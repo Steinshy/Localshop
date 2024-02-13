@@ -9,10 +9,11 @@ interface Product {
   description: string;
   price: number;
   category: string;
+  thumbnail: string;
 }
 
 const ProductList = () => {
-  const [products, setProducts] = useState(useState<Product[]>([]));
+  const [products, setProducts] = useState<Product[]>([]);
   const URL = "https://dummyjson.com/products";
 
   const fetchData = async () => {
@@ -26,9 +27,10 @@ const ProductList = () => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
-  <div className="max-w-[900px] gap-2 grid grid-cols-2 grid-rows-2 px-8">
+  return (
+    <div className="max-w-[900px] gap-2 grid grid-cols-2 grid-rows-2 px-8">
     { products.map((product) => (
       <Card
         key={product.id}
@@ -57,6 +59,7 @@ const ProductList = () => {
       </Card>
     ))};
   </div>
+  )
 
   //         <li>{product.title}</li>
   //         <li>{product.brand}</li>
