@@ -28,8 +28,8 @@ const ProductList = () => {
     fetchData();
   }, [fetchData]);
 
-  return products.map((product) => (
-    <div className="max-w-[900px] gap-2 grid grid-cols-2 grid-rows-2 px-8">
+  <div className="max-w-[900px] gap-2 grid grid-cols-2 grid-rows-2 px-8">
+    { products.map((product) => (
       <Card
         key={product.id}
         isFooterBlurred
@@ -55,8 +55,9 @@ const ProductList = () => {
           </Button>
         </CardFooter>
       </Card>
-    </div>
-  ));
+    ))};
+  </div>
+
   //         <li>{product.title}</li>
   //         <li>{product.brand}</li>
   //         <li>{product.category}</li>
