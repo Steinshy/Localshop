@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
 
-interface Props {
+interface product {
   id: number;
   title: string;
   description: string;
@@ -9,7 +9,7 @@ interface Props {
   thumbnail: string;
 }
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product }: { product: product }) => {
   return (
         <Card
           key={product.id}
