@@ -1,12 +1,14 @@
 import "./App.css";
 import ProductList from "./components/productList";
-import ShopNavbar from "./components/shopNavbar";
+import HeaderNav from "./components/headernav";
+import Footer from "./components/footer";
 
 const App = () => {
   return (
     <>
-      <ShopNavbar />
+      <HeaderNav />
       <ProductList />
+      <Footer />
     </>
   );
 };
