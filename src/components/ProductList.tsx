@@ -36,11 +36,6 @@ const ProductList = () => {
       ))}
     </div>
   );
-
-  //         <li>{product.title}</li>
-  //         <li>{product.brand}</li>
-  //         <li>{product.category}</li>
-  //         <li>{product.description}</li>
 };
 
 export default ProductList;
