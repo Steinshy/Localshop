@@ -1,8 +1,14 @@
-import ProductList from "./components/productList";
 import "./App.css";
+import ProductList from "./components/productList";
+import ShopNavbar from "./components/shopNavbar";
 
 const App = () => {
-  return <ProductList />;
+  return (
+    <>
+      <ShopNavbar />
+      <ProductList />
+    </>
+  );
 };
 
 export default App;
