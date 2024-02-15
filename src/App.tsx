@@ -25,9 +25,9 @@ const App = () => {
         <Footer /> */}
       </>
         <Routes>
-          <Route element={<Home />} />
-          <Route element={<ProductPage />} />
-          <Route element={<AboutUs />} />
+          <Route path="/" element={<Home />} />
+          <Route path="product-page" element={<ProductPage />} />
+          <Route path="about-us" element={<AboutUs />} />
         </Routes>
     </NextUIProvider>
   );
