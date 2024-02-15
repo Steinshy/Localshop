@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { NextUIProvider } from "@nextui-org/react";
 
 // Components
 import Navbar from "./components/navbar";
@@ -10,20 +11,25 @@ import ProductPage from "./routes/productPage";
 import AboutUs from "./routes/aboutUs";
 
 // CSS
-import "./App.css";
+import "./styles/App.css";
 
 const App = () => {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <Navbar />
-      {/* <Router>
-          <Routes>
-            <Route path="/" element={<Home />}/>
-            <Route path="/productPage" element={<ProductPage />} />
-          </Routes>
-      </Router>
-      <Footer /> */}
-    </>
+    <NextUIProvider navigate={navigate}>
+      <>
+        <Navbar />
+        {/* <ProductPage />
+        <AboutUs />
+        <Footer /> */}
+      </>
+        <Routes>
+          <Route element={<Home />} />
+          <Route element={<ProductPage />} />
+          <Route element={<AboutUs />} />
+        </Routes>
+    </NextUIProvider>
   );
 };
 

@@ -13,6 +13,7 @@ export const siteConfig = {
       href: "/aboutUs",
     },
   ],
+
   links: {
     github: "https://github.com",
     twitter: "https://twitter.com",
