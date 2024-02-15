@@ -6,9 +6,9 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 
 // Pages
-import Home from "./routes/home";
-import ProductPage from "./routes/productPage";
-import AboutUs from "./routes/aboutUs";
+import Home from "./page"
+import ProductPage from "./products/page";
+import AboutPage from "./about/page";
 
 // CSS
 import "./styles/App.css";
@@ -27,7 +27,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="product-page" element={<ProductPage />} />
-          <Route path="about-us" element={<AboutUs />} />
+          <Route path="about-us" element={<AboutPage />} />
         </Routes>
     </NextUIProvider>
   );
