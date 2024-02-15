@@ -7,8 +7,13 @@ export default function HeaderNav() {
         <p className="font-bold text-inherit">LocalShop</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarItem isActive aria-current="page">
+          <Link color="foreground" href="/">
+            Home
+          </Link>
+        </NavbarItem>
         <NavbarItem isActive aria-current="page">
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="productPage">
             Products
           </Link>
         </NavbarItem>
