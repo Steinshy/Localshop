@@ -3,6 +3,8 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarItem,
+  NavbarMenu,
+  NavbarMenuToggle
 } from "@nextui-org/Navbar";
 import { Link } from "@nextui-org/link";
 import { DiCssdeck } from "react-icons/di";
@@ -52,6 +54,19 @@ export default function Navbar() {
           </Link>
         </NavbarItem>
       </NavbarContent>
+
+      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <NavbarMenuToggle />
+      </NavbarContent>
+
+      {/* NavbarMenu toggle */}
+
+      <NavbarMenu>
+
+
+      </NavbarMenu>
+
+
     </NextUiNavbar>
 
     // <Navbar>
