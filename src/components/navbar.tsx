@@ -1,10 +1,28 @@
 import { Navbar as NextUiNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle } from "@nextui-org/navbar";
 import { Link } from "@nextui-org/link";
+import { Input } from "@nextui-org/input";
+import { Kbd } from "@nextui-org/kbd";
 import { DiCssdeck } from "react-icons/di";
-import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaTwitter, FaSearch } from "react-icons/fa";
 import { siteConfig } from "../config/site";
 
 export default function Navbar() {
+  const searchInput = (
+    <Input 
+    aria-label="Search"
+    classNames={{inputWrapper: "bg-default-100",
+    input: "text-sm"}}
+    endContent={
+      <Kbd className="hidden lg:inline-block" keys={["command"]}>K</Kbd>
+    }
+    labelPlacement="outside"
+    placeholder="Search..."
+    startContent={
+      <FaSearch className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+    }
+    type="search"/>
+    );
+
   return (
     // User menues
     <NextUiNavbar maxWidth="xl" position="sticky">
@@ -55,8 +73,8 @@ export default function Navbar() {
       {/* NavbarMenu toggle */}
 
       <NavbarMenu>
-
-
+        {searchInput}
+        
       </NavbarMenu>
 
 

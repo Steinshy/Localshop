@@ -20,12 +20,12 @@ const App = () => {
     <NextUIProvider navigate={navigate}>
       <>
         <Navbar />
-        <Routes>
+        {/* <Routes>
           <Route path="/" element={<Home />} />
           <Route path="product-page" element={<ProductPage />} />
           <Route path="about-us" element={<AboutPage />} />
-        </Routes>
-        <Footer />
+        </Routes> */}
+        {/* <Footer /> */}
       </>
     </NextUIProvider>
   );
