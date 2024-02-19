@@ -6,7 +6,7 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 
 // Pages
-import Home from "./page"
+import Home from "./page";
 import ProductPage from "./products/page";
 import AboutPage from "./about/page";
 
@@ -20,15 +20,13 @@ const App = () => {
     <NextUIProvider navigate={navigate}>
       <>
         <Navbar />
-        {/* <ProductPage />
-        <AboutUs />
-        <Footer /> */}
-      </>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="product-page" element={<ProductPage />} />
           <Route path="about-us" element={<AboutPage />} />
         </Routes>
+        <Footer />
+      </>
     </NextUIProvider>
   );
 };

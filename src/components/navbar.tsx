@@ -1,11 +1,4 @@
-import {
-  Navbar as NextUiNavbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarItem,
-  NavbarMenu,
-  NavbarMenuToggle
-} from "@nextui-org/Navbar";
+import { Navbar as NextUiNavbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenu, NavbarMenuToggle } from "@nextui-org/Navbar";
 import { Link } from "@nextui-org/link";
 import { DiCssdeck } from "react-icons/di";
 import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa";
