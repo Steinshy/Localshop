@@ -25,7 +25,7 @@ const App = () => {
           <Route path="product-page" element={<ProductPage />} />
           <Route path="about-us" element={<AboutPage />} />
         </Routes> */}
-        {/* <Footer /> */}
+        <Footer />
       </>
     </NextUIProvider>
   );
