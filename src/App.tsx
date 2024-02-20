@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { NextUIProvider } from "@nextui-org/react";
+import { ChakraProvider } from '@chakra-ui/react'
 
 // Components
 import Navbar from "./components/navbar";
@@ -14,10 +14,9 @@ import AboutPage from "./about/page";
 import "./styles/App.css";
 
 const App = () => {
-  const navigate = useNavigate();
 
   return (
-    <NextUIProvider navigate={navigate}>
+    <ChakraProvider>
       <>
         <Navbar />
         {/* <Routes>
@@ -27,7 +26,7 @@ const App = () => {
         </Routes> */}
         <Footer />
       </>
-    </NextUIProvider>
+    </ChakraProvider>
   );
 };
 

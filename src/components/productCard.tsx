@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@nextui-org/react";
+import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
 
 interface product {
   id: number;
