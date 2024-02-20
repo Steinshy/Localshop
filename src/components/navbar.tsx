@@ -65,17 +65,6 @@ export default function Navbar() {
     //     className="hidden sm:flex basis-1/5 sm:basis-full"
     //     justify="end"
     //   >
-    //     <NavbarItem className="hidden sm:flex gap-2">
-    //       <Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-    //         <FaTwitter className="text-default-500" />
-    //       </Link>
-    //       <Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-    //         <FaDiscord className="text-default-500" />
-    //       </Link>
-    //       <Link isExternal href={siteConfig.links.github} aria-label="Github">
-    //         <FaGithub className="text-default-500" />
-    //       </Link>
-    //     </NavbarItem>
     //   </NavbarContent>
 
     //   {/* NavbarMenu toggle */}
