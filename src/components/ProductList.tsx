@@ -33,7 +33,7 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div className="max-w-[900px] gap-2 grid grid-cols-2 grid-rows-2 px-8">
+    <div className="grid grid-cols-3 gap-2 p-2">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} isLoading={isLoading} />
       ))}
