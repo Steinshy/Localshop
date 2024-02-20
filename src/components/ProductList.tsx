@@ -13,16 +13,19 @@ interface Product {
 }
 
 const ProductList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>(new Array(10));
+  const [isLoading, setIsLoading] = useState(true);
   const URL = "https://dummyjson.com/products";
 
   const fetchData = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.get(URL);
       setProducts(response.data.products);
     } catch (error) {
       console.error(error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -32,7 +35,7 @@ const ProductList = () => {
   return (
     <div className="max-w-[900px] gap-2 grid grid-cols-2 grid-rows-2 px-8">
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} isLoading={isLoading} />
       ))}
     </div>
   );

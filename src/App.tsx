@@ -19,11 +19,11 @@ const App = () => {
     <ChakraProvider>
       <>
         <Navbar />
-        {/* <Routes>
+        <Routes>
           <Route path="/" element={<Home />} />
           <Route path="product-page" element={<ProductPage />} />
           <Route path="about-us" element={<AboutPage />} />
-        </Routes> */}
+        </Routes>
         <Footer />
       </>
     </ChakraProvider>
