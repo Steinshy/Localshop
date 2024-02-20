@@ -12,6 +12,7 @@ import { Kbd } from "@chakra-ui/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaDiscord, FaGithub, FaTwitter, FaSearch } from "react-icons/fa";
 import { siteConfig } from "../config/site";
+import { Link as RouterLink } from "react-router-dom";
 
 export default function Navbar() {
   const searchInput = (
@@ -97,7 +98,7 @@ export default function Navbar() {
     // </ChackraUiNavbar>
     <div className="flex flex-row gap-3 justify-center items-center p-4 bg-neutral-900/25">
       <div className="flex flex-col">
-        <Link className="flex justify-start items-center gap-1" href="/">
+        <Link as={RouterLink} className="flex justify-start items-center gap-1" to="/">
           <DiCssdeck />
           <p className="font-bold text-inherit">{siteConfig.name}</p>
         </Link>
@@ -107,13 +108,14 @@ export default function Navbar() {
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <li key={item.href}>
-              <a
+              <Link
+                as={RouterLink}
                 className="data-[active=true]:text-primary data-[active=true]:font-medium"
                 color="foreground"
-                href={item.href}
+                to={item.href}
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
