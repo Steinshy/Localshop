@@ -1,7 +1,23 @@
 export default function Home() {
   return (
-    <div>
-      <h1>Welcome to our local shop! We sell a variety of products, including fruits, vegetables, and more. Come on in and see what we have to offer!</h1>
+    <div className="flex flex-col flex-grow justify-center items-center">
+      <h1 className="text-5xl">
+        Welcome to Localshop!
+      </h1>
+
+      <p
+        className="text-lg text-center mt-4"
+      >
+        Localshop is a platform that allows you to buy and sell products from local businesses in your area.
+      </p>
+
+      <p
+        className="text-lg text-center"
+      >
+        We believe that local businesses are the backbone of our communities and we want to help them thrive.
+      </p>
+
+      {/* Add a background image, put it behind the text */}
     </div>
   );
 }

@@ -5,6 +5,10 @@ export const siteConfig = {
   description: "A shopping website for browser items close to your home",
   navItems: [
     {
+      label: "Home",
+      href: "/",
+    },
+    {
       label: "Our Products",
       href: "/product-page",
     },
@@ -18,5 +22,5 @@ export const siteConfig = {
     github: "https://github.com",
     twitter: "https://twitter.com",
     discord: "https://discordapp.com",
-  },
+  }
 };

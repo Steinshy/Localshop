@@ -11,13 +11,13 @@ interface Product {
 }
 
 const useFetchProducts = (url: string) => {
-  const [products, setProducts] = useState<Product[]>(new Array(10));
+  const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await http.get(url);;
+      const response = await http.get(url);
       const { products } = response?.data; 
       setProducts(products);
     } catch (error) {

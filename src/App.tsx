@@ -17,7 +17,7 @@ const App = () => {
 
   return (
     <ChakraProvider>
-      <>
+      <main className="flex flex-col flex-grow bg-background">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -25,7 +25,7 @@ const App = () => {
           <Route path="about-us" element={<AboutPage />} />
         </Routes>
         <Footer />
-      </>
+      </main>
     </ChakraProvider>
   );
 };
