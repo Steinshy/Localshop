@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import ProductCard from "./productCard";
+import http from "../utils/http";
 
 // Data being passed to useState and return expected data
 interface Product {
@@ -15,12 +15,12 @@ interface Product {
 const ProductList = () => {
   const [products, setProducts] = useState<Product[]>(new Array(10));
   const [isLoading, setIsLoading] = useState(true);
-  const URL = "https://dummyjson.com/products";
+  const URL = "/products";
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(URL);
+      const response = await http.get(URL);
       setProducts(response.data.products);
     } catch (error) {
       console.error(error);
