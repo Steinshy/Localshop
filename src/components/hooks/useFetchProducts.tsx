@@ -18,7 +18,8 @@ const useFetchProducts = (url: string) => {
     setIsLoading(true);
     try {
       const response = await http.get(url);;
-      setProducts(response.data.products);
+      const { products } = response?.data; 
+      setProducts(products);
     } catch (error) {
       console.error(error);
     }
