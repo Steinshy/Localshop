@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import http from "../../utils/http"
+import http from "../../utils/http";
 
 interface Product {
   id: number;
@@ -10,17 +10,19 @@ interface Product {
   thumbnail: string;
 }
 
-const useFetchProducts = (url: string) => {
+const useFetchProducts = (url: string, limit: number, skip: number) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await http.get(url);
+      const response = await http.get(url + '?limit=' + limit + '&skip=' + skip); // url api = http://127.0.0.1:3000/products?limit=10&skip=2
       const { products } = response?.data; 
       setProducts(products);
     } catch (error) {
+      setError(error.message);
       console.error(error);
     }
     setIsLoading(false);
@@ -30,7 +32,7 @@ const useFetchProducts = (url: string) => {
     fetchData();
   }, []);
 
-  return { products, isLoading };
+  return { products, isLoading, error };
 };
 
 export default useFetchProducts;
