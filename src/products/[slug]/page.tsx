@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 // Utils - Request + Interface
-import http from "../utils/http";
-import { ProductInterface } from "../config/site";
+import http from "../../utils/http";
+import { ProductInterface } from "../../config/site";
 
 // Chakra UI - Icon
 import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";

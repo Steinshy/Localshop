@@ -7,9 +7,9 @@ import Footer from "./components/footer";
 
 // Pages
 import Home from "./home";
-import ProductPage from "./products/page";
-import AboutPage from "./about/page";
-import Product from "./product/product";
+import Products from "./products/page";
+import About from "./about/page";
+import Product from "./products/[slug]/page";
 
 // Context
 import { CartContext } from "./utils/contexts";
@@ -27,9 +27,9 @@ const ABOUT_US_ROUTE = "/about-us";
 const RoutesComponent = () => (
   <Routes>
     <Route path={HOME_ROUTE} element={<Home />} />
-    <Route path={PRODUCT_PAGE_ROUTE} element={<ProductPage />} />
+    <Route path={PRODUCT_PAGE_ROUTE} element={<Products />} />
     <Route path={PRODUCT_ROUTE} element={<Product />} />
-    <Route path={ABOUT_US_ROUTE} element={<AboutPage />} />
+    <Route path={ABOUT_US_ROUTE} element={<About />} />
   </Routes>
   );
   interface CartItem {

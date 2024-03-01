@@ -1,5 +1,5 @@
 import ProductList from "../components/ProductList";
 
-export default function ProductsPage() {
+export default function Products() {
   return <ProductList />;
 }
