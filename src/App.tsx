@@ -1,7 +1,6 @@
+// React - Routes
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { ChakraProvider } from '@chakra-ui/react'
-
 // Components
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
@@ -12,17 +11,18 @@ import ProductPage from "./products/page";
 import AboutPage from "./about/page";
 import Product from "./product/product";
 
-// Routes
+// Context
+import { CartContext } from "./utils/contexts";
+
+// Chakra UI - APP CSS
+import { ChakraProvider } from '@chakra-ui/react'
+import "./styles/App.css";
+
+// Setup Routes
 const HOME_ROUTE = "/";
 const PRODUCT_PAGE_ROUTE = "/product-page";
 const PRODUCT_ROUTE = "/product-page/:id/:slug";
 const ABOUT_US_ROUTE = "/about-us";
-
-// context
-import { CartContext } from "./utils/contexts";
-
-// CSS
-import "./styles/App.css";
 
 const RoutesComponent = () => (
   <Routes>

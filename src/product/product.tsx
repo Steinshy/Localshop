@@ -2,16 +2,15 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-// Request + Interface
+// Utils - Request + Interface
 import http from "../utils/http";
 import { ProductInterface } from "../config/site";
 
-// Style
+// Chakra UI - Icon
 import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
 import { FaCartPlus } from "react-icons/fa";
 
 export default function Product() {
-  const URL = "/products/";
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState({} as ProductInterface);
@@ -19,7 +18,7 @@ export default function Product() {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await http.get(URL + params.id); 
+      const response = await http.get('/products/' + params.id); 
       const product = response?.data;
       setProduct(product);
       console.log(product);

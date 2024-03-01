@@ -1,11 +1,9 @@
-import { DiCssdeck } from "react-icons/di";
+// Chakra UI - React Icon
 import { Flex, List, ListItem, Link } from "@chakra-ui/react";
+import { DiCssdeck } from "react-icons/di";
 
-type LinkItemProps = {
-  text?: string;
-  isTag?: boolean;
-  tagText?: string;
-}
+// interface
+import { LinkItemProps } from "../config/site";
 
 const LinkItem = ({ text, isTag = false, tagText }: LinkItemProps) => {
   return (

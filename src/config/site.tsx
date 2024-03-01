@@ -32,3 +32,9 @@ export type ProductInterface = {
   category: string;
   thumbnail: string
 }
+
+export type LinkItemProps = {
+  text?: string;
+  isTag?: boolean;
+  tagText?: string;
+}

@@ -1,9 +1,17 @@
-import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
-import { FaCartPlus } from "react-icons/fa";
-import { Link as RouterLink  } from "react-router-dom";
-import { ProductInterface } from "../config/site";
+// React Context
 import { useContext } from "react";
 import { CartContext } from "../utils/contexts";
+
+// Chakra UI - Icon
+import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
+import { FaCartPlus } from "react-icons/fa";
+
+// React Router
+
+import { Link as RouterLink  } from "react-router-dom";
+
+// Utils - Interfaces
+import { ProductInterface } from "../config/site";
 
 interface ProductCardProps {
   product: ProductInterface;
@@ -20,7 +28,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
 
   // Function to add the product to the cart, localstorage? + react context?
   const AddToCart = () => {
-        
     const newItem = {
       id: product.id,
       discount: 0,

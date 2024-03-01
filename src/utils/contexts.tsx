@@ -7,7 +7,6 @@ interface CartItem {
     discount: number;
     quantity: number;
 }
-
 interface CartContextType {
   data: CartItem[];
   update: Dispatch<SetStateAction<CartItem[]>>;

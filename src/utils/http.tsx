@@ -1,3 +1,4 @@
+// Axios instance with interceptors
 import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 

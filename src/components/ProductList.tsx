@@ -1,11 +1,17 @@
+// React
 import { useState, useEffect } from "react";
-import { Button } from '@chakra-ui/react'
+
+// Component
 import ProductCard from "./productCard";
+
+// Utils - Request + Interfaces
 import http from "../utils/http";
 import { ProductInterface } from "../config/site";
 
+// Chakra UI
+import { Button } from '@chakra-ui/react'
+
 const ProductList = () => {
-  const URL = "/products";
   const limit = 10;
   const [skip, setSkip] = useState(0)
   const [products, setProducts] = useState<ProductInterface[]>([]);
@@ -15,7 +21,7 @@ const ProductList = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await http.get(URL + '?limit=' + limit + '&skip=' + skip);
+      const response = await http.get("/products" + '?limit=' + limit + '&skip=' + skip);
       const { products } = response?.data; 
       setProducts(products);
       setTotal(response?.data.total);

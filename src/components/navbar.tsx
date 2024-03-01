@@ -1,10 +1,18 @@
+// React
 import { useState, useContext } from "react";
-import { Link } from "@chakra-ui/react";
-import { Input } from "@chakra-ui/react";
+
+// Chakra UI - Icon
+import { Link, Input } from "@chakra-ui/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown } from "react-icons/fa";
+
+// Site Config
 import { siteConfig } from "../config/site";
+
+// Route
 import { Link as RouterLink } from "react-router-dom";
+
+// Context
 import { CartContext } from "../utils/contexts";
 
 export default function Navbar() {
