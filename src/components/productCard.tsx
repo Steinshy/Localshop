@@ -1,7 +1,9 @@
 import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
 import { FaCartPlus } from "react-icons/fa";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink  } from "react-router-dom";
 import { ProductInterface } from "../config/site";
+import { useContext } from "react";
+import { CartContext } from "../utils/contexts";
 
 interface ProductCardProps {
   product: ProductInterface;
@@ -9,9 +11,23 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
+  const cartStore = useContext(CartContext);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    AddToCart();
+  };
+
   // Function to add the product to the cart, localstorage? + react context?
   const AddToCart = () => {
-    console.log("Add to cart");
+        
+    const newItem = {
+      id: product.id,
+      discount: 0,
+      quantity: 1
+    }
+    
+    cartStore.update([...cartStore.data, newItem]);
   }
   const slug = product.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
 
@@ -28,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
         />
         <CardFooter className="w-full absolute bg-black/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between items-center rounded-b-md">
           <p className="text-white text-small font-semibold">{product.price} €</p>
-          <Button onClick={AddToCart} color="teal" size="sm">
+          <Button onClick={handleClick} color="teal" size="sm">
             <FaCartPlus className="text-xl" />
           </Button>
         </CardFooter>

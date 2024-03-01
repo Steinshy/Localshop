@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown } from "react-icons/fa";
 import { siteConfig } from "../config/site";
 import { Link as RouterLink } from "react-router-dom";
+import { CartContext } from "../utils/contexts";
 
 export default function Navbar() {
+  const cartStore = useContext(CartContext);
+  
   // State for the search query
   const [query, setQuery] = useState("");
 
@@ -34,7 +37,7 @@ export default function Navbar() {
       </div>
 
       <div className="flex flex-col flex-grow">
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+        <ul className="hidden md:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <li key={item.href}>
               <Link
@@ -63,8 +66,14 @@ export default function Navbar() {
       </div>
 
       <div className="flex flex-col-grow">
-        <a href="#" aria-label="Cart">
+        <a className="relative" href="#" aria-label="Cart">
           <FaCartArrowDown className="text-2xl" />
+          {cartStore.data.length > 0 && (
+            
+          <div className="absolute h-[20px] w-[20px] flex justify-center items-center bottom-0 right-0 rounded-full bg-red-500 text-sm text-white">
+            {cartStore.data.length}
+          </div>
+          )}
         </a>
       </div>
     </div>

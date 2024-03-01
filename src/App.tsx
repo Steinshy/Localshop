@@ -1,4 +1,5 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import { ChakraProvider } from '@chakra-ui/react'
 
 // Components
@@ -11,23 +12,52 @@ import ProductPage from "./products/page";
 import AboutPage from "./about/page";
 import Product from "./product/product";
 
+// Routes
+const HOME_ROUTE = "/";
+const PRODUCT_PAGE_ROUTE = "/product-page";
+const PRODUCT_ROUTE = "/product-page/:id/:slug";
+const ABOUT_US_ROUTE = "/about-us";
+
+// context
+import { CartContext } from "./utils/contexts";
+
 // CSS
 import "./styles/App.css";
 
+const RoutesComponent = () => (
+  <Routes>
+    <Route path={HOME_ROUTE} element={<Home />} />
+    <Route path={PRODUCT_PAGE_ROUTE} element={<ProductPage />} />
+    <Route path={PRODUCT_ROUTE} element={<Product />} />
+    <Route path={ABOUT_US_ROUTE} element={<AboutPage />} />
+  </Routes>
+  );
+  interface CartItem {
+    id: number;
+    color?: string;
+    size?: string;
+    discount: number;
+    quantity: number;
+}
+
 const App = () => {
+  const [cart, setCart] = useState<CartItem[]>([]);
+  useEffect(() => {
+    console.log('CART CONTEXT')
+    console.log(cart);
+    console.log('CART LENGTH')
+    console.log(cart.length);
+  }, [cart])
 
   return (
     <ChakraProvider>
+      <CartContext.Provider value={{data: cart, update: setCart}}>
       <main className="flex flex-col flex-grow bg-background">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="product-page" element={<ProductPage />} />
-          <Route path="product-page/:id/:slug" element={<Product />} />
-          <Route path="about-us" element={<AboutPage />} />
-        </Routes>
+        <RoutesComponent />
         <Footer />
       </main>
+      </CartContext.Provider>
     </ChakraProvider>
   );
 };
