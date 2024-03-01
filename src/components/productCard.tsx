@@ -21,9 +21,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
     console.log("Add to cart");
   }
 
+  const slug = product.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+  console.log(slug)
   return (
     <Skeleton isLoaded={!isLoading}>
-      <Card as={RouterLink} to="#" key={product.id} className="w-full h-[300px] rounded-md shadow-lg">
+      <Card as={RouterLink} to={"/product-page/" + product.id + '/' + slug} key={product.id} className="w-full h-[300px] rounded-md shadow-lg">
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">New</p>
           <h4 className="text-white font-medium text-2xl">{product.title}</h4>

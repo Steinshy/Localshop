@@ -9,6 +9,7 @@ import Footer from "./components/footer";
 import Home from "./page";
 import ProductPage from "./products/page";
 import AboutPage from "./about/page";
+import Product from "./product/product";
 
 // CSS
 import "./styles/App.css";
@@ -22,6 +23,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="product-page" element={<ProductPage />} />
+          <Route path="product-page/:id/:slug" element={<Product />} />
           <Route path="about-us" element={<AboutPage />} />
         </Routes>
         <Footer />

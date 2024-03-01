@@ -4,12 +4,13 @@ import ProductCard from "./productCard";
 import http from "../utils/http";
 interface Product {
   id: number;
+  price: number;
   title: string;
   description: string;
-  price: number;
+  brand: string;
   category: string;
   thumbnail: string;
-  
+  images: string[];
 }
 
 const ProductList = () => {
@@ -40,7 +41,6 @@ const ProductList = () => {
   }, [skip]);
 
   return (
-
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} isLoading={isLoading} />
@@ -59,6 +59,7 @@ const ProductList = () => {
           <p>No products found</p>
         </div>
       )}
+      
       {/* Pagination here */}
       {total > 0 && (
         <div className="flex justify-center w-full col-span-full">
@@ -70,7 +71,6 @@ const ProductList = () => {
           )}
         </div>
       )}
-
     </div>
   );
 };
