@@ -1,26 +1,17 @@
 import { useState, useEffect } from "react";
 import http from "../utils/http";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { ProductInterface } from "../config/site";
 
 // Style
 import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
 import { FaCartPlus } from "react-icons/fa";
 
-
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  category: string;
-  thumbnail: string;
-}
-
 export default function Product() {
   const URL = "/products/";
   const params = useParams();
   const [isLoading, setIsLoading] = useState(true);
-  const [product, setProduct] = useState({} as Product);
+  const [product, setProduct] = useState({} as ProductInterface);
   
   const fetchData = async () => {
     setIsLoading(true);

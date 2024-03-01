@@ -1,17 +1,10 @@
 import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
 import { FaCartPlus } from "react-icons/fa";
 import { Link as RouterLink } from "react-router-dom";
-interface Product {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  category: string;
-  thumbnail: string;
-}
+import { ProductInterface } from "../config/site";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductInterface;
   isLoading: boolean;
 }
 
@@ -20,9 +13,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
   const AddToCart = () => {
     console.log("Add to cart");
   }
-
   const slug = product.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-  console.log(slug)
+
   return (
     <Skeleton isLoaded={!isLoading}>
       <Card as={RouterLink} to={"/product-page/" + product.id + '/' + slug} key={product.id} className="w-full h-[300px] rounded-md shadow-lg">

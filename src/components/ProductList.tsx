@@ -2,29 +2,20 @@ import { useState, useEffect } from "react";
 import { Button } from '@chakra-ui/react'
 import ProductCard from "./productCard";
 import http from "../utils/http";
-interface Product {
-  id: number;
-  price: number;
-  title: string;
-  description: string;
-  brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
-}
+import { ProductInterface } from "../config/site";
 
 const ProductList = () => {
   const URL = "/products";
   const limit = 10;
   const [skip, setSkip] = useState(0)
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<ProductInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [total, setTotal] = useState(0);
 
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await http.get(URL + '?limit=' + limit + '&skip=' + skip); // url api = http://127.0.0.1:3000/products?limit=10&skip=2
+      const response = await http.get(URL + '?limit=' + limit + '&skip=' + skip);
       const { products } = response?.data; 
       setProducts(products);
       setTotal(response?.data.total);
@@ -35,7 +26,6 @@ const ProductList = () => {
     setIsLoading(false);
   };
 
-  // Le fetch va deja etre trigger a l'assignation
   useEffect(() => {
     fetchData();
   }, [skip]);
@@ -60,7 +50,7 @@ const ProductList = () => {
         </div>
       )}
       
-      {/* Pagination here */}
+      {/* Pagination */}
       {total > 0 && (
         <div className="flex justify-center w-full col-span-full">
           { skip > 0 && (

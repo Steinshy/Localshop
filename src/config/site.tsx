@@ -24,3 +24,11 @@ export const siteConfig = {
     discord: "https://discordapp.com",
   }
 };
+
+export type ProductInterface = {
+  id: number;
+  price: number;
+  title: string;
+  category: string;
+  thumbnail: string
+}
