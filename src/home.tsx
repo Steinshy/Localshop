@@ -5,15 +5,11 @@ export default function Home() {
         Welcome to Localshop!
       </h1>
 
-      <p
-        className="text-lg text-center mt-4"
-      >
+      <p className="text-lg text-center mt-4">
         Localshop is a platform that allows you to buy and sell products from local businesses in your area.
       </p>
 
-      <p
-        className="text-lg text-center"
-      >
+      <p className="text-lg text-center">
         We believe that local businesses are the backbone of our communities and we want to help them thrive.
       </p>
 
