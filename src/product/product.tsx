@@ -1,6 +1,9 @@
+// React + Routes
 import { useState, useEffect } from "react";
-import http from "../utils/http";
 import { useParams } from "react-router-dom";
+
+// Request + Interface
+import http from "../utils/http";
 import { ProductInterface } from "../config/site";
 
 // Style
