@@ -1,19 +1,17 @@
 // Axios instance with interceptors
-import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { setupCache } from 'axios-cache-interceptor';
+import axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+import { setupCache } from "axios-cache-interceptor";
 
-const config:AxiosRequestConfig = {
-  baseURL: 'http://localhost:3000',
-  headers: { 
-    "Content-Type": "application/json",
-  }
+const config: AxiosRequestConfig = {
+  baseURL: "http://localhost:3000",
+  headers: { "Content-Type": "application/json" },
 };
 
 // Creating the instance
 const http: AxiosInstance = axios.create(config);
 
 // Request Interceptor
-const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+const onRequest = ( config: InternalAxiosRequestConfig ): InternalAxiosRequestConfig => {
   const { method, url, headers } = config;
   return config;
 };
@@ -30,7 +28,7 @@ const onErrorResponse = (error: AxiosError | Error): Promise<AxiosError> => {
   if (axios.isAxiosError(error)) {
     const { message } = error;
     const { method, url } = error.config as AxiosRequestConfig;
-    const { statusText, status } = error.response as AxiosResponse ?? {};
+    const { statusText, status } = (error.response as AxiosResponse) ?? {};
 
     switch (status) {
       case 401: {
@@ -55,7 +53,7 @@ const onErrorResponse = (error: AxiosError | Error): Promise<AxiosError> => {
       }
     }
   } else {
-    console.log(`Error ${error.message}`);
+    console.error(`Error ${error.message}`);
   }
 
   return Promise.reject(error);
