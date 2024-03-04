@@ -1,6 +1,6 @@
 // React Context
 import { useContext } from "react";
-import { CartContext } from "../utils/contexts";
+import { CartContext } from "../utils/cartProvider";
 
 // Chakra UI - Icon
 import { Card, CardHeader, CardFooter, Image, Skeleton } from "@nextui-org/react"

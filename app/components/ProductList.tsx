@@ -1,3 +1,5 @@
+'use client';
+
 // React
 import { useState, useEffect } from "react";
 
@@ -8,7 +10,7 @@ import ProductCard from "./productCard";
 import http from "../utils/http";
 import { ProductInterface } from "../config/site";
 
-// Chakra UI
+// Nextui
 import { Button } from '@nextui-org/react'
 
 const ProductList = () => {
@@ -22,9 +24,13 @@ const ProductList = () => {
     setIsLoading(true);
     try {
       const response = await http.get("/products" + '?limit=' + limit + '&skip=' + skip);
-      const { products, total } = response?.data; 
-      setProducts(products);
-      setTotal(total);
+      const { products, total } = response?.data;
+      console.log("setProducts from product list");
+      console.log(setProducts)
+      setProducts(products || []);
+      console.log("Total from product list");
+      console.log(setTotal);
+      setTotal(total || 0);
     } catch (error: any) {
       setProducts([]);
       console.error(error);
@@ -56,7 +62,7 @@ const ProductList = () => {
       </div>
 
       {/* No products */}
-      {!isLoading && total === 0 && (
+      {!isLoading && total <= 0 && (
         <div className="flex flex-grow justify-center items-center">
           <p>No products found</p>
         </div>
@@ -65,11 +71,11 @@ const ProductList = () => {
       {/* Pagination */}
       {total > 0 && (
         <div className="flex justify-between items-center p-4">
-          <Button isDisabled={skip <= 0 || isLoading} colorScheme='teal' variant='solid' onClick={previousPage}>Previous</Button>
+          <Button isDisabled={skip <= 0 || isLoading} variant='solid' onClick={previousPage}>Previous</Button>
           <p className="text-sm text-black/40">
             Displaying {clamp(skip + limit, 0, total)} items of {total}
           </p>
-          <Button isDisabled={(skip + limit) >= total || isLoading} colorScheme='teal' variant='solid' onClick={nextPage}>Next</Button>
+          <Button isDisabled={(skip + limit) >= total || isLoading} variant='solid' onClick={nextPage}>Next</Button>
         </div>
       )}
     </div>

@@ -10,11 +10,11 @@ export const siteConfig = {
     },
     {
       label: "Our Products",
-      href: "/product-page",
+      href: "/products",
     },
     {
       label: "About Us",
-      href: "/about-us",
+      href: "/about",
     },
   ],
 

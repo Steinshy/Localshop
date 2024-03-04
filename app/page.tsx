@@ -1,6 +1,4 @@
-'use client'
-
-export default function Home() {
+export default function Homepage() {
   return (
     <div className="flex flex-col flex-grow justify-center items-center">
       <h1 className="text-5xl">

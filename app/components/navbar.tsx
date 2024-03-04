@@ -1,19 +1,19 @@
+'use client';
+
 // React
 import { useState, useContext } from "react";
 
-// Chakra UI - Icon
-import { Link, Input } from "@nextui-org/react"
+// NextUi - Icon
+import Link from "next/link";
+import { Link as NextLink, Input } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown } from "react-icons/fa";
 
 // Site Config
 import { siteConfig } from "../config/site";
 
-// Route
-import { Link as RouterLink } from "react-router-dom";
-
-// Context
-import { CartContext } from "../utils/contexts";
+// CartProvider
+import { CartContext } from "../utils/cartProvider";
 
 export default function Navbar() {
   const cartStore = useContext(CartContext);
@@ -38,24 +38,24 @@ export default function Navbar() {
   return (
     <div className="flex flex-row gap-3 justify-center items-center p-4 bg-teal-700 text-white">
       <div className="flex flex-col">
-        <Link as={RouterLink} className="flex justify-start items-center gap-1" to="/">
+        <NextLink as={Link} className="flex justify-start items-center gap-1 text-decoration-none" href="/">
           <DiCssdeck />
           <p className="font-bold text-inherit">{siteConfig.name}</p>
-        </Link>
+        </NextLink>
       </div>
 
       <div className="flex flex-col flex-grow">
         <ul className="hidden md:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <li key={item.href}>
-              <Link
-                as={RouterLink}
+              <NextLink
+                as={Link}
                 color="foreground"
                 className="font-semibold hover:text-white/75"
-                to={item.href}
+                href={item.href}
               >
                 {item.label}
-              </Link>
+              </NextLink>
             </li>
           ))}
         </ul>
