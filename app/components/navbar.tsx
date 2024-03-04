@@ -2,7 +2,7 @@
 import { useState, useContext } from "react";
 
 // Chakra UI - Icon
-import { Link, Input } from "@chakra-ui/react";
+import { Link, Input } from "@nextui-org/react"
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown } from "react-icons/fa";
 

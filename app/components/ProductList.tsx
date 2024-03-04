@@ -9,7 +9,7 @@ import http from "../utils/http";
 import { ProductInterface } from "../config/site";
 
 // Chakra UI
-import { Button } from '@chakra-ui/react'
+import { Button } from '@nextui-org/react'
 
 const ProductList = () => {
   const limit = 12;

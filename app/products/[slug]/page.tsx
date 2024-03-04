@@ -1,3 +1,5 @@
+'use client'
+
 // React + Routes
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -7,7 +9,7 @@ import http from "../../utils/http";
 import { ProductInterface } from "../../config/site";
 
 // Chakra UI - Icon
-import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
+import {Card, CardHeader, CardFooter, Button, Image, Skeleton} from "@nextui-org/react";
 import { FaCartPlus } from "react-icons/fa";
 
 export default function Product() {
@@ -47,7 +49,7 @@ export default function Product() {
             />
             <CardFooter className="w-full absolute bg-black/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between items-center rounded-b-md">
               <p className="text-white text-small font-semibold">{product.price} €</p>
-              <Button color="teal" size="sm">
+              <Button color="default" size="sm">
                 <FaCartPlus className="text-xl" />
               </Button>
             </CardFooter>
