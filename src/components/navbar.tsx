@@ -77,10 +77,9 @@ export default function Navbar() {
         <a className="relative" href="#" aria-label="Cart">
           <FaCartArrowDown className="text-2xl" />
           {cartStore.data.length > 0 && (
-            
-          <div className="absolute h-[20px] w-[20px] flex justify-center items-center bottom-0 right-0 rounded-full bg-red-500 text-sm text-white">
-            {cartStore.data.length}
-          </div>
+            <div className="absolute h-[20px] w-[20px] flex justify-center items-center bottom-0 right-0 rounded-full bg-red-500 text-sm text-white">
+              {cartStore.data.length}
+            </div>
           )}
         </a>
       </div>

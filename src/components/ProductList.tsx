@@ -12,7 +12,7 @@ import { ProductInterface } from "../config/site";
 import { Button } from '@chakra-ui/react'
 
 const ProductList = () => {
-  const limit = 10;
+  const limit = 12;
   const [skip, setSkip] = useState(0)
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -22,9 +22,9 @@ const ProductList = () => {
     setIsLoading(true);
     try {
       const response = await http.get("/products" + '?limit=' + limit + '&skip=' + skip);
-      const { products } = response?.data; 
+      const { products, total } = response?.data; 
       setProducts(products);
-      setTotal(response?.data.total);
+      setTotal(total);
     } catch (error: any) {
       setProducts([]);
       console.error(error);
@@ -32,39 +32,44 @@ const ProductList = () => {
     setIsLoading(false);
   };
 
+  const previousPage = () => {
+    setSkip(skip - limit);
+  }
+
+  const nextPage = () => {
+    setSkip(skip + limit);
+  }
+
   useEffect(() => {
     fetchData();
   }, [skip]);
 
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2">
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} isLoading={isLoading} />
-      ))}
+  // Clamp function to prevent negative values
+  const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max)
 
-      {/* Skeletons */}
-      {isLoading && (
-        Array.from({length: limit}).map((_item, index) => (
-          <div key={index} className="animate-pulse bg-gray-200 w-full h-[300px] rounded-md shadow-lg"></div>
-        ))
-      )}
+  return (
+    <div className="flex flex-col flex-grow justify-between">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2 pb-4">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} isLoading={isLoading} />
+        ))}
+      </div>
 
       {/* No products */}
-      {!isLoading && products.length === 0 && (
-        <div className="text-center w-full col-span-full">
+      {!isLoading && total === 0 && (
+        <div className="flex flex-grow justify-center items-center">
           <p>No products found</p>
         </div>
       )}
       
       {/* Pagination */}
       {total > 0 && (
-        <div className="flex justify-center w-full col-span-full">
-          { skip > 0 && (
-            <Button colorScheme='teal' variant='solid' onClick={() => setSkip(skip - limit)}>Previous</Button>
-          )}
-          { skip !== total - limit  && (
-            <Button colorScheme='teal' variant='solid' onClick={() => setSkip(skip + limit)}>Next</Button>
-          )}
+        <div className="flex justify-between items-center p-4">
+          <Button isDisabled={skip <= 0 || isLoading} colorScheme='teal' variant='solid' onClick={previousPage}>Previous</Button>
+          <p className="text-sm text-black/40">
+            Displaying {clamp(skip + limit, 0, total)} items of {total}
+          </p>
+          <Button isDisabled={(skip + limit) >= total || isLoading} colorScheme='teal' variant='solid' onClick={nextPage}>Next</Button>
         </div>
       )}
     </div>

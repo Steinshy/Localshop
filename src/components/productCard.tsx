@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { CartContext } from "../utils/contexts";
 
 // Chakra UI - Icon
-import { Card, CardHeader, CardFooter, Image, Button, Skeleton } from "@chakra-ui/react";
+import { Card, CardHeader, CardFooter, Image, Button, Skeleton, IconButton } from "@chakra-ui/react";
 import { FaCartPlus } from "react-icons/fa";
 
 // React Router
@@ -51,9 +51,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
         />
         <CardFooter className="w-full absolute bg-black/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between items-center rounded-b-md">
           <p className="text-white text-small font-semibold">{product.price} €</p>
-          <Button onClick={handleClick} color="teal" size="sm">
-            <FaCartPlus className="text-xl" />
-          </Button>
+          <IconButton
+            colorScheme="teal"
+            aria-label="Add to cart"
+            onClick={handleClick}
+            size="md"
+            fontSize="20px"
+            variant="solid"
+            verticalAlign="middle"
+            icon={<FaCartPlus />}
+          />
         </CardFooter>
       </Card>
     </Skeleton>
