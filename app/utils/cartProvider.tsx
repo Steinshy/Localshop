@@ -1,14 +1,9 @@
 'use client';
-
+// React Context for Cart
 import React, { useState, useEffect, createContext, Dispatch, SetStateAction, Context } from "react";
 
-interface CartItem {
-  id: number;
-  color?: string;
-  size?: string;
-  discount: number;
-  quantity: number;
-}
+// Interface - CartItem
+import { CartItem } from "../config/site";
 
 interface CartContextType {
   data: CartItem[];

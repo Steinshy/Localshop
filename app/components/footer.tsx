@@ -1,13 +1,12 @@
 "use client";
 
-// React Icon
+// NextUi - React Icon
 import { Link, Chip, Button } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
-
-// interface
-import { LinkItemProps } from "../config/site";
-
 import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare } from "react-icons/fa";
+
+// interface - LinkItemProps
+import { LinkItemProps } from "../config/site";
 
 const LinkItem = ({ text, isTag = false, tagText }: LinkItemProps) => {
   return (

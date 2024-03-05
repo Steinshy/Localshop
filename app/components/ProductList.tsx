@@ -10,9 +10,8 @@ import ProductCard from "./productCard";
 import http from "../utils/http";
 import { ProductInterface } from "../config/site";
 
-// Nextui
+// Nextui - React Icon
 import { Button } from '@nextui-org/react'
-
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const ProductList = () => {
@@ -27,11 +26,7 @@ const ProductList = () => {
     try {
       const response = await http.get("/products" + '?limit=' + limit + '&skip=' + skip);
       const { products, total } = response?.data;
-      console.log("setProducts from product list");
-      console.log(setProducts)
       setProducts(products || []);
-      console.log("Total from product list");
-      console.log(setTotal);
       setTotal(total || 0);
     } catch (error: any) {
       setProducts([]);

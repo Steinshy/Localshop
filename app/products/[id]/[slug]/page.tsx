@@ -1,10 +1,11 @@
-// Utils - Request + Interface
+// Utils - Request
 import http from "../../../utils/http";
 
-// Chakra UI - Icon
-import { Button, Image, Link } from "@nextui-org/react";
+// NextUi - React Icon
+import { Button } from "@nextui-org/react";
 import { FaCartPlus } from "react-icons/fa";
 
+// Img
 import ProductImages from "../../../components/productImages";
 
 async function getData(id: string) {

@@ -9,12 +9,7 @@ import { FaCartPlus } from "react-icons/fa";
 import Link from "next/link";
 
 // Utils - Interfaces
-import { ProductInterface } from "../config/site";
-
-interface ProductCardProps {
-  product: ProductInterface;
-  isLoading: boolean;
-}
+import { ProductCardProps } from "../config/site";
 
 const ProductCard:FC<ProductCardProps> = ({ product, isLoading }) => {
   const cartStore = useContext(CartContext);

@@ -1,20 +1,16 @@
 'use client';
 
-import { FC, MouseEvent, useState } from 'react';
+// React - NextUi
+import { FC, useState } from 'react';
 import { Image, Link } from '@nextui-org/react';
 
-interface ProductImagesProps {
-  alt: string;
-  main: string;
-  images: [string];
-}
+// Interface - ProductImagesProps
+import { ProductImagesProps } from '../config/site';
 
 const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: string, main: string, images: [string]}) => {
 
   const [mainImage, setMainImage] = useState(main);
-  const handleImageChange = (image: string) => {
-    setMainImage(image);
-  }
+  const handleImageChange = (image: string) => { setMainImage(image); }
 
   return (
     <div className="flex flex-col items-center">
