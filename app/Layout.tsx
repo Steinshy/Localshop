@@ -22,13 +22,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body>
-        <main className="flex flex-col flex-grow bg-background">
+      <body className="flex flex-col min-h-svh">
+        <main className="flex flex-col flex-grow">
           <Providers>
             <Navbar />
             {children}
           </Providers>
-          {<Footer />}
+          <Footer />
         </main>
       </body>
     </html>

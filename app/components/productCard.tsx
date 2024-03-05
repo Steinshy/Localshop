@@ -1,14 +1,12 @@
 // React Context
-import { useContext } from "react";
+import { FC, useContext } from "react";
 import { CartContext } from "../utils/cartProvider";
 
 // Chakra UI - Icon
-import { Card, CardHeader, CardFooter, Image, Skeleton } from "@nextui-org/react"
+import { Card, CardHeader, CardFooter, Image, Skeleton, Button } from "@nextui-org/react"
 import { FaCartPlus } from "react-icons/fa";
 
-// React Router
-
-import { Link as RouterLink  } from "react-router-dom";
+import Link from "next/link";
 
 // Utils - Interfaces
 import { ProductInterface } from "../config/site";
@@ -18,7 +16,7 @@ interface ProductCardProps {
   isLoading: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
+const ProductCard:FC<ProductCardProps> = ({ product, isLoading }) => {
   const cartStore = useContext(CartContext);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -39,28 +37,31 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isLoading }) => {
   const slug = product.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
 
   return (
-    <Skeleton isLoaded={!isLoading}>
-      <Card as={RouterLink} to={"/product-page/" + product.id + '/' + slug} key={product.id} className="w-full h-[300px] rounded-md shadow-lg">
+    <Skeleton isLoaded={!isLoading} classNames={{
+      base: "rounded-md"
+    }}>
+      <Card isFooterBlurred as={Link} href={`/products/${product.id}/${slug}`} className="w-full h-[300px]" radius="sm">
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
-          <p className="text-tiny text-white/60 uppercase font-bold">New</p>
-          <h4 className="text-white font-medium text-2xl">{product.title}</h4>
+          <p className="text-tiny text-white/60 uppercase font-bold">
+            New
+          </p>
+          <h4 className="text-black font-medium text-2xl">
+            {product.title}
+          </h4>
         </CardHeader>
         <Image
-          className="object-cover h-full w-full rounded-md"
+          removeWrapper
+          alt="Card example background"
+          className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
           src={product.thumbnail}
         />
-        <CardFooter className="w-full absolute bg-black/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between items-center rounded-b-md">
-          <p className="text-white text-small font-semibold">{product.price} €</p>
-          {/* <IconButton
-            colorScheme="teal"
-            aria-label="Add to cart"
-            onClick={handleClick}
-            size="md"
-            fontSize="20px"
-            variant="solid"
-            verticalAlign="middle"
-            icon={<FaCartPlus />}
-          /> */}
+        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+          <p className="text-black text-sm font-semibold">
+            {product.price} €
+          </p>
+          <Button isIconOnly color="primary" variant="flat" size="sm" radius="sm" onClick={handleClick}>
+            <FaCartPlus className="text-lg" />
+          </Button>
         </CardFooter>
       </Card>
     </Skeleton>

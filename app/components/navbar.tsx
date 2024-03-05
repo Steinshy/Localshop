@@ -4,10 +4,11 @@
 import { useState, useContext } from "react";
 
 // NextUi - Icon
+import { usePathname } from 'next/navigation';
 import Link from "next/link";
-import { Link as NextLink, Input } from "@nextui-org/react";
+import { Link as NextLink, Input, NavbarContent, Divider, Button, NavbarItem, Navbar, Badge } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
-import { FaCartArrowDown } from "react-icons/fa";
+import { FaCartArrowDown, FaSearch } from "react-icons/fa";
 
 // Site Config
 import { siteConfig } from "../config/site";
@@ -15,7 +16,11 @@ import { siteConfig } from "../config/site";
 // CartProvider
 import { CartContext } from "../utils/cartProvider";
 
-export default function Navbar() {
+// ThemeSwitcher
+import { ThemeSwitcher } from "./switcher";
+
+export default function Header() {
+  const pathname = usePathname();
   const cartStore = useContext(CartContext);
   
   // State for the search query
@@ -36,53 +41,52 @@ export default function Navbar() {
   }
 
   return (
-    <div className="flex flex-row gap-3 justify-center items-center p-4 bg-teal-700 text-white">
-      <div className="flex flex-col">
-        <NextLink as={Link} className="flex justify-start items-center gap-1 text-decoration-none" href="/">
-          <DiCssdeck />
-          <p className="font-bold text-inherit">{siteConfig.name}</p>
-        </NextLink>
-      </div>
+    <Navbar isBlurred isBordered position="sticky">
+      <NavbarContent className="hidden sm:flex gap-4" justify="start">
+        <NavbarItem>
+          <Link color="foreground" href="/" className="flex items-center">
+            <DiCssdeck />
+            <p className="ml-1 font-light">LOCALSHOP</p>
+          </Link>
+        </NavbarItem>
+        {siteConfig.navItems.map((item) => (
+          <NavbarItem key={item.href} isActive={pathname === item.href}>
+            <NextLink
+              as={Link}
+              color="foreground"
+              href={item.href}
+            >
+              {item.label}
+            </NextLink>
+          </NavbarItem>
+        ))}
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <form onSubmit={handleSubmit} action="#">
+            <Input
+              aria-label="Search"
+              placeholder="Type and press enter..."
+              type="search"
+              value={query}
+              onChange={(e) => handleQueryChange(e.target.value)}
+              startContent={<FaSearch />}
+            />
+          </form>
+        </NavbarItem>
 
-      <div className="flex flex-col flex-grow">
-        <ul className="hidden md:flex gap-4 justify-start ml-2">
-          {siteConfig.navItems.map((item) => (
-            <li key={item.href}>
-              <NextLink
-                as={Link}
-                color="foreground"
-                className="font-semibold hover:text-white/75"
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <form onSubmit={handleSubmit} action="#">
-          <Input
-            aria-label="Search"
-            placeholder="Type and press enter..."
-            type="search"
-            value={query}
-            onChange={(e) => handleQueryChange(e.target.value)}
-          />
-        </form>
-      </div>
-
-      <div className="flex flex-col-grow">
-        <a className="relative" href="#" aria-label="Cart">
-          <FaCartArrowDown className="text-2xl" />
-          {cartStore.data.length > 0 && (
-            <div className="absolute h-[20px] w-[20px] flex justify-center items-center bottom-0 right-0 rounded-full bg-red-500 text-sm text-white">
-              {cartStore.data.length}
-            </div>
-          )}
-        </a>
-      </div>
-    </div>
+        <NavbarItem>
+          <Badge isInvisible={cartStore.data.length <= 0} content={cartStore.data.length} color="danger" placement="top-right" variant="shadow">
+            <Button as={Link} href="/cart" isIconOnly variant="light">
+              <FaCartArrowDown className="text-2xl" />
+            </Button>
+          </Badge>
+        </NavbarItem>
+        <Divider orientation="vertical" />
+        <NavbarItem>
+          <ThemeSwitcher />
+        </NavbarItem>
+      </NavbarContent>
+    </Navbar>
   );
 }

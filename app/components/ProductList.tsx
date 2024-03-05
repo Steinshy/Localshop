@@ -13,6 +13,8 @@ import { ProductInterface } from "../config/site";
 // Nextui
 import { Button } from '@nextui-org/react'
 
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
 const ProductList = () => {
   const limit = 12;
   const [skip, setSkip] = useState(0)
@@ -70,12 +72,32 @@ const ProductList = () => {
       
       {/* Pagination */}
       {total > 0 && (
-        <div className="flex justify-between items-center p-4">
-          <Button isDisabled={skip <= 0 || isLoading} variant='solid' onClick={previousPage}>Previous</Button>
-          <p className="text-sm text-black/40">
+        <div className="flex justify-between items-center px-2 mb-4">
+          <Button
+            isDisabled={skip <= 0 || isLoading}
+            size="sm"
+            variant="flat"
+            onClick={previousPage}
+            startContent={
+              <FaChevronLeft />
+            }
+          >
+            Previous
+          </Button>
+          <p className="text-sm text-foreground/40">
             Displaying {clamp(skip + limit, 0, total)} items of {total}
           </p>
-          <Button isDisabled={(skip + limit) >= total || isLoading} variant='solid' onClick={nextPage}>Next</Button>
+          <Button
+            isDisabled={(skip + limit) >= total || isLoading}
+            size="sm"
+            variant="flat"
+            onClick={nextPage}
+            endContent={
+              <FaChevronRight />
+            }
+          >
+            Next
+          </Button>
         </div>
       )}
     </div>

@@ -7,7 +7,7 @@ import { CartProvider } from './utils/cartProvider';
 export function Providers({children}: { children: React.ReactNode }) {
   return (
     <NextUIProvider className="flex flex-col flex-grow">
-      <NextThemesProvider attribute="class" defaultTheme="dark">
+      <NextThemesProvider attribute="class" defaultTheme="light">
         <CartProvider>
           {children}
         </CartProvider>
