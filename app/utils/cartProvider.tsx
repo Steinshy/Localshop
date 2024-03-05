@@ -1,4 +1,5 @@
-'use client';
+"use client";
+
 // React Context for Cart
 import React, { useState, useEffect, createContext, Dispatch, SetStateAction, Context } from "react";
 
@@ -29,8 +30,6 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </CartContext.Provider>
   );
-}
+};
 
-export {
-  CartContext, CartProvider
-}
+export { CartContext, CartProvider };

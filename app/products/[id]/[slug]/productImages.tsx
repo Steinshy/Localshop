@@ -5,7 +5,7 @@ import { FC, useState } from 'react';
 import { Image, Link } from '@nextui-org/react';
 
 // Interface - ProductImagesProps
-import { ProductImagesProps } from '../../../config/site';
+import { ProductImagesProps } from "../../../utils/site";
 
 const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: string, main: string, images: [string]}) => {
 
@@ -19,7 +19,7 @@ const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: stri
         src={mainImage}
         classNames={{
           img: "w-[300px] h-[300px] object-cover",
-          wrapper: "border-2"
+          wrapper: "border-2",
         }}
         radius="sm"
         isZoomed
@@ -33,7 +33,7 @@ const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: stri
               src={image}
               classNames={{
                 img: "w-[40px] h-[40px] object-cover",
-                wrapper: "border-2"
+                wrapper: "border-2",
               }}
               shadow="none"
               radius="sm"
@@ -43,7 +43,7 @@ const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: stri
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default ProductImages;

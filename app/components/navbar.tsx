@@ -3,9 +3,13 @@
 // React
 import { useState, useContext } from "react";
 
-// NextUi - Icon
+
+
+// NextJS - Navigation - Link
 import { usePathname } from 'next/navigation';
 import Link from "next/link";
+
+// NextUi - React Icon
 import { Link as NextLink, Input, NavbarContent, Divider, Button, NavbarItem, Navbar, Badge } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown, FaSearch } from "react-icons/fa";

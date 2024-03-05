@@ -1,16 +1,16 @@
 // Utils - Request
 import http from "../../../utils/http";
 
+// Img
+import ProductImages from "./productImages";
+
 // NextUi - React Icon
 import { Button } from "@nextui-org/react";
 import { FaCartPlus } from "react-icons/fa";
 
-// Img
-import ProductImages from "./productImages";
-
 async function getData(id: string) {
   const res = await http.get(`/products/${id}`);
-  if (res.status !== 200) throw new Error('Failed to fetch data');
+  if (res.status !== 200) throw new Error("Failed to fetch data");
   return res;
 }
 
@@ -40,5 +40,5 @@ export default async function Product({ params }: { params: { id: string } }) {
         </div>
       </div>
     )
-  )
+  );
 }

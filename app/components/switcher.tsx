@@ -10,7 +10,7 @@ import { useTheme } from "next-themes";
 // NextUI
 import { Switch } from "@nextui-org/switch";
 
-// Icons
+// React Icons
 import { MoonIcon, SunIcon } from "./icons";
 
 export const ThemeSwitcher = () => {
@@ -21,16 +21,17 @@ export const ThemeSwitcher = () => {
     setMounted(true);
   }, []);
 
-  if(!mounted) return null;
+  if (!mounted) return null;
 
   const setIsSelected = (isSelected: boolean) => {
-    setTheme(isSelected ? 'light' : 'dark');
+    setTheme(isSelected ? "light" : "dark");
   };
 
   return (
     <Switch
       defaultSelected
-      isSelected={theme === 'light'} onValueChange={setIsSelected}
+      isSelected={theme === "light"}
+      onValueChange={setIsSelected}
       size="lg"
       color="danger"
       thumbIcon={({ isSelected, className }) =>
@@ -41,5 +42,5 @@ export const ThemeSwitcher = () => {
         )
       }
     />
-  )
+  );
 };
