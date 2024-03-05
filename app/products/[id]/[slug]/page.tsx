@@ -6,7 +6,7 @@ import { Button } from "@nextui-org/react";
 import { FaCartPlus } from "react-icons/fa";
 
 // Img
-import ProductImages from "../../../components/productImages";
+import ProductImages from "./productImages";
 
 async function getData(id: string) {
   const res = await http.get(`/products/${id}`);

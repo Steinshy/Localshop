@@ -5,7 +5,7 @@ import { FC, useState } from 'react';
 import { Image, Link } from '@nextui-org/react';
 
 // Interface - ProductImagesProps
-import { ProductImagesProps } from '../config/site';
+import { ProductImagesProps } from '../../../config/site';
 
 const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: string, main: string, images: [string]}) => {
 

@@ -2,10 +2,11 @@
 import { FC, useContext } from "react";
 import { CartContext } from "../utils/cartProvider";
 
-// Chakra UI - Icon
+// NextUi - Icon
 import { Card, CardHeader, CardFooter, Image, Skeleton, Button } from "@nextui-org/react"
 import { FaCartPlus } from "react-icons/fa";
 
+// NextJS - Link
 import Link from "next/link";
 
 // Utils - Interfaces

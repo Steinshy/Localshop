@@ -6,8 +6,9 @@ import { useState, useEffect } from "react";
 // Component
 import ProductCard from "./productCard";
 
-// Utils - Request + Interfaces
+// Utils - Request
 import http from "../utils/http";
+// Interfaces - ProductInterface
 import { ProductInterface } from "../config/site";
 
 // Nextui - React Icon
