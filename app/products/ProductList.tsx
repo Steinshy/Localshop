@@ -9,7 +9,7 @@ import ProductCard from "./productCard";
 // Utils - Request
 import http from "../utils/http";
 // Interfaces - ProductInterface
-import { ProductInterface } from "../config/site";
+import { ProductInterface } from "../utils/site";
 
 // Nextui - React Icon
 import { Button } from '@nextui-org/react'

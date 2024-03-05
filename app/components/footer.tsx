@@ -6,7 +6,7 @@ import { DiCssdeck } from "react-icons/di";
 import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare } from "react-icons/fa";
 
 // interface - LinkItemProps
-import { LinkItemProps } from "../config/site";
+import { LinkItemProps } from "../utils/site";
 
 const LinkItem = ({ text, isTag = false, tagText }: LinkItemProps) => {
   return (

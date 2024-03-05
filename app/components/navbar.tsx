@@ -11,7 +11,7 @@ import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown, FaSearch } from "react-icons/fa";
 
 // Site Config
-import { siteConfig } from "../config/site";
+import { siteConfig } from "../utils/site";
 
 // Components - cartProvider
 import { CartContext } from "../utils/cartProvider";
