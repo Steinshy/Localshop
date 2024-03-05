@@ -1,12 +1,10 @@
-'use client';
+"use client";
 
 // React
 import { useState, useContext } from "react";
 
-
-
 // NextJS - Navigation - Link
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // NextUi - React Icon
@@ -23,26 +21,23 @@ import { CartContext } from "../utils/cartProvider";
 // ThemeSwitcher
 import { ThemeSwitcher } from "./switcher";
 
-export default function Header() {
-  const pathname = usePathname();
-  const cartStore = useContext(CartContext);
-  
-  // State for the search query
-  const [query, setQuery] = useState("");
-
-  // Handles the query change
-  const handleQueryChange = (value: string) => {
+// Handles the query change
+const handleQueryChange = (setQuery: (value: string) => void) => (value: string) => {
     setQuery(value);
   };
 
-  // Handles the form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevents the default form submission
-    console.log("Form submitted");
-    console.log(query); // Logs the query to the console
+// Handles the form submission
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault(); // Prevents the default form submission
+  // TODO: Implement search functionality
+};
 
-    // TODO: Implement search functionality
-  }
+export default function Header() {
+  const pathname = usePathname();
+  const cartStore = useContext(CartContext);
+
+  // State for the search query
+  const [query, setQuery] = useState("");
 
   return (
     <Navbar isBlurred isBordered position="sticky">
@@ -55,11 +50,7 @@ export default function Header() {
         </NavbarItem>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={pathname === item.href}>
-            <NextLink
-              as={Link}
-              color="foreground"
-              href={item.href}
-            >
+            <NextLink as={Link} color="foreground" href={item.href}>
               {item.label}
             </NextLink>
           </NavbarItem>
@@ -73,14 +64,20 @@ export default function Header() {
               placeholder="Type and press enter..."
               type="search"
               value={query}
-              onChange={(e) => handleQueryChange(e.target.value)}
+              onChange={(e) => handleQueryChange(setQuery)}
               startContent={<FaSearch />}
             />
           </form>
         </NavbarItem>
 
         <NavbarItem>
-          <Badge isInvisible={cartStore.data.length <= 0} content={cartStore.data.length} color="danger" placement="top-right" variant="shadow">
+          <Badge
+            isInvisible={cartStore.data.length <= 0}
+            content={cartStore.data.length}
+            color="danger"
+            placement="top-right"
+            variant="shadow"
+          >
             <Button as={Link} href="/cart" isIconOnly variant="light">
               <FaCartArrowDown className="text-2xl" />
             </Button>
