@@ -4,10 +4,10 @@
 // React
 import { useEffect, useState } from "react";
 
-// Next
+// NextUiTheme
 import { useTheme } from "next-themes";
 
-// NextUI
+// NextUISwitch
 import { Switch } from "@nextui-org/switch";
 
 // React Icons
@@ -39,13 +39,6 @@ export const ThemeSwitcher = () => {
       size="lg"
       color="danger"
       thumbIcon={renderIcon}
-      // thumbIcon={({ isSelected, className }) =>
-      //   isSelected ? (
-      //     <SunIcon className={className} />
-      //   ) : (
-      //     <MoonIcon className={className} />
-      //   )
-      // }
     />
   );
 };

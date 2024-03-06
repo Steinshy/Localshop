@@ -3,17 +3,17 @@
 // React
 import { useState, useEffect } from "react";
 
+// Utils - Request
+import http from "../../utils/http";
+
 // Component
 import ProductCard from "./productCard";
 
-// Utils - Request
-import http from "../utils/http";
-
 // Interfaces - ProductInterface
-import { ProductInterface } from "../utils/site";
+import { ProductInterface } from "../../utils/site";
 
 // Nextui - React Icon
-import { Button } from '@nextui-org/react'
+import { Button } from '@nextui-org/react';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 const ProductList = () => {

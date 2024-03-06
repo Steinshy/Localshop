@@ -1,12 +1,9 @@
 // Utils - Request
 import http from "../../../utils/http";
 
-// Img
-import ProductImages from "./productImages";
-
-// NextUi - React Icon
-import { Button } from "@nextui-org/react";
-import { FaCartPlus } from "react-icons/fa";
+// Components - ProductImages - AddToCart
+import ProductImages from "../../components/productImages";
+import AddToCart from "../../components/addToCart";
 
 async function getData(id: string) {
   try {
@@ -19,6 +16,7 @@ async function getData(id: string) {
 
 export default async function Product({ params }: { params: { id: string } }) {
   const { data: product } = (await getData(params.id)) || {};
+  
   return product ? (
     <div className="grid grid-cols-2 gap-4 items-center justify-center p-4">
       <ProductImages
@@ -33,10 +31,7 @@ export default async function Product({ params }: { params: { id: string } }) {
         <p className="text-md font-semibold">{product.price}€</p>
 
         <div className="flex justify-start">
-          <Button variant="flat" color="primary">
-            <FaCartPlus className="text-lg" />
-            Add to cart
-          </Button>
+          <AddToCart product={product}/>
         </div>
       </div>
     </div>

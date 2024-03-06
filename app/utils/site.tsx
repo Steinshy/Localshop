@@ -36,6 +36,7 @@ export type ProductCardProps = {
 // productsCard
 export type ProductInterface = {
   id: number;
+  description: string;
   price: number;
   title: string;
   category: string;
@@ -48,12 +49,14 @@ export type LinkItemProps = {
   isTag?: boolean;
   tagText?: string;
 };
+
 // ProductImages
 export type ProductImagesProps = {
   alt: string;
   main: string;
   images: [string];
 };
+
 // CartItem
 export type CartItem = {
   id: number;

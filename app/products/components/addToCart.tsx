@@ -1,11 +1,15 @@
+"use client";
+
 // React Context
 import { FC, useContext } from "react";
-import { CartContext } from "../utils/cartProvider";
+import { CartContext } from "../../utils/cartProvider";
 
-import { FaCartPlus } from "react-icons/fa";
+// NextUi - Reat Icon
 import { Button } from "@nextui-org/react";
+import { FaCartPlus } from "react-icons/fa";
 
-import { ProductCardProps } from "../utils/site";
+// Interface - ProductCardProps
+import { ProductCardProps } from "../../utils/site";
 
 const AddToCart: FC<ProductCardProps> = ({ product }) => {
   const cartStore = useContext(CartContext);
@@ -26,7 +30,8 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
   };
 
   return (
-    <Button isIconOnly
+    <Button
+      isIconOnly
       color="primary"
       variant="flat"
       size="sm"

@@ -12,10 +12,8 @@ import { Link as NextLink, Input, NavbarContent, Divider, Button, NavbarItem, Na
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown, FaSearch } from "react-icons/fa";
 
-// Site Config
+// Utils - Site Config - cartProvider
 import { siteConfig } from "../utils/site";
-
-// Components - cartProvider
 import { CartContext } from "../utils/cartProvider";
 
 // ThemeSwitcher
