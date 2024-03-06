@@ -27,6 +27,10 @@ export const ThemeSwitcher = () => {
     setTheme(isSelected ? "light" : "dark");
   };
 
+  const renderIcon = ({ isSelected, className }: { isSelected: boolean, className?: string }) => {
+    return isSelected ? <SunIcon className={className} /> : <MoonIcon className={className} />;
+  };
+
   return (
     <Switch
       defaultSelected
@@ -34,13 +38,14 @@ export const ThemeSwitcher = () => {
       onValueChange={setIsSelected}
       size="lg"
       color="danger"
-      thumbIcon={({ isSelected, className }) =>
-        isSelected ? (
-          <SunIcon className={className} />
-        ) : (
-          <MoonIcon className={className} />
-        )
-      }
+      thumbIcon={renderIcon}
+      // thumbIcon={({ isSelected, className }) =>
+      //   isSelected ? (
+      //     <SunIcon className={className} />
+      //   ) : (
+      //     <MoonIcon className={className} />
+      //   )
+      // }
     />
   );
 };

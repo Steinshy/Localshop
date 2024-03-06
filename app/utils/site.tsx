@@ -30,7 +30,7 @@ export const siteConfig = {
 // productsCard
 export type ProductCardProps = {
   product: ProductInterface;
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
 // productsCard

@@ -19,10 +19,6 @@ const CartContext: Context<CartContextType> = createContext<CartContextType>({
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
   useEffect(() => {
-    console.log("CART CONTEXT");
-    console.log(cart);
-    console.log("CART LENGTH");
-    console.log(cart.length);
   }, [cart]);
 
   return (
