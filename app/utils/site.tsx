@@ -75,3 +75,7 @@ export type CartItem = {
 export type BreadcrumbProps = {
   id: string;
 }
+
+export function generateSlug(title: string): string {
+  return title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+}

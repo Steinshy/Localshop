@@ -52,7 +52,7 @@ export default function Cart() {
         </p>
       ) : 
         cartStore.data.map((item) => {
-          const slug = item.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+          const slug = generateSlug(item.title);
           return (
             <ul key={item.id} className="max-w-lg flex w-full flex-col">
               <li className="mb-2 flex justify-between items-center">

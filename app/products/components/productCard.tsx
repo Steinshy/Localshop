@@ -9,12 +9,13 @@ import AddToCart from "./addToCart";
 
 // Utils - Interfaces
 import { ProductCardProps } from "../../utils/site";
+import { generateSlug } from "../../utils/site";
 
 // NextUi
 import { Card, CardHeader, CardFooter, Image, Skeleton } from "@nextui-org/react";
 
 const ProductCard:FC<ProductCardProps> = ({ product, isLoading }) => {
-  const slug = product.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+  const slug = generateSlug(product.title)
 
   return (
     <Skeleton isLoaded={!isLoading} classNames={{
