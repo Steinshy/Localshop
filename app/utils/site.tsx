@@ -70,3 +70,8 @@ export type CartItem = {
   category: string;
   thumbnail: string;
 };
+
+// BreadCrumb
+export type BreadcrumbProps = {
+  id: string;
+}
