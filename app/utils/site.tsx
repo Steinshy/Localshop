@@ -73,6 +73,7 @@ export type CartItem = {
 
 // BreadCrumb
 export type BreadcrumbProps = {
+  title: string;
   id: string;
 }
 

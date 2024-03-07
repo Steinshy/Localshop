@@ -25,7 +25,7 @@ export default async function Product({ params }: { params: { id: string } }) {
   
   return product ? (
     <>
-    <Breadcrumb id={product.id} />
+    <Breadcrumb id={product.id} title={product.title} />
     <div className="grid grid-cols-2 gap-4 items-center justify-center p-4">
       <ProductImages
         alt={product.title}
