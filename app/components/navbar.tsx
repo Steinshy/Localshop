@@ -37,6 +37,8 @@ export default function Header() {
   // State for the search query
   const [query, setQuery] = useState("");
 
+  const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <Navbar isBlurred isBordered position="sticky">
       <NavbarContent className="hidden sm:flex gap-4" justify="start">
@@ -71,7 +73,7 @@ export default function Header() {
         <NavbarItem>
           <Badge
             isInvisible={cartStore.data.length <= 0}
-            content={cartStore.data.length}
+            content={cartQuantity}
             color="danger"
             placement="top-right"
             variant="shadow"

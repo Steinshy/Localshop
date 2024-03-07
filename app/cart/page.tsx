@@ -2,7 +2,7 @@
 
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../utils/cartProvider";
-import { Image, Button } from "@nextui-org/react";
+import { Image, Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { FaTrash } from "react-icons/fa";
 
@@ -14,7 +14,7 @@ export default function Cart() {
     const calculateTotal = () => {
       let total = 0;
       cartStore.data.forEach((item) => {
-        total += item.price;
+        total += item.price * item.quantity;
       });
       setTotal(total);
     };
@@ -29,6 +29,16 @@ export default function Cart() {
     cartStore.update(newCart);
   };
 
+  const handleQuantityChange = (value: string, id: number) => {
+    const newCart = cartStore.data.map((item) => {
+      if (item.id === id) {
+        return { ...item, quantity: parseInt(value) };
+      }
+      return item;
+    });
+    cartStore.update(newCart);
+  }
+
   return (
     <div className="flex flex-col flex-grow justify-center items-center">
       <h1 className="text-5xl">Cart</h1>
@@ -42,8 +52,8 @@ export default function Cart() {
           const slug = item.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
           return (
             <ul key={item.id} className="max-w-lg flex w-full flex-col">
-              <li className="mb-2">
-                <Link href={`/products/${item.id}/${slug}`} className="flex justify-between items-center">
+              <li className="mb-2 flex justify-between items-center">
+                <Link href={`/products/${item.id}/${slug}`}>
                   <Image
                     src={item.thumbnail}
                     alt={item.title}
@@ -54,12 +64,22 @@ export default function Cart() {
                     radius="sm"
                     shadow="sm"
                   />
-                  <p className="flex flex-grow justify-self-start">{item.title}</p>
-                  <p className="font-semibold mr-4">{item.price}€</p>
-                  <Button isIconOnly variant="flat" color="danger" onClick={(e) => handleClick(e, item.id)}>
-                    <FaTrash />
-                  </Button>
                 </Link>
+                <p className="flex flex-grow justify-self-start">
+                  <Link href={`/products/${item.id}/${slug}`}>
+                    {item.title}
+                  </Link>
+                </p>
+                <Input
+                  className="w-20 mr-5"
+                  type="number"
+                  value={item.quantity.toString()}
+                  onValueChange={(value) => handleQuantityChange(value, item.id)}
+                />
+                <p className="font-semibold mr-4">{item.price}€</p>
+                <Button isIconOnly variant="flat" color="danger" onClick={(e) => handleClick(e, item.id)}>
+                  <FaTrash />
+                </Button>
               </li>
             </ul>
           )

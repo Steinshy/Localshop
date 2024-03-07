@@ -21,17 +21,29 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     
-    const newItem = {
-      id: product.id,
-      discount: 0,
-      quantity: 1,
-      price: product.price,
-      title: product.title,
-      category: product.category,
-      thumbnail: product.thumbnail,
-    };
+    const item = cartStore.data.find((item) => item.id === product.id);
+    if (item) {
+      const newCart = cartStore.data.map((item) => {
+        if (item.id === product.id) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+      cartStore.update(newCart);
+      return;
+    } else {
+      const newItem = {
+        id: product.id,
+        discount: 0,
+        quantity: 1,
+        price: product.price,
+        title: product.title,
+        category: product.category,
+        thumbnail: product.thumbnail,
+      };
 
-    cartStore.update([...cartStore.data, newItem]);
+      cartStore.update([...cartStore.data, newItem]);
+    }
   };
 
   return (
