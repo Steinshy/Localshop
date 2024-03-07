@@ -5,6 +5,7 @@ import { CartContext } from "../utils/cartProvider";
 import { Image, Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 import { FaTrash, FaCartArrowDown } from "react-icons/fa";
+import { generateSlug } from "../utils/site";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
