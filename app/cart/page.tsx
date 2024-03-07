@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../utils/cartProvider";
 import { Image, Button, Input } from "@nextui-org/react";
 import Link from "next/link";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaCartArrowDown } from "react-icons/fa";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
@@ -40,8 +40,11 @@ export default function Cart() {
   }
 
   return (
-    <div className="flex flex-col flex-grow justify-center items-center">
-      <h1 className="text-5xl">Cart</h1>
+    <div className="flex flex-col flex-grow justify-center items-center p-4">
+      <h1 className="text-5xl mb-8 flex justify-start items-center">
+        <FaCartArrowDown className="mr-4" />
+        Cart
+      </h1>
 
       {cartStore.data.length <= 0 ? (
         <p className="text-lg text-center mt-4">
@@ -75,6 +78,7 @@ export default function Cart() {
                   type="number"
                   value={item.quantity.toString()}
                   onValueChange={(value) => handleQuantityChange(value, item.id)}
+                  min={1}
                 />
                 <p className="font-semibold mr-4">{item.price}€</p>
                 <Button isIconOnly variant="flat" color="danger" onClick={(e) => handleClick(e, item.id)}>
@@ -86,9 +90,32 @@ export default function Cart() {
         })
       }
 
-      <p className="text-lg font-semibold mt-4">
-        Total: {total}€
-      </p>
+      <div className="flex gap-2 max-w-lg w-full justify-end items-center">
+        <p className="text-lg mt-6">
+          Total: <span className="font-semibold">{total}€</span>
+        </p>
+      </div>
+
+      <div className="flex gap-2 max-w-lg w-full justify-end items-center">
+        <Link href="/products">
+          <Button
+            className="mt-8"
+            color="secondary"
+            variant="flat"
+          >
+            Continue shopping
+          </Button>
+        </Link>
+        <Link href="/checkout">
+          <Button
+            className="mt-8"
+            color="primary"
+            variant="solid"
+          >
+            Checkout
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }
