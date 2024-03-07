@@ -3,6 +3,7 @@
 // NextUi
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import Link from "next/link";
+
 // React icon
 import { FaHome } from "react-icons/fa";
 
@@ -10,7 +11,6 @@ import { FaHome } from "react-icons/fa";
 import { BreadcrumbProps } from "../utils/site";
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ id, title }) => {
-  // const pathNames = paths.split('/').filter((path, index) => path && index !== 2);
   return (
     <div>
       <Breadcrumbs>
@@ -18,7 +18,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ id, title }) => {
           <FaHome />
         </BreadcrumbItem>
         <BreadcrumbItem as={Link} href="/products">
-          Product
+          Products
         </BreadcrumbItem>
         <BreadcrumbItem>{title}</BreadcrumbItem>
       </Breadcrumbs>

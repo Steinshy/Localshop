@@ -5,11 +5,9 @@ import http from "../../../utils/http";
 // ProductImages
 import ProductImages from "../../components/productImages";
 
-// NextUi - React Icon
-import { Button } from "@nextui-org/react";
-import { FaCartPlus } from "react-icons/fa";
-
+// Components
 import Breadcrumb from "../../../components/breadCrumb";
+import AddToCard from "../../components/addToCart";
 
 async function getData(id: string) {
   try {
@@ -39,10 +37,7 @@ export default async function Product({ params }: { params: { id: string } }) {
         <p className="text-md font-semibold">{product.price}€</p>
 
         <div className="flex justify-start">
-          <Button variant="flat" color="primary">
-            <FaCartPlus className="text-lg" />
-            Add to cart
-          </Button>
+        <AddToCard product={product} />
         </div>
       </div>
     </div>
