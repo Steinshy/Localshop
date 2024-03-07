@@ -14,16 +14,21 @@ import { ProductCardProps } from "../../utils/site";
 const AddToCart: FC<ProductCardProps> = ({ product }) => {
   const cartStore = useContext(CartContext);
 
+  if (!product || !cartStore) {
+    return null;
+  }
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    AddNewItem();
-  };
-
-  const AddNewItem = () => {
+    
     const newItem = {
       id: product.id,
       discount: 0,
       quantity: 1,
+      price: product.price,
+      title: product.title,
+      category: product.category,
+      thumbnail: product.thumbnail,
     };
 
     cartStore.update([...cartStore.data, newItem]);

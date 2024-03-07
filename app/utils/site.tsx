@@ -41,6 +41,7 @@ export type ProductInterface = {
   title: string;
   category: string;
   thumbnail: string;
+  images: [string];
 };
 
 // Footer
@@ -64,4 +65,8 @@ export type CartItem = {
   size?: string;
   discount: number;
   quantity: number;
+  price: number;
+  title: string;
+  category: string;
+  thumbnail: string;
 };

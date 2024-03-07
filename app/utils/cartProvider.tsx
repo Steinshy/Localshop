@@ -17,9 +17,23 @@ const CartContext: Context<CartContextType> = createContext<CartContextType>({
 });
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartChecked, setCartChecked] = useState<boolean>(false);
+  const [cart, setCart] = useState<CartItem[]>([] as CartItem[]);
+
   useEffect(() => {
-  }, [cart]);
+    const getCart = async () => {
+      const data = await JSON.parse(localStorage.getItem("cart") || "[]");
+      setCart(data);
+      setCartChecked(true);
+    }
+
+    getCart();
+  }, [cartChecked]);
+
+  useEffect(() => {
+    if (!cartChecked) return;
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart, cartChecked]);
 
   return (
     <CartContext.Provider value={{ data: cart, update: setCart }}>
