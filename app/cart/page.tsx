@@ -50,7 +50,7 @@ export default function Cart() {
         Cart
       </h1>
 
-      {cartStore.data.length <= 0 ? (
+      {cartStore.data.length <= 0 && !isLoading ? (
         <p className="text-lg text-center mt-4">
           Your cart is empty
         </p>
