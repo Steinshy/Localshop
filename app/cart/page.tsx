@@ -9,15 +9,18 @@ import { generateSlug } from "../utils/site";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
+  const [isLoading, setIsLoading] = useState(true);
   const [total, setTotal] = useState<number>(0);
 
   useEffect(() => {
+    setIsLoading(true);
     const calculateTotal = () => {
       let total = 0;
       cartStore.data.forEach((item) => {
         total += item.price * item.quantity;
       });
       setTotal(total);
+      setIsLoading(false)
     };
 
     calculateTotal();
@@ -98,24 +101,25 @@ export default function Cart() {
       </div>
 
       <div className="flex gap-2 max-w-lg w-full justify-end items-center">
-        <Link href="/products">
           <Button
             className="mt-8"
             color="secondary"
             variant="flat"
+            href="/products"
+            as={Link}
           >
             Continue shopping
           </Button>
-        </Link>
-        <Link href="/checkout">
-          <Button
+          <Button 
+            isDisabled={cartStore.data.length <= 0}
             className="mt-8"
             color="primary"
             variant="solid"
+            href="/checkout"
+            as={Link}
           >
             Checkout
           </Button>
-        </Link>
       </div>
     </div>
   );
