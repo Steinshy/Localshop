@@ -18,12 +18,10 @@ import { ProductCardProps } from "../../utils/site";
 const AddToCart: FC<ProductCardProps> = ({ product }) => {
   const { id, title, category, thumbnail, price } = product;
   const cartStore = useContext(CartContext);
-  const [isLoading, setIsLoading] = useState(false);
   const item = cartStore.data.find((item) => item.id === product.id);
   const quantity = item ? item.quantity : 0;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setIsLoading(true);
     event.preventDefault();
 
     if (quantity > 0) { redirect('/cart') }
@@ -43,7 +41,6 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
       };
 
       cartStore.update((prev) => [...prev, newItem]);
-      setIsLoading(false);
     }
   };
 
@@ -56,7 +53,6 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
       radius="sm"
       href="/cart"
       as={Link}
-      isLoading={isLoading}
       onClick={handleClick}
       startContent={quantity >= 1 && <FaShoppingCart />}
     >
