@@ -1,7 +1,7 @@
 "use client";
 
 // React Context
-import { FC, useContext } from "react";
+import { FC, useContext, useState } from "react";
 import { CartContext } from "../../utils/cartProvider";
 import { FaShoppingCart } from "react-icons/fa";
 
@@ -18,10 +18,12 @@ import { ProductCardProps } from "../../utils/site";
 const AddToCart: FC<ProductCardProps> = ({ product }) => {
   const { id, title, category, thumbnail, price } = product;
   const cartStore = useContext(CartContext);
+  const [isLoading, setIsLoading] = useState(false);
   const item = cartStore.data.find((item) => item.id === product.id);
   const quantity = item ? item.quantity : 0;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setIsLoading(true);
     event.preventDefault();
 
     if (quantity > 0) { redirect('/cart') }
@@ -41,10 +43,12 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
       };
 
       cartStore.update((prev) => [...prev, newItem]);
+      setIsLoading(false);
     }
   };
 
   return (
+
     <Button
       color="primary"
       variant="solid"
@@ -52,6 +56,7 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
       radius="sm"
       href="/cart"
       as={Link}
+      isLoading={isLoading}
       onClick={handleClick}
       startContent={quantity >= 1 && <FaShoppingCart />}
     >
