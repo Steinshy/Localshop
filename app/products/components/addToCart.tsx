@@ -5,7 +5,7 @@ import { FC, useContext, useState } from "react";
 import { CartContext } from "../../utils/cartProvider";
 import { FaShoppingCart } from "react-icons/fa";
 
-// Next - Link - redirect
+// Next - navigation
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
 

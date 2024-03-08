@@ -11,10 +11,17 @@ import { generateSlug } from "../utils/site";
 import { Image, Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
+
 import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 
 // React Icons
-import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import {
+  FaTrash,
+  FaCartArrowDown,
+  FaArrowLeft,
+  FaArrowRight,
+} from "react-icons/fa";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
@@ -53,110 +60,116 @@ export default function Cart() {
   };
 
   return (
-    <div className="flex flex-col flex-grow justify-center items-center p-4">
-      <h1 className="text-5xl mb-8 flex justify-start items-center">
-        <FaCartArrowDown className="mr-4" />
-        Cart
-      </h1>
-
-      {cartStore.data.length <= 0 && !isLoading ? (
-        <p className="text-lg text-center mt-4">Your cart is empty</p>
-      ) : (
-        cartStore.data.map((item) => {
-          const slug = generateSlug(item.title);
-          return (
-            <ul key={item.id} className="max-w-lg flex w-full flex-col">
-              <li className="mb-2 flex justify-between items-center">
-                <Link href={`/products/${item.id}/${slug}`}>
-                  <Image
-                    src={item.thumbnail}
-                    alt={item.title}
-                    classNames={{
-                      img: "w-16 h-16",
-                      wrapper: "border mr-4",
-                    }}
-                    radius="sm"
-                    shadow="sm"
-                  />
-                </Link>
-                <p className="flex flex-grow justify-self-start">
-                  <Link href={`/products/${item.id}/${slug}`}>
-                    {item.title}
-                  </Link>
-                </p>
-                <Input
-                  className="w-20 mr-5"
-                  type="number"
-                  value={item.quantity.toString()}
-                  onValueChange={(value) =>
-                    handleQuantityChange(value, item.id)
-                  }
-                  min={1}
-                />
-                <p className="font-semibold mr-4">{item.price}€</p>
-                <Button
-                  isIconOnly
-                  variant="flat"
-                  color="danger"
-                  onClick={(e) => handleClick(e, item.id)}
-                >
-                  <FaTrash />
-                </Button>
-              </li>
-            </ul>
-          );
-        })
-      )}
-
-      <div className="flex gap-2 max-w-lg w-full justify-end items-center">
-        <p className="text-lg mt-6">
-          Total: <span className="font-semibold">{total}€</span>
-        </p>
+    <div className="container mx-auto">
+      <div className="flex flex-row">
+        <div className="grid grid-cols gap-4">
+          {cartStore.data.length <= 0 && !isLoading ? (
+            <p className="text-lg text-center mt-4">Your cart is empty</p>
+          ) : (
+            cartStore.data.map((item) => {
+              const slug = generateSlug(item.title);
+              return (
+                <Card>
+                  <CardHeader>
+                    <ul key={item.id} className="max-w-lg flex w-full flex-col">
+                      <li className="mb-2 flex justify-between items-center">
+                        <Link href={`/products/${item.id}/${slug}`}>
+                          <Image
+                            src={item.thumbnail}
+                            alt={item.title}
+                            classNames={{
+                              img: "w-16 h-16",
+                              wrapper: "border mr-4",
+                            }}
+                            radius="sm"
+                            shadow="sm"
+                          />
+                        </Link>
+                        <p className="flex flex-grow justify-self-start">
+                          <Link href={`/products/${item.id}/${slug}`}>
+                            {item.title}
+                          </Link>
+                        </p>
+                      </li>
+                    </ul>
+                  </CardHeader>
+                </Card>
+              );
+            })
+          )}
+        </div>
+        <div className="grid-col grid gap-4">
+          <div>Partie droite</div>
+        </div>
       </div>
 
-      <div className="flex gap-2 max-w-lg w-full justify-end items-center">
-        <Button
-          className="mt-8"
-          color="secondary"
-          variant="solid"
-          href="/products"
-          as={Link}
-          startContent={<FaArrowLeft />}
-        >
-          Continue shopping
-        </Button>
+        <div className="flex flex-row">
+          <div className="grid grid-cols gap-4">
 
-        <Popover placement="top">
-          <PopoverTrigger>
+            <div className="flex flex-row gap-2 max-w-lg w-full justify-end items-center">
+              <p className="text-lg mt-6">
+                Total: <span className="font-semibold">{total}€</span>
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex flex-row">
+            <div className="grid grid-cols gap-4">
+              <Input
+                  type="field"
+                  label="Promo code"
+                  placeholder="Enter your Promo Code"
+                />
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-row">
+          <div className="grid grid-cols-3 gap-4">
+            <Button
+              className="mt-8"
+              color="secondary"
+              variant="solid"
+              href="/products"
+              as={Link}
+              startContent={<FaArrowLeft />}
+            >
+              Continue shopping
+            </Button>
+
+            <Popover placement="top">
+              <PopoverTrigger>
+                <Button
+                  isDisabled={cartStore.data.length <= 0}
+                  className="mt-8"
+                  color="danger"
+                  variant="solid"
+                  onClick={() => cartStore.update([])}
+                >
+                  Delete Cart
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <div className="px-1 py-2">
+                  <div className="text-tiny">Your cart has been emptied !</div>
+                </div>
+              </PopoverContent>
+            </Popover>
+
             <Button
               isDisabled={cartStore.data.length <= 0}
               className="mt-8"
-              color="danger"
+              color="primary"
               variant="solid"
-              onClick={() => cartStore.update([])}
+              href="/checkout"
+              as={Link}
+              endContent={<FaArrowRight />}
             >
-              Delete Cart
+              Checkout
             </Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className="px-1 py-2">
-              <div className="text-tiny">Your cart has been emptied !</div>
-            </div>
-          </PopoverContent>
-        </Popover>
+          </div>
+        </div>
 
-        <Button
-          isDisabled={cartStore.data.length <= 0}
-          className="mt-8"
-          color="primary"
-          variant="solid"
-          href="/checkout"
-          as={Link}
-          endContent={<FaArrowRight />}
-        >
-          Checkout
-        </Button>
-      </div>
     </div>
   );
 }
