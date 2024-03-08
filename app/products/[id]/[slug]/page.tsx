@@ -1,4 +1,3 @@
-import react from "react";
 // Utils - Request
 import http from "../../../utils/http";
 

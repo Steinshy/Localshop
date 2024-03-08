@@ -1,11 +1,18 @@
 "use client";
 
+// React context
 import { useContext, useEffect, useState } from "react";
+
+// Components
 import { CartContext } from "../utils/cartProvider";
+import { generateSlug } from "../utils/site";
+
+// NextUI components
 import { Image, Button, Input } from "@nextui-org/react";
 import Link from "next/link";
+
+// React Icons
 import { FaTrash, FaCartArrowDown } from "react-icons/fa";
-import { generateSlug } from "../utils/site";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
