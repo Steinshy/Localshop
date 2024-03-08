@@ -11,8 +11,10 @@ import { generateSlug } from "../utils/site";
 import { Image, Button, Input } from "@nextui-org/react";
 import Link from "next/link";
 
+import { Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
+
 // React Icons
-import { FaTrash, FaCartArrowDown } from "react-icons/fa";
+import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
@@ -27,7 +29,7 @@ export default function Cart() {
         total += item.price * item.quantity;
       });
       setTotal(total);
-      setIsLoading(false)
+      setIsLoading(false);
     };
 
     calculateTotal();
@@ -48,7 +50,7 @@ export default function Cart() {
       return item;
     });
     cartStore.update(newCart);
-  }
+  };
 
   return (
     <div className="flex flex-col flex-grow justify-center items-center p-4">
@@ -58,10 +60,8 @@ export default function Cart() {
       </h1>
 
       {cartStore.data.length <= 0 && !isLoading ? (
-        <p className="text-lg text-center mt-4">
-          Your cart is empty
-        </p>
-      ) : 
+        <p className="text-lg text-center mt-4">Your cart is empty</p>
+      ) : (
         cartStore.data.map((item) => {
           const slug = generateSlug(item.title);
           return (
@@ -73,7 +73,7 @@ export default function Cart() {
                     alt={item.title}
                     classNames={{
                       img: "w-16 h-16",
-                      wrapper: "border mr-4"
+                      wrapper: "border mr-4",
                     }}
                     radius="sm"
                     shadow="sm"
@@ -88,18 +88,25 @@ export default function Cart() {
                   className="w-20 mr-5"
                   type="number"
                   value={item.quantity.toString()}
-                  onValueChange={(value) => handleQuantityChange(value, item.id)}
+                  onValueChange={(value) =>
+                    handleQuantityChange(value, item.id)
+                  }
                   min={1}
                 />
                 <p className="font-semibold mr-4">{item.price}€</p>
-                <Button isIconOnly variant="flat" color="danger" onClick={(e) => handleClick(e, item.id)}>
+                <Button
+                  isIconOnly
+                  variant="flat"
+                  color="danger"
+                  onClick={(e) => handleClick(e, item.id)}
+                >
                   <FaTrash />
                 </Button>
               </li>
             </ul>
-          )
+          );
         })
-      }
+      )}
 
       <div className="flex gap-2 max-w-lg w-full justify-end items-center">
         <p className="text-lg mt-6">
@@ -108,25 +115,47 @@ export default function Cart() {
       </div>
 
       <div className="flex gap-2 max-w-lg w-full justify-end items-center">
-          <Button
-            className="mt-8"
-            color="secondary"
-            variant="flat"
-            href="/products"
-            as={Link}
-          >
-            Continue shopping
-          </Button>
-          <Button 
-            isDisabled={cartStore.data.length <= 0}
-            className="mt-8"
-            color="primary"
-            variant="solid"
-            href="/checkout"
-            as={Link}
-          >
-            Checkout
-          </Button>
+        <Button
+          className="mt-8"
+          color="secondary"
+          variant="solid"
+          href="/products"
+          as={Link}
+          startContent={<FaArrowLeft />}
+        >
+          Continue shopping
+        </Button>
+
+        <Popover placement="top">
+          <PopoverTrigger>
+            <Button
+              isDisabled={cartStore.data.length <= 0}
+              className="mt-8"
+              color="danger"
+              variant="solid"
+              onClick={() => cartStore.update([])}
+            >
+              Delete Cart
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className="px-1 py-2">
+              <div className="text-tiny">Your cart has been emptied !</div>
+            </div>
+          </PopoverContent>
+        </Popover>
+
+        <Button
+          isDisabled={cartStore.data.length <= 0}
+          className="mt-8"
+          color="primary"
+          variant="solid"
+          href="/checkout"
+          as={Link}
+          endContent={<FaArrowRight />}
+        >
+          Checkout
+        </Button>
       </div>
     </div>
   );

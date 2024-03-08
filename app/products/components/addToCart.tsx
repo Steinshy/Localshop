@@ -3,59 +3,62 @@
 // React Context
 import { FC, useContext } from "react";
 import { CartContext } from "../../utils/cartProvider";
+import { FaShoppingCart } from "react-icons/fa";
+
+// Next - Link
+import Link from "next/link";
 
 // NextUi - Reat Icon
 import { Button } from "@nextui-org/react";
-import { FaCartPlus } from "react-icons/fa";
 
 // Interface - ProductCardProps
 import { ProductCardProps } from "../../utils/site";
 
 const AddToCart: FC<ProductCardProps> = ({ product }) => {
+  const { id, title, category, thumbnail, price } = product;
   const cartStore = useContext(CartContext);
-
-  if (!product || !cartStore) {
-    return null;
-  }
+  const item = cartStore.data.find((item) => item.id === product.id);
+  const quantity = item ? item.quantity : 0;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    
-    const item = cartStore.data.find((item) => item.id === product.id);
-    if (item) {
-      const newCart = cartStore.data.map((item) => {
-        if (item.id === product.id) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
-        return item;
-      });
-      cartStore.update(newCart);
+
+    if (quantity > 0) {
+      window.location.href = "/cart";
       return;
+    }
+
+    if (item) {
+      item.quantity += 1;
+      cartStore.update((prev) => prev.map((i) => (i.id === item.id ? item : i))
+      );
     } else {
       const newItem = {
-        id: product.id,
+        id,
         discount: 0,
         quantity: 1,
-        price: product.price,
-        title: product.title,
-        category: product.category,
-        thumbnail: product.thumbnail,
+        price,
+        title,
+        category,
+        thumbnail,
       };
 
-      cartStore.update([...cartStore.data, newItem]);
+      cartStore.update((prev) => [...prev, newItem]);
     }
   };
 
   return (
     <Button
-      isIconOnly
       color="primary"
-      variant="flat"
-      size="sm"
+      variant="solid"
+      size="md"
       radius="sm"
+      href="/cart"
+      as={Link}
       onClick={handleClick}
+      startContent={quantity >= 1 ? <FaShoppingCart /> : ""}
     >
-      <FaCartPlus className="text-lg" />
+      {quantity > 0 ? "Go to Cart" : `Add to Cart`}
     </Button>
   );
 };

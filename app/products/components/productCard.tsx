@@ -36,8 +36,8 @@ const ProductCard:FC<ProductCardProps> = ({ product, isLoading }) => {
           className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
           src={product.thumbnail}
         />
-        <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
-          <p className="text-black text-sm font-semibold">
+        <CardFooter className="absolute bg-black/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+          <p className="text-white text-sm font-semibold">
             {product.price} €
           </p>
           <AddToCart product={product}/>
