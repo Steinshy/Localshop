@@ -7,7 +7,7 @@ import { FaShoppingCart } from "react-icons/fa";
 
 // Next - Link - redirect
 import Link from "next/link";
-import { redirect } from 'next/navigation' 
+import { useRouter } from 'next/navigation'
 
 // NextUi - Reat Icon
 import { Button } from "@nextui-org/react";
@@ -20,11 +20,14 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
   const cartStore = useContext(CartContext);
   const item = cartStore.data.find((item) => item.id === product.id);
   const quantity = item ? item.quantity : 0;
+  const router = useRouter()
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
-    if (quantity > 0) { redirect('/cart') }
+    if (quantity > 0) { 
+      router.push('/cart')
+    }
     if (item) {
       item.quantity += 1;
       cartStore.update((prev) => prev.map((i) => (i.id === item.id ? item : i))
