@@ -3,7 +3,7 @@
 // React Context
 import { FC, useContext, useState } from "react";
 import { CartContext } from "../../utils/cartProvider";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
 // Next - navigation
 import Link from "next/link";
@@ -15,7 +15,7 @@ import { Button } from "@nextui-org/react";
 // Interface - ProductCardProps
 import { ProductCardProps } from "../../utils/site";
 
-const AddToCart: FC<ProductCardProps> = ({ product }) => {
+const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly = false }) => {
   const { id, title, category, thumbnail, price } = product;
   const cartStore = useContext(CartContext);
   const item = cartStore.data.find((item) => item.id === product.id);
@@ -26,8 +26,9 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
     event.preventDefault();
 
     if (quantity > 0) { 
-      router.push('/cart')
+      return router.push('/cart');
     }
+    
     if (item) {
       item.quantity += 1;
       cartStore.update((prev) => prev.map((i) => (i.id === item.id ? item : i))
@@ -50,16 +51,22 @@ const AddToCart: FC<ProductCardProps> = ({ product }) => {
   return (
 
     <Button
-      color="primary"
+      color={quantity > 0 ? "success" : "primary"}
       variant="solid"
-      size="md"
+      size={isIconOnly ? "sm" : "md"}
       radius="sm"
       href="/cart"
       as={Link}
       onClick={handleClick}
-      startContent={quantity >= 1 && <FaShoppingCart />}
+      startContent={(quantity >= 1 && !isIconOnly) && <FaArrowRight className="text-lg text-white" />}
+      isIconOnly={isIconOnly}
+      className={quantity > 0 ? 'text-white' : ''}
     >
-      {quantity > 0 ? "Go to Cart" : `Add to Cart`}
+      {isIconOnly ?
+        quantity > 0 ? <FaArrowRight className="text-lg text-white" />  : <FaShoppingCart className="text-lg" />
+      :
+        quantity > 0 ? "Go to Cart" : `Add to Cart`
+      }
     </Button>
   );
 };

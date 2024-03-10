@@ -31,6 +31,7 @@ export const siteConfig = {
 export type ProductCardProps = {
   product: ProductInterface;
   isLoading?: boolean;
+  isIconOnly?: boolean;
 };
 
 // productsCard
