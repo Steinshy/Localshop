@@ -60,116 +60,124 @@ export default function Cart() {
   };
 
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-row">
-        <div className="grid grid-cols gap-4">
-          {cartStore.data.length <= 0 && !isLoading ? (
-            <p className="text-lg text-center mt-4">Your cart is empty</p>
-          ) : (
-            cartStore.data.map((item) => {
+    <div className="max-w-screen-xl mx-auto grid grid-cols-3 gap-4 my-8">
+      {/* LEFT */}
+      <div className="col-span-2">
+        <div className="flex justify-end items-center mb-4">
+          <Button
+            color="danger"
+            variant="solid"
+            onClick={() => cartStore.update([])}
+            startContent={<FaTrash />}
+          >
+            Delete Cart
+          </Button>
+        </div>
+        {cartStore.data.length <= 0 && !isLoading ? (
+          <p className="text-lg text-center mt-4">Your cart is empty</p>
+        ) : (
+          <ul className="flex flex-col">
+            {cartStore.data.map((item) => {
               const slug = generateSlug(item.title);
               return (
-                <Card>
-                  <CardHeader>
-                    <ul key={item.id} className="max-w-lg flex w-full flex-col">
-                      <li className="mb-2 flex justify-between items-center">
-                        <Link href={`/products/${item.id}/${slug}`}>
-                          <Image
-                            src={item.thumbnail}
-                            alt={item.title}
-                            classNames={{
-                              img: "w-16 h-16",
-                              wrapper: "border mr-4",
-                            }}
-                            radius="sm"
-                            shadow="sm"
-                          />
-                        </Link>
-                        <p className="flex flex-grow justify-self-start">
-                          <Link href={`/products/${item.id}/${slug}`}>
-                            {item.title}
-                          </Link>
-                        </p>
-                      </li>
-                    </ul>
-                  </CardHeader>
-                </Card>
+                <li key={item.id} className="p-4 bg-background border rounded-md mb-2 flex justify-between items-center">
+                  <Link href={`/products/${item.id}/${slug}`}>
+                    <Image
+                      src={item.thumbnail}
+                      alt={item.title}
+                      classNames={{
+                        img: "w-16 h-16 object-cover",
+                        wrapper: "mr-4",
+                      }}
+                      radius="md"
+                      shadow="none"
+                    />
+                  </Link>
+                  <p className="flex flex-grow justify-self-start">
+                    <Link href={`/products/${item.id}/${slug}`}>
+                      {item.title}
+                    </Link>
+                  </p>
+                </li>
               );
-            })
-          )}
-        </div>
-        <div className="grid-col grid gap-4">
-          <div>Partie droite</div>
-        </div>
+            })}
+          </ul>
+        )}
       </div>
 
-        <div className="flex flex-row">
-          <div className="grid grid-cols gap-4">
-
-            <div className="flex flex-row gap-2 max-w-lg w-full justify-end items-center">
-              <p className="text-lg mt-6">
-                Total: <span className="font-semibold">{total}€</span>
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-row">
-            <div className="grid grid-cols gap-4">
-              <Input
-                  type="field"
-                  label="Promo code"
-                  placeholder="Enter your Promo Code"
-                />
-            </div>
-          </div>
+      {/* RIGHT */}
+      <div className="border rounded-md p-4">
+        <h2 className="text-2xl font-semibold mb-4">Order summary</h2>
+        
+        <div className="grid grid-cols-3 gap-4">
+          <p className="text-lg">Subtotal:</p>
+          <p className="text-lg">€{total}</p>
         </div>
 
-        <div className="flex flex-row">
-          <div className="grid grid-cols-3 gap-4">
-            <Button
-              className="mt-8"
-              color="secondary"
-              variant="solid"
-              href="/products"
-              as={Link}
-              startContent={<FaArrowLeft />}
-            >
-              Continue shopping
-            </Button>
-
-            <Popover placement="top">
-              <PopoverTrigger>
-                <Button
-                  isDisabled={cartStore.data.length <= 0}
-                  className="mt-8"
-                  color="danger"
-                  variant="solid"
-                  onClick={() => cartStore.update([])}
-                >
-                  Delete Cart
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <div className="px-1 py-2">
-                  <div className="text-tiny">Your cart has been emptied !</div>
-                </div>
-              </PopoverContent>
-            </Popover>
-
-            <Button
-              isDisabled={cartStore.data.length <= 0}
-              className="mt-8"
-              color="primary"
-              variant="solid"
-              href="/checkout"
-              as={Link}
-              endContent={<FaArrowRight />}
-            >
-              Checkout
-            </Button>
-          </div>
+        <div className="grid grid-cols-3 gap-4">
+          <p className="text-lg">Shipping:</p>
+          <p className="text-lg">€0</p>
         </div>
 
+        <div className="grid grid-cols-3 gap-4">
+          <p className="text-lg">Taxes:</p>
+          <p className="text-lg">€0</p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4">
+          <p className="text-lg">Discount:</p>
+          <p className="text-lg">€0</p>
+        </div>
+
+        <hr className="my-4" />
+        <div className="grid grid-cols-3 gap-4">
+          <p className="text-lg">Total:</p>
+          <p className="text-lg">€{total}</p>
+        </div>
+
+        <hr className="my-4" />
+        <p className="text-small mb-4">
+          Shipping and taxes will be calculated at checkout
+        </p>
+
+        <div className="grid grid-cols-3 gap-4 my-4">
+          <Input
+            type="field"
+            placeholder="Enter your Promo Code"
+            className="col-span-2"
+          />
+          <Button
+            color="primary"
+            variant="solid"
+            className="col-span-1"
+            onClick={() => alert("Promo code applied")}
+          >
+            Apply
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <Button
+            color="secondary"
+            variant="solid"
+            href="/products"
+            as={Link}
+            startContent={<FaArrowLeft />}
+          >
+            Continue shopping
+          </Button>
+          <Button
+            color="success"
+            variant="solid"
+            href="/checkout"
+            as={Link}
+            endContent={<FaArrowRight />}
+            className="text-white"
+          >
+            Checkout
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
