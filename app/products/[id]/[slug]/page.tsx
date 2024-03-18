@@ -5,7 +5,7 @@ import http from "../../../utils/http";
 import ProductImages from "../../components/productImages";
 
 // Components
-import Breadcrumb from "../../../components/breadCrumb";
+import Breadcrumb from "./components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 
 async function getData(id: string) {
