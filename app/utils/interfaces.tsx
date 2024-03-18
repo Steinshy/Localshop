@@ -1,32 +1,3 @@
-export type SiteConfig = typeof siteConfig;
-
-export const siteConfig = {
-  name: "Localshop",
-  description: "A shopping website for browser items close to your home",
-  navItems: [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "Our Products",
-      href: "/products",
-    },
-    {
-      label: "About Us",
-      href: "/about",
-    },
-  ],
-
-  links: {
-    github: "https://github.com",
-    twitter: "https://twitter.com",
-    discord: "https://discordapp.com",
-  },
-};
-
-// Global interface
-
 // productsCard
 export type ProductCardProps = {
   product: ProductInterface;
@@ -78,6 +49,17 @@ export type BreadcrumbProps = {
   id: string;
 }
 
+// Pagination
+export type PaginationInterface = {
+  total: number;
+  skip: number;
+  limit: number;
+  isLoading: boolean;
+  previousPage: () => void;
+  nextPage: () => void;
+};
+
+// Generate slug from title
 export function generateSlug(title: string): string {
   return title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
 }
