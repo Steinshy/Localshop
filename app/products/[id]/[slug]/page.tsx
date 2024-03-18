@@ -3,18 +3,21 @@ import http from "../../../utils/http";
 
 // ProductImages
 import ProductImages from "../../components/productImages";
+import { ProductInterface } from "../../../utils/interfaces";
 
 // Components
 import Breadcrumb from "./components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 
-async function getData(id: string) {
+async function getData(id: string): Promise<{data: ProductInterface | undefined}> {
+  let response: { data: ProductInterface } | undefined;
+
   try {
-    const res = await http.get(`/products/${id}`);
-    return res;
+    response = await http.get(`/products/${id}`);
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching product with id ${id}:`, error);
   }
+  return { data: response?.data || undefined };
 }
 
 export default async function Product({ params }: { params: { id: string } }) {
@@ -22,7 +25,7 @@ export default async function Product({ params }: { params: { id: string } }) {
   
   return product ? (
     <>
-    <Breadcrumb id={product.id} title={product.title} />
+    <Breadcrumb title={product.title} />
     <div className="grid grid-cols-2 gap-4 items-center justify-center p-4">
       <ProductImages
         alt={product.title}
