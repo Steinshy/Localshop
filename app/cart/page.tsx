@@ -5,19 +5,14 @@ import { useContext, useEffect, useState } from "react";
 
 // Components
 import { CartContext } from "../utils/cartProvider";
-import { generateSlug } from "../utils/site";
+import { generateSlug } from "../utils/interfaces";
 
 // NextUI components
 import { Image, Button, Input, Spinner } from "@nextui-org/react";
 import Link from "next/link";
 
 // React Icons
-import {
-  FaTrash,
-  FaCartArrowDown,
-  FaArrowLeft,
-  FaArrowRight,
-} from "react-icons/fa";
+import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
@@ -68,7 +63,7 @@ export default function Cart() {
   const handleCoupon = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     alert("Coupon applied");
-  }
+  };
 
   return (
     <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
@@ -89,9 +84,9 @@ export default function Cart() {
         </div>
         {cart.length <= 0 ? (
           <div className="flex flex-col flex-grow items-center justify-center">
-            {isLoading ?
+            {isLoading ? (
               <Spinner size="lg" color="warning" label="Loading Cart..." />
-            :
+            ) : (
               <>
                 <FaCartArrowDown className="text-8xl text-foreground" />
                 <p className="text-lg text-center mt-4">Your cart is empty</p>
@@ -107,14 +102,17 @@ export default function Cart() {
                   Start shopping
                 </Button>
               </>
-            }
+            )}
           </div>
         ) : (
           <ul className="flex flex-col flex-grow">
             {cart.map((item) => {
               const slug = generateSlug(item.title);
               return (
-                <li key={item.id} className="p-2 bg-background border-2 border-current text-default-100 rounded-md mb-2">
+                <li
+                  key={item.id}
+                  className="p-2 bg-background border-2 border-current text-default-100 rounded-md mb-2"
+                >
                   <div className="grid grid-cols-2">
                     <div className="flex justify-start items-center">
                       <Link href={`/products/${item.id}/${slug}`}>
@@ -129,21 +127,23 @@ export default function Cart() {
                           shadow="none"
                         />
                       </Link>
-                      <p className="text-lg text-foreground font-semibold">{item.title}</p>
+                      <p className="text-lg text-foreground font-semibold">
+                        {item.title}
+                      </p>
                     </div>
                     <div className="flex justify-end items-start">
-                    <Button
-                      color="default"
-                      variant="light"
-                      className="text-foreground/25"
-                      onClick={(e) => handleClick(e, item.id)}
-                      startContent={<FaTrash />}
-                      isIconOnly
-                      size="sm"
-                    />
+                      <Button
+                        color="default"
+                        variant="light"
+                        className="text-foreground/25"
+                        onClick={(e) => handleClick(e, item.id)}
+                        startContent={<FaTrash />}
+                        isIconOnly
+                        size="sm"
+                      />
                     </div>
                   </div>
-                  
+
                   <hr className="my-4" />
 
                   <div className="grid grid-cols-3 gap-4">
@@ -157,9 +157,13 @@ export default function Cart() {
                     <Input
                       type="number"
                       value={item.quantity.toString()}
-                      onChange={(e) => handleQuantityChange(e.target.value, item.id)}
+                      onChange={(e) =>
+                        handleQuantityChange(e.target.value, item.id)
+                      }
                     />
-                    <p className="text-lg text-foreground">€{item.price * item.quantity}</p>
+                    <p className="text-lg text-foreground">
+                      €{item.price * item.quantity}
+                    </p>
                   </div>
                 </li>
               );
@@ -183,8 +187,10 @@ export default function Cart() {
       {/* RIGHT */}
       <div>
         <div className="p-4 border-2 border-current p-4 rounded-md bg-background text-default-100">
-          <h2 className="text-2xl font-semibold mb-4 text-foreground">Order summary</h2>
-          
+          <h2 className="text-2xl font-semibold mb-4 text-foreground">
+            Order summary
+          </h2>
+
           <div className="grid grid-cols-2 gap-4 text-foreground">
             <p className="text-lg">Subtotal:</p>
             <p className="text-lg">€{total}</p>
@@ -216,7 +222,11 @@ export default function Cart() {
             Shipping and taxes will be calculated at checkout
           </p>
 
-          <form onSubmit={handleCoupon} action="#" className="grid grid-cols-3 gap-4 my-4">
+          <form
+            onSubmit={handleCoupon}
+            action="#"
+            className="grid grid-cols-3 gap-4 my-4"
+          >
             <Input
               type="field"
               placeholder="Enter your Promo Code"
