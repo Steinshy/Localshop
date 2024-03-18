@@ -11,7 +11,7 @@ import { useTheme } from "next-themes";
 import { Switch } from "@nextui-org/switch";
 
 // React Icons
-import { MoonIcon, SunIcon } from "./icons";
+import { MoonIcon, SunIcon } from "./themeSwitcherIcons";
 
 export const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
@@ -21,14 +21,24 @@ export const ThemeSwitcher = () => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) return <Switch size="lg"></Switch>;
 
   const setIsSelected = (isSelected: boolean) => {
     setTheme(isSelected ? "light" : "dark");
   };
 
-  const renderIcon = ({ isSelected, className }: { isSelected: boolean, className?: string }) => {
-    return isSelected ? <SunIcon className={className} /> : <MoonIcon className={className} />;
+  const renderIcon = ({
+    isSelected,
+    className,
+  }: {
+    isSelected: boolean;
+    className?: string;
+  }) => {
+    return isSelected ? (
+      <SunIcon className={className} />
+    ) : (
+      <MoonIcon className={className} />
+    );
   };
 
   return (
