@@ -1,6 +1,6 @@
 # Logs
 logs
-*.log
+.log*
 *.local
 *.test
 npm-debug.log*
@@ -13,7 +13,7 @@ dist
 dist-ssr
 .next
 next-env.d.ts
-eslintrc.json
+.eslintrc*
 
 # Editor directories and files
 .vscode/*
