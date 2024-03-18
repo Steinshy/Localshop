@@ -8,7 +8,7 @@ import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 
 // Interface - Utils
-import { BreadcrumbProps } from "../utils/site";
+import { BreadcrumbProps } from "./../../../../utils/interfaces";
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ id, title }) => {
   return (
