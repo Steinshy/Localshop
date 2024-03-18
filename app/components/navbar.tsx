@@ -1,43 +1,32 @@
 "use client";
 
 // React
-import { useState, useContext } from "react";
+import { useContext } from "react";
 
 // NextJS - Navigation - Link
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // NextUi - React Icon
-import { Link as NextLink, Input, NavbarContent, Divider, Button, NavbarItem, Navbar, Badge } from "@nextui-org/react";
+import { Link as NextLink, NavbarContent, Divider, Button, NavbarItem, Navbar, Badge } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
-import { FaCartArrowDown, FaSearch } from "react-icons/fa";
+import { FaCartArrowDown } from "react-icons/fa";
 
-// Utils - Site Config - cartProvider
-import { siteConfig } from "../utils/site";
+// Utils - Site Config - CartContext
+import { siteConfig } from "../utils/siteConfig";
 import { CartContext } from "../utils/cartProvider";
 
 // ThemeSwitcher
-import { ThemeSwitcher } from "./switcher";
-
-// Handles the query change
-const handleQueryChange = (setQuery: (value: string) => void) => (value: string) => {
-    setQuery(value);
-  };
-
-// Handles the form submission
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault(); // Prevents the default form submission
-  // TODO: Implement search functionality
-};
+import { ThemeSwitcher } from "../utils/themeSwitcher";
 
 export default function Header() {
   const pathname = usePathname();
   const cartStore = useContext(CartContext);
 
-  // State for the search query
-  const [query, setQuery] = useState("");
-
-  const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
+  const cartQuantity = cartStore.data.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
 
   return (
     <Navbar isBlurred isBordered position="sticky">
@@ -57,18 +46,6 @@ export default function Header() {
         ))}
       </NavbarContent>
       <NavbarContent justify="end">
-        <NavbarItem>
-          <form onSubmit={handleSubmit} action="#">
-            <Input
-              aria-label="Search"
-              placeholder="Type and press enter..."
-              type="search"
-              value={query}
-              onChange={(e) => handleQueryChange(setQuery)}
-              startContent={<FaSearch />}
-            />
-          </form>
-        </NavbarItem>
 
         <NavbarItem>
           <Badge
