@@ -66,3 +66,6 @@ export function generateSlug(title: string): string {
 export function generateClamp(num: number, min: number, max: number): number {
   return Math.min(Math.max(num, min), max);
 }
+export function generateNewProductLogo(): boolean {
+  return Math.random() >= 0.5;
+}

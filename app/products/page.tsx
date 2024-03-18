@@ -65,7 +65,7 @@ export default function Products() {
             Welcome to our product catalog, where innovation meets excellence!
             We are thrilled to present a curated selection of top-notch products
             designed to meet your diverse needs and exceed your expectations.
-            Whether you're a seasoned professional or just starting your
+            Whether you&#39;re a seasoned professional or just starting your
             journey, our range of products is carefully crafted to enhance your
             experience and make every task seamless. From cutting-edge
             technology to timeless classics, we have something for everyone.

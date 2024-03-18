@@ -7,26 +7,24 @@ import Link from "next/link";
 // Components - AddToCart
 import AddToCart from "./addToCart";
 
-// Utils - Interfaces
-import { ProductCardProps, generateSlug } from "../../utils/interfaces";
+// Interfaces - Generation
+import { ProductCardProps, generateSlug, generateNewProductLogo } from "../../utils/interfaces";
 
 // NextUi
 import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react";
 
 const ProductCard: FC<ProductCardProps> = ({ product, isLoading }) => {
-  const slug = generateSlug(product.title);
-  const isNew = () => Math.random() >= 0.5;
 
   return (
     <article>
         <Card
           className="w-full h-[350px]"
           as={Link}
-          href={`/products/${product.id}/${slug}`}
+          href={`/products/${product.id}/${generateSlug(product.title)}`}
           radius="sm"
         >
           <CardHeader className="absolute z-10 top-1 flex-col items-end">
-            {isNew() && (
+            {generateNewProductLogo() && (
               <p className="text-tiny text-white uppercase font-bold bg-red-500 p-1 rounded-sm shadow-lg">
                 New!
               </p>
@@ -36,6 +34,7 @@ const ProductCard: FC<ProductCardProps> = ({ product, isLoading }) => {
             <Image
               removeWrapper
               className="z-0 w-full h-48 rounded-md object-cover"
+              alt="Product Image"
               src={product.thumbnail}
             />
           </CardBody>
