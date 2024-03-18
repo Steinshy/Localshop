@@ -4,7 +4,7 @@
 import React, { useState, useEffect, createContext, Dispatch, SetStateAction, Context } from "react";
 
 // Interface - CartItem
-import { CartItem } from "../utils/site";
+import { CartItem } from "../utils/interfaces";
 
 interface CartContextType {
   data: CartItem[];
