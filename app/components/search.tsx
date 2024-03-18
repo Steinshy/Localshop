@@ -5,8 +5,8 @@ import { FaSearch } from "react-icons/fa";
 const Search = () => {
   
   // Handles the form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevents the default form submission
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault(); // Prevents the default form submission
     // TODO: Implement search functionality
   };
 
@@ -14,10 +14,9 @@ const Search = () => {
   const [query, setQuery] = useState("");
 
   // Handles the query change
-  const handleQueryChange =
-    (setQuery: (value: string) => void) => (value: string) => {
-      setQuery(value);
-    };
+  const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value || "");
+  };
 
   return (
     <form onSubmit={handleSubmit} action="#">
@@ -26,7 +25,7 @@ const Search = () => {
         placeholder="Type and press enter..."
         type="search"
         value={query}
-        onChange={(e) => handleQueryChange(setQuery)}
+        onChange={handleQueryChange}
         startContent={<FaSearch />}
       />
     </form>
