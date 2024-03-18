@@ -6,24 +6,19 @@ import { useState, useEffect, FC } from "react";
 // Utils - Request
 import http from "../utils/http";
 
-import { Skeleton } from "@nextui-org/react";
-
 // Component
 import ProductCard from "./components/productCard";
 import SkeletonProduct from "./components/skeletonProduct";
-// import Pagination from "./components/pagination";
+import Pagination from "./components/pagination";
 import Search from "./../components/search";
+
+// Squeleton
+import { Skeleton } from "@nextui-org/react";
 
 // Interfaces - ProductInterface
 import { ProductInterface } from "../utils/interfaces";
 
-// Nextui - React Icon
-import { Button } from "@nextui-org/react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
 export default function Products() {
-  const clamp = (num: number, min: number, max: number) =>
-    Math.min(Math.max(num, min), max);
   const limit = 12;
   const [skip, setSkip] = useState(0);
   const [products, setProducts] = useState<ProductInterface[]>([]);
@@ -86,7 +81,8 @@ export default function Products() {
                   <SkeletonProduct key={index} />
                 ))}
 
-              {!isLoading && total > 0 &&
+              {!isLoading &&
+                total > 0 &&
                 products.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
@@ -94,40 +90,18 @@ export default function Products() {
           </div>
 
           {/* Pagination */}
-          {isLoading && total === 0 && (
-            <Skeleton isLoaded={!isLoading}>
-              <div className="flex flex-grow px-2 mb-4"></div>
-            </Skeleton>
-          )}
-
-          {total > 0 && (
-            <div className="flex flex-grow justify-between px-2 mb-4">
-              <Button
-                isDisabled={skip <= 0}
-                isLoading={isLoading}
-                size="sm"
-                variant="flat"
-                onClick={previousPage}
-                startContent={<FaChevronLeft />}
-              >
-                Previous
-              </Button>
-              <Skeleton isLoaded={!isLoading}>
-                <p className="text-sm text-foreground/40">
-                  Displaying {clamp(skip + limit, 0, total)} items of {total}
-                </p>
-              </Skeleton>
-              <Button
-                isDisabled={skip + limit >= total}
-                isLoading={isLoading}
-                size="sm"
-                variant="flat"
-                onClick={nextPage}
-                endContent={<FaChevronRight />}
-              >
-                Next
-              </Button>
-            </div>
+          <Skeleton isLoaded={!isLoading}>
+            <div className="flex flex-grow px-2 mb-4"></div>
+          </Skeleton>
+          {!isLoading && (
+            <Pagination
+              isLoading={isLoading}
+              total={total}
+              limit={limit}
+              skip={skip}
+              previousPage={previousPage}
+              nextPage={nextPage}
+            />
           )}
         </div>
       </div>

@@ -59,7 +59,10 @@ export type PaginationInterface = {
   nextPage: () => void;
 };
 
-// Generate slug from title
+// Generation
 export function generateSlug(title: string): string {
   return title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+}
+export function generateClamp(num: number, min: number, max: number): number {
+  return Math.min(Math.max(num, min), max);
 }
