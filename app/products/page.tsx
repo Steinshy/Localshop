@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect } from "react";
 
 // Utils - Request
 import http from "../utils/http";
@@ -16,7 +16,7 @@ import Search from "./../components/search";
 import { Skeleton } from "@nextui-org/react";
 
 // Interfaces - ProductInterface
-import { ProductInterface } from "../utils/interfaces";
+import { ProductInterface, ProductDataProps } from "../utils/interfaces";
 
 export default function Products() {
   const limit = 12;
@@ -37,21 +37,19 @@ export default function Products() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData= async () => {
       try {
-        const response = await http.get(
-          "/products" + "?limit=" + limit + "&skip=" + skip
-        );
-        const { products, total } = response?.data;
-        setProducts(products || []);
+        const response = await http.get<ProductDataProps>( "/products" + "?limit=" + limit + "&skip=" + skip );
+        const { products, total } = response?.data || {};
+        setProducts(Array.isArray(products) ? products : [products]);
         setTotal(total || 0);
         setIsLoading(false);
-      } catch (error: any) {
+      } catch (error) {
         setProducts([]);
-        console.error(error);
+        console.error('An error occurred while fetching data:', error)
       }
     };
-    fetchData();
+    fetchData().catch(console.error);
   }, [skip]);
 
   return (
