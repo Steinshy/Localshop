@@ -1,9 +1,8 @@
 "use client";
 
 // React Context
-import { FC, useContext, useState } from "react";
+import { FC, useContext } from "react";
 import { CartContext } from "../../utils/cartProvider";
-import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
 // Next - navigation
 import Link from "next/link";
@@ -11,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 // NextUi - Reat Icon
 import { Button } from "@nextui-org/react";
+import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
 // Interface - ProductCardProps
 import { ProductCardProps } from "../../utils/interfaces";

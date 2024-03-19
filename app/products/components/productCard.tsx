@@ -13,7 +13,7 @@ import { ProductCardProps, generateSlug, generateNewProductLogo } from "../../ut
 // NextUi
 import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react";
 
-const ProductCard: FC<ProductCardProps> = ({ product, isLoading }) => {
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   return (
     <article>

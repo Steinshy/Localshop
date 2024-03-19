@@ -1,4 +1,4 @@
-// productsCard
+// productsCardProps
 export type ProductCardProps = {
   product: ProductInterface;
   isLoading?: boolean;
@@ -16,11 +16,11 @@ export type ProductInterface = {
   images: [string];
 };
 
-// Footer
-export type LinkItemProps = {
-  text?: string;
-  isTag?: boolean;
-  tagText?: string;
+// ProductDataResponse
+export type ProductDataProps = {
+  products: ProductInterface;
+  total: number;
+  limit: number;
 };
 
 // ProductImages
@@ -41,6 +41,13 @@ export type CartItem = {
   title: string;
   category: string;
   thumbnail: string;
+};
+
+// Footer
+export type LinkItemProps = {
+  text?: string;
+  isTag?: boolean;
+  tagText?: string;
 };
 
 // BreadCrumb
