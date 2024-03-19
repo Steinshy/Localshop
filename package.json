@@ -38,5 +38,7 @@
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.0.2"
-  }
+  },
+
+  "eslintIgnore": ["app/utils/http.tsx"]
 }

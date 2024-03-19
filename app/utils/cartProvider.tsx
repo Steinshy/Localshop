@@ -21,13 +21,16 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([] as CartItem[]);
 
   useEffect(() => {
-    const getCart = async () => {
-      const data = await JSON.parse(localStorage.getItem("cart") || "[]");
-      setCart(data);
-      setCartChecked(true);
-    }
-
-    getCart();
+    const getCartData = async () => {
+      try {
+        const data = (await JSON.parse(localStorage.getItem("cart") || "[]")) as CartItem[];
+        setCart(data);
+        setCartChecked(true);
+      } catch (error) {
+        console.error("An error occurred while fill localStorage :", error);
+      }
+    };
+    getCartData().catch(console.error);
   }, [cartChecked]);
 
   useEffect(() => {
