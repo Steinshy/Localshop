@@ -186,7 +186,7 @@ export default function Cart() {
 
       {/* RIGHT */}
       <div>
-        <div className="p-4 border-2 border-current p-4 rounded-md bg-background text-default-100">
+        <div className="border-2 border-current p-4 rounded-md bg-background text-default-100">
           <h2 className="text-2xl font-semibold mb-4 text-foreground">
             Order summary
           </h2>
