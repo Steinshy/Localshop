@@ -3,16 +3,27 @@
 // React context
 import { useContext, useEffect, useState } from "react";
 
-// Components
+// Components - Generation
 import { CartContext } from "../utils/cartProvider";
 import { generateSlug } from "../utils/interfaces";
 
-// NextUI components
+// Zod
+import { z } from "zod";
+
+// Formik
+import { Formik, Form } from "formik";
+
+// NextLink - NextUI
 import { Image, Button, Input, Spinner } from "@nextui-org/react";
 import Link from "next/link";
 
 // React Icons
-import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import {
+  FaTrash,
+  FaCartArrowDown,
+  FaArrowLeft,
+  FaArrowRight,
+} from "react-icons/fa";
 
 export default function Cart() {
   const cartStore = useContext(CartContext);
@@ -43,7 +54,7 @@ export default function Cart() {
     setIsLoading(false);
   }, [cartChecked]);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>, id: number) => {
+  const handleUpdateCart = (event: React.MouseEvent<HTMLElement>, id: number) => {
     event.preventDefault();
 
     const newCart = cartStore.data.filter((item) => item.id !== id);
@@ -60,10 +71,19 @@ export default function Cart() {
     cartStore.update(newCart);
   };
 
-  const handleCoupon = (event: React.FormEvent<HTMLFormElement>) => {
+  function handleCouponValidation(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    alert("Coupon applied");
-  };
+    const cartCouponSchema = z.object({ coupon: z.string().optional() });
+    type couponValue = z.infer<typeof cartCouponSchema>;
+
+    const couponValue = (event.currentTarget.elements[0] as HTMLInputElement).value;
+
+    if (couponValue === "UserCoupon1234") {
+      alert("Coupon successfully applied!");
+    } else {
+      alert("Your Coupon is invalide!");
+    }
+  }
 
   return (
     <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
@@ -136,7 +156,7 @@ export default function Cart() {
                         color="default"
                         variant="light"
                         className="text-foreground/25"
-                        onClick={(e) => handleClick(e, item.id)}
+                        onClick={(e) => handleUpdateCart(e, item.id)}
                         startContent={<FaTrash />}
                         isIconOnly
                         size="sm"
@@ -170,18 +190,22 @@ export default function Cart() {
             })}
           </ul>
         )}
-        <div className="flex justify-start items-center mt-4">
-          <Button
-            color="default"
-            variant="light"
-            href="/products"
-            as={Link}
-            startContent={<FaArrowLeft className="text-foreground/50" />}
-            className="text-foreground/50"
-          >
-            Continue shopping
-          </Button>
-        </div>
+
+        {/* Add condition */}
+        {cart.length > 0 && (
+          <div className="flex justify-start items-center mt-4">
+            <Button
+              color="default"
+              variant="light"
+              href="/products"
+              as={Link}
+              startContent={<FaArrowLeft className="text-foreground/50" />}
+              className="text-foreground/50"
+            >
+              Continue shopping
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* RIGHT */}
@@ -222,29 +246,50 @@ export default function Cart() {
             Shipping and taxes will be calculated at checkout
           </p>
 
-          <form
-            onSubmit={handleCoupon}
-            action="#"
-            className="grid grid-cols-3 gap-4 my-4"
+          {/* Coupon Validation */}
+          <Formik
+            initialValues={{ coupon: "" }}
+            validate={(value = { coupon: "" }) => {
+              const errors: { coupon?: string } = {};
+              if (!value.coupon) {
+                errors.coupon = "Required";
+              }
+              return errors;
+            }}
+            onSubmit={(value, { setSubmitting }) => {
+              setTimeout(() => {
+                setSubmitting(false);
+              }, 400);
+            }}
           >
-            <Input
-              type="field"
-              placeholder="Enter your Promo Code"
-              className="col-span-2"
-              isDisabled={cart.length <= 0 || isLoading}
-              radius="sm"
-            />
-            <Button
-              color="primary"
-              variant="solid"
-              className="col-span-1"
-              type="submit"
-              radius="sm"
-              isDisabled={cart.length <= 0 || isLoading}
+            <Form
+              onSubmit={handleCouponValidation}
+              action="#"
+              className="grid grid-cols-3 gap-4 my-4"
             >
-              Apply
-            </Button>
-          </form>
+              <Input
+                type="field"
+                placeholder="Enter your Promo Code"
+                description="UserCoupon1234 | Is a valid code !"
+                className="col-span-2"
+                isDisabled={cart.length <= 0 || isLoading}
+                radius="sm"
+              />
+
+              <Button
+                color="primary"
+                variant="solid"
+                className="col-span-1"
+                type="submit"
+                radius="sm"
+                isDisabled={cart.length <= 0 || isLoading}
+              >
+                Apply
+              </Button>
+            </Form>
+          </Formik>
+
+          {/* Checkout Redirection */}
 
           <div className="grid grid-cols-2 gap-4">
             <Button
