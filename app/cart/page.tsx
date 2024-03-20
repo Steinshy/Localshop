@@ -11,7 +11,7 @@ import { generateSlug } from "../utils/interfaces";
 import { z } from "zod";
 
 // Formik
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 
 // NextLink - NextUI
 import { Image, Button, Input, Spinner } from "@nextui-org/react";
@@ -70,20 +70,6 @@ export default function Cart() {
     });
     cartStore.update(newCart);
   };
-
-  function handleCouponValidation(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const cartCouponSchema = z.object({ coupon: z.string().optional() });
-    type couponValue = z.infer<typeof cartCouponSchema>;
-
-    const couponValue = (event.currentTarget.elements[0] as HTMLInputElement).value;
-
-    if (couponValue === "UserCoupon1234") {
-      alert("Coupon successfully applied!");
-    } else {
-      alert("Your Coupon is invalide!");
-    }
-  }
 
   return (
     <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
@@ -249,44 +235,52 @@ export default function Cart() {
           {/* Coupon Validation */}
           <Formik
             initialValues={{ coupon: "" }}
-            validate={(value = { coupon: "" }) => {
+            validate={(values) => {
               const errors: { coupon?: string } = {};
-              if (!value.coupon) {
+              if (!values.coupon) {
                 errors.coupon = "Required";
               }
               return errors;
             }}
-            onSubmit={(value, { setSubmitting }) => {
+            onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
+                if (values.coupon === "UserCoupon1234") {
+                  alert("Coupon successfully applied!");
+                } else {
+                  alert("Your Coupon is invalide!");
+                }
                 setSubmitting(false);
               }, 400);
             }}
           >
-            <Form
-              onSubmit={handleCouponValidation}
-              action="#"
-              className="grid grid-cols-3 gap-4 my-4"
-            >
-              <Input
-                type="field"
-                placeholder="Enter your Promo Code"
-                description="UserCoupon1234 | Is a valid code !"
-                className="col-span-2"
-                isDisabled={cart.length <= 0 || isLoading}
-                radius="sm"
-              />
-
-              <Button
-                color="primary"
-                variant="solid"
-                className="col-span-1"
-                type="submit"
-                radius="sm"
-                isDisabled={cart.length <= 0 || isLoading}
+            {({ isSubmitting }) => (
+              <Form
+                className="grid grid-cols-3 gap-4 my-4"
               >
-                Apply
-              </Button>
-            </Form>
+                <Field
+                  as={Input}
+                  className="col-span-2"
+                  name="coupon"
+                  // placeholder="Enter your Promo Code"
+                  type="text"
+                  isDisabled={cart.length <= 0 || isLoading}
+                  radius="sm"
+                  isRequired
+                  description="UserCoupon1234 | Is a valid code !"
+                />
+
+                <Button
+                  color="primary"
+                  variant="solid"
+                  className="col-span-1"
+                  type="submit"
+                  radius="sm"
+                  isDisabled={cart.length <= 0 || isLoading}
+                >
+                  Apply
+                </Button>
+              </Form>
+            )}
           </Formik>
 
           {/* Checkout Redirection */}
