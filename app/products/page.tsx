@@ -53,13 +53,15 @@ export default function Products() {
   }, [skip]);
 
   return (
-    <>
-      <div className="w-full">
-        <div className="inset-0 mt-8 p-5 flex-col text-center md:px-20 lg:space-y-10">
-          <h1 className="text-2xl font-bold tracking-tight text-heading lg:text-4xl xl:text-5xl">
+    <div className="flex flex-col flex-grow">
+      <div className="flex flex-col items-center justify-center min-h-svh" style={{
+        backgroundImage: "url('https://plus.unsplash.com/premium_photo-1683133438751-abb68a5c2270?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+      }}>
+        <div className="max-w-screen-lg mx-auto flex flex-col items-center justify-center gap-8">
+          <h1 className="text-white text-2xl font-bold tracking-tight text-heading lg:text-4xl xl:text-5xl">
             Products
           </h1>
-          <p className="text-sm text-heading xl:text-lg lg:text-md">
+          <p className="text-white text-sm text-heading xl:text-lg lg:text-md">
             Welcome to our product catalog, where innovation meets excellence!
             We are thrilled to present a curated selection of top-notch products
             designed to meet your diverse needs and exceed your expectations.
@@ -68,36 +70,35 @@ export default function Products() {
             experience and make every task seamless. From cutting-edge
             technology to timeless classics, we have something for everyone.
           </p>
-          <div className="flex flex-col flex-grow"></div>
           <Search />
-
-          {/* Products Card */}
-          <div className="flex flex-col flex-grow justify-between">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2 pb-4">
-              {isLoading &&
-                Array.from(array.keys()).map((index) => (
-                  <SkeletonProduct key={index} />
-                ))}
-
-              {!isLoading &&
-                total > 0 &&
-                products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-            </div>
-          </div>
-
-          {/* Pagination */}
-          <Pagination
-            isLoading={isLoading}
-            total={total}
-            limit={limit}
-            skip={skip}
-            previousPage={previousPage}
-            nextPage={nextPage}
-          />
         </div>
       </div>
-    </>
+
+      {/* Products Card */}
+      <div className="flex flex-col flex-grow justify-between">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2 pb-4">
+          {isLoading &&
+            Array.from(array.keys()).map((index) => (
+              <SkeletonProduct key={index} />
+            ))}
+
+          {!isLoading &&
+            total > 0 &&
+            products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+        </div>
+      </div>
+
+      {/* Pagination */}
+      <Pagination
+        isLoading={isLoading}
+        total={total}
+        limit={limit}
+        skip={skip}
+        previousPage={previousPage}
+        nextPage={nextPage}
+      />
+    </div>
   );
 }

@@ -19,7 +19,7 @@ const Search = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} action="#">
+    <form onSubmit={handleSubmit} action="#" className="w-full">
       <Input
         aria-label="Search"
         placeholder="Type and press enter..."
@@ -27,6 +27,7 @@ const Search = () => {
         value={query}
         onChange={handleQueryChange}
         startContent={<FaSearch />}
+        size="lg"
       />
     </form>
   );
