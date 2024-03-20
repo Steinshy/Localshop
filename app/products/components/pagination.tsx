@@ -30,7 +30,7 @@ const Pagination: FC<PaginationInterface> = ({ isLoading, total, skip, limit, pr
       </Skeleton>
 
       <Skeleton isLoaded={!isLoading} classNames={{
-        base: "rounded-full",
+        base: isLoading ? "rounded-full" : ""
       }}>
         <p className="text-sm text-foreground/40">
           Displaying {generateClamp(skip + limit, 0, total)} items of {total}
