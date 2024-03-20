@@ -88,19 +88,14 @@ export default function Products() {
           </div>
 
           {/* Pagination */}
-          <Skeleton isLoaded={!isLoading}>
-            <div className="flex flex-grow px-2 mb-4"></div>
-          </Skeleton>
-          {!isLoading && (
-            <Pagination
-              isLoading={isLoading}
-              total={total}
-              limit={limit}
-              skip={skip}
-              previousPage={previousPage}
-              nextPage={nextPage}
-            />
-          )}
+          <Pagination
+            isLoading={isLoading}
+            total={total}
+            limit={limit}
+            skip={skip}
+            previousPage={previousPage}
+            nextPage={nextPage}
+          />
         </div>
       </div>
     </>

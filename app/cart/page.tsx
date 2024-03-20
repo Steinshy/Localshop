@@ -284,7 +284,6 @@ export default function Cart() {
           </Formik>
 
           {/* Checkout Redirection */}
-
           <div className="grid grid-cols-2 gap-4">
             <Button
               color="success"

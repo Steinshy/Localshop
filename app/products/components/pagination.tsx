@@ -12,14 +12,14 @@ import { Skeleton } from "@nextui-org/react";
 import { PaginationInterface, generateClamp } from "../../utils/interfaces";
 
 const Pagination: FC<PaginationInterface> = ({ isLoading, total, skip, limit, previousPage, nextPage }) => {
-  // const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
   return (
-    total > 0 && (
-      <div className="flex flex-grow justify-between px-2 mb-4">
+    <div className="flex flex-grow justify-between px-2 mb-4">
+      <Skeleton isLoaded={!isLoading} classNames={{
+        base: "rounded-md",
+      }}>
         <Button
           isDisabled={skip <= 0}
-          isLoading={isLoading}
           size="sm"
           variant="flat"
           onClick={previousPage}
@@ -27,14 +27,21 @@ const Pagination: FC<PaginationInterface> = ({ isLoading, total, skip, limit, pr
         >
           Previous
         </Button>
-        <Skeleton isLoaded={!isLoading}>
-          <p className="text-sm text-foreground/40">
-            Displaying {generateClamp(skip + limit, 0, total)} items of {total}
-          </p>
-        </Skeleton>
+      </Skeleton>
+
+      <Skeleton isLoaded={!isLoading} classNames={{
+        base: "rounded-full",
+      }}>
+        <p className="text-sm text-foreground/40">
+          Displaying {generateClamp(skip + limit, 0, total)} items of {total}
+        </p>
+      </Skeleton>
+
+      <Skeleton isLoaded={!isLoading} classNames={{
+        base: "rounded-md",
+      }}>
         <Button
           isDisabled={skip + limit >= total}
-          isLoading={isLoading}
           size="sm"
           variant="flat"
           onClick={nextPage}
@@ -42,8 +49,8 @@ const Pagination: FC<PaginationInterface> = ({ isLoading, total, skip, limit, pr
         >
           Next
         </Button>
-      </div>
-    )
+      </Skeleton>
+    </div>
   );
 };
 
