@@ -10,10 +10,8 @@ import http from "../utils/http";
 import ProductCard from "./components/productCard";
 import SkeletonProduct from "./components/skeletonProduct";
 import Pagination from "./components/pagination";
+import OffersDisplay from "./components/offersDisplay";
 import Search from "./../components/search";
-
-// Squeleton
-import { Skeleton } from "@nextui-org/react";
 
 // Interfaces - ProductInterface
 import { ProductInterface, ProductDataProps } from "../utils/interfaces";
@@ -37,16 +35,18 @@ export default function Products() {
   };
 
   useEffect(() => {
-    const fetchData= async () => {
+    const fetchData = async () => {
       try {
-        const response = await http.get<ProductDataProps>( "/products" + "?limit=" + limit + "&skip=" + skip );
+        const response = await http.get<ProductDataProps>(
+          "/products" + "?limit=" + limit + "&skip=" + skip
+        );
         const { products, total } = response?.data || {};
         setProducts(Array.isArray(products) ? products : [products]);
         setTotal(total || 0);
         setIsLoading(false);
       } catch (error) {
         setProducts([]);
-        console.error('An error occurred while fetching data:', error)
+        console.error("An error occurred while fetching data:", error);
       }
     };
     fetchData().catch(console.error);
@@ -54,9 +54,13 @@ export default function Products() {
 
   return (
     <div className="flex flex-col flex-grow">
-      <div className="flex flex-col items-center justify-center min-h-svh" style={{
-        backgroundImage: "url('https://plus.unsplash.com/premium_photo-1683133438751-abb68a5c2270?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-      }}>
+      <div
+        className="flex flex-col items-center justify-center min-h-svh"
+        style={{
+          backgroundImage:
+            "url('https://plus.unsplash.com/premium_photo-1683133438751-abb68a5c2270?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        }}
+      >
         <div className="max-w-screen-lg mx-auto flex flex-col items-center justify-center gap-8">
           <h1 className="text-white text-2xl font-bold tracking-tight text-heading lg:text-4xl xl:text-5xl">
             Products
@@ -70,9 +74,13 @@ export default function Products() {
             experience and make every task seamless. From cutting-edge
             technology to timeless classics, we have something for everyone.
           </p>
+          {/* Do search */}
           <Search />
         </div>
       </div>
+
+      {/* Offers Display */}
+      <OffersDisplay />
 
       {/* Products Card */}
       <div className="flex flex-col flex-grow justify-between">
