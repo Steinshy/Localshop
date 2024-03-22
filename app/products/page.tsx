@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Utils - Request
 import http from "../utils/http";
@@ -23,6 +23,7 @@ export default function Products() {
   const [isLoading, setIsLoading] = useState(true);
   const [total, setTotal] = useState(0);
   const array = Array(12);
+  const [query, setQuery] = useState<string>("");
 
   const previousPage = () => {
     setIsLoading(true);
@@ -34,23 +35,26 @@ export default function Products() {
     setSkip(skip + limit);
   };
 
+  const fetchData = useCallback(async () => {
+    try {
+      const url = query.length > 0 ? "/products" + "?limit=" + limit + "&skip=" + skip + "&query=" + query : "/products" + "?limit=" + limit + "&skip=" + skip
+      console.log("query")
+      console.log(query)
+      const response = await http.get<ProductDataProps>(url);
+      const { products, total } = response?.data || {};
+      setProducts(Array.isArray(products) ? products : [products]);
+      setTotal(total || 0);
+      setIsLoading(false);
+    } catch (error) {
+      setProducts([]);
+    }
+  }, [limit, skip, query]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await http.get<ProductDataProps>(
-          "/products" + "?limit=" + limit + "&skip=" + skip
-        );
-        const { products, total } = response?.data || {};
-        setProducts(Array.isArray(products) ? products : [products]);
-        setTotal(total || 0);
-        setIsLoading(false);
-      } catch (error) {
-        setProducts([]);
-        console.error("An error occurred while fetching data:", error);
-      }
-    };
-    fetchData().catch(console.error);
-  }, [skip]);
+    fetchData().catch(error => {
+      console.error("An error occurred while fetching data:", error);
+    });
+  }, [fetchData, query, skip]);
 
   return (
     <div className="flex flex-col flex-grow">
@@ -75,7 +79,7 @@ export default function Products() {
             technology to timeless classics, we have something for everyone.
           </p>
           {/* Do search */}
-          <Search />
+          <Search fetchData={fetchData} query={query} setQuery={setQuery} />
         </div>
       </div>
 
