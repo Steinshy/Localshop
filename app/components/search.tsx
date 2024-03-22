@@ -1,14 +1,19 @@
 import { Input } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
-import { ProductDataProps } from "../utils/interfaces";
 
-const Search = ({ query, setQuery }: { query: string, setQuery: string}) => {  
+const Search = ({ fetchData, query, setQuery }: { query: string, setQuery: string}) => {  
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchData();
+    console.log("Search for:", query);
+  }
+
   return (
-      <form action="#" className="w-full">
+      <form onSubmit={handleSubmit} action="#" className="w-full">
         <Input
           aria-label="Search"
           placeholder="Type and press enter..."

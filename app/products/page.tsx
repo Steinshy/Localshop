@@ -37,9 +37,11 @@ export default function Products() {
 
   const fetchData = useCallback(async () => {
     try {
-      const url = query.length > 0 ? "/products" + "?limit=" + limit + "&skip=" + skip + "&query=" + query : "/products" + "?limit=" + limit + "&skip=" + skip
-      console.log("query")
-      console.log(query)
+      const base_url = `/products?limit=${limit}&skip=${skip}`;
+      const search_url = `/products/search?limit=${limit}&skip=${skip}&query=${query}`;
+      const url = query.length > 0 ? search_url : base_url;
+      console.log("query");
+      console.log(query);
       const response = await http.get<ProductDataProps>(url);
       const { products, total } = response?.data || {};
       setProducts(Array.isArray(products) ? products : [products]);
@@ -87,6 +89,9 @@ export default function Products() {
       <OffersDisplay />
 
       {/* Products Card */}
+      {query.length > 0 && (
+        <p>Results for : {query}</p>
+      )}
       <div className="flex flex-col flex-grow justify-between">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2 pb-4">
           {isLoading &&
