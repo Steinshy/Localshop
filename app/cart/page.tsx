@@ -37,12 +37,6 @@ export default function Cart() {
   const [discount, setDiscount] = useState<number>(0);
   const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
 
-
-  console.log("applyCoupon ?" , applyCoupon)
-  console.log("discount" , discount)
-  console.log("totalPriceDiscount" , totalPriceDiscount)
-  console.log("totalPrice" , totalPrice)
-
   useEffect(() => {
     const calculateTotal = () => {
       let total = 0;
@@ -65,7 +59,10 @@ export default function Cart() {
     setIsLoading(false);
   }, [cartChecked]);
 
-  const handleUpdateCart = ( event: React.MouseEvent<HTMLElement>, id: number ) => {
+  const handleUpdateCart = (
+    event: React.MouseEvent<HTMLElement>,
+    id: number
+  ) => {
     event.preventDefault();
 
     const newCart = cartStore.data.filter((item) => item.id !== id);
@@ -84,17 +81,15 @@ export default function Cart() {
   const handleDiscount = (value: number) => {
     setApplyCoupon(true);
     setDiscount(value);
-    // Calculate the total price with discount
-    console.log("setTotalPriceDiscount Calculation", )
-    const calculatedDiscount = totalPrice - (totalPrice * (value / 100))
-    setTotalPriceDiscount(calculatedDiscount)
-  }
+    const calculatedDiscount = totalPrice - totalPrice * (value / 100);
+    setTotalPriceDiscount(calculatedDiscount);
+  };
 
   const handleRemoveCoupon = () => {
     setApplyCoupon(false);
-    setDiscount(0)
+    setDiscount(0);
     setTotalPriceDiscount(0);
-  }
+  };
 
   return (
     <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
@@ -188,7 +183,8 @@ export default function Cart() {
                     <Input
                       type="number"
                       value={item.quantity.toString()}
-                      onChange={(e) => handleQuantityChange(e.target.value, item.id)
+                      onChange={(e) =>
+                        handleQuantityChange(e.target.value, item.id)
                       }
                     />
                     <p className="text-lg text-foreground">
@@ -249,7 +245,9 @@ export default function Cart() {
           <div className="grid grid-cols-2 gap-4 text-foreground">
             <p className="text-lg">Total:</p>
             {/* Here place the total with or wothout discount */}
-            <p className="text-lg">€{applyCoupon ? totalPriceDiscount : totalPrice}</p>
+            <p className="text-lg">
+              €{applyCoupon ? totalPriceDiscount : totalPrice}
+            </p>
           </div>
 
           <hr className="my-4" />
@@ -270,7 +268,7 @@ export default function Cart() {
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
                 if (values.coupon === "UserCoupon1234") {
-                  handleDiscount(10)
+                  handleDiscount(10);
                 } else {
                   alert("Your Coupon is invalide!");
                 }
@@ -278,53 +276,55 @@ export default function Cart() {
               }, 400);
             }}
           >
-            {({ isSubmitting }) => (
-              <Form className="grid col-auto gap-4 my-4">
-                <Field
-                  as={Input}
-                  className="col-span-2"
-                  name="coupon"
-                  type="text"
-                  isDisabled={cart.length <= 0 || isLoading}
-                  radius="sm"
-                  isRequired
-                  description="UserCoupon1234 | Is a valid code !"
-                />
+            <Form className="grid col-auto gap-4 my-4">
+              <Field
+                as={Input}
+                className="col-span-2"
+                name="coupon"
+                type="text"
+                isDisabled={cart.length <= 0 || isLoading}
+                radius="sm"
+                isRequired
+                description="UserCoupon1234 | Is a valid code !"
+              />
 
-                <Button
-                  color="primary"
-                  variant="solid"
-                  className="col-span-1"
-                  type="submit"
-                  radius="sm"
-                  size="sm"
-                  isDisabled={cart.length <= 0 || isLoading}
-                >
-                  Apply
-                </Button>
-                <Button
-                  color="danger"
-                  variant="solid"
-                  className="col-span-1"
-                  radius="sm"
-                  size="sm"
-                  onClick={handleRemoveCoupon}
-                  isDisabled={!applyCoupon || isLoading}>
-                  Delete
-                </Button>
-                
-                <Chip
-                  className="text-white"
-                  startContent={applyCoupon ? <FaRegCircleCheck size={18} /> : null}
-                  size="sm"
-                  color="secondary"
-                  variant="solid"
-                >
-                  {applyCoupon ? `Coupon ${discount}% applied` : "No coupon applied"}
-                </Chip>
+              <Button
+                color="primary"
+                variant="solid"
+                className="col-span-1"
+                type="submit"
+                radius="sm"
+                size="sm"
+                isDisabled={cart.length <= 0 || isLoading}
+              >
+                Apply
+              </Button>
+              <Button
+                color="danger"
+                variant="solid"
+                className="col-span-1"
+                radius="sm"
+                size="sm"
+                onClick={handleRemoveCoupon}
+                isDisabled={!applyCoupon || isLoading}
+              >
+                Delete
+              </Button>
 
-              </Form>
-            )}
+              <Chip
+                className="text-white"
+                startContent={
+                  applyCoupon ? <FaRegCircleCheck size={18} /> : null
+                }
+                size="sm"
+                color="secondary"
+                variant="solid"
+              >
+                {applyCoupon
+                  ? `Coupon ${discount}% applied`
+                  : "No coupon applied"}
+              </Chip>
+            </Form>
           </Formik>
 
           {/* Checkout Redirection */}
