@@ -11,18 +11,20 @@ import ProductCard from "./components/productCard";
 import SkeletonProduct from "./components/skeletonProduct";
 import Pagination from "./components/pagination";
 import OffersDisplay from "./components/offersDisplay";
-import Search from "./../components/search";
+// import Search from "./components/search";
+import { Input } from "@nextui-org/react";
+import { FaSearch } from "react-icons/fa";
 
 // Interfaces - ProductInterface
 import { ProductInterface, ProductDataProps } from "../utils/interfaces";
 
 export default function Products() {
   const limit = 12;
+  const array = Array(12);
   const [skip, setSkip] = useState(0);
+  const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [total, setTotal] = useState(0);
-  const array = Array(12);
   const [query, setQuery] = useState<string>("");
 
   const previousPage = () => {
@@ -40,8 +42,6 @@ export default function Products() {
       const base_url = `/products?limit=${limit}&skip=${skip}`;
       const search_url = `/products/search?limit=${limit}&skip=${skip}&query=${query}`;
       const url = query.length > 0 ? search_url : base_url;
-      console.log("query");
-      console.log(query);
       const response = await http.get<ProductDataProps>(url);
       const { products, total } = response?.data || {};
       setProducts(Array.isArray(products) ? products : [products]);
@@ -52,11 +52,29 @@ export default function Products() {
     }
   }, [limit, skip, query]);
 
+
+  // Fetch data
   useEffect(() => {
-    fetchData().catch(error => {
+    fetchData().catch((error) => {
       console.error("An error occurred while fetching data:", error);
     });
   }, [fetchData, query, skip]);
+
+  // Reset skip when query changes
+  useEffect(() => {
+    setSkip(0);
+  }, [query]);
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchData().catch((error) => {
+      console.error("An error occurred while fetching data:", error);
+    });
+  };
 
   return (
     <div className="flex flex-col flex-grow">
@@ -80,8 +98,19 @@ export default function Products() {
             experience and make every task seamless. From cutting-edge
             technology to timeless classics, we have something for everyone.
           </p>
-          {/* Do search */}
-          <Search fetchData={fetchData} query={query} setQuery={setQuery} />
+
+          {/* Search */}
+          <form onSubmit={handleSubmit} action="#" className="w-full">
+            <Input
+              aria-label="Search"
+              placeholder="Type and press enter..."
+              type="search"
+              value={query}
+              onChange={handleQueryChange}
+              startContent={<FaSearch />}
+              size="lg"
+            />
+          </form>
         </div>
       </div>
 
@@ -89,13 +118,14 @@ export default function Products() {
       <OffersDisplay />
 
       {/* Products Card */}
-      {query.length > 0 && (
-        <p>Results for : {query}</p>
-      )}
       <div className="flex flex-col flex-grow justify-between">
+        <div className="flex items-center justify-center gap-4 p-4">
+          {query.length > 0 && <p>Results for : {query}</p>}
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2 pb-4">
+          
           {isLoading &&
-            Array.from(array.keys()).map((index) => (
+            Array.from(array.keys()).map((index) => ( 
               <SkeletonProduct key={index} />
             ))}
 
