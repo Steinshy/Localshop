@@ -1,7 +1,6 @@
 "use client";
 
-import { Image } from "@nextui-org/react";
-import { Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody, Image } from "@nextui-org/react";
 
 const OffersDisplay = () => {
   return (

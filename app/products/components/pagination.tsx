@@ -9,46 +9,42 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Skeleton } from "@nextui-org/react";
 
 // Interface - Generation
-import { PaginationInterface, generateClamp } from "../../utils/interfaces";
+import { PaginationInterface, PaginationButtonInterface, generateClamp } from "../../utils/interfaces";
+
+
+const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, children, startContent, endContent }) => (
+    <Button
+      isDisabled={isDisabled}
+      size="sm"
+      variant="flat"
+      onClick={onClick}
+      startContent={startContent}
+      endContent={endContent}>
+      
+      {children}
+    </Button>
+);
 
 const Pagination: FC<PaginationInterface> = ({ isLoading, total, skip, limit, previousPage, nextPage }) => {
-
+  
   return (
     <div className="flex flex-grow justify-between px-2 mb-4">
-      <Skeleton isLoaded={!isLoading} classNames={{
-        base: "rounded-md",
-      }}>
-        <Button
-          isDisabled={skip <= 0}
-          size="sm"
-          variant="flat"
-          onClick={previousPage}
-          startContent={<FaChevronLeft />}
-        >
+      <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
+        <PaginationButton isDisabled={skip <= 0} onClick={previousPage} startContent={<FaChevronLeft />}>
           Previous
-        </Button>
+        </PaginationButton>
       </Skeleton>
 
-      <Skeleton isLoaded={!isLoading} classNames={{
-        base: isLoading ? "rounded-full" : ""
-      }}>
+      <Skeleton isLoaded={!isLoading} classNames={{ base: isLoading ? "rounded-full" : ""}}>
         <p className="text-sm text-foreground/40">
           Displaying {generateClamp(skip + limit, 0, total)} items of {total}
         </p>
       </Skeleton>
+      <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
 
-      <Skeleton isLoaded={!isLoading} classNames={{
-        base: "rounded-md",
-      }}>
-        <Button
-          isDisabled={skip + limit >= total}
-          size="sm"
-          variant="flat"
-          onClick={nextPage}
-          endContent={<FaChevronRight />}
-        >
-          Next
-        </Button>
+      <PaginationButton isDisabled={skip + limit >= total} onClick={nextPage} startContent="" endContent={<FaChevronRight />}>
+        Next
+      </PaginationButton>
       </Skeleton>
     </div>
   );

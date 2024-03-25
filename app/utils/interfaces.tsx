@@ -43,6 +43,13 @@ export type CartItem = {
   thumbnail: string;
 };
 
+// Search
+export type SearchProps = {
+  fetchData: () => Promise<void>;
+  query: string;
+  setQuery: (query: string) => void;
+}
+
 // Footer
 export type LinkItemProps = {
   text?: string;
@@ -64,6 +71,14 @@ export type PaginationInterface = {
   previousPage: () => void;
   nextPage: () => void;
 };
+
+export type PaginationButtonInterface = {
+  isDisabled: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+}
 
 // Generation
 export function generateSlug(title: string): string {
