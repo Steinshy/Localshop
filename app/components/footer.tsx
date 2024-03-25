@@ -6,9 +6,9 @@ import { DiCssdeck } from "react-icons/di";
 import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare } from "react-icons/fa";
 
 // interface - LinkItemProps
-import { LinkItemProps } from "../utils/interfaces";
+import { FooterInterface } from "../utils/interfaces";
 
-const LinkItem = ({ text, isTag = false, tagText }: LinkItemProps) => {
+const FooterItemLink = ({ text, isTag = false, tagText }: FooterInterface) => {
   return (
     <li>
       <Link href="#" className="text-sm" color="foreground">
@@ -34,11 +34,11 @@ export default function Footer() {
               Localshop
             </h5>
             <ul>
-              <LinkItem text="Careers" />
-              <LinkItem text="News" />
-              <LinkItem text="Policies" />
-              <LinkItem text="Help" />
-              <LinkItem text="Diversity & Belonging" />
+              <FooterItemLink text="Careers" />
+              <FooterItemLink text="News" />
+              <FooterItemLink text="Policies" />
+              <FooterItemLink text="Help" />
+              <FooterItemLink text="Diversity & Belonging" />
             </ul>
           </div>
 
@@ -48,11 +48,11 @@ export default function Footer() {
               Categories
             </h5>
             <ul>
-              <LinkItem text="Trust &amp; Safety" />
-              <LinkItem text="Travel Credit" />
-              <LinkItem text="Gift Cards" />
-              <LinkItem text="Airbnb Citizen" />
-              <LinkItem text="Things To Do" isTag={true} tagText="New" />
+              <FooterItemLink text="Trust &amp; Safety" />
+              <FooterItemLink text="Travel Credit" />
+              <FooterItemLink text="Gift Cards" />
+              <FooterItemLink text="Airbnb Citizen" />
+              <FooterItemLink text="Things To Do" isTag={true} tagText="New" />
             </ul>
           </div>
 
@@ -70,9 +70,9 @@ export default function Footer() {
               </Button>
             </div>
             <ul>
-              <LinkItem text="Terms" />
-              <LinkItem text="Privacy" />
-              <LinkItem text="Site Map" />
+              <FooterItemLink text="Terms" />
+              <FooterItemLink text="Privacy" />
+              <FooterItemLink text="Site Map" />
             </ul>
           </div>
         </div>

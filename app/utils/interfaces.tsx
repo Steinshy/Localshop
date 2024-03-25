@@ -1,3 +1,17 @@
+// Navbar
+export type NavbarInterface =  {
+  href: string;
+  isActive: boolean;
+  children: React.ReactNode;
+};
+
+// Footer
+export type FooterInterface = {
+  text?: string;
+  isTag?: boolean;
+  tagText?: string;
+};
+
 // productsCardProps
 export type ProductCardProps = {
   product: ProductInterface;
@@ -49,13 +63,6 @@ export type SearchProps = {
   query: string;
   setQuery: (query: string) => void;
 }
-
-// Footer
-export type LinkItemProps = {
-  text?: string;
-  isTag?: boolean;
-  tagText?: string;
-};
 
 // BreadCrumb
 export type BreadcrumbProps = {

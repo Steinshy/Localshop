@@ -1,7 +1,14 @@
 "use client";
 
 // React Context for Cart
-import React, { useState, useEffect, createContext, Dispatch, SetStateAction, Context } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  Dispatch,
+  SetStateAction,
+  Context,
+} from "react";
 
 // Interface - CartItem
 import { CartItem } from "../utils/interfaces";
@@ -23,7 +30,9 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const getCartData = async () => {
       try {
-        const data = (await JSON.parse(localStorage.getItem("cart") || "[]")) as CartItem[];
+        const data = (await JSON.parse(
+          localStorage.getItem("cart") || "[]"
+        )) as CartItem[];
         setCart(data);
         setCartChecked(true);
       } catch (error) {
