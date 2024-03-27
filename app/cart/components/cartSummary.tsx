@@ -1,0 +1,61 @@
+
+import { FC } from "react";
+// NextLink - NextUI
+import { Button } from "@nextui-org/react";
+import Link from "next/link";
+
+import CartCoupons from '../components/cartCoupons';
+
+// React Icons
+import { FaArrowRight } from "react-icons/fa";
+
+import { CartItemProps } from "../../utils/interfaces";
+
+const CartSummary: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
+  return (
+    <>
+      <div className="border-2 border-current p-4 rounded-md bg-background text-default-100">
+        <h2 className="text-2xl font-semibold mb-4 text-foreground">
+          Order summary
+        </h2>
+        {/* Cart Summary without coupon reductions */}
+        <div className="grid grid-cols-2 gap-4 text-foreground">
+          <p className="text-lg">Subtotal:</p>
+          <p className="text-lg">€{totalPrice}</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 text-foreground">
+          <p className="text-lg">Shipping:</p>
+          <p className="text-lg">€0</p>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 text-foreground">
+          <p className="text-lg">Taxes:</p>
+          <p className="text-lg">€0</p>
+        </div>
+
+        {/* COUPONS */}
+        <CartCoupons cart={cart} totalPrice={totalPrice} isLoading={isLoading} />
+
+
+        {/* Checkout Redirection */}
+        <div className="grid grid-cols-2 gap-4">
+          <Button
+            color="success"
+            variant="solid"
+            href="/checkout"
+            as={Link}
+            endContent={<FaArrowRight />}
+            className="text-white col-span-2"
+            size="lg"
+            radius="sm"
+            isDisabled={cart.quantity <= 0 || isLoading}
+          >
+            Checkout
+          </Button>
+        </div>
+      </div>
+      </>
+  );
+};
+export default CartSummary;

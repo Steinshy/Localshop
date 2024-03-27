@@ -57,6 +57,12 @@ export type CartItem = {
   thumbnail: string;
 };
 
+export type CartItemProps = {
+  cart: CartItem;
+  totalPrice: number;
+  isLoading: boolean;
+}
+
 // Search
 export type SearchProps = {
   fetchData: () => Promise<void>;

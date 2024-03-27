@@ -5,38 +5,20 @@ import { useContext, useEffect, useState } from "react";
 
 // Components - Generation
 import { CartContext } from "../utils/cartProvider";
-import { generateSlug } from "../utils/interfaces";
 
-import { Chip } from "@nextui-org/react";
-
-// Formik
-import { Formik, Form, Field } from "formik";
-import { FaRegCircleCheck } from "react-icons/fa6";
-
-// NextLink - NextUI
-import { Image, Button, Input, Spinner } from "@nextui-org/react";
-import Link from "next/link";
-
-// React Icons
-import {
-  FaTrash,
-  FaCartArrowDown,
-  FaArrowLeft,
-  FaArrowRight,
-} from "react-icons/fa";
+import CartItems from "./components/cartItems";
+import CartSummary from "./components/cartSummary";
 
 export default function Cart() {
+  // Cart Store context
   const cartStore = useContext(CartContext);
   const [isLoading, setIsLoading] = useState(true);
+  // Cart
   const [cartChecked, setCartChecked] = useState(false);
   const [cart, setCart] = useState(cartStore.data);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  // Coupon
-  const [applyCoupon, setApplyCoupon] = useState(false);
-  const [discount, setDiscount] = useState<number>(0);
-  const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
-
+  // Calculate Total Price
   useEffect(() => {
     const calculateTotal = () => {
       let total = 0;
@@ -49,302 +31,22 @@ export default function Cart() {
     calculateTotal();
   }, [cartStore.data]);
 
+  // Cart check
   useEffect(() => {
     setCart(cartStore.data);
     setCartChecked(true);
   }, [cartStore.data]);
 
+  // Cart check with loading
   useEffect(() => {
     if (!cartChecked) return;
     setIsLoading(false);
   }, [cartChecked]);
 
-  const handleUpdateCart = (
-    event: React.MouseEvent<HTMLElement>,
-    id: number
-  ) => {
-    event.preventDefault();
-
-    const newCart = cartStore.data.filter((item) => item.id !== id);
-    cartStore.update(newCart);
-  };
-
-  const handleQuantityChange = (value: string, id: number) => {
-    const newCart = cartStore.data.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: parseInt(value) };
-      }
-      return item;
-    });
-    cartStore.update(newCart);
-  };
-  const handleDiscount = (value: number) => {
-    setApplyCoupon(true);
-    setDiscount(value);
-    const calculatedDiscount = totalPrice - totalPrice * (value / 100);
-    setTotalPriceDiscount(calculatedDiscount);
-  };
-
-  const handleRemoveCoupon = () => {
-    setApplyCoupon(false);
-    setDiscount(0);
-    setTotalPriceDiscount(0);
-  };
-
   return (
     <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
-      {/* LEFT */}
-      <div className="flex flex-col col-span-1 lg:col-span-2">
-        <div className="flex justify-end items-center mb-4">
-          <Button
-            color="default"
-            variant="light"
-            onClick={() => cartStore.update([])}
-            startContent={<FaTrash className="text-foreground/50" />}
-            size="sm"
-            isDisabled={cart.length <= 0}
-            className="text-foreground/50"
-          >
-            Delete Cart
-          </Button>
-        </div>
-        {cart.length <= 0 ? (
-          <div className="flex flex-col flex-grow items-center justify-center">
-            {isLoading ? (
-              <Spinner size="lg" color="warning" label="Loading Cart..." />
-            ) : (
-              <>
-                <FaCartArrowDown className="text-8xl text-foreground" />
-                <p className="text-lg text-center mt-4">Your cart is empty</p>
-
-                <Button
-                  color="primary"
-                  variant="flat"
-                  href="/products"
-                  as={Link}
-                  className="mt-4"
-                  endContent={<FaArrowRight />}
-                >
-                  Start shopping
-                </Button>
-              </>
-            )}
-          </div>
-        ) : (
-          <ul className="flex flex-col flex-grow">
-            {cart.map((item) => {
-              const slug = generateSlug(item.title);
-              return (
-                <li
-                  key={item.id}
-                  className="p-2 bg-background border-2 border-current text-default-100 rounded-md mb-2"
-                >
-                  <div className="grid grid-cols-2">
-                    <div className="flex justify-start items-center">
-                      <Link href={`/products/${item.id}/${slug}`}>
-                        <Image
-                          src={item.thumbnail}
-                          alt={item.title}
-                          classNames={{
-                            img: "w-16 h-16 object-cover",
-                            wrapper: "mr-4",
-                          }}
-                          radius="md"
-                          shadow="none"
-                        />
-                      </Link>
-                      <p className="text-lg text-foreground font-semibold">
-                        {item.title}
-                      </p>
-                    </div>
-                    <div className="flex justify-end items-start">
-                      <Button
-                        color="default"
-                        variant="light"
-                        className="text-foreground/25"
-                        onClick={(e) => handleUpdateCart(e, item.id)}
-                        startContent={<FaTrash />}
-                        isIconOnly
-                        size="sm"
-                      />
-                    </div>
-                  </div>
-                  {/* Single item information */}
-                  <hr className="my-4" />
-
-                  <div className="grid grid-cols-3 gap-4">
-                    <p className="text-md text-foreground/50">Price</p>
-                    <p className="text-md text-foreground/50">Quantity</p>
-                    <p className="text-md text-foreground/50">Total</p>
-                  </div>
-
-                  <div className="grid grid-cols-3 gap-4">
-                    <p className="text-lg text-foreground">€{item.price}</p>
-                    <Input
-                      type="number"
-                      value={item.quantity.toString()}
-                      onChange={(e) =>
-                        handleQuantityChange(e.target.value, item.id)
-                      }
-                    />
-                    <p className="text-lg text-foreground">
-                      €{item.price * item.quantity}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-
-        {/* Add condition */}
-        {cart.length > 0 && (
-          <div className="flex justify-start items-center mt-4">
-            <Button
-              color="default"
-              variant="light"
-              href="/products"
-              as={Link}
-              startContent={<FaArrowLeft className="text-foreground/50" />}
-              className="text-foreground/50"
-            >
-              Continue shopping
-            </Button>
-          </div>
-        )}
-      </div>
-
-      {/* RIGHT */}
-      <div>
-        <div className="border-2 border-current p-4 rounded-md bg-background text-default-100">
-          <h2 className="text-2xl font-semibold mb-4 text-foreground">
-            Order summary
-          </h2>
-          {/* Cart Summary without coupon reductions */}
-          <div className="grid grid-cols-2 gap-4 text-foreground">
-            <p className="text-lg">Subtotal:</p>
-            <p className="text-lg">€{totalPrice}</p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 text-foreground">
-            <p className="text-lg">Shipping:</p>
-            <p className="text-lg">€0</p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 text-foreground">
-            <p className="text-lg">Taxes:</p>
-            <p className="text-lg">€0</p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4 text-foreground">
-            <p className="text-lg">Discount:</p>
-            <p className="text-lg">%{discount}</p>
-          </div>
-
-          <hr className="my-4" />
-          <div className="grid grid-cols-2 gap-4 text-foreground">
-            <p className="text-lg">Total:</p>
-            {/* Here place the total with or wothout discount */}
-            <p className="text-lg">
-              €{applyCoupon ? totalPriceDiscount : totalPrice}
-            </p>
-          </div>
-
-          <hr className="my-4" />
-          <p className="text-small mb-4 text-foreground/75 italic">
-            Shipping and taxes will be calculated at checkout
-          </p>
-
-          {/* Coupon Validation */}
-          <Formik
-            initialValues={{ coupon: "" }}
-            validate={(values) => {
-              const errors: { coupon?: string } = {};
-              if (!values.coupon) {
-                errors.coupon = "Required";
-              }
-              return errors;
-            }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                if (values.coupon === "UserCoupon1234") {
-                  handleDiscount(10);
-                } else {
-                  alert("Your Coupon is invalide!");
-                }
-                setSubmitting(false);
-              }, 400);
-            }}
-          >
-            <Form className="grid col-auto gap-4 my-4">
-              <Field
-                as={Input}
-                className="col-span-2"
-                name="coupon"
-                type="text"
-                isDisabled={cart.length <= 0 || isLoading}
-                radius="sm"
-                isRequired
-                description="UserCoupon1234 | Is a valid code !"
-              />
-
-              <Button
-                color="primary"
-                variant="solid"
-                className="col-span-1"
-                type="submit"
-                radius="sm"
-                size="sm"
-                isDisabled={cart.length <= 0 || isLoading}
-              >
-                Apply
-              </Button>
-              <Button
-                color="danger"
-                variant="solid"
-                className="col-span-1"
-                radius="sm"
-                size="sm"
-                onClick={handleRemoveCoupon}
-                isDisabled={!applyCoupon || isLoading}
-              >
-                Delete
-              </Button>
-
-              <Chip
-                className="text-white"
-                startContent={
-                  applyCoupon ? <FaRegCircleCheck size={18} /> : null
-                }
-                size="sm"
-                color="secondary"
-                variant="solid"
-              >
-                {applyCoupon
-                  ? `Coupon ${discount}% applied`
-                  : "No coupon applied"}
-              </Chip>
-            </Form>
-          </Formik>
-
-          {/* Checkout Redirection */}
-          <div className="grid grid-cols-2 gap-4">
-            <Button
-              color="success"
-              variant="solid"
-              href="/checkout"
-              as={Link}
-              endContent={<FaArrowRight />}
-              className="text-white col-span-2"
-              size="lg"
-              radius="sm"
-              isDisabled={cart.length <= 0 || isLoading}
-            >
-              Checkout
-            </Button>
-          </div>
-        </div>
-      </div>
+      <CartItems cartStore={cartStore} cart={cart} isLoading={isLoading} />
+      <CartSummary cart={cart} totalPrice={totalPrice} isLoading={isLoading} />
     </div>
   );
 }
