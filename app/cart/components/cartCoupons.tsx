@@ -34,7 +34,7 @@ const coupons = [
 
 const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
   // Coupons
-  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; active: boolean; } | null>(null);
+  const [appliedCoupon, setAppliedCoupon] = useState<number | null>(null);
   const [discount, setDiscount] = useState<number>(0);
   const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
 
@@ -43,7 +43,7 @@ const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
     const selectedCoupon = coupons[index];
     if (!coupons[index].active) { return false }
 
-    setAppliedCoupon(coupons[index]);
+    setAppliedCoupon(index);
     setDiscount(selectedCoupon.discount);
     const calculatedDiscount = totalPrice - totalPrice * (selectedCoupon.discount / 100);
     setTotalPriceDiscount(calculatedDiscount);
@@ -147,7 +147,7 @@ const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
             color="secondary"
             variant="solid"
           >
-            {appliedCoupon ? `${appliedCoupon.code} applied` : "No coupon applied"}
+            {appliedCoupon ? `${coupons[appliedCoupon].code} applied` : "No coupon applied"}
           </Chip>
         </Form>
       </Formik>
