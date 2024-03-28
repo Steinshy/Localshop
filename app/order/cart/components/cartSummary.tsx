@@ -13,7 +13,7 @@ import { CartItemProps } from "../../../utils/interfaces";
 const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPriceDiscount, totalPrice, isLoading }) => {
   const pathname = usePathname()
   // PathName = order/cart or order/checkout or order/shopping - 
-  const orderPathName = pathname === '/order/cart' ? '/order/shipping' : pathname === '/order/checkout' ? '/order/shipping' : '/order/checkout'
+  const orderPathName = pathname === '/order/cart' ? '/order/shipping' : pathname === '/order/checkout' ? '' : '/order/checkout'
   
   return (
     <>
