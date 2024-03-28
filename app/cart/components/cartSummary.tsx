@@ -10,7 +10,7 @@ import CartCoupons from '../components/cartCoupons';
 import { FaArrowRight } from "react-icons/fa";
 import { CartItemProps } from "../../utils/interfaces";
 
-const CartSummary: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
+const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPriceDiscount, totalPrice, isLoading }) => {
   return (
     <>
       <div className="border-2 border-current p-4 rounded-md bg-background text-default-100">
@@ -34,7 +34,7 @@ const CartSummary: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
         </div>
 
         {/* COUPONS */}
-        <CartCoupons totalPrice={totalPrice} isLoading={isLoading} />
+        <CartCoupons setTotalPriceDiscount={setTotalPriceDiscount} totalPriceDiscount={totalPriceDiscount} totalPrice={totalPrice} isLoading={isLoading} />
 
         {/* Checkout Redirection */}
         <div className="grid grid-cols-2 gap-4">

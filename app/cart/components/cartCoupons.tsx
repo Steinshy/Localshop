@@ -32,11 +32,11 @@ const coupons = [
   },
 ];
 
-const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
+const CartCoupons: FC<CartItemProps> = ({ setTotalPriceDiscount, totalPriceDiscount, totalPrice, isLoading }) => {
   // Coupons
   const [appliedCoupon, setAppliedCoupon] = useState<number | null>(null);
   const [discount, setDiscount] = useState<number>(0);
-  const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
+  
 
   // Coupon Handler - Discount
   const handleDiscount = (index: number) => {
@@ -69,7 +69,17 @@ const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
         <p className="text-lg">Total:</p>
         {/* Here place the total with or wothout discount */}
         <p className="text-lg">
-          €{appliedCoupon ? totalPriceDiscount : totalPrice}
+          €{totalPrice}
+          {appliedCoupon !== null && (
+            <>
+              <div className="text-sm text-foreground/75">
+                -{discount}% discount
+              </div>
+              <div className="text-md text-foreground">
+                €{totalPriceDiscount}
+              </div>
+            </>
+          )}
         </p>
       </div>
 
@@ -91,7 +101,6 @@ const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             const couponIndex = coupons.findIndex((coupon) => coupon.code === values.coupon);
-            console.log(couponIndex);
             if (couponIndex === -1) {
               alert("Your coupon is invalid!");
             } else {
@@ -142,12 +151,12 @@ const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
 
           <Chip
             className="text-white"
-            startContent={appliedCoupon ? <FaRegCircleCheck size={18} /> : null}
+            startContent={appliedCoupon !== null ? <FaRegCircleCheck size={18} /> : null}
             size="sm"
             color="secondary"
             variant="solid"
           >
-            {appliedCoupon ? `${coupons[appliedCoupon].code} applied` : "No coupon applied"}
+            {appliedCoupon !== null ? `${coupons[appliedCoupon].code} applied` : "No coupon applied"}
           </Chip>
         </Form>
       </Formik>
