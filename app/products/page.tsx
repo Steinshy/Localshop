@@ -40,7 +40,7 @@ export default function Products() {
   const fetchData = useCallback(async () => {
     try {
       const base_url = `/products?limit=${limit}&skip=${skip}`;
-      const search_url = `/products/search?limit=${limit}&skip=${skip}&query=${query}`;
+      const search_url = `/products/search?limit=${limit}&skip=${skip}&q=${query}`;
       const url = query.length > 0 ? search_url : base_url;
       const response = await http.get<ProductDataProps>(url);
       const { products, total } = response?.data || {};
