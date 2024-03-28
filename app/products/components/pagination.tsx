@@ -12,7 +12,7 @@ import { Skeleton } from "@nextui-org/react";
 import { PaginationInterface, PaginationButtonInterface, generateClamp } from "../../utils/interfaces";
 
 
-const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, children, startContent, endContent }) => (
+const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, children, startContent = null, endContent = null }) => (
     <Button
       isDisabled={isDisabled}
       size="sm"
@@ -42,7 +42,7 @@ const Pagination: FC<PaginationInterface> = ({ isLoading, total, skip, limit, pr
       </Skeleton>
       <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
 
-      <PaginationButton isDisabled={skip + limit >= total} onClick={nextPage} startContent="" endContent={<FaChevronRight />}>
+      <PaginationButton isDisabled={skip + limit >= total} onClick={nextPage} endContent={<FaChevronRight />}>
         Next
       </PaginationButton>
       </Skeleton>

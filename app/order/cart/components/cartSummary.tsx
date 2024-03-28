@@ -16,8 +16,8 @@ const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPric
   const orderPathName = pathname === '/order/cart' ? '/order/shipping' : pathname === '/order/checkout' ? '' : '/order/checkout'
   
   return (
-    <>
-      <div className="border-2 border-current p-4 rounded-md bg-background text-default-100">
+    <div>
+      <div className="sticky top-[70px] border-2 border-current p-4 rounded-md bg-background text-default-100">
         <h2 className="text-2xl font-semibold mb-4 text-foreground">
           Order summary
         </h2>
@@ -57,7 +57,7 @@ const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPric
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default CartSummary;

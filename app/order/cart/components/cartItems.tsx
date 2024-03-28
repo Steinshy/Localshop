@@ -23,7 +23,7 @@ const CartItems = ({ cartStore, cart, isLoading,}: { cartStore: any; cart: any; 
 
   return (
     <div className="flex flex-col col-span-1 lg:col-span-2">
-      <div className="flex justify-between my-4">
+      <div className="flex justify-between items-center mb-4">
         {cart.length > 0 && (
             <Button
               color="default"
