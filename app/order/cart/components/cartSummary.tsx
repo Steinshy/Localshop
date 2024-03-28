@@ -3,7 +3,7 @@ import { FC } from "react";
 // NextLink - NextUI
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-
+import { usePathname } from 'next/navigation'
 import CartCoupons from './cartCoupons';
 
 // React Icons
@@ -11,6 +11,10 @@ import { FaArrowRight } from "react-icons/fa";
 import { CartItemProps } from "../../../utils/interfaces";
 
 const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPriceDiscount, totalPrice, isLoading }) => {
+  const pathname = usePathname()
+  // PathName = order/cart or order/checkout or order/shopping - 
+  const orderPathName = pathname === '/order/cart' ? '/order/shipping' : pathname === '/order/checkout' ? '/order/shipping' : '/order/checkout'
+  
   return (
     <>
       <div className="border-2 border-current p-4 rounded-md bg-background text-default-100">
@@ -41,7 +45,7 @@ const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPric
           <Button
             color="success"
             variant="solid"
-            href="/checkout"
+            href={orderPathName}
             as={Link}
             endContent={<FaArrowRight />}
             className="text-white col-span-2"
@@ -49,7 +53,7 @@ const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPric
             radius="sm"
             isDisabled={cart.quantity <= 0 || isLoading}
           >
-            Checkout
+            {pathname === '/order/cart' ? 'Proceed to Shipping' : pathname === '/order/checkout' ? 'Proceed to Payment' : 'Proceed to Checkout'}
           </Button>
         </div>
       </div>
