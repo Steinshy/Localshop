@@ -70,13 +70,13 @@ const CartItems = ({ cartStore, cart, isLoading,}: { cartStore: any; cart: any; 
           )}
         </div>
       ) : (
-        <ul className="flex flex-col flex-grow">
+        <ul className="flex flex-col flex-grow gap-2">
           {cart.map((item) => {
             const slug = generateSlug(item.title);
             return (
               <li
                 key={item.id}
-                className="p-2 bg-background border-2 border-current text-default-100 rounded-md mb-2"
+                className="p-2 bg-background border-2 border-current text-default-100 rounded-md"
               >
                 <div className="grid grid-cols-2">
                   <div className="flex justify-start items-center">
