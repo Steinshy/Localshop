@@ -23,13 +23,24 @@ const CartItems = ({ cartStore, cart, isLoading,}: { cartStore: any; cart: any; 
 
   return (
     <div className="flex flex-col col-span-1 lg:col-span-2">
-      <div className="flex justify-end items-center mb-4">
+      <div className="flex justify-between my-4">
+        {cart.length > 0 && (
+            <Button
+              color="default"
+              variant="light"
+              href="/products"
+              as={Link}
+              startContent={<FaArrowLeft className="text-foreground/50" />}
+              className="text-foreground/50"
+            >
+              Continue shopping
+            </Button>
+        )}
         <Button
           color="default"
           variant="light"
           onClick={() => cartStore.update([])}
           startContent={<FaTrash className="text-foreground/50" />}
-          size="sm"
           isDisabled={cart.length <= 0}
           className="text-foreground/50"
         >
@@ -123,22 +134,6 @@ const CartItems = ({ cartStore, cart, isLoading,}: { cartStore: any; cart: any; 
             );
           })}
         </ul>
-      )}
-
-      {/* Add condition */}
-      {cart.length > 0 && (
-        <div className="flex justify-start items-center mt-4">
-          <Button
-            color="default"
-            variant="light"
-            href="/products"
-            as={Link}
-            startContent={<FaArrowLeft className="text-foreground/50" />}
-            className="text-foreground/50"
-          >
-            Continue shopping
-          </Button>
-        </div>
       )}
     </div>
   );
