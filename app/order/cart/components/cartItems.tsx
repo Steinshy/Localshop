@@ -1,4 +1,4 @@
-import { generateSlug } from "../../utils/interfaces";
+import { generateSlug } from "../../../utils/interfaces";
 import { Image, Spinner, Button, Input } from "@nextui-org/react";
 import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Link from "next/link";
