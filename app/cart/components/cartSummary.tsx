@@ -8,7 +8,6 @@ import CartCoupons from '../components/cartCoupons';
 
 // React Icons
 import { FaArrowRight } from "react-icons/fa";
-
 import { CartItemProps } from "../../utils/interfaces";
 
 const CartSummary: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
@@ -35,8 +34,7 @@ const CartSummary: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
         </div>
 
         {/* COUPONS */}
-        <CartCoupons cart={cart} totalPrice={totalPrice} isLoading={isLoading} />
-
+        <CartCoupons totalPrice={totalPrice} isLoading={isLoading} />
 
         {/* Checkout Redirection */}
         <div className="grid grid-cols-2 gap-4">
@@ -55,7 +53,7 @@ const CartSummary: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
           </Button>
         </div>
       </div>
-      </>
+    </>
   );
 };
 export default CartSummary;

@@ -9,22 +9,50 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 
 import { CartItemProps } from "../../utils/interfaces";
 
-const CartCoupons: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
+const coupons = [
+  {
+    code: "DISCOUNT10",
+    discount: 10,
+    active: true,
+  },
+  {
+    code: "DISCOUNT20",
+    discount: 20,
+    active: true,
+  },
+  {
+    code: "DISCOUNT50",
+    discount: 50,
+    active: true,
+  },
+  {
+    code: "DISCOUNTEXPIRED",
+    discount: 0,
+    active: false,
+  },
+];
+
+const CartCoupons: FC<CartItemProps> = ({ totalPrice, isLoading }) => {
   // Coupons
-  const [applyCoupon, setApplyCoupon] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; active: boolean; } | null>(null);
   const [discount, setDiscount] = useState<number>(0);
   const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
 
   // Coupon Handler - Discount
-  const handleDiscount = (value: number) => {
-    setApplyCoupon(true);
-    setDiscount(value);
-    const calculatedDiscount = totalPrice - totalPrice * (value / 100);
+  const handleDiscount = (index: number) => {
+    const selectedCoupon = coupons[index];
+    if (!coupons[index].active) { return false }
+
+    setAppliedCoupon(coupons[index]);
+    setDiscount(selectedCoupon.discount);
+    const calculatedDiscount = totalPrice - totalPrice * (selectedCoupon.discount / 100);
     setTotalPriceDiscount(calculatedDiscount);
+    return true;
   };
+
   // Coupon Handler - Remove
   const handleRemoveCoupon = () => {
-    setApplyCoupon(false);
+    setAppliedCoupon(null);
     setDiscount(0);
     setTotalPriceDiscount(0);
   };
@@ -33,7 +61,7 @@ const CartCoupons: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
     <div>
       <div className="grid grid-cols-2 gap-4 text-foreground">
         <p className="text-lg">Discount:</p>
-        <p className="text-lg">%{discount}</p>
+        <p className="text-lg">{discount}%</p>
       </div>
 
       <hr className="my-4" />
@@ -41,7 +69,7 @@ const CartCoupons: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
         <p className="text-lg">Total:</p>
         {/* Here place the total with or wothout discount */}
         <p className="text-lg">
-          €{applyCoupon ? totalPriceDiscount : totalPrice}
+          €{appliedCoupon ? totalPriceDiscount : totalPrice}
         </p>
       </div>
 
@@ -62,11 +90,18 @@ const CartCoupons: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
         }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            if (values.coupon === "UserCoupon1234") {
-              handleDiscount(10);
+            const couponIndex = coupons.findIndex((coupon) => coupon.code === values.coupon);
+            console.log(couponIndex);
+            if (couponIndex === -1) {
+              alert("Your coupon is invalid!");
             } else {
-              alert("Your Coupon is invalide!");
+              if (!handleDiscount(couponIndex)) {
+                alert("Your coupon is expired!");
+              } else {
+                values.coupon = "";
+              }
             }
+            
             setSubmitting(false);
           }, 400);
         }}
@@ -77,10 +112,9 @@ const CartCoupons: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
             className="col-span-2"
             name="coupon"
             type="text"
-            isDisabled={cart.quantity <= 0 || isLoading}
+            isDisabled={isLoading}
             radius="sm"
             isRequired
-            description="UserCoupon1234 | Is a valid code !"
           />
 
           <Button
@@ -90,7 +124,7 @@ const CartCoupons: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
             type="submit"
             radius="sm"
             size="sm"
-            // isDisabled={cart.length <= 0 || isLoading}
+            isDisabled={isLoading}
           >
             Apply
           </Button>
@@ -101,19 +135,19 @@ const CartCoupons: FC<CartItemProps> = ({ cart, totalPrice, isLoading }) => {
             radius="sm"
             size="sm"
             onClick={handleRemoveCoupon}
-            isDisabled={!applyCoupon || isLoading}
+            isDisabled={!appliedCoupon || isLoading}
           >
             Delete
           </Button>
 
           <Chip
             className="text-white"
-            startContent={applyCoupon ? <FaRegCircleCheck size={18} /> : null}
+            startContent={appliedCoupon ? <FaRegCircleCheck size={18} /> : null}
             size="sm"
             color="secondary"
             variant="solid"
           >
-            {applyCoupon ? `Coupon ${discount}% applied` : "No coupon applied"}
+            {appliedCoupon ? `${appliedCoupon.code} applied` : "No coupon applied"}
           </Chip>
         </Form>
       </Formik>

@@ -58,7 +58,7 @@ export type CartItem = {
 };
 
 export type CartItemProps = {
-  cart: CartItem;
+  cart: CartItem[];
   totalPrice: number;
   isLoading: boolean;
 }

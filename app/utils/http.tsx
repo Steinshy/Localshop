@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig, In
 import { setupCache } from "axios-cache-interceptor";
 
 const config: AxiosRequestConfig = {
-  baseURL: "http://localhost:3005",
+  baseURL: "https://dummyjson.com",
   headers: { "Content-Type": "application/json" },
 };
 
