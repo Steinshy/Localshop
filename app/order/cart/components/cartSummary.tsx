@@ -4,11 +4,11 @@ import { FC } from "react";
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
 
-import CartCoupons from '../components/cartCoupons';
+import CartCoupons from './cartCoupons';
 
 // React Icons
 import { FaArrowRight } from "react-icons/fa";
-import { CartItemProps } from "../../utils/interfaces";
+import { CartItemProps } from "../../../utils/interfaces";
 
 const CartSummary: FC<CartItemProps> = ({ cart, setTotalPriceDiscount, totalPriceDiscount, totalPrice, isLoading }) => {
   return (

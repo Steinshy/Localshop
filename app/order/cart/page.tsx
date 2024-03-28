@@ -6,8 +6,8 @@ import { useContext, useEffect, useState } from "react";
 // Components - Generation
 import { CartContext } from "../utils/cartProvider";
 
-import CartItems from "./components/cartItems";
-import CartSummary from "./components/cartSummary";
+import CartItems from "./cart/components/cartItems";
+import CartSummary from "./cart/components/cartSummary";
 
 export default function Cart() {
   // Cart Store context

@@ -7,7 +7,7 @@ import { Chip } from "@nextui-org/react";
 import { Formik, Form, Field } from "formik";
 import { FaRegCircleCheck } from "react-icons/fa6";
 
-import { CartItemProps } from "../../utils/interfaces";
+import { CartItemProps } from "../../../utils/interfaces";
 
 const coupons = [
   {

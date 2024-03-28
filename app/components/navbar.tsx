@@ -45,7 +45,7 @@ const CartBadge: FC<{ quantity: number }> = ({ quantity }) => {
       color="danger"
       placement="top-right"
       variant="shadow">
-      <Button as={Link} href="/cart" isIconOnly variant="light">
+      <Button as={Link} href="/order/cart" isIconOnly variant="light">
         <FaCartArrowDown className="text-2xl" />
       </Button>
     </Badge>
