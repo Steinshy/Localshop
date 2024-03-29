@@ -17,6 +17,24 @@ export const siteConfig = {
       href: "/about",
     },
   ],
+  userItems: [
+    {
+      label: "Profile",
+      href: "/user/profile",
+    },
+    {
+      label: "Settings",
+      href: "/user/settings",
+    },
+    {
+      label: "Orders",
+      href: "/user/orders",
+    },
+    {
+      label: "Log Out",
+      href: "/user/logout",
+    },
+  ],
 
   links: {
     github: "https://github.com",
