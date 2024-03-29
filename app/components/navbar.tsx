@@ -16,6 +16,11 @@ import {
   NavbarItem,
   Navbar,
   Badge,
+  Avatar,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown
 } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown } from "react-icons/fa";
@@ -26,6 +31,7 @@ import { NavbarInterface } from "../utils/interfaces";
 // Utils - Site Config - CartContext
 import { siteConfig } from "../utils/siteConfig";
 import { CartContext } from "../utils/cartProvider";
+import { UserContext } from "../utils/userProvider";
 import { ThemeSwitcher } from "../utils/themeSwitcher";
 
 const NavbarItemLink: FC<NavbarInterface> = ({ href, isActive, children }) => {
@@ -44,7 +50,9 @@ const CartBadge: FC<{ quantity: number }> = ({ quantity }) => {
       content={quantity > 0 ? quantity : null}
       color="danger"
       placement="top-right"
-      variant="shadow">
+      variant="shadow"
+      isInvisible={quantity === 0}
+    >
       <Button as={Link} href="/order/cart" isIconOnly variant="light">
         <FaCartArrowDown className="text-2xl" />
       </Button>
@@ -54,7 +62,7 @@ const CartBadge: FC<{ quantity: number }> = ({ quantity }) => {
 
 export default function Header() {
   const pathname = usePathname();
-  const cartStore = useContext(CartContext);
+  const cartStore = useContext(CartContext), userStore = useContext(UserContext);
   const cartQuantity = cartStore.data.reduce( (acc, item) => acc + item.quantity, 0);
 
   return (
@@ -78,6 +86,32 @@ export default function Header() {
         <NavbarItem>
           <CartBadge quantity={cartQuantity} />
         </NavbarItem>
+
+        {userStore.isLogged() && (
+          <NavbarItem>
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  color="primary"
+                  name={userStore.data.firstname}
+                  size="sm"
+                  // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="profile">Profile</DropdownItem>
+                <DropdownItem key="settings">Settings</DropdownItem>
+                <DropdownItem key="orders">Orders</DropdownItem>
+                <DropdownItem key="logout" color="danger">
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarItem>
+        )}
 
         <Divider orientation="vertical" />
         <NavbarItem>
