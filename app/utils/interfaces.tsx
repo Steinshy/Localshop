@@ -1,26 +1,43 @@
-// Navbar
-export type NavbarInterface =  {
+import React, {Dispatch, SetStateAction} from "react";
+
+// Utils => CartProvider
+export type CartContextType =  {
+  data: CartItemObj[];
+  update: Dispatch<SetStateAction<CartItemObj[]>>;
+}
+
+// Utils => UserProvider
+export type UserItemsObj = {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+}
+
+// Utils => UserProvider
+export type UserContextType = {
+  data: UserItemsObj
+  update: Dispatch<SetStateAction<UserItemsObj>>;
+  isLogged: () => boolean;
+}
+
+// Components => Navbar
+export type NavbarProps =  {
   href: string;
   isActive: boolean;
   children: React.ReactNode;
 };
 
-// Footer
-export type FooterInterface = {
+// Components => Footer
+export type FooterProps = {
   text?: string;
   isTag?: boolean;
   tagText?: string;
 };
 
-// productsCardProps
-export type ProductCardProps = {
-  product: ProductInterface;
-  isLoading?: boolean;
-  isIconOnly?: boolean;
-};
-
-// productsCard
-export type ProductInterface = {
+// Products / [ID]/[Slug] => Page
+export type ProductObj = {
   id: number;
   description: string;
   price: number;
@@ -30,22 +47,48 @@ export type ProductInterface = {
   images: [string];
 };
 
-// ProductDataResponse
+// Products => Page
 export type ProductDataProps = {
-  products: ProductInterface;
+  products: ProductObj;
   total: number;
   limit: number;
 };
 
-// ProductImages
+// Products => Components => ProductCard / AddToCart
+export type ProductCardProps = {
+  product: ProductObj;
+  isLoading?: boolean;
+  isIconOnly?: boolean;
+};
+
+// Products => Components => ProductImages
 export type ProductImagesProps = {
   alt: string;
   main: string;
   images: [string];
 };
 
-// CartItem
-export type CartItem = {
+// Products => Components => Pagination => PaginationProps
+export type PaginationProps = {
+  total: number;
+  skip: number;
+  limit: number;
+  isLoading: boolean;
+  previousPage: () => void;
+  nextPage: () => void;
+};
+
+// Products => Components => Pagination => PaginationProps
+export type PaginationButtonInterface = {
+  isDisabled: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+  startContent?: React.ReactNode;
+  endContent?: React.ReactNode;
+}
+
+// CartProvider => CartItem
+export type CartItemObj = {
   id: number;
   color?: string;
   size?: string;
@@ -57,40 +100,35 @@ export type CartItem = {
   thumbnail: string;
 };
 
+// Order => Cart => CartItem
 export type CartItemProps = {
-  cart: CartItem[];
+  cartStore: CartContextType;
+  cart: CartItemObj[];
+  isLoading: boolean;
+}
+
+// Order => CartSummary
+export type CartSummaryProps = {
+  cart: CartItemObj[];
+  setTotalPriceDiscount: number;
+  totalPriceDiscount: number;
   totalPrice: number;
   isLoading: boolean;
 }
 
-// Search
-export type SearchProps = {
-  fetchData: () => Promise<void>;
-  query: string;
-  setQuery: (query: string) => void;
-}
-
-// BreadCrumb
-export type BreadcrumbProps = {
-  title: string;
-}
-
-// Pagination
-export type PaginationInterface = {
-  total: number;
-  skip: number;
-  limit: number;
+// Order => CartCoupons
+export type CartCouponsProps = {
+  totalPrice: number;
+  setTotalPriceDiscount: number;
+  totalPriceDiscount: number;
   isLoading: boolean;
-  previousPage: () => void;
-  nextPage: () => void;
-};
+}
 
-export type PaginationButtonInterface = {
-  isDisabled: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-  startContent?: React.ReactNode;
-  endContent?: React.ReactNode;
+// Order => CartCoupons
+export type CouponsObject = {
+  code: string;
+  discount: number;
+  active: boolean;
 }
 
 // Generation
@@ -102,4 +140,12 @@ export function generateClamp(num: number, min: number, max: number): number {
 }
 export function generateNewProductLogo(): boolean {
   return Math.random() >= 0.5;
+}
+
+export function calculatedDiscount(selectedCoupon: CouponsObject, totalPrice: number): number {
+return (totalPrice - totalPrice * (selectedCoupon.discount / 100))
+}
+
+export function cartNavigation(pathname: string): string {
+return pathname === '/order/cart' ? '/order/shipping' : pathname === '/order/checkout' ? '' : '/order/checkout'
 }

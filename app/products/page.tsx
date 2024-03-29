@@ -11,19 +11,18 @@ import ProductCard from "./components/productCard";
 import SkeletonProduct from "./components/skeletonProduct";
 import Pagination from "./components/pagination";
 import OffersDisplay from "./components/offersDisplay";
-// import Search from "./components/search";
 import { Input } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
 
-// Interfaces - ProductInterface
-import { ProductInterface, ProductDataProps } from "../utils/interfaces";
+// Interfaces - Utils
+import { ProductObj, ProductDataProps } from "../utils/interfaces";
 
 export default function Products() {
   const limit = 12;
   const array = Array(12);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
-  const [products, setProducts] = useState<ProductInterface[]>([]);
+  const [products, setProducts] = useState<ProductObj[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState<string>("");
 
@@ -51,7 +50,6 @@ export default function Products() {
       setProducts([]);
     }
   }, [limit, skip, query]);
-
 
   // Fetch data
   useEffect(() => {

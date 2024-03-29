@@ -1,31 +1,12 @@
 "use client";
 
-// React Context for User
-import React, {
-  useState,
-  useEffect,
-  createContext,
-  Dispatch,
-  SetStateAction,
-  Context,
-} from "react";
+// Context - React
+import React, { useState, useEffect, createContext, Context } from "react";
 
-// Interface - UserItem
-interface UserItem {
-  id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  password: string;
-}
+// Interface - Utils
+import { UserItemsObj, UserContextType } from "./interfaces";
 
-interface UserContextType {
-  data: UserItem
-  update: Dispatch<SetStateAction<UserItem>>;
-  isLogged: () => boolean;
-}
-
-const UserDefaultData = {
+const UserDefaultData: UserItemsObj = {
   id: 1,
   firstname: "John",
   lastname: "Doe",
@@ -41,18 +22,18 @@ const UserContext: Context<UserContextType> = createContext<UserContextType>({
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [UserChecked, setUserChecked] = useState<boolean>(false);
-  const [User, setUser] = useState<UserItem>(UserDefaultData as UserItem);
+  const [User, setUser] = useState<UserItemsObj>(UserDefaultData);
 
   const isLogged = () => {
     return User.id !== 0;
-  }
+  };
 
   useEffect(() => {
     const getUserData = async () => {
       try {
         const data = (await JSON.parse(
           localStorage.getItem("user") || JSON.stringify(UserDefaultData)
-        )) as UserItem;
+        )) as UserItemsObj;
         setUser(data);
         setUserChecked(true);
       } catch (error) {
@@ -68,9 +49,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, [User, UserChecked]);
 
   return (
-    <UserContext.Provider value={{ data: User, update: setUser, isLogged: isLogged }}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={{ data: User, update: setUser, isLogged: isLogged }}>{children}</UserContext.Provider>
   );
 };
 

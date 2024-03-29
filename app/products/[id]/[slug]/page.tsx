@@ -3,14 +3,14 @@ import http from "../../../utils/http";
 
 // ProductImages
 import ProductImages from "../../components/productImages";
-import { ProductInterface } from "../../../utils/interfaces";
+import { ProductObj } from "../../../utils/interfaces";
 
 // Components
 import Breadcrumb from "./components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 
-async function getData(id: string): Promise<{data: ProductInterface | undefined}> {
-  let response: { data: ProductInterface } | undefined;
+async function getData(id: string): Promise<{data: ProductObj | undefined}> {
+  let response: { data: ProductObj } | undefined;
 
   try {
     response = await http.get(`/products/${id}`);

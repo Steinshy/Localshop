@@ -8,11 +8,10 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 // Squeleton
 import { Skeleton } from "@nextui-org/react";
 
-// Interface - Generation
-import { PaginationInterface, PaginationButtonInterface, generateClamp } from "../../utils/interfaces";
+// Interface - Utils - Generation
+import { PaginationProps, PaginationButtonInterface, generateClamp } from "../../utils/interfaces";
 
-
-const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, children, startContent = null, endContent = null }) => (
+const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, children, startContent, endContent }) => (
     <Button
       isDisabled={isDisabled}
       size="sm"
@@ -25,7 +24,7 @@ const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, 
     </Button>
 );
 
-const Pagination: FC<PaginationInterface> = ({ isLoading, total, skip, limit, previousPage, nextPage }) => {
+const Pagination: FC<PaginationProps> = ({ isLoading, total, skip, limit, previousPage, nextPage }) => {
   
   return (
     <div className="flex flex-grow justify-between px-2 mb-4">

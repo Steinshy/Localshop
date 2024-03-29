@@ -1,5 +1,8 @@
 "use client";
 
+// React
+import { FC } from "react";
+
 // NextUi
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/react";
 import Link from "next/link";
@@ -7,10 +10,7 @@ import Link from "next/link";
 // React icon
 import { FaHome } from "react-icons/fa";
 
-// Interface - Utils
-import { BreadcrumbProps } from "./../../../../utils/interfaces";
-
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ title }) => {
+const Breadcrumb: FC<{ title: string }> = ({ title }) => {
   return (
     <div>
       <Breadcrumbs>

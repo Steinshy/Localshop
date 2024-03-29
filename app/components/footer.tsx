@@ -5,10 +5,10 @@ import { Link, Chip, Button } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare } from "react-icons/fa";
 
-// interface - LinkItemProps
-import { FooterInterface } from "../utils/interfaces";
+// Interface - Utils
+import { FooterProps } from "../utils/interfaces";
 
-const FooterItemLink = ({ text, isTag = false, tagText }: FooterInterface) => {
+const FooterItemLink = ({ text, isTag, tagText }: FooterProps) => {
   return (
     <li>
       <Link href="#" className="text-sm" color="foreground">

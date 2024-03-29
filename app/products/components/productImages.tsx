@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
 // React - NextUi
-import { FC, useState } from 'react';
-import { Image, Link } from '@nextui-org/react';
+import { FC, useState } from "react";
+import { Image, Link } from "@nextui-org/react";
 
-// Interface - ProductImagesProps
+// Interface - Utils
 import { ProductImagesProps } from "../../utils/interfaces";
 
-const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: string, main: string, images: [string]}) => {
-
+const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {
   const [mainImage, setMainImage] = useState(main);
-  const handleImageChange = (image: string) => { setMainImage(image); }
+  const handleImageChange = (image: string) => {
+    setMainImage(image);
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -26,8 +27,12 @@ const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }: { alt: stri
       />
 
       <div className="grid grid-flow-col mt-2 gap-3 max-w-[300px]">
-        {images.map((image: string, index: number) => (
-          <Link key={index} href="#" onMouseOver={() => handleImageChange(image)}>
+        {images.map((image, index) => (
+          <Link
+            key={index}
+            href="#"
+            onMouseOver={() => handleImageChange(image)}
+          >
             <Image
               alt={alt}
               src={image}
