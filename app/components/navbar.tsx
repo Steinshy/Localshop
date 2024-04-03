@@ -20,13 +20,13 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Dropdown,
+  Dropdown
 } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown } from "react-icons/fa";
 
-// Interface - Utils
-import { NavbarProps } from "../utils/interfaces";
+// Interface
+// import { NavbarProps } from "../utils/interfaces";
 
 // Utils - Site Config - CartContext
 import { siteConfig } from "../utils/siteConfig";
@@ -34,17 +34,7 @@ import { CartContext } from "../utils/cartProvider";
 import { UserContext } from "../utils/userProvider";
 import { ThemeSwitcher } from "../utils/themeSwitcher";
 
-const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
-  return (
-    <NavbarItem isActive={isActive}>
-      <NextLink as={Link} color="foreground" href={href}>
-        {children}
-      </NextLink>
-    </NavbarItem>
-  );
-};
-
-const UserItemsLink: FC<NavbarProps> = ({ href, isActive, children }) => {
+const NavbarItemLink: FC<{ href: string; isActive: boolean; children: React.ReactNode }> = ({ href, isActive, children }) => {
   return (
     <NavbarItem isActive={isActive}>
       <NextLink as={Link} color="foreground" href={href}>
@@ -67,46 +57,13 @@ const CartBadge: FC<{ quantity: number }> = ({ quantity }) => {
         <FaCartArrowDown className="text-2xl" />
       </Button>
     </Badge>
-  );
-};
-
-const UserDropdown: FC<{ userFirstName: string }> = ({ userFirstName }) => {
-  return (
-    <Dropdown placement="bottom-end">
-      <DropdownTrigger>
-        <Avatar
-          isBordered
-          as="button"
-          className="transition-transform"
-          color="primary"
-          name={userFirstName}
-          size="sm"
-          // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-        />
-      </DropdownTrigger>
-
-      <DropdownMenu aria-label="Profile Actions" variant="flat">
-        {siteConfig.userItems.map((item) => (
-          <DropdownItem key={item.href}>
-            <UserItemsLink key={item.href} href={item.href} isActive={false}>
-              {item.label}
-            </UserItemsLink>
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
-  );
-};
+  )
+}
 
 export default function Header() {
   const pathname = usePathname();
-  const cartStore = useContext(CartContext),
-    userStore = useContext(UserContext);
-  const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
-  const userFirstName = userStore.data.firstname;
-
-  console.log("userFirstName");
-  console.log(userFirstName);
+  const cartStore = useContext(CartContext), userStore = useContext(UserContext);
+  const cartQuantity = cartStore.data.reduce( (acc, item) => acc + item.quantity, 0);
 
   return (
     <Navbar isBlurred isBordered position="sticky">
@@ -116,7 +73,11 @@ export default function Header() {
           <p className="ml-1 font-light">{siteConfig.name}</p>
         </NavbarItemLink>
         {siteConfig.navItems.map((item) => (
-          <NavbarItemLink key={item.href} href={item.href} isActive={pathname === item.href}>
+          <NavbarItemLink
+            key={item.href}
+            href={item.href}
+            isActive={pathname === item.href}
+          >
             {item.label}
           </NavbarItemLink>
         ))}
@@ -126,11 +87,31 @@ export default function Header() {
           <CartBadge quantity={cartQuantity} />
         </NavbarItem>
 
-        {userStore.isLogged() && (
+        {/* {userStore.isLogged() && (
           <NavbarItem>
-            <UserDropdown userFirstName={userFirstName} />
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  color="primary"
+                  name={userStore.data.firstname || "User"}
+                  size="sm"
+                  // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="profile">Profile</DropdownItem>
+                <DropdownItem key="settings">Settings</DropdownItem>
+                <DropdownItem key="orders">Orders</DropdownItem>
+                <DropdownItem key="logout" color="danger">
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </NavbarItem>
-        )}
+        )} */}
 
         <Divider orientation="vertical" />
         <NavbarItem>
