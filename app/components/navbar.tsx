@@ -30,8 +30,8 @@ import { FaCartArrowDown } from "react-icons/fa";
 
 // Utils - Site Config - CartContext
 import { siteConfig } from "../utils/siteConfig";
-import { CartContext } from "../utils/cartProvider";
-import { UserContext } from "../utils/userProvider";
+// Utils - subProviders
+import { UserContext, CartContext } from "../utils/subProviders";
 import { ThemeSwitcher } from "../utils/themeSwitcher";
 
 const NavbarItemLink: FC<{ href: string; isActive: boolean; children: React.ReactNode }> = ({ href, isActive, children }) => {
@@ -62,7 +62,8 @@ const CartBadge: FC<{ quantity: number }> = ({ quantity }) => {
 
 export default function Header() {
   const pathname = usePathname();
-  const cartStore = useContext(CartContext), userStore = useContext(UserContext);
+  const cartStore = useContext(CartContext)
+  // userStore = useContext(UserContext);
   const cartQuantity = cartStore.data.reduce( (acc, item) => acc + item.quantity, 0);
 
   return (
@@ -86,33 +87,6 @@ export default function Header() {
         <NavbarItem>
           <CartBadge quantity={cartQuantity} />
         </NavbarItem>
-
-        {/* {userStore.isLogged() && (
-          <NavbarItem>
-            <Dropdown placement="bottom-end">
-              <DropdownTrigger>
-                <Avatar
-                  isBordered
-                  as="button"
-                  className="transition-transform"
-                  color="primary"
-                  name={userStore.data.firstname || "User"}
-                  size="sm"
-                  // src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                />
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem key="profile">Profile</DropdownItem>
-                <DropdownItem key="settings">Settings</DropdownItem>
-                <DropdownItem key="orders">Orders</DropdownItem>
-                <DropdownItem key="logout" color="danger">
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </NavbarItem>
-        )} */}
-
         <Divider orientation="vertical" />
         <NavbarItem>
           <ThemeSwitcher />
@@ -121,3 +95,28 @@ export default function Header() {
     </Navbar>
   );
 }
+
+
+// {userStore.isLogged() && (
+//   <NavbarItem>
+//     <Dropdown placement="bottom-end">
+//       <DropdownTrigger>
+//         <Avatar
+//           isBordered
+//           as="button"
+//           className="transition-transform"
+//           color="primary"
+//           name="User"
+//           size="sm"
+//           src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+//         />
+//       </DropdownTrigger>
+//       <DropdownMenu aria-label="Profile Actions" variant="flat">
+//         <DropdownItem key="profile">Profile</DropdownItem>
+//         <DropdownItem key="settings">Settings</DropdownItem>
+//         <DropdownItem key="orders">Orders</DropdownItem>
+//         <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
+//       </DropdownMenu>
+//     </Dropdown>
+//   </NavbarItem>
+// )}

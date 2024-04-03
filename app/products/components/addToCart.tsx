@@ -2,7 +2,7 @@
 
 // React Context
 import { FC, useContext } from "react";
-import { CartContext } from "../../utils/cartProvider";
+import { CartContext } from "../../utils/subProviders";
 
 // Next - navigation
 import Link from "next/link";

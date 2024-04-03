@@ -43,7 +43,7 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, setTotalPriceDiscount, totalP
           <Button
             color="success"
             variant="solid"
-            href={cartNavigation}
+            href={cartNavigation(pathname)}
             as={Link}
             endContent={<FaArrowRight />}
             className="text-white col-span-2"

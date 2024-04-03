@@ -4,7 +4,7 @@
 import { useContext, useEffect, useState } from "react";
 
 // Components - Generation
-import { CartContext } from "../../utils/cartProvider";
+import { CartContext } from "../../utils/subProviders";
 
 import CartItems from "./components/cartItems";
 
