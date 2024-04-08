@@ -15,7 +15,6 @@ export default function Cart({ children }: {children: React.ReactNode}) {
   const [cartChecked, setCartChecked] = useState(false);
   const [cart, setCart] = useState(cartStore.data);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
 
   // Calculate Total Price
   useEffect(() => {
@@ -45,7 +44,7 @@ export default function Cart({ children }: {children: React.ReactNode}) {
   return (
     <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
       {children}
-      <CartSummary cart={cart} setTotalPriceDiscount={setTotalPriceDiscount} totalPriceDiscount={totalPriceDiscount} totalPrice={totalPrice} isLoading={isLoading} />
+      <CartSummary cart={cart} totalPrice={totalPrice} isLoading={isLoading} />
     </div>
   );
 }
