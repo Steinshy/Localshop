@@ -20,13 +20,13 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Dropdown
+  Dropdown,
 } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown } from "react-icons/fa";
 
 // Interface
-// import { NavbarProps } from "../utils/interfaces";
+import { NavbarProps, CartBadgeProps } from "../utils/interfaces";
 
 // Utils - Site Config - CartContext
 import { siteConfig } from "../utils/siteConfig";
@@ -34,7 +34,7 @@ import { siteConfig } from "../utils/siteConfig";
 import { UserContext, CartContext } from "../utils/subProviders";
 import { ThemeSwitcher } from "../utils/themeSwitcher";
 
-const NavbarItemLink: FC<{ href: string; isActive: boolean; children: React.ReactNode }> = ({ href, isActive, children }) => {
+const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
   return (
     <NavbarItem isActive={isActive}>
       <NextLink as={Link} color="foreground" href={href}>
@@ -44,7 +44,7 @@ const NavbarItemLink: FC<{ href: string; isActive: boolean; children: React.Reac
   );
 };
 
-const CartBadge: FC<{ quantity: number }> = ({ quantity }) => {
+const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
   return (
     <Badge
       content={quantity > 0 ? quantity : null}
@@ -57,14 +57,14 @@ const CartBadge: FC<{ quantity: number }> = ({ quantity }) => {
         <FaCartArrowDown className="text-2xl" />
       </Button>
     </Badge>
-  )
-}
+  );
+};
 
 export default function Header() {
   const pathname = usePathname();
-  const cartStore = useContext(CartContext)
-  // userStore = useContext(UserContext);
-  const cartQuantity = cartStore.data.reduce( (acc, item) => acc + item.quantity, 0);
+  const cartStore = useContext(CartContext),
+    userStore = useContext(UserContext);
+  const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <Navbar isBlurred isBordered position="sticky">
@@ -74,14 +74,35 @@ export default function Header() {
           <p className="ml-1 font-light">{siteConfig.name}</p>
         </NavbarItemLink>
         {siteConfig.navItems.map((item) => (
-          <NavbarItemLink
-            key={item.href}
-            href={item.href}
-            isActive={pathname === item.href}
-          >
+          <NavbarItemLink key={item.href} href={item.href} isActive={pathname === item.href}>
             {item.label}
           </NavbarItemLink>
         ))}
+        {userStore.isLogged() && (
+          <NavbarItem>
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  color="primary"
+                  name="User"
+                  size="sm"
+                  src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="flat">
+                <DropdownItem href="/user/profile" key="profile">Profile</DropdownItem>
+                <DropdownItem href="/user/settings" key="settings">Settings</DropdownItem>
+                <DropdownItem href="/user/orders" key="orders">Orders</DropdownItem>
+                <DropdownItem key="logout" color="danger">
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
@@ -95,28 +116,3 @@ export default function Header() {
     </Navbar>
   );
 }
-
-
-// {userStore.isLogged() && (
-//   <NavbarItem>
-//     <Dropdown placement="bottom-end">
-//       <DropdownTrigger>
-//         <Avatar
-//           isBordered
-//           as="button"
-//           className="transition-transform"
-//           color="primary"
-//           name="User"
-//           size="sm"
-//           src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-//         />
-//       </DropdownTrigger>
-//       <DropdownMenu aria-label="Profile Actions" variant="flat">
-//         <DropdownItem key="profile">Profile</DropdownItem>
-//         <DropdownItem key="settings">Settings</DropdownItem>
-//         <DropdownItem key="orders">Orders</DropdownItem>
-//         <DropdownItem key="logout" color="danger">Log Out</DropdownItem>
-//       </DropdownMenu>
-//     </Dropdown>
-//   </NavbarItem>
-// )}

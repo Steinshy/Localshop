@@ -1,5 +1,5 @@
 "use client";
-
+import {FC} from "react";
 // NextUi - React Icon
 import { Link, Chip, Button } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
@@ -8,7 +8,7 @@ import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare } from "react-icon
 // Interface - Utils
 import { FooterProps } from "../utils/interfaces";
 
-const FooterItemLink = ({ text, isTag, tagText }: FooterProps) => {
+const FooterItemLink: FC<FooterProps> = ({ text, isTag = false, tagText }) => {
   return (
     <li>
       <Link href="#" className="text-sm" color="foreground">
