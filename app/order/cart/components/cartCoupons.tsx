@@ -1,54 +1,41 @@
 import { useState, FC } from "react";
-import { Button, Input } from "@nextui-org/react";
 
-import { Chip } from "@nextui-org/react";
-
+// Icons
+import { Chip, Button, Input } from "@nextui-org/react";
+import { FaRegCircleCheck } from "react-icons/fa6";
 // Formik
 import { Formik, Form, Field } from "formik";
-import { FaRegCircleCheck } from "react-icons/fa6";
+// utils - interfaces
+import { calculatedDiscount, CartCouponsProps, couponsDefaultData, CouponsObject } from "../../../utils/interfaces";
 
-import { CartCouponsProps, CouponsObject, calculatedDiscount } from "../../../utils/interfaces";
-
-const coupons: CouponsObject[] = [
-  {
-    code: "DISCOUNT10",
-    discount: 10,
-    active: true,
-  },
-  {
-    code: "DISCOUNT20",
-    discount: 20,
-    active: true,
-  },
-  {
-    code: "DISCOUNT50",
-    discount: 50,
-    active: true,
-  },
-  {
-    code: "DISCOUNTEXPIRED",
-    discount: 0,
-    active: false,
-  },
-];
-
-const CartCoupons: FC<CartCouponsProps> = ({ setTotalPriceDiscount, totalPriceDiscount, totalPrice, isLoading }) => {
+const CartCoupons: FC<CartCouponsProps> = ({ totalPrice, isLoading }) => {
   // Coupons
   const [appliedCoupon, setAppliedCoupon] = useState<number | null>(null);
   const [discount, setDiscount] = useState<number>(0);
+  const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
 
-  // Coupon Handler - Discount
+  // Coupon Handler - Apply
   const handleDiscount = (index: number) => {
-    const selectedCoupon = coupons[index];
-    if (!coupons[index].active) {
+    if (!checkCouponValidation(index)) {
       return false;
     }
-
     setAppliedCoupon(index);
-    setDiscount(selectedCoupon.discount);
-    setTotalPriceDiscount(calculatedDiscount);
+    setDiscount(couponsDefaultData[index].discount);
+    setTotalPriceDiscount(calculatedDiscountValue(index, totalPrice));
     return true;
   };
+  // Coupon Validation - Helper
+  function checkCouponValidation(index: number) {
+    if (!couponsDefaultData[index].active || totalPrice === 0 || couponsDefaultData[index].expired) {
+      return false;
+    }
+    return true;
+  }
+  // Calculate Discount Value - Helper
+  function calculatedDiscountValue(index: number, totalPrice: number) {
+    const value = calculatedDiscount(couponsDefaultData[index], totalPrice);
+    return value;
+  }
 
   // Coupon Handler - Remove
   const handleRemoveCoupon = () => {
@@ -56,6 +43,78 @@ const CartCoupons: FC<CartCouponsProps> = ({ setTotalPriceDiscount, totalPriceDi
     setDiscount(0);
     setTotalPriceDiscount(0);
   };
+
+  // Fornik => Validate Coupon - Helper
+  const ValidateCoupon = (couponIndex: number) => {
+    if (totalPrice === 0) {
+      alert("Your cart is empty!");
+      return false;
+    }
+    if (couponIndex === -1) {
+      // -1 = error
+      alert("Your coupon is invalid!");
+      return false;
+    }
+    if (!handleDiscount(couponIndex)) {
+      alert("Your coupon is expired!");
+      return false;
+    }
+    return true;
+  };
+
+  const ApplyButton = ({ isLoading, totalPrice }: { isLoading: boolean; totalPrice: number }) => (
+    <Button
+      color="primary"
+      variant="solid"
+      className="col-span-1"
+      type="submit"
+      radius="sm"
+      size="sm"
+      isDisabled={isLoading || totalPrice === 0}
+    >
+      Apply
+    </Button>
+  );
+
+  const DeleteButton = ({
+    appliedCoupon,
+    isloading,
+    handleRemoveCoupon,
+  }: {
+    appliedCoupon: number | null;
+    isloading: boolean;
+    handleRemoveCoupon: () => void;
+  }) => (
+    <Button
+      color="danger"
+      variant="solid"
+      className="col-span-1"
+      radius="sm"
+      size="sm"
+      onClick={handleRemoveCoupon}
+      isDisabled={isloading || appliedCoupon === null}
+    >
+      Delete
+    </Button>
+  );
+
+  const CouponChip = ({
+    appliedCoupon,
+    couponsDefaultData,
+  }: {
+    appliedCoupon: number | null;
+    couponsDefaultData: CouponsObject[];
+  }) => (
+    <Chip
+      className="text-white justify-self-center col-span-2"
+      startContent={appliedCoupon !== null ? <FaRegCircleCheck size={18} /> : null}
+      size="sm"
+      color="secondary"
+      variant="solid"
+    >
+      {appliedCoupon !== null ? `${couponsDefaultData[appliedCoupon].code} applied` : "No coupon applied"}
+    </Chip>
+  );
 
   return (
     <div>
@@ -94,17 +153,10 @@ const CartCoupons: FC<CartCouponsProps> = ({ setTotalPriceDiscount, totalPriceDi
         }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
-            const couponIndex = coupons.findIndex((coupon) => coupon.code === values.coupon);
-            if (couponIndex === -1) {
-              alert("Your coupon is invalid!");
-            } else {
-              if (!handleDiscount(couponIndex)) {
-                alert("Your coupon is expired!");
-              } else {
-                values.coupon = "";
-              }
+            const couponIndex = couponsDefaultData.findIndex((coupon) => coupon.code === values.coupon);
+            if (ValidateCoupon(couponIndex)) {
+              values.coupon = "";
             }
-
             setSubmitting(false);
           }, 400);
         }}
@@ -115,43 +167,13 @@ const CartCoupons: FC<CartCouponsProps> = ({ setTotalPriceDiscount, totalPriceDi
             className="col-span-2"
             name="coupon"
             type="text"
-            isDisabled={isLoading}
+            isDisabled={isLoading || totalPrice === 0}
             radius="sm"
             isRequired
           />
-
-          <Button
-            color="primary"
-            variant="solid"
-            className="col-span-1"
-            type="submit"
-            radius="sm"
-            size="sm"
-            isDisabled={isLoading}
-          >
-            Apply
-          </Button>
-          <Button
-            color="danger"
-            variant="solid"
-            className="col-span-1"
-            radius="sm"
-            size="sm"
-            onClick={handleRemoveCoupon}
-            isDisabled={!appliedCoupon || isLoading}
-          >
-            Delete
-          </Button>
-
-          <Chip
-            className="text-white"
-            startContent={appliedCoupon !== null ? <FaRegCircleCheck size={18} /> : null}
-            size="sm"
-            color="secondary"
-            variant="solid"
-          >
-            {appliedCoupon !== null ? `${coupons[appliedCoupon].code} applied` : "No coupon applied"}
-          </Chip>
+          <ApplyButton isLoading={isLoading} totalPrice={totalPrice} />
+          <DeleteButton appliedCoupon={appliedCoupon} isloading={isLoading} handleRemoveCoupon={handleRemoveCoupon} />
+          <CouponChip appliedCoupon={appliedCoupon} couponsDefaultData={couponsDefaultData} />
         </Form>
       </Formik>
     </div>
