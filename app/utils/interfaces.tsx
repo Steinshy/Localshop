@@ -24,6 +24,11 @@ export type NavbarProps = {
   children: React.ReactNode;
 };
 
+// Composants => Navbar => CartBadge
+export type CartBadgeProps = {
+  quantity: number;
+};
+
 // Components => Footer
 export type FooterProps = {
   text?: string;
@@ -101,43 +106,43 @@ export type CartContextType = {
   update: Dispatch<SetStateAction<CartItemObj[]>>;
 };
 
-// Order => Cart => CartItem
+// Order => Cart => Components -> CartItem
 export type CartItemProps = {
   cartStore: CartContextType;
   cart: CartItemObj[];
   isLoading: boolean;
 };
 
-// Order => CartSummary
+// order => Cart => Components -> CartProduct
+export type CartProductProps = {
+  cartStore: CartContextType;
+  itemcart: CartItemObj;
+};
+
+// Order => Cart => Components -> CartSummary
 export type CartSummaryProps = {
   cart: CartItemObj[];
-  setTotalPriceDiscount: number;
-  totalPriceDiscount: number;
   totalPrice: number;
   isLoading: boolean;
 };
 
-// Order => CartCoupons
+// Order => Cart => Components -> CartCoupons
 export type CartCouponsProps = {
   totalPrice: number;
-  setTotalPriceDiscount: number;
-  totalPriceDiscount: number;
   isLoading: boolean;
 };
 
-// Order => CartCoupons
+// Order => Cart => Components -> CartCoupons
 export type CouponsObject = {
   code: string;
   discount: number;
   active: boolean;
+  expired: boolean;
 };
 
 // Generation
 export function generateSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
+  return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 }
 export function generateClamp(num: number, min: number, max: number): number {
   return Math.min(Math.max(num, min), max);
@@ -147,17 +152,19 @@ export function generateNewProductLogo(): boolean {
 }
 
 export function calculatedDiscount(selectedCoupon: CouponsObject, totalPrice: number): number {
-  return totalPrice - totalPrice * (selectedCoupon.discount / 100);
+  return (totalPrice - totalPrice * (selectedCoupon.discount / 100));
 }
 
 export function cartNavigation(pathname: string): string {
   switch (pathname) {
     case "/order/cart":
-      return "/order/shipping";
-    case "/order/checkout":
-      return "";
-    default:
       return "/order/checkout";
+    case "/order/checkout":
+      return "/order/shipping";
+    case "/order/shipping":
+      return "/order/cart";
+    default:
+      return "/order/cart";
   }
 }
 
@@ -169,3 +176,30 @@ export const UserDefaultData = {
   email: "john.doe@gmail.com",
   password: "password",
 } as UserItemsObj;
+
+export const couponsDefaultData = [
+  {
+    code: "DISCOUNT10",
+    discount: 10,
+    active: true,
+    expired: false,
+  },
+  {
+    code: "DISCOUNT20",
+    discount: 20,
+    active: true,
+    expired: false,
+  },
+  {
+    code: "DISCOUNT50",
+    discount: 50,
+    active: true,
+    expired: false,
+  },
+  {
+    code: "DISCOUNTEXPIRED",
+    discount: 0,
+    active: false,
+    expired: true,
+  },
+] as CouponsObject[];
