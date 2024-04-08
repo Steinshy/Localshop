@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 
 // Icons
 import { Chip, Button, Input } from "@nextui-org/react";
@@ -13,6 +13,12 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice, isLoading }) => {
   const [appliedCoupon, setAppliedCoupon] = useState<number | null>(null);
   const [discount, setDiscount] = useState<number>(0);
   const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
+
+  useEffect(() => {
+    if (appliedCoupon !== null) {
+      setTotalPriceDiscount(calculatedDiscountValue(appliedCoupon, totalPrice));
+    }
+  }, [totalPrice, appliedCoupon]);
 
   // Coupon Handler - Apply
   const handleDiscount = (index: number) => {
