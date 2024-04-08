@@ -1,24 +1,29 @@
-
 import { FC } from "react";
 // NextLink - NextUI
 import { Button } from "@nextui-org/react";
 import Link from "next/link";
-import { usePathname } from 'next/navigation'
-import CartCoupons from './cartCoupons';
+import { usePathname } from "next/navigation";
+import CartCoupons from "./cartCoupons";
 
 // React Icons
 import { FaArrowRight } from "react-icons/fa";
 import { CartSummaryProps, cartNavigation } from "../../../utils/interfaces";
 
-const CartSummary: FC<CartSummaryProps> = ({ cart, setTotalPriceDiscount, totalPriceDiscount, totalPrice, isLoading }) => {
-  const pathname = usePathname()
-  
+const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
+  const pathname: string = usePathname();
+  const buttonTextMap: { [key: string]: string } = {
+    "/order/cart": "Proceed to Checkout",
+    "/order/checkout": "Proceed to Shipping",
+    "/order/shipping": "Return to Cart",
+    default: "Proceed to Checkout",
+  };
+
+  const buttonText: string = buttonTextMap[pathname] || buttonTextMap.default;
+
   return (
     <div>
       <div className="sticky top-[70px] border-2 border-current p-4 rounded-md bg-background text-default-100">
-        <h2 className="text-2xl font-semibold mb-4 text-foreground">
-          Order summary
-        </h2>
+        <h2 className="text-2xl font-semibold mb-4 text-foreground">Order summary</h2>
         {/* Cart Summary without coupon reductions */}
         <div className="grid grid-cols-2 gap-4 text-foreground">
           <p className="text-lg">Subtotal:</p>
@@ -36,7 +41,7 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, setTotalPriceDiscount, totalP
         </div>
 
         {/* COUPONS */}
-        <CartCoupons setTotalPriceDiscount={setTotalPriceDiscount} totalPriceDiscount={totalPriceDiscount} totalPrice={totalPrice} isLoading={isLoading} />
+        <CartCoupons totalPrice={totalPrice} isLoading={isLoading} />
 
         {/* Checkout Redirection */}
         <div className="grid grid-cols-2 gap-4">
@@ -51,7 +56,7 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, setTotalPriceDiscount, totalP
             radius="sm"
             isDisabled={cart.length <= 0 || isLoading}
           >
-            {pathname === '/order/cart' ? 'Proceed to Shipping' : pathname === '/order/checkout' ? 'Proceed to Payment' : 'Proceed to Checkout'}
+            {buttonText}
           </Button>
         </div>
       </div>
