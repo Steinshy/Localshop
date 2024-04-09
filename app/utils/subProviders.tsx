@@ -28,7 +28,8 @@ const UserLoggedOutData = {
   id: 0,
   firstname: "",
   lastname: "",
-  email: ""
+  email: "",
+  addresses: []
 };
 
 const useUser = () => {

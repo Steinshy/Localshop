@@ -26,7 +26,7 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
     event.preventDefault();
 
     if (quantity > 0) {
-      return router.push("/cart");
+      return router.push("/order/cart");
     }
 
     if (item) {

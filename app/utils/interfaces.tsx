@@ -15,7 +15,7 @@ export type UserItemsObj = {
   firstname: string;
   lastname: string;
   email: string;
-  addresses: [AddressObj];
+  addresses: AddressObj[];
 };
 
 // Utils => UserProvider
