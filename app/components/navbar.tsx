@@ -11,7 +11,6 @@ import Link from "next/link";
 import {
   Link as NextLink,
   NavbarContent,
-  Divider,
   Button,
   NavbarItem,
   Navbar,
@@ -23,7 +22,7 @@ import {
   Dropdown,
 } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
-import { FaCartArrowDown } from "react-icons/fa";
+import { FaCartArrowDown, FaChevronDown } from "react-icons/fa";
 
 // Interface
 import { NavbarProps, CartBadgeProps } from "../utils/interfaces";
@@ -62,12 +61,14 @@ const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
 
 export default function Header() {
   const pathname = usePathname();
-  const cartStore = useContext(CartContext), userStore = useContext(UserContext);
+  const cartStore = useContext(CartContext),
+    userStore = useContext(UserContext);
+  const userName = userStore.user.lastname + " " + userStore.user.firstname;
   const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
-    <Navbar isBlurred isBordered position="sticky">
-      <NavbarContent className="hidden sm:flex gap-4" justify="start">
+    <Navbar isBlurred isBordered>
+      <NavbarContent className="" justify="start">
         <NavbarItemLink href="/" isActive={pathname === "/"}>
           <DiCssdeck />
           <p className="ml-1 font-light">{siteConfig.name}</p>
@@ -77,38 +78,58 @@ export default function Header() {
             {item.label}
           </NavbarItemLink>
         ))}
-        {userStore.isLogged() && (
-          <NavbarItem>
-            <Dropdown placement="bottom-end">
-              <DropdownTrigger>
-                <Avatar
-                  isBordered
-                  as="button"
-                  className="transition-transform"
-                  color="primary"
-                  name="User"
-                  size="sm"
-                  src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
-                />
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="flat">
-                <DropdownItem href="/user/profile" key="profile">Profile</DropdownItem>
-                <DropdownItem href="/user/settings" key="settings">Settings</DropdownItem>
-                <DropdownItem href="/user/orders" key="orders">Orders</DropdownItem>
-                <DropdownItem key="logout" color="danger">
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </NavbarItem>
-        )}
       </NavbarContent>
+
       <NavbarContent justify="end">
         <NavbarItem>
           <CartBadge quantity={cartQuantity} />
         </NavbarItem>
-        <Divider orientation="vertical" />
-        <NavbarItem>
+        {userStore.isLogged() && (
+          <NavbarItem>
+            <Dropdown placement="bottom-end">
+              <Button
+                variant="light"
+                className="text-white pl-1"
+                radius="full"
+                startContent={
+                  <Avatar
+                    isBordered
+                    as="button"
+                    className="transition-transform"
+                    color="primary"
+                    name="User"
+                    size="sm"
+                    src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
+                  />
+                }
+                endContent={
+                  <div>
+                    <FaChevronDown />
+                  </div>
+                }
+              >
+                <span className="pl-2 hidden sm:block font-semibold">{userName}</span>
+              </Button>
+              <DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="flat">
+                  <DropdownItem href="/user/profile" key="profile">
+                    Profile
+                  </DropdownItem>
+                  <DropdownItem href="/user/settings" key="settings">
+                    Settings
+                  </DropdownItem>
+                  <DropdownItem href="/user/orders" key="orders">
+                    Orders
+                  </DropdownItem>
+                  <DropdownItem key="logout" color="danger">
+                    Login
+                  </DropdownItem>
+                </DropdownMenu>
+              </DropdownTrigger>
+            </Dropdown>
+          </NavbarItem>
+        )}
+        <NavbarItem key="themswitcher">
           <ThemeSwitcher />
         </NavbarItem>
       </NavbarContent>
