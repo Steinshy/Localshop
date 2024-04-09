@@ -146,13 +146,12 @@ export default function Header() {
           <NavbarItem>
             <Button
               variant="solid"
-              className="pl-1"
               radius="sm"
               color="primary"
               size="sm"
               onClick={handleUserLogin}
             >
-              <span className="pl-2 hidden sm:block font-semibold">
+              <span className="font-semibold">
                 Login
               </span>
             </Button>

@@ -11,11 +11,14 @@ import ProductCard from "./components/productCard";
 import SkeletonProduct from "./components/skeletonProduct";
 import Pagination from "./components/pagination";
 import OffersDisplay from "./components/offersDisplay";
-import { Input } from "@nextui-org/react";
+import { Input, Chip } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
 
 // Interfaces - Utils
 import { ProductObj, ProductDataProps } from "../utils/interfaces";
+
+// Image
+import BG from '../assets/bg-products.webp';
 
 export default function Products() {
   const limit = 12;
@@ -74,20 +77,26 @@ export default function Products() {
     });
   };
 
+  const clearQuery = () => {
+    setQuery("");
+  }
+
   return (
     <div className="flex flex-col flex-grow">
       <div
-        className="flex flex-col items-center justify-center min-h-svh"
+        className="relative flex flex-col items-center justify-center min-h-[400px]"
         style={{
-          backgroundImage:
-            "url('https://plus.unsplash.com/premium_photo-1683133438751-abb68a5c2270?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+          backgroundImage: `url(${BG.src})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center"
         }}
       >
-        <div className="max-w-screen-lg mx-auto flex flex-col items-center justify-center gap-8">
-          <h1 className="text-white text-2xl font-bold tracking-tight text-heading lg:text-4xl xl:text-5xl">
+        <div className="absolute inset-0 bg-black opacity-50" />
+        <div className="relative px-2 max-w-screen-lg mx-auto flex flex-col items-center justify-center gap-4">
+          <h1 className="text-white text-3xl font-bold tracking-tight text-heading lg:text-4xl xl:text-5xl">
             Products
           </h1>
-          <p className="text-white text-sm text-heading xl:text-lg lg:text-md">
+          <p className="text-white text-md text-heading xl:text-lg lg:text-md">
             Welcome to our product catalog, where innovation meets excellence!
             We are thrilled to present a curated selection of top-notch products
             designed to meet your diverse needs and exceed your expectations.
@@ -96,32 +105,38 @@ export default function Products() {
             experience and make every task seamless. From cutting-edge
             technology to timeless classics, we have something for everyone.
           </p>
+        </div>
 
-          {/* Search */}
-          <form onSubmit={handleSubmit} action="#" className="w-full">
-            <Input
-              aria-label="Search"
-              placeholder="Type and press enter..."
-              type="search"
-              value={query}
-              onChange={handleQueryChange}
-              startContent={<FaSearch />}
-              size="lg"
-            />
-          </form>
+        <div className="my-4">
+          <OffersDisplay />
         </div>
       </div>
 
-      {/* Offers Display */}
-      <OffersDisplay />
+      {/* Search */}
+      <form onSubmit={handleSubmit} action="#" className="w-full max-w-screen-2xl mx-auto my-4 px-2">
+        <Input
+          aria-label="Search"
+          placeholder="Type and press enter..."
+          type="search"
+          value={query}
+          onChange={handleQueryChange}
+          startContent={<FaSearch />}
+          size="lg"
+          isClearable
+          onClear={clearQuery}
+        />
+      </form>
 
       {/* Products Card */}
       <div className="flex flex-col flex-grow justify-between">
-        <div className="flex items-center justify-center gap-4 p-4">
-          {query.length > 0 && <p>Results for : {query}</p>}
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-2 pb-4">
-          
+
+        {query.length > 0 && (
+          <div className="flex items-center gap-4 mb-4 px-2">
+            <Chip onClose={clearQuery}>{query}</Chip>
+          </div>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 px-2 pb-4">
           {isLoading &&
             Array.from(array.keys()).map((index) => ( 
               <SkeletonProduct key={index} />

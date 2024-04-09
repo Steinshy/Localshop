@@ -34,16 +34,18 @@ const Pagination: FC<PaginationProps> = ({ isLoading, total, skip, limit, previo
         </PaginationButton>
       </Skeleton>
 
-      <Skeleton isLoaded={!isLoading} classNames={{ base: isLoading ? "rounded-full" : ""}}>
+      <Skeleton isLoaded={!isLoading} classNames={{
+        base: isLoading ? "rounded-full hidden sm:block" : "hidden sm:block"
+      }}>
         <p className="text-sm text-foreground/40">
           Displaying {generateClamp(skip + limit, 0, total)} items of {total}
         </p>
       </Skeleton>
-      <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
 
-      <PaginationButton isDisabled={skip + limit >= total} onClick={nextPage} endContent={<FaChevronRight />}>
-        Next
-      </PaginationButton>
+      <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
+        <PaginationButton isDisabled={skip + limit >= total} onClick={nextPage} endContent={<FaChevronRight />}>
+          Next
+        </PaginationButton>
       </Skeleton>
     </div>
   );
