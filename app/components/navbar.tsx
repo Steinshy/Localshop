@@ -11,6 +11,9 @@ import Link from "next/link";
 import {
   Link as NextLink,
   NavbarContent,
+  NavbarMenuToggle,
+  NavbarMenuItem,
+  NavbarMenu,
   Button,
   NavbarItem,
   Navbar,
@@ -64,6 +67,7 @@ export default function Header() {
         cartStore = useContext(CartContext), userStore = useContext(UserContext);
   const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
 
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
   const handleUserKeySelection = (value: React.Key): void => {
@@ -80,8 +84,15 @@ export default function Header() {
   }
 
   return (
-    <Navbar isBlurred isBordered>
-      <NavbarContent className="" justify="start">
+    <Navbar isBlurred isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent className="flex sm:hidden" justify="start">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex" justify="start">
         <NavbarItemLink href="/" isActive={pathname === "/"}>
           <DiCssdeck />
           <p className="ml-1 font-light">{siteConfig.name}</p>
@@ -161,6 +172,16 @@ export default function Header() {
           <ThemeSwitcher />
         </NavbarItem>
       </NavbarContent>
+
+      <NavbarMenu >
+        {siteConfig.navItems.map((item) => (
+          <NavbarMenuItem key={item.href}>
+            <Link href={item.href} onClick={() => setIsMenuOpen(false)}>
+              {item.label}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
     </Navbar>
   );
 }
