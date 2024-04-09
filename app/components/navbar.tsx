@@ -1,10 +1,10 @@
 "use client";
 
 // React
-import React, { useContext, FC } from "react";
+import React, { useContext, useState, FC } from "react";
 
 // NextJS - Navigation - Link
-import { usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
 // NextUi - React Icon
@@ -60,11 +60,21 @@ const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
 };
 
 export default function Header() {
-  const pathname = usePathname();
-  const cartStore = useContext(CartContext),
-    userStore = useContext(UserContext);
-  const userName = userStore.user.lastname + " " + userStore.user.firstname;
+  const router = useRouter(), pathname = usePathname(),
+        cartStore = useContext(CartContext), userStore = useContext(UserContext);
+  const userName = `${userStore.user.lastname} ${userStore.user.firstname}`;
   const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
+
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
+
+  const handleUserKeySelection = (value: React.Key): void => {
+    if (value === 'logout') userStore.logout();
+    router.push(`/user/${value}`);
+  };
+
+  const handleUserMenuOpen = (bool: boolean) => {
+    setIsUserMenuOpen(bool);
+  };
 
   return (
     <Navbar isBlurred isBordered>
@@ -86,46 +96,46 @@ export default function Header() {
         </NavbarItem>
         {userStore.isLogged() && (
           <NavbarItem>
-            <Dropdown placement="bottom-end">
-              <Button
-                variant="light"
-                className="text-white pl-1"
-                radius="full"
-                startContent={
-                  <Avatar
-                    isBordered
-                    as="button"
-                    className="transition-transform"
-                    color="primary"
-                    name="User"
-                    size="sm"
-                    src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
-                  />
-                }
-                endContent={
-                  <div>
-                    <FaChevronDown />
-                  </div>
-                }
-              >
-                <span className="pl-2 hidden sm:block font-semibold">{userName}</span>
-              </Button>
+            <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>
               <DropdownTrigger>
-                <DropdownMenu aria-label="Profile Actions" variant="flat">
-                  <DropdownItem href="/user/profile" key="profile">
-                    Profile
-                  </DropdownItem>
-                  <DropdownItem href="/user/settings" key="settings">
-                    Settings
-                  </DropdownItem>
-                  <DropdownItem href="/user/orders" key="orders">
-                    Orders
-                  </DropdownItem>
-                  <DropdownItem key="logout" color="danger">
-                    Login
-                  </DropdownItem>
-                </DropdownMenu>
+                <Button
+                  variant="light"
+                  className="pl-1"
+                  radius="full"
+                  startContent={
+                    <Avatar
+                      isBordered
+                      as="button"
+                      className="transition-transform"
+                      color="primary"
+                      name="User"
+                      size="sm"
+                      src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
+                    />
+                  }
+                  endContent={
+                    <div className={`transition-transform	${isUserMenuOpen ? 'rotate-180' : 'rotate-0'}`}>
+                      <FaChevronDown />
+                    </div>
+                  }
+                >
+                  <span className="pl-2 hidden sm:block font-semibold">{userName}</span>
+                </Button>
               </DropdownTrigger>
+              <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
+                <DropdownItem key="profile">
+                  Profile
+                </DropdownItem>
+                <DropdownItem key="settings">
+                  Settings
+                </DropdownItem>
+                <DropdownItem key="orders">
+                  Orders
+                </DropdownItem>
+                <DropdownItem key="logout" color="danger">
+                  Logout
+                </DropdownItem>
+              </DropdownMenu>
             </Dropdown>
           </NavbarItem>
         )}

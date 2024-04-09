@@ -55,6 +55,7 @@ export const UserContext = createContext<UserContextType>({
   userChecked: false,
   update: () => {},
   isLogged: () => false,
+  logout: () => {},
 });
 
 // Export CartContext

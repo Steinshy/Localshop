@@ -15,6 +15,7 @@ export type UserContextType = {
   userChecked: boolean;
   update: Dispatch<SetStateAction<UserItemsObj>>;
   isLogged: () => boolean;
+  logout: () => void;
 };
 
 // Components => Navbar
