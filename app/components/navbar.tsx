@@ -62,8 +62,7 @@ const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
 
 export default function Header() {
   const pathname = usePathname();
-  const cartStore = useContext(CartContext),
-    userStore = useContext(UserContext);
+  const cartStore = useContext(CartContext), userStore = useContext(UserContext);
   const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
