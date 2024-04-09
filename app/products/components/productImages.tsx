@@ -19,9 +19,9 @@ const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {
         alt={alt}
         src={mainImage}
         classNames={{
-          img: "w-[300px] h-[300px] object-cover",
-          wrapper: "border-2",
+          img: "w-[300px] h-[300px] object-cover"
         }}
+        shadow="none"
         radius="sm"
         isZoomed
       />
@@ -37,8 +37,7 @@ const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {
               alt={alt}
               src={image}
               classNames={{
-                img: "w-[40px] h-[40px] object-cover",
-                wrapper: "border-2",
+                img: "w-[40px] h-[40px] object-cover"
               }}
               shadow="none"
               radius="sm"
