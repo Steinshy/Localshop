@@ -25,7 +25,7 @@ import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown, FaChevronDown } from "react-icons/fa";
 
 // Interface
-import { NavbarProps, CartBadgeProps } from "../utils/interfaces";
+import { NavbarProps, CartBadgeProps, UserDefaultData } from "../utils/interfaces";
 
 // Utils - Site Config - CartContext
 import { siteConfig } from "../utils/siteConfig";
@@ -62,19 +62,22 @@ const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
 export default function Header() {
   const router = useRouter(), pathname = usePathname(),
         cartStore = useContext(CartContext), userStore = useContext(UserContext);
-  const userName = `${userStore.user.lastname} ${userStore.user.firstname}`;
   const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
 
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
   const handleUserKeySelection = (value: React.Key): void => {
-    if (value === 'logout') userStore.logout();
+    if (value === 'logout') return userStore.logout();
     router.push(`/user/${value}`);
   };
 
   const handleUserMenuOpen = (bool: boolean) => {
     setIsUserMenuOpen(bool);
   };
+
+  const handleUserLogin = () => {
+    userStore.update(UserDefaultData);
+  }
 
   return (
     <Navbar isBlurred isBordered>
@@ -94,7 +97,7 @@ export default function Header() {
         <NavbarItem>
           <CartBadge quantity={cartQuantity} />
         </NavbarItem>
-        {userStore.isLogged() && (
+        {userStore.isLogged() ? (
           <NavbarItem>
             <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>
               <DropdownTrigger>
@@ -105,10 +108,8 @@ export default function Header() {
                   startContent={
                     <Avatar
                       isBordered
-                      as="button"
                       className="transition-transform"
                       color="primary"
-                      name="User"
                       size="sm"
                       src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
                     />
@@ -119,7 +120,9 @@ export default function Header() {
                     </div>
                   }
                 >
-                  <span className="pl-2 hidden sm:block font-semibold">{userName}</span>
+                  <span className="pl-2 hidden sm:block font-semibold">
+                    {userStore.user.lastname} {userStore.user.firstname}
+                  </span>
                 </Button>
               </DropdownTrigger>
               <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
@@ -137,6 +140,22 @@ export default function Header() {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
+          </NavbarItem>
+        )
+        : (
+          <NavbarItem>
+            <Button
+              variant="solid"
+              className="pl-1"
+              radius="sm"
+              color="primary"
+              size="sm"
+              onClick={handleUserLogin}
+            >
+              <span className="pl-2 hidden sm:block font-semibold">
+                Login
+              </span>
+            </Button>
           </NavbarItem>
         )}
         <NavbarItem key="themswitcher">

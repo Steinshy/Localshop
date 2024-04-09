@@ -23,16 +23,29 @@ const useCart = () => {
 };
 
 // User Hook => Self Providers
+
+const UserLoggedOutData = {
+  id: 0,
+  firstname: "",
+  lastname: "",
+  email: ""
+};
+
 const useUser = () => {
-  const [user, setUser] = useState<UserItemsObj>(UserDefaultData || (JSON.parse(localStorage.getItem("user") as string) as UserItemsObj)
-  );
+  const [user, setUser] = useState<UserItemsObj>(UserDefaultData || (JSON.parse(localStorage.getItem("user") as string) as UserItemsObj));
 
   // Update User
   const update = (newData: UserItemsObj) => {
     setUser(newData);
     localStorage.setItem("user", JSON.stringify(newData));
   };
-  return { user, update, isLogged: () => user.id !== 0 };
+
+  // Logout User
+  const logout = () => {
+    setUser(UserLoggedOutData);
+    localStorage.removeItem("user");
+  };
+  return { user, update, logout, isLogged: () => user.id !== 0 };
 };
 
 // Export CartProvider

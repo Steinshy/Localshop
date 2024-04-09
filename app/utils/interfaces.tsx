@@ -6,7 +6,6 @@ export type UserItemsObj = {
   firstname: string;
   lastname: string;
   email: string;
-  password: string;
 };
 
 // Utils => UserProvider
@@ -174,8 +173,7 @@ export const UserDefaultData = {
   id: 1,
   firstname: "John",
   lastname: "Doe",
-  email: "john.doe@gmail.com",
-  password: "password",
+  email: "john.doe@gmail.com"
 } as UserItemsObj;
 
 export const couponsDefaultData = [
