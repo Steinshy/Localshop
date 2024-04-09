@@ -2,12 +2,15 @@ import React, { Dispatch, SetStateAction } from "react";
 
 // Utils => UserProvider
 export type AddressObj = {
+  id: number;
+  label: string;
   firstname: string;
   lastname: string;
   address: string;
   city: string;
   country: string;
   postalCode: string;
+  default: boolean;
 };
 
 export type UserItemsObj = {
@@ -186,12 +189,15 @@ export const UserDefaultData = {
   email: "john.doe@gmail.com",
   addresses: [
     {
+      id: 1,
+      label: "Home",
       firstname: "John",
       lastname: "Doe",
       address: "123 Street",
       city: "New York",
       country: "USA",
       postalCode: "12345",
+      default: true
     },
   ]
 } as UserItemsObj;

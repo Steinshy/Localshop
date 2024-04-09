@@ -155,6 +155,9 @@ export default function Header() {
                 <DropdownItem startContent={<FaUserCog />} key="settings">
                   Settings
                 </DropdownItem>
+                <DropdownItem startContent={<FaShoppingBag />} key="addresses">
+                  Addresses
+                </DropdownItem>
                 <DropdownItem startContent={<FaShoppingBag />} key="orders">
                   Orders
                 </DropdownItem>
