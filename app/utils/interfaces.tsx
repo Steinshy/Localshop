@@ -1,11 +1,21 @@
 import React, { Dispatch, SetStateAction } from "react";
 
 // Utils => UserProvider
+export type AddressObj = {
+  firstname: string;
+  lastname: string;
+  address: string;
+  city: string;
+  country: string;
+  postalCode: string;
+};
+
 export type UserItemsObj = {
   id: number;
   firstname: string;
   lastname: string;
   email: string;
+  addresses: [AddressObj];
 };
 
 // Utils => UserProvider
@@ -173,7 +183,17 @@ export const UserDefaultData = {
   id: 1,
   firstname: "John",
   lastname: "Doe",
-  email: "john.doe@gmail.com"
+  email: "john.doe@gmail.com",
+  addresses: [
+    {
+      firstname: "John",
+      lastname: "Doe",
+      address: "123 Street",
+      city: "New York",
+      country: "USA",
+      postalCode: "12345",
+    },
+  ]
 } as UserItemsObj;
 
 export const couponsDefaultData = [
