@@ -25,7 +25,14 @@ import {
   Dropdown,
 } from "@nextui-org/react";
 import { DiCssdeck } from "react-icons/di";
-import { FaCartArrowDown, FaChevronDown } from "react-icons/fa";
+import {
+  FaCartArrowDown,
+  FaChevronDown,
+  FaRegUserCircle,
+  FaUserCog,
+  FaShoppingBag,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 // Interface
 import { NavbarProps, CartBadgeProps, UserDefaultData } from "../utils/interfaces";
@@ -63,15 +70,20 @@ const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
 };
 
 export default function Header() {
-  const router = useRouter(), pathname = usePathname(),
-        cartStore = useContext(CartContext), userStore = useContext(UserContext);
+  const router = useRouter(),
+    pathname = usePathname(),
+    cartStore = useContext(CartContext),
+    userStore = useContext(UserContext);
   const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
   const handleUserKeySelection = (value: React.Key): void => {
-    if (value === 'logout') return userStore.logout();
+    if (value === "logout") {
+      if (pathname.match(/user\/.*/)) router.push("/");
+      return userStore.logout();
+    }
     router.push(`/user/${value}`);
   };
 
@@ -81,7 +93,7 @@ export default function Header() {
 
   const handleUserLogin = () => {
     userStore.update(UserDefaultData);
-  }
+  };
 
   return (
     <Navbar isBlurred isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
@@ -126,7 +138,7 @@ export default function Header() {
                     />
                   }
                   endContent={
-                    <div className={`transition-transform	${isUserMenuOpen ? 'rotate-180' : 'rotate-0'}`}>
+                    <div className={`transition-transform	${isUserMenuOpen ? "rotate-180" : "rotate-0"}`}>
                       <FaChevronDown />
                     </div>
                   }
@@ -137,34 +149,25 @@ export default function Header() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
-                <DropdownItem key="profile">
+                <DropdownItem startContent={<FaRegUserCircle />} key="profile">
                   Profile
                 </DropdownItem>
-                <DropdownItem key="settings">
+                <DropdownItem startContent={<FaUserCog />} key="settings">
                   Settings
                 </DropdownItem>
-                <DropdownItem key="orders">
+                <DropdownItem startContent={<FaShoppingBag />} key="orders">
                   Orders
                 </DropdownItem>
-                <DropdownItem key="logout" color="danger">
+                <DropdownItem startContent={<FaSignOutAlt />} key="logout" color="danger">
                   Logout
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </NavbarItem>
-        )
-        : (
+        ) : (
           <NavbarItem>
-            <Button
-              variant="solid"
-              radius="sm"
-              color="primary"
-              size="sm"
-              onClick={handleUserLogin}
-            >
-              <span className="font-semibold">
-                Login
-              </span>
+            <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
+              <span className="font-semibold">Login</span>
             </Button>
           </NavbarItem>
         )}
