@@ -1,5 +1,9 @@
+"use client"
+
 // Utils - Request
 import http from "../../../utils/http";
+
+import { FC, useEffect, useState } from "react";
 
 // ProductImages
 import ProductImages from "../../components/productImages";
@@ -9,30 +13,32 @@ import { ProductObj } from "../../../utils/interfaces";
 import Breadcrumb from "./components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 
-async function getData(id: string): Promise<{data: ProductObj | undefined}> {
-  let response: { data: ProductObj } | undefined;
+const ProductPage: FC<{ params: { id: string } }> = ({ params }) => {
+  const [product, setProduct] = useState<ProductObj>();
 
-  try {
-    response = await http.get(`/products/${id}`);
-  } catch (error) {
-    console.error(`Error fetching product with id ${id}:`, error);
-  }
-  return { data: response?.data || undefined };
-}
+  // FetchData
+    useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await http.get(`/products/${params.id}`);
+        const productData = response?.data as ProductObj;
+        setProduct(productData)
+      } catch (error) {
+        console.error(`Error fetching product with id ${params.id}:`, error);
+      }
+    }
 
-export default async function Product({ params }: { params: { id: string } }) {
-  const { data: product } = (await getData(params.id)) || {};
-  
+    fetchData().catch((error) => {
+      console.error("An error occurred while fetching data:", error);
+    });
+  }, [params.id]);
+
   return product ? (
     <>
       <Breadcrumb title={product.title} />
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4">
-        <ProductImages
-          alt={product.title}
-          main={product.thumbnail}
-          images={product.images}
-        />
+        <ProductImages alt={product.title} main={product.thumbnail} images={product.images} />
 
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-semibold text-center sm:text-start">{product.title}</h1>
@@ -51,4 +57,5 @@ export default async function Product({ params }: { params: { id: string } }) {
       <p>No products found</p>
     </div>
   );
-}
+};
+export default ProductPage;

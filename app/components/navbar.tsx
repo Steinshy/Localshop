@@ -35,7 +35,13 @@ import {
 } from "react-icons/fa";
 
 // Interface
-import { NavbarProps, CartBadgeProps, UserDefaultData } from "../utils/interfaces";
+import {
+  NavbarProps,
+  CartBadgeProps,
+  UserDefaultData,
+  UsermenuNotLoggedProps,
+  UsermenuLoggedProps,
+} from "../utils/interfaces";
 
 // Utils - Site Config - CartContext
 import { siteConfig } from "../utils/siteConfig";
@@ -69,6 +75,69 @@ const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
   );
 };
 
+const UsermenuLogged: FC<UsermenuLoggedProps> = ({
+  userLastName,
+  userFirstName,
+  handleUserMenuOpen,
+  isUserMenuOpen,
+  handleUserKeySelection,
+}) => {
+  return (
+    <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>
+      <DropdownTrigger>
+        <Button
+          variant="light"
+          className="pl-1"
+          radius="full"
+          startContent={
+            <Avatar
+              isBordered
+              className="transition-transform"
+              color="primary"
+              size="sm"
+              src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
+            />
+          }
+          endContent={
+            <div className={`transition-transform	${isUserMenuOpen ? "rotate-180" : "rotate-0"}`}>
+              <FaChevronDown />
+            </div>
+          }
+        >
+          <span className="pl-2 hidden sm:block font-semibold">
+            {userLastName} {userFirstName}
+          </span>
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
+        <DropdownItem startContent={<FaRegUserCircle />} key="profile">
+          Profile
+        </DropdownItem>
+        <DropdownItem startContent={<FaShoppingBag />} key="addresses">
+          Addresses
+        </DropdownItem>
+        <DropdownItem startContent={<FaUserCog />} key="settings">
+          Settings
+        </DropdownItem>
+        <DropdownItem startContent={<FaShoppingBag />} key="orders">
+          Orders
+        </DropdownItem>
+        <DropdownItem startContent={<FaSignOutAlt />} key="logout" color="danger">
+          Logout
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+};
+
+const UsermenuNotLogged: FC<UsermenuNotLoggedProps> = ({ handleUserLogin }) => {
+  return (
+    <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
+      <span className="font-semibold">Login</span>
+    </Button>
+  );
+};
+
 export default function Header() {
   const router = useRouter(),
     pathname = usePathname(),
@@ -87,21 +156,18 @@ export default function Header() {
     router.push(`/user/${value}`);
   };
 
-  const handleUserMenuOpen = (bool: boolean) => {
-    setIsUserMenuOpen(bool);
-  };
-
   const handleUserLogin = () => {
     userStore.update(UserDefaultData);
+  };
+
+  const handleUserMenuOpen = (bool: boolean) => {
+    setIsUserMenuOpen(bool);
   };
 
   return (
     <Navbar isBlurred isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent className="flex sm:hidden" justify="start">
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
+        <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden" />
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex" justify="start">
@@ -122,56 +188,17 @@ export default function Header() {
         </NavbarItem>
         {userStore.isLogged() ? (
           <NavbarItem>
-            <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>
-              <DropdownTrigger>
-                <Button
-                  variant="light"
-                  className="pl-1"
-                  radius="full"
-                  startContent={
-                    <Avatar
-                      isBordered
-                      className="transition-transform"
-                      color="primary"
-                      size="sm"
-                      src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
-                    />
-                  }
-                  endContent={
-                    <div className={`transition-transform	${isUserMenuOpen ? "rotate-180" : "rotate-0"}`}>
-                      <FaChevronDown />
-                    </div>
-                  }
-                >
-                  <span className="pl-2 hidden sm:block font-semibold">
-                    {userStore.user.lastname} {userStore.user.firstname}
-                  </span>
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
-                <DropdownItem startContent={<FaRegUserCircle />} key="profile">
-                  Profile
-                </DropdownItem>
-                <DropdownItem startContent={<FaUserCog />} key="settings">
-                  Settings
-                </DropdownItem>
-                <DropdownItem startContent={<FaShoppingBag />} key="addresses">
-                  Addresses
-                </DropdownItem>
-                <DropdownItem startContent={<FaShoppingBag />} key="orders">
-                  Orders
-                </DropdownItem>
-                <DropdownItem startContent={<FaSignOutAlt />} key="logout" color="danger">
-                  Logout
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <UsermenuLogged
+              userLastName={userStore.user.lastname}
+              userFirstName={userStore.user.firstname}
+              handleUserMenuOpen={handleUserMenuOpen}
+              isUserMenuOpen={isUserMenuOpen}
+              handleUserKeySelection={handleUserKeySelection}
+            />
           </NavbarItem>
         ) : (
           <NavbarItem>
-            <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
-              <span className="font-semibold">Login</span>
-            </Button>
+            <UsermenuNotLogged handleUserLogin={handleUserLogin} />
           </NavbarItem>
         )}
         <NavbarItem key="themswitcher">
@@ -179,7 +206,7 @@ export default function Header() {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu >
+      <NavbarMenu>
         {siteConfig.navItems.map((item) => (
           <NavbarMenuItem key={item.href}>
             <Link href={item.href} onClick={() => setIsMenuOpen(false)}>

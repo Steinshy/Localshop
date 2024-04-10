@@ -42,6 +42,20 @@ export type CartBadgeProps = {
   quantity: number;
 };
 
+// Composants => Navbar => UsermenuLogged
+export type UsermenuLoggedProps = {
+  userLastName: string;
+  userFirstName: string;
+  handleUserMenuOpen: (bool: boolean) => void;
+  isUserMenuOpen: boolean;
+  handleUserKeySelection: (value: React.Key) => void;
+}
+
+// Composants => Navbar => UsermenuNotLogged
+export type UsermenuNotLoggedProps = {
+  handleUserLogin: () => void;
+}
+
 // Components => Footer
 export type FooterProps = {
   text?: string;
@@ -152,6 +166,13 @@ export type CouponsObject = {
   active: boolean;
   expired: boolean;
 };
+
+// User => Components -> AddressCard
+export type AddressListProps = {
+  selected?: number|null,
+  setSelected?: (id:number) => void,
+  selectable?: boolean
+}
 
 // Generation
 export function generateSlug(title: string): string {
