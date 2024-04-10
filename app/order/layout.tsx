@@ -42,7 +42,7 @@ export default function Cart({ children }: {children: React.ReactNode}) {
   }, [cartChecked]);
 
   return (
-    <div className="max-w-screen-xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
+    <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
       {children}
       <CartSummary cart={cart} totalPrice={totalPrice} isLoading={isLoading} />
     </div>

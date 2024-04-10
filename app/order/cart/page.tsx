@@ -8,7 +8,7 @@ import { CartContext } from "../../utils/subProviders";
 
 import CartItems from "./components/cartItems";
 
-export default function Cart() {
+const Cart = () => {
   // Cart Store context
   const cartStore = useContext(CartContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -32,3 +32,5 @@ export default function Cart() {
     <CartItems cartStore={cartStore} cart={cart} isLoading={isLoading} />
   );
 }
+
+export default Cart;

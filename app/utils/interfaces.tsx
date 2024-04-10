@@ -171,11 +171,11 @@ export function calculatedDiscount(selectedCoupon: CouponsObject, totalPrice: nu
 export function cartNavigation(pathname: string): string {
   switch (pathname) {
     case "/order/cart":
-      return "/order/checkout";
-    case "/order/checkout":
       return "/order/shipping";
+    case "/order/checkout":
+      return "/";
     case "/order/shipping":
-      return "/order/cart";
+      return "/order/checkout";
     default:
       return "/order/cart";
   }
@@ -198,6 +198,50 @@ export const UserDefaultData = {
       country: "USA",
       postalCode: "12345",
       default: true
+    },
+    {
+      id: 2,
+      label: "Home 2",
+      firstname: "John",
+      lastname: "Doe",
+      address: "123 Street",
+      city: "New York",
+      country: "USA",
+      postalCode: "12345",
+      default: false
+    },
+    {
+      id: 3,
+      label: "Home 3",
+      firstname: "John",
+      lastname: "Doe",
+      address: "123 Street",
+      city: "New York",
+      country: "USA",
+      postalCode: "12345",
+      default: false
+    },
+    {
+      id: 4,
+      label: "Home 4",
+      firstname: "John",
+      lastname: "Doe",
+      address: "123 Street",
+      city: "New York",
+      country: "USA",
+      postalCode: "12345",
+      default: false
+    },
+    {
+      id: 5,
+      label: "Home 5",
+      firstname: "John",
+      lastname: "Doe",
+      address: "123 Street",
+      city: "New York",
+      country: "USA",
+      postalCode: "12345",
+      default: false
     },
   ]
 } as UserItemsObj;

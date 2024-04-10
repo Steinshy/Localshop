@@ -1,10 +1,17 @@
-"use client";
+// React
+import { FC, ReactNode } from 'react';
 
-export default function UserLayout({ children }) {
+interface UserLayoutProps {
+  children: ReactNode;
+}
+
+const UserLayout:FC<UserLayoutProps> = ({ children }) => {
   
   return (
-    <div className="max-w-screen-xl mx-auto flex flex-col my-8">
+    <div className="max-w-screen-2xl flex flex-col flex-grow items-center my-8">
       {children}
     </div>
   );
 }
+
+export default UserLayout;

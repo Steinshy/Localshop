@@ -12,9 +12,9 @@ import { CartSummaryProps, cartNavigation } from "../../../utils/interfaces";
 const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
   const pathname: string = usePathname();
   const buttonTextMap: { [key: string]: string } = {
-    "/order/cart": "Proceed to Checkout",
-    "/order/checkout": "Proceed to Shipping",
-    "/order/shipping": "Return to Cart",
+    "/order/cart": "Proceed to Shipping",
+    "/order/shipping": "Proceed to Checkout",
+    "/order/checkout": "Return to Cart",
     default: "Proceed to Checkout",
   };
 

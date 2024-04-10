@@ -1,10 +1,17 @@
-import React from "react";
+// Recat
+import { FC, useContext } from "react";
 
-import { useContext } from "react";
+// NextUI
 import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox, Card } from "@nextui-org/react";
+
+// Modules
 import { Formik, Form, Field } from "formik";
+import { FaPlus, FaEdit } from "react-icons/fa";
+
+// Utils
 import { UserContext } from "../..//utils/subProviders";
 
+// Interfaces
 import { AddressObj } from "../../utils/interfaces";
 
 const defaultAdress = {
@@ -19,7 +26,11 @@ const defaultAdress = {
   default: false
 };
 
-export default function AddressModal({ id = 0 }) {
+interface AddressModalProps {
+  id?: number
+}
+
+const AddressModal:FC<AddressModalProps> = ({ id = 0 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const userStore = useContext(UserContext);
   const { update } = userStore;
@@ -47,10 +58,14 @@ export default function AddressModal({ id = 0 }) {
   return (
     <>
       {id > 0 ?
-        <Button size="sm" onPress={onOpen} color="primary">Edit</Button>
+        <Button isIconOnly size="sm" onPress={onOpen} variant="flat" color="primary">
+          <FaEdit className="text-lg" />
+        </Button>
         :
-          <Card isPressable onPress={onOpen} className="justify-center items-center">
-            <h2 className="font-semibold">New</h2>
+          <Card isPressable onPress={onOpen} className="flex justify-center items-center h-[124px]">
+            <h2 className="flex justify-center items-center font-semibold">
+              <FaPlus className="mr-1" /> New
+            </h2>
           </Card>
       }
       <Modal 
@@ -203,3 +218,5 @@ export default function AddressModal({ id = 0 }) {
     </>
   );
 }
+
+export default AddressModal;
