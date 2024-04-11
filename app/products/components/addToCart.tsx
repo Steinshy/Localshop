@@ -5,7 +5,6 @@ import { FC, useContext } from "react";
 import { CartContext } from "../../utils/subProviders";
 
 // Next - navigation
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 // NextUi - Reat Icon

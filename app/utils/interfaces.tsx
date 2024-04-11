@@ -184,7 +184,6 @@ export type AddressObj = {
   postalCode: string;
   [key: string]: string | number | boolean;
   default: boolean;
-
 };
 
 // User => Components -> AddressCard
@@ -232,7 +231,7 @@ export const UserDefaultData = {
       city: "New York",
       country: "USA",
       postalCode: "12345",
-      default: true
+      default: false
     },
     {
       id: 2,
@@ -254,7 +253,7 @@ export const UserDefaultData = {
       city: "New York",
       country: "USA",
       postalCode: "12345",
-      default: false
+      default: true
     },
     {
       id: 4,
