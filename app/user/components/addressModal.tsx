@@ -43,21 +43,24 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
   const { addresses } = userStore.user;
   const address = addresses.find((obj) => obj.id === id) || defaultAdress;
 
-  const add = (values: AddressObj) => {
+  const addAddress = (values: AddressObj) => {
     const newAddress = { ...address, ...values, id: addresses.length + 1 };
     update({ ...userStore.user, addresses: [newAddress, ...addresses] });
   };
 
-  const edit = (values: AddressObj) => {
+  const editaddAddress = (values: AddressObj) => {
     const newAddress = { ...address, ...values };
     const index = addresses.findIndex((obj) => obj.id === id);
+    if (newAddress.default == true) {
+      addresses.forEach((obj) => (obj.default = false));
+    }
     addresses[index] = newAddress;
     update({ ...userStore.user, addresses });
   };
 
   const handleSubmit = (values: AddressObj) => {
     const newAddress = { ...address, ...values };
-    id > 0 ? edit(newAddress) : add(newAddress);
+    id > 0 ? editaddAddress(newAddress) : addAddress(newAddress);
   };
 
   return (
