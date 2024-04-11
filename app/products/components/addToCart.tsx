@@ -55,8 +55,6 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
       variant="solid"
       size={isIconOnly ? "sm" : "md"}
       radius="sm"
-      href="/cart"
-      as={Link}
       onClick={handleClick}
       startContent={
         quantity >= 1 &&

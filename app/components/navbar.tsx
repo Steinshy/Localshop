@@ -47,7 +47,7 @@ import {
 import { siteConfig } from "../utils/siteConfig";
 // Utils - subProviders
 import { UserContext, CartContext } from "../utils/subProviders";
-import { ThemeSwitcher } from "../utils/themeSwitcher";
+import ThemeSwitcher from "../utils/themeSwitcher";
 
 const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
   return (

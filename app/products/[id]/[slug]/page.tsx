@@ -1,9 +1,7 @@
-"use client"
-
 // Utils - Request
 import http from "../../../utils/http";
 
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 
 // ProductImages
 import ProductImages from "../../components/productImages";
@@ -13,29 +11,26 @@ import { ProductObj } from "../../../utils/interfaces";
 import Breadcrumb from "./components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 
-const ProductPage: FC<{ params: { id: string } }> = ({ params }) => {
-  const [product, setProduct] = useState<ProductObj>();
+interface ProductPageProps {
+  params: {
+    id: string;
+  };
+}
 
-  // FetchData
-    useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await http.get(`/products/${params.id}`);
-        const productData = response?.data as ProductObj;
-        setProduct(productData)
-      } catch (error) {
-        console.error(`Error fetching product with id ${params.id}:`, error);
-      }
-    }
+export async function getProduct(id:string) {
+  const response = await http.get(`/products/${id}`);
+  const product = response?.data as ProductObj;
 
-    fetchData().catch((error) => {
-      console.error("An error occurred while fetching data:", error);
-    });
-  }, [params.id]);
+  return product;
+}
+
+const ProductPage: FC<ProductPageProps> = async ({ params }) => {
+  const product = await getProduct(params.id);
+  const breadCrumbItems = [{ title: "Products", href: "/products" }, { title: product.title }];
 
   return product ? (
     <>
-      <Breadcrumb title={product.title} />
+      <Breadcrumb items={breadCrumbItems} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4">
         <ProductImages alt={product.title} main={product.thumbnail} images={product.images} />
@@ -58,4 +53,5 @@ const ProductPage: FC<{ params: { id: string } }> = ({ params }) => {
     </div>
   );
 };
+
 export default ProductPage;
