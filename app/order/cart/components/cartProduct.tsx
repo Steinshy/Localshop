@@ -64,13 +64,13 @@ const CartProduct: FC<CartProductProps> = ({ cartStore, itemcart }) => {
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <p className="text-lg text-foreground">€{itemcart.price}</p>
+        <p className="text-lg text-foreground">{itemcart.price}€</p>
         <Input
           type="number"
           value={itemcart.quantity?.toString() || ""}
           onChange={(e) => handleQuantityChange(e.target.value, itemcart.id)}
         />
-        <p className="text-lg text-foreground">€{itemcart.price * itemcart.quantity}</p>
+        <p className="text-lg text-foreground">{itemcart.price * itemcart.quantity}€</p>
       </div>
     </li>
   );

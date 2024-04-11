@@ -134,11 +134,11 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice, isLoading }) => {
         <p className="text-lg">Total:</p>
         {/* Here place the total with or wothout discount */}
         <p className="text-lg">
-          €{totalPrice}
+          {totalPrice}€
           {appliedCoupon !== null && (
             <>
               <div className="text-sm text-foreground/75">-{discount}% discount</div>
-              <div className="text-md text-foreground">€{totalPriceDiscount}</div>
+              <div className="text-md text-foreground">{totalPriceDiscount}€</div>
             </>
           )}
         </p>

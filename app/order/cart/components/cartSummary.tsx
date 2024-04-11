@@ -9,7 +9,8 @@ import CartCoupons from "./cartCoupons";
 import { FaArrowRight } from "react-icons/fa";
 import { CartSummaryProps } from "../../../utils/interfaces";
 
-const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
+const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, taxesPrice, isLoading }) => {
+
   const pathname: string = usePathname();
 
   const buttonTextMap: { [key: string]: string } = {
@@ -40,17 +41,17 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
         {/* Cart Summary without coupon reductions */}
         <div className="grid grid-cols-2 gap-4 text-foreground">
           <p className="text-lg">Subtotal:</p>
-          <p className="text-lg">€{totalPrice}</p>
+          <p className="text-lg">{totalPrice}€</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 text-foreground">
           <p className="text-lg">Shipping:</p>
-          <p className="text-lg">€0</p>
+          <p className="text-lg">{shippingPrice}€</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 text-foreground">
           <p className="text-lg">Taxes:</p>
-          <p className="text-lg">€0</p>
+          <p className="text-lg">{taxesPrice}€</p>
         </div>
 
         {/* COUPONS */}
