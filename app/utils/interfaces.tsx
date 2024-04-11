@@ -182,7 +182,9 @@ export type AddressObj = {
   city: string;
   country: string;
   postalCode: string;
+  [key: string]: string | number | boolean;
   default: boolean;
+
 };
 
 // User => Components -> AddressCard

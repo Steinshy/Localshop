@@ -54,6 +54,9 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
     if (newAddress.default == true) {
       addresses.forEach((obj) => (obj.default = false));
     }
+    if (newAddress.default == false) {
+      addresses[index].default = false;
+    }
     addresses[index] = newAddress;
     update({ ...userStore.user, addresses });
   };
@@ -187,13 +190,12 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
                         className="col-span-1"
                         id="postalCode"
                         name="postalCode"
-                        type="text"
+                        type="number"
                         radius="sm"
                         placeholder="00000"
                       />
                     </div>
 
-                    {/* Set default */}
                     <Field
                       as={Checkbox}
                       type="checkbox"
@@ -201,7 +203,7 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
                       name="default"
                       label="Set as default"
                       className="col-span-1"
-                      defaultChecked={address.default}
+                      defaultSelected={address.default}
                     >
                       Set as default
                     </Field>
@@ -215,7 +217,7 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
                         size="md"
                         radius="sm"
                       >
-                        {id > 0 ? "Edit" : "Add"}
+                        {id > 0 ? "Confirm Edit" : "Add"}
                       </Button>
                     </div>
                   </Form>
