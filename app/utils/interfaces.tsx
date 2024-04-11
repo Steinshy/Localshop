@@ -45,6 +45,8 @@ export type ProductObj = {
   description: string;
   price: number;
   title: string;
+  stock: number;
+  rating: number;
   category: string;
   thumbnail: string;
   images: [string];
@@ -102,6 +104,7 @@ export type CartItemObj = {
   price: number;
   title: string;
   category: string;
+  stock: number;
   thumbnail: string;
 };
 
@@ -128,6 +131,8 @@ export type CartProductProps = {
 export type CartSummaryProps = {
   cart: CartItemObj[];
   totalPrice: number;
+  shippingPrice: number;
+  taxesPrice: number;
   isLoading: boolean;
 };
 

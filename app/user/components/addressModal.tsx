@@ -56,7 +56,6 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
   };
 
   const handleSubmit = (values: AddressObj) => {
-    console.log("values", values);
     const newAddress = { ...address, ...values };
     id > 0 ? edit(newAddress) : add(newAddress);
   };
