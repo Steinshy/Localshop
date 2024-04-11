@@ -16,7 +16,7 @@ import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 import { ProductCardProps } from "../../utils/interfaces";
 
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
-  const { id, title, category, thumbnail, price } = product;
+  const { id, title, category, thumbnail, price, stock } = product;
   const cartStore = useContext(CartContext);
   const item = cartStore.data.find((item) => item.id === product.id);
   const quantity = item ? item.quantity : 0;
@@ -41,6 +41,7 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
         quantity: 1,
         price,
         title,
+        stock,
         category,
         thumbnail,
       };

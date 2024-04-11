@@ -14,6 +14,26 @@ import { ProductCardProps, generateSlug, generateNewProductLogo } from "../../ut
 import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const productRating = Math.round(product.rating) || 0;
+
+  const Reviews: FC<{ productRating: number }> = ({ productRating }) => {
+    return (
+      <div className="flex items-center gap-1 ml-auto">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <svg
+            key={i}
+            xmlns="http://www.w3.org/2000/svg"
+            className={`h-4 w-4 ${i < productRating ? "text-yellow-500" : "text-gray-300"}`}
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <article>
@@ -25,9 +45,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       >
         <CardHeader className="absolute z-10 top-2 right-2 flex-col items-end">
           {generateNewProductLogo() && (
-            <p className="text-tiny text-white uppercase font-bold bg-red-500 p-1 rounded-md shadow-lg">
-              New!
-            </p>
+            <p className="text-tiny text-white uppercase font-bold bg-red-500 p-1 rounded-md shadow-lg">New!</p>
           )}
         </CardHeader>
         <CardBody>
@@ -40,9 +58,11 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         </CardBody>
         <div className="flex items-center text-base p-3">
           <h5 className="">{product.title}</h5>
+          <Reviews productRating={productRating} />
         </div>
-        <CardFooter className="col relative flex items-center justify-between">
-          <h3 className="">{product.price} €</h3>
+        <CardFooter className="col relative flex justify-between">
+          <h4 className="">{product.price} €</h4>
+          <h3 className="text-sm text-gray-500">{product.stock} left</h3>
           <AddToCart product={product} isIconOnly />
         </CardFooter>
       </Card>
