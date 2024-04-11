@@ -11,8 +11,6 @@ import AddressModal from "../../user/components/addressModal";
 import { AddressListProps } from "../../utils/interfaces";
 import { UserContext } from "../..//utils/subProviders";
 
-
-
 const AddressList:FC<AddressListProps> = ({ selected, setSelected, selectable = false }) => {
   const userStore = useContext(UserContext);
   const { addresses } = userStore.user;

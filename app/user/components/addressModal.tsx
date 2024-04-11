@@ -2,7 +2,17 @@
 import { FC, useContext } from "react";
 
 // NextUI
-import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox, Card } from "@nextui-org/react";
+import {
+  Input,
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+  Checkbox,
+  Card,
+} from "@nextui-org/react";
 
 // Modules
 import { Formik, Form, Field } from "formik";
@@ -23,65 +33,57 @@ const defaultAdress = {
   city: "",
   country: "",
   postalCode: "",
-  default: false
+  default: false,
 };
 
-interface AddressModalProps {
-  id?: number
-}
-
-const AddressModal:FC<AddressModalProps> = ({ id = 0 }) => {
+const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const userStore = useContext(UserContext);
   const { update } = userStore;
   const { addresses } = userStore.user;
-  const address = addresses.find(obj => obj.id === id) || defaultAdress;
+  const address = addresses.find((obj) => obj.id === id) || defaultAdress;
 
-  const add = (values:AddressObj) => {
+  const add = (values: AddressObj) => {
     const newAddress = { ...address, ...values, id: addresses.length + 1 };
     update({ ...userStore.user, addresses: [newAddress, ...addresses] });
-  }
+  };
 
-  const edit = (values:AddressObj) => {
+  const edit = (values: AddressObj) => {
     const newAddress = { ...address, ...values };
-    const index = addresses.findIndex(obj => obj.id === id);
+    const index = addresses.findIndex((obj) => obj.id === id);
     addresses[index] = newAddress;
     update({ ...userStore.user, addresses });
-  }
+  };
 
-  const handleSubmit = (values:AddressObj) => {
+  const handleSubmit = (values: AddressObj) => {
     console.log("values", values);
     const newAddress = { ...address, ...values };
     id > 0 ? edit(newAddress) : add(newAddress);
-  }
+  };
 
   return (
     <>
-      {id > 0 ?
+      {id > 0 ? (
         <Button isIconOnly size="sm" onPress={onOpen} variant="flat" color="primary">
           <FaEdit className="text-lg" />
         </Button>
-        :
-          <Card isPressable onPress={onOpen} className="flex justify-center items-center h-[124px]">
-            <h2 className="flex justify-center items-center font-semibold">
-              <FaPlus className="mr-1" /> New
-            </h2>
-          </Card>
-      }
-      <Modal 
-        isOpen={isOpen} 
-        onOpenChange={onOpenChange}
-        placement="top-center"
-      >
+      ) : (
+        <Card isPressable onPress={onOpen} className="flex justify-center items-center h-[124px]">
+          <h2 className="flex justify-center items-center font-semibold">
+            <FaPlus className="mr-1" /> New
+          </h2>
+        </Card>
+      )}
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">{id > 0 ? 'Edit' : 'Add'} Address</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">{id > 0 ? "Edit" : "Add"} Address</ModalHeader>
               <ModalBody>
                 <Formik
                   initialValues={address}
-                  validate={(values:AddressObj) => {
-                    console.log('validate')
+                  validate={(values: AddressObj) => {
+                    console.log("validate");
                     const errors: { [key: string]: string } = {};
                     Object.keys(values).forEach((key) => {
                       if (!values[key]) {
@@ -91,10 +93,9 @@ const AddressModal:FC<AddressModalProps> = ({ id = 0 }) => {
                     });
                     // return errors;
                   }}
-                      
-                  onSubmit={(values:AddressObj, { setSubmitting }) => {
+                  onSubmit={(values: AddressObj, { setSubmitting }) => {
                     setTimeout(() => {
-                      console.log('submit');
+                      console.log("submit");
                       handleSubmit(values);
                       setSubmitting(false);
                       onClose();
@@ -204,8 +205,15 @@ const AddressModal:FC<AddressModalProps> = ({ id = 0 }) => {
                     </Field>
 
                     <div className="flex justify-center">
-                      <Button type="submit" color="primary" variant="solid" className="text-white" size="md" radius="sm">
-                        {id > 0 ? 'Edit' : 'Add'}
+                      <Button
+                        type="submit"
+                        color="primary"
+                        variant="solid"
+                        className="text-white"
+                        size="md"
+                        radius="sm"
+                      >
+                        {id > 0 ? "Edit" : "Add"}
                       </Button>
                     </div>
                   </Form>
@@ -217,6 +225,6 @@ const AddressModal:FC<AddressModalProps> = ({ id = 0 }) => {
       </Modal>
     </>
   );
-}
+};
 
 export default AddressModal;

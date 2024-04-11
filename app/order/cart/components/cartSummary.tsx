@@ -7,18 +7,31 @@ import CartCoupons from "./cartCoupons";
 
 // React Icons
 import { FaArrowRight } from "react-icons/fa";
-import { CartSummaryProps, cartNavigation } from "../../../utils/interfaces";
+import { CartSummaryProps } from "../../../utils/interfaces";
 
 const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
   const pathname: string = usePathname();
+
   const buttonTextMap: { [key: string]: string } = {
     "/order/cart": "Proceed to Shipping",
     "/order/shipping": "Proceed to Checkout",
     "/order/checkout": "Return to Cart",
     default: "Proceed to Checkout",
   };
-
   const buttonText: string = buttonTextMap[pathname] || buttonTextMap.default;
+
+  const cartNavigation = (pathname: string) => {
+    switch (pathname) {
+      case "/order/cart":
+        return "/order/shipping";
+      case "/order/shipping":
+        return "/order/checkout";
+      case "/order/checkout":
+        return "/order/cart";
+      default:
+        return "/order/cart";
+    }
+  };
 
   return (
     <div>

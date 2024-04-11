@@ -1,34 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 
-// Utils => UserProvider
-export type AddressObj = {
-  id: number;
-  label: string;
-  firstname: string;
-  lastname: string;
-  address: string;
-  city: string;
-  country: string;
-  postalCode: string;
-  default: boolean;
-};
-
-export type UserItemsObj = {
-  id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  addresses: AddressObj[];
-};
-
-// Utils => UserProvider
-export type UserContextType = {
-  user: UserItemsObj;
-  userChecked: boolean;
-  update: Dispatch<SetStateAction<UserItemsObj>>;
-  isLogged: () => boolean;
-  logout: () => void;
-};
+// ========= NAVBAR =========
 
 // Components => Navbar
 export type NavbarProps = {
@@ -56,6 +28,8 @@ export type UsermenuNotLoggedProps = {
   handleUserLogin: () => void;
 }
 
+// ========= FOOTER =========
+
 // Components => Footer
 export type FooterProps = {
   text?: string;
@@ -63,7 +37,9 @@ export type FooterProps = {
   tagText?: string;
 };
 
-// Products / [ID]/[Slug] => Page
+// ========= PRODUCTS =========
+
+// Products => [ID]/[Slug] => Page
 export type ProductObj = {
   id: number;
   description: string;
@@ -114,7 +90,9 @@ export type PaginationButtonInterface = {
   endContent?: React.ReactNode;
 };
 
-// CartProvider => CartItem
+// ========= ORDER => CART =========
+
+// Utils => subProviders => CartItem
 export type CartItemObj = {
   id: number;
   color?: string;
@@ -127,7 +105,7 @@ export type CartItemObj = {
   thumbnail: string;
 };
 
-// Utils => CartProvider
+// Utils => subProviders => CartProvider
 export type CartContextType = {
   data: CartItemObj[];
   update: Dispatch<SetStateAction<CartItemObj[]>>;
@@ -140,7 +118,7 @@ export type CartItemProps = {
   isLoading: boolean;
 };
 
-// order => Cart => Components -> CartProduct
+// Order => Cart => Components -> CartProduct
 export type CartProductProps = {
   cartStore: CartContextType;
   itemcart: CartItemObj;
@@ -167,10 +145,52 @@ export type CouponsObject = {
   expired: boolean;
 };
 
+// ========= USER =========
+
+// Utils => subProviders => UserProvider
+export type UserItemsObj = {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  addresses: AddressObj[];
+};
+
+// Utils => UserProvider
+export type UserContextType = {
+  user: UserItemsObj;
+  userChecked: boolean;
+  update: Dispatch<SetStateAction<UserItemsObj>>;
+  isLogged: () => boolean;
+  logout: () => void;
+};
+
+// ========= USER => ADDRESS ========= 
+
+// Utils => UserProvider
+export type AddressObj = {
+  id: number;
+  label: string;
+  firstname: string;
+  lastname: string;
+  address: string;
+  city: string;
+  country: string;
+  postalCode: string;
+  default: boolean;
+};
+
 // User => Components -> AddressCard
 export type AddressListProps = {
   selected?: number|null,
   setSelected?: (id:number) => void,
+  selectable?: boolean
+}
+ // User => Components -> AddressCard
+export type AddressCardProps = {
+  selected?: number|null,
+  setSelected?: (id:number) => void,
+  address: AddressObj,
   selectable?: boolean
 }
 
@@ -189,20 +209,7 @@ export function calculatedDiscount(selectedCoupon: CouponsObject, totalPrice: nu
   return (totalPrice - totalPrice * (selectedCoupon.discount / 100));
 }
 
-export function cartNavigation(pathname: string): string {
-  switch (pathname) {
-    case "/order/cart":
-      return "/order/shipping";
-    case "/order/checkout":
-      return "/";
-    case "/order/shipping":
-      return "/order/checkout";
-    default:
-      return "/order/cart";
-  }
-}
-
-// SubProviders => Default User Data
+// SubProviders => DefaultUserrData
 export const UserDefaultData = {
   id: 1,
   firstname: "John",
@@ -267,6 +274,7 @@ export const UserDefaultData = {
   ]
 } as UserItemsObj;
 
+// Order => Cart => Components -> CartCoupons
 export const couponsDefaultData = [
   {
     code: "DISCOUNT10",

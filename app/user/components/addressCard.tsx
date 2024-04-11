@@ -9,14 +9,7 @@ import AddressModal from "../../user/components/addressModal";
 import RemoveAddress from "../../user/components/removeAddress";
 
 // Interfaces
-import { AddressObj } from "../../utils/interfaces";
-
-interface AddressCardProps {
-  selected?: number|null,
-  setSelected?: (id:number) => void,
-  address: AddressObj,
-  selectable?: boolean
-}
+import { AddressCardProps } from "../../utils/interfaces";
 
 const AddressCard:FC<AddressCardProps> = ({ selected, setSelected, address, selectable = false }) => {
 
