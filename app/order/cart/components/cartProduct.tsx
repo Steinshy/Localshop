@@ -25,7 +25,7 @@ const CartProduct: FC<CartProductProps> = ({ cartStore, itemcart }) => {
   };
 
   return (
-    <li key={itemcart.id} className="p-2 bg-background border-2 border-current text-default-100 rounded-md">
+    <li key={itemcart.id} className="p-2 bg-background border-1 rounded-md">
       <div className="grid grid-cols-2">
         <div className="flex justify-start items-center">
           <Link href={`/products/${itemcart.id}/${slug}`}>

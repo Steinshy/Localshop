@@ -36,7 +36,7 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, ta
 
   return (
     <div>
-      <div className="sticky top-[70px] border-2 border-current p-4 rounded-md bg-background text-default-100">
+      <div className="sticky top-[70px] border-1 p-4 rounded-md bg-background">
         <h2 className="text-2xl font-semibold mb-4 text-foreground">Order summary</h2>
         {/* Cart Summary without coupon reductions */}
         <div className="grid grid-cols-2 gap-4 text-foreground">
