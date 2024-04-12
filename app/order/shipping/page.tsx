@@ -7,7 +7,7 @@ import { FC, useState } from "react";
 import { Divider } from "@nextui-org/react";
 
 // Components
-import AddressList from "../../user/components/addressList";
+import AddressList from "../../user/addresses/components/addressList";
 
 const Shipping: FC = () => {
   const [selectedShippingAddressId, setSelectedShippingAddressId] = useState<number | null>(1);

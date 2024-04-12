@@ -2,7 +2,7 @@
 import { FC } from "react";
 
 // Components
-import AddressList from "../../user/components/addressList";
+import AddressList from "./components/addressList";
 
 const Addresses:FC = () => {
   return (

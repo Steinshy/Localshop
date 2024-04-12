@@ -19,10 +19,10 @@ import { Formik, Form, Field } from "formik";
 import { FaPlus, FaEdit } from "react-icons/fa";
 
 // Utils
-import { UserContext } from "../../utils/subProviders";
+import { UserContext } from "../../../utils/subProviders";
 
 // Interfaces
-import { AddressObj } from "../../utils/interfaces";
+import { AddressObj } from "../../../utils/interfaces";
 
 const defaultAdress = {
   id: 0,
@@ -83,7 +83,7 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">{id > 0 ? "Edit" : "Add"} Address</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">{id > 0 ? "Edit" : "Create"} Address</ModalHeader>
               <ModalBody>
                 <Formik
                   initialValues={address}
@@ -217,7 +217,7 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
                         size="md"
                         radius="sm"
                       >
-                        {id > 0 ? "Confirm Edit" : "Add"}
+                        {id > 0 ? "Confirm Edit" : "Create Address"}
                       </Button>
                     </div>
                   </Form>

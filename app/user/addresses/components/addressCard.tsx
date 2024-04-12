@@ -5,11 +5,11 @@ import { FC } from "react";
 import { Card, CardBody, Chip } from "@nextui-org/react";
 
 // Components
-import AddressModal from "../../user/components/addressModal";
-import RemoveAddress from "../../user/components/removeAddress";
+import AddressModal from "./addressModal";
+import RemoveAddress from "./removeAddress";
 
 // Interfaces
-import { AddressCardProps } from "../../utils/interfaces";
+import { AddressCardProps } from "../../../utils/interfaces";
 
 const AddressCard: FC<AddressCardProps> = ({ selected, setSelected, address, selectable = false }) => {
   const handleSelect = () => {

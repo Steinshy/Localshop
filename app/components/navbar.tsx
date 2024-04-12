@@ -70,8 +70,15 @@ const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
       variant="shadow"
       isInvisible={quantity === 0}
     >
-      <Button as={Link} href="/order/cart" isIconOnly variant="light">
-        <FaCartArrowDown className="text-2xl" />
+      <Button
+        startContent={<FaCartArrowDown className="text-2xl" />}
+        as={Link}
+        href="/order/cart"
+        size="md"
+        variant="ghost"
+        radius="md"
+      >
+        Cart
       </Button>
     </Badge>
   );
@@ -188,9 +195,6 @@ const Header = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        <NavbarItem>
-          <CartBadge quantity={cartQuantity} />
-        </NavbarItem>
         {userStore.isLogged() ? (
           <NavbarItem>
             <UsermenuLogged
@@ -206,6 +210,9 @@ const Header = () => {
             <UsermenuNotLogged handleUserLogin={handleUserLogin} />
           </NavbarItem>
         )}
+        <NavbarItem>
+          <CartBadge quantity={cartQuantity} />
+        </NavbarItem>
         <NavbarItem key="themswitcher">
           <ThemeSwitcher />
         </NavbarItem>
