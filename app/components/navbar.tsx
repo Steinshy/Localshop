@@ -3,11 +3,11 @@
 // React
 import React, { useContext, useState, FC } from "react";
 
-// NextJS - Navigation - Link
+// NextJS
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
-// NextUi - React Icon
+// NextUI
 import {
   Link as NextLink,
   NavbarContent,
@@ -24,6 +24,8 @@ import {
   DropdownItem,
   Dropdown,
 } from "@nextui-org/react";
+
+// Icons
 import { DiCssdeck } from "react-icons/di";
 import {
   FaCartArrowDown,
@@ -34,7 +36,7 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
-// Interface
+// Interfaces
 import {
   NavbarProps,
   CartBadgeProps,
@@ -43,9 +45,8 @@ import {
   UsermenuLoggedProps,
 } from "../utils/interfaces";
 
-// Utils - Site Config - CartContext
+// Utils
 import { siteConfig } from "../utils/siteConfig";
-// Utils - subProviders
 import { UserContext, CartContext } from "../utils/subProviders";
 import ThemeSwitcher from "../utils/themeSwitcher";
 
@@ -138,7 +139,7 @@ const UsermenuNotLogged: FC<UsermenuNotLoggedProps> = ({ handleUserLogin }) => {
   );
 };
 
-export default function Header() {
+const Header = () => {
   const router = useRouter(),
     pathname = usePathname(),
     cartStore = useContext(CartContext),
@@ -218,3 +219,5 @@ export default function Header() {
     </Navbar>
   );
 }
+
+export default Header;

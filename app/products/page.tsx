@@ -3,7 +3,7 @@
 // React
 import { useState, useEffect, useCallback } from "react";
 
-// Utils - Request
+// Utils
 import http from "../utils/http";
 
 // Component
@@ -11,18 +11,19 @@ import ProductCard from "./components/productCard";
 import SkeletonProduct from "./components/skeletonProduct";
 import Pagination from "./components/pagination";
 import OffersDisplay from "./components/offersDisplay";
+
+// Icons
 import { Input, Chip } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
 
-// Interfaces - Utils
+// Interfaces
 import { ProductObj, ProductDataProps } from "../utils/interfaces";
 
 // Image
 import BG from '../assets/bg-products.webp';
 
-export default function Products() {
-  const limit = 12;
-  const array = Array(12);
+const ProductsPage = () => {
+  const limit = 12, array = Array(12);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<ProductObj[]>([]);
@@ -162,3 +163,5 @@ export default function Products() {
     </div>
   );
 }
+
+export default ProductsPage;

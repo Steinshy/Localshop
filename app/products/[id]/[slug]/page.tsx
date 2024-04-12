@@ -1,30 +1,30 @@
-// Utils - Request
-import http from "../../../utils/http";
-
+// React
 import { FC } from "react";
 
-// ProductImages
-import ProductImages from "../../components/productImages";
-import { ProductObj } from "../../../utils/interfaces";
-
 // Components
+import ProductImages from "../../components/productImages";
 import Breadcrumb from "./components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 
+// Utils
+import http from "../../../utils/http";
+
+// Interfaces
+import { ProductObj } from "../../../utils/interfaces";
 interface ProductPageProps {
   params: {
     id: string;
   };
 }
 
-export async function getProduct(id:string) {
+const getProduct = async (id:string) => {
   const response = await http.get(`/products/${id}`);
   const product = response?.data as ProductObj;
 
   return product;
 }
 
-const ProductPage: FC<ProductPageProps> = async ({ params }) => {
+const ProductPage:FC<ProductPageProps> = async ({ params }) => {
   const product = await getProduct(params.id);
   const breadCrumbItems = [{ title: "Products", href: "/products" }, { title: product.title }];
 

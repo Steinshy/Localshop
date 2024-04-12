@@ -1,9 +1,12 @@
+// React
+import { FC } from "react";
+
 // Components
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 
 // Providers
-import { Providers } from "./providers";
+import Providers from "./providers";
 
 // APP CSS
 import "./styles/App.css";
@@ -14,22 +17,22 @@ export const metadata = {
   description: "LocalShop - Your local shop online",
 };
 
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body className="flex flex-col min-h-svh">
-        <main className="flex flex-col flex-grow">
-          <Providers>
-            <Navbar />
-            {children}
-          </Providers>
-          <Footer />
-        </main>
-      </body>
-    </html>
-  );
 }
+
+const RootLayout:FC<RootLayoutProps> = ({ children }) => (
+  <html lang="en">
+    <body className="flex flex-col min-h-svh">
+      <main className="flex flex-col flex-grow">
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
+        <Footer />
+      </main>
+    </body>
+  </html>
+);
+
+export default RootLayout;

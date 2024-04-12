@@ -1,13 +1,19 @@
 "use client";
 
-// React context
-import { useContext, useEffect, useState } from "react";
+// React
+import { FC, useContext, useEffect, useState } from "react";
 
-// Components - Generation
-import { CartContext, UserContext } from "../utils/subProviders";
+// Components
 import CartSummary from "./cart/components/cartSummary";
 
-export default function Cart({ children }: { children: React.ReactNode }) {
+// Utils
+import { CartContext, UserContext } from "../utils/subProviders";
+
+interface CartProps {
+  children: React.ReactNode;
+}
+
+const OrderLayout:FC<CartProps> = ({ children }) => {
   // Cart Store context
   const cartStore = useContext(CartContext);
   const userStore = useContext(UserContext);
@@ -55,3 +61,5 @@ export default function Cart({ children }: { children: React.ReactNode }) {
     </div>
   );
 }
+
+export default OrderLayout;

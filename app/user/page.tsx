@@ -1,7 +1,7 @@
-"use client";
-
 import { redirect } from 'next/navigation';
 
-export default function User() {
+const UserPage = () => {
   redirect('/user/profile');
 }
+
+export default UserPage;
