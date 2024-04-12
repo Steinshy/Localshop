@@ -1,9 +1,7 @@
 // React
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 
-interface UserLayoutProps {
-  children: ReactNode;
-}
+import { UserLayoutProps } from '../utils/interfaces';
 
 const UserLayout:FC<UserLayoutProps> = ({ children }) => {
   

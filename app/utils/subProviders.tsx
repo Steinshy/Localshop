@@ -3,7 +3,7 @@
 // Context - React
 import React, { useState, createContext } from "react";
 
-// Interface - Utils
+// Interface
 import { UserItemsObj, UserContextType, UserDefaultData, CartItemObj, CartContextType } from "./interfaces";
 
 // Cart Hook => Self Providers

@@ -1,14 +1,16 @@
 // React
 import { FC } from "react";
 
-// Nextui - React Icon
+// NextUI
 import { Button } from "@nextui-org/react";
+
+// Icons
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // Squeleton
 import { Skeleton } from "@nextui-org/react";
 
-// Interface - Utils - Generation
+// Interface - Generation
 import { PaginationProps, PaginationButtonInterface, generateClamp } from "../../utils/interfaces";
 
 const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, children, startContent, endContent }) => (

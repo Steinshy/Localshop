@@ -64,7 +64,6 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice, isLoading }) => {
       return false;
     }
     if (couponIndex === -1) {
-      // -1 = error
       alert("Your coupon is invalid!");
       return false;
     }

@@ -1,4 +1,16 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, ReactNode } from "react";
+
+// ========= Root =========
+
+export type RootLayoutProps = {
+  children: React.ReactNode;
+};
+
+// ========= PROVIDERS =========
+
+export type ProvidersProps = {
+  children: React.ReactNode;
+};
 
 // ========= NAVBAR =========
 
@@ -21,12 +33,12 @@ export type UsermenuLoggedProps = {
   handleUserMenuOpen: (bool: boolean) => void;
   isUserMenuOpen: boolean;
   handleUserKeySelection: (value: React.Key) => void;
-}
+};
 
 // Composants => Navbar => UsermenuNotLogged
 export type UsermenuNotLoggedProps = {
   handleUserLogin: () => void;
-}
+};
 
 // ========= FOOTER =========
 
@@ -39,6 +51,13 @@ export type FooterProps = {
 
 // ========= PRODUCTS =========
 
+// Products => Page
+export type ProductPageProps = {
+  params: {
+    id: string;
+  };
+};
+
 // Products => [ID]/[Slug] => Page
 export type ProductObj = {
   id: number;
@@ -50,6 +69,11 @@ export type ProductObj = {
   category: string;
   thumbnail: string;
   images: [string];
+};
+
+// Product => [ID]/[Slug] => components => Breadcrumb
+export type BreadcrumbProps = {
+  items: Array<{ title: string; href?: string | undefined }>;
 };
 
 // Products => Page
@@ -93,6 +117,11 @@ export type PaginationButtonInterface = {
 };
 
 // ========= ORDER => CART =========
+
+// Order => Cart
+export type CartProps = {
+  children: React.ReactNode;
+};
 
 // Utils => subProviders => CartItem
 export type CartItemObj = {
@@ -152,6 +181,11 @@ export type CouponsObject = {
 
 // ========= USER =========
 
+// User => Layout
+export type UserLayoutProps = {
+  children: ReactNode;
+};
+
 // Utils => subProviders => UserProvider
 export type UserItemsObj = {
   id: number;
@@ -170,7 +204,7 @@ export type UserContextType = {
   logout: () => void;
 };
 
-// ========= USER => ADDRESS ========= 
+// ========= USER => ADDRESS =========
 
 // Utils => UserProvider
 export type AddressObj = {
@@ -188,21 +222,24 @@ export type AddressObj = {
 
 // User => Components -> AddressCard
 export type AddressListProps = {
-  selected?: number|null,
-  setSelected?: (id:number) => void,
-  selectable?: boolean
-}
- // User => Components -> AddressCard
+  selected?: number | null;
+  setSelected?: (id: number) => void;
+  selectable?: boolean;
+};
+// User => Components -> AddressCard
 export type AddressCardProps = {
-  selected?: number|null,
-  setSelected?: (id:number) => void,
-  address: AddressObj,
-  selectable?: boolean
-}
+  selected?: number | null;
+  setSelected?: (id: number) => void;
+  address: AddressObj;
+  selectable?: boolean;
+};
 
 // Generation
 export function generateSlug(title: string): string {
-  return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+  return title
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
 }
 export function generateClamp(num: number, min: number, max: number): number {
   return Math.min(Math.max(num, min), max);
@@ -212,7 +249,7 @@ export function generateNewProductLogo(): boolean {
 }
 
 export function calculatedDiscount(selectedCoupon: CouponsObject, totalPrice: number): number {
-  return (totalPrice - totalPrice * (selectedCoupon.discount / 100));
+  return totalPrice - totalPrice * (selectedCoupon.discount / 100);
 }
 
 // SubProviders => DefaultUserrData
@@ -231,7 +268,7 @@ export const UserDefaultData = {
       city: "New York",
       country: "USA",
       postalCode: "12345",
-      default: false
+      default: false,
     },
     {
       id: 2,
@@ -242,7 +279,7 @@ export const UserDefaultData = {
       city: "New York",
       country: "USA",
       postalCode: "12345",
-      default: false
+      default: false,
     },
     {
       id: 3,
@@ -253,7 +290,7 @@ export const UserDefaultData = {
       city: "New York",
       country: "USA",
       postalCode: "12345",
-      default: true
+      default: true,
     },
     {
       id: 4,
@@ -264,7 +301,7 @@ export const UserDefaultData = {
       city: "New York",
       country: "USA",
       postalCode: "12345",
-      default: false
+      default: false,
     },
     {
       id: 5,
@@ -275,9 +312,9 @@ export const UserDefaultData = {
       city: "New York",
       country: "USA",
       postalCode: "12345",
-      default: false
+      default: false,
     },
-  ]
+  ],
 } as UserItemsObj;
 
 // Order => Cart => Components -> CartCoupons

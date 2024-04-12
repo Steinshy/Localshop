@@ -15,6 +15,7 @@
     "axios": "^1.6.7",
     "axios-cache-interceptor": "^1",
     "formik": "^2.4.5",
+    "formik-stepper": "^2.2.1",
     "framer-motion": "^11.0.6",
     "next": "^14.1.4",
     "next-themes": "^0.2.1",
@@ -22,8 +23,7 @@
     "react-dom": "^18",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.0",
-    "yarn": "^1.22.21",
-    "zod": "^3.23.0-canary.20240222T232722"
+    "yarn": "^1.22.21"
   },
   "devDependencies": {
     "@types/node": "20.11.24",

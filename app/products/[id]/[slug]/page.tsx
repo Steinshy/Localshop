@@ -10,12 +10,7 @@ import AddToCard from "../../components/addToCart";
 import http from "../../../utils/http";
 
 // Interfaces
-import { ProductObj } from "../../../utils/interfaces";
-interface ProductPageProps {
-  params: {
-    id: string;
-  };
-}
+import { ProductPageProps, ProductObj } from "../../../utils/interfaces";
 
 const getProduct = async (id:string) => {
   const response = await http.get(`/products/${id}`);

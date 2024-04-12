@@ -8,6 +8,9 @@ import Footer from "./components/footer";
 // Providers
 import Providers from "./providers";
 
+// Interface
+import { RootLayoutProps } from "./utils/interfaces";
+
 // APP CSS
 import "./styles/App.css";
 
@@ -16,10 +19,6 @@ export const metadata = {
   title: "LocalShop",
   description: "LocalShop - Your local shop online",
 };
-
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
 
 const RootLayout:FC<RootLayoutProps> = ({ children }) => (
   <html lang="en">

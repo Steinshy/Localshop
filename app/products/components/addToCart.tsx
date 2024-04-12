@@ -1,17 +1,21 @@
 "use client";
 
-// React Context
+// React
 import { FC, useContext } from "react";
+
+// Providers
 import { CartContext } from "../../utils/subProviders";
 
-// Next - navigation
+// Next
 import { useRouter } from "next/navigation";
 
-// NextUi - Reat Icon
+// NextUi
 import { Button } from "@nextui-org/react";
+
+// Icon
 import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
-// Interface - ProductCardProps
+// Interface
 import { ProductCardProps } from "../../utils/interfaces";
 
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {

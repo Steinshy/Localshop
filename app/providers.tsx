@@ -7,12 +7,11 @@ import { FC } from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-// Utils - subProviders
+// Providers
 import { UserProvider, CartProvider } from "./utils/subProviders";
 
-interface ProvidersProps {
-  children: React.ReactNode;
-}
+// Interface
+import { ProvidersProps } from "./utils/interfaces";
 
 const Providers:FC<ProvidersProps> = ({ children }) => (
   <NextUIProvider className="flex flex-col flex-grow">

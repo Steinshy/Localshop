@@ -19,7 +19,7 @@ import { Formik, Form, Field } from "formik";
 import { FaPlus, FaEdit } from "react-icons/fa";
 
 // Utils
-import { UserContext } from "../..//utils/subProviders";
+import { UserContext } from "../../utils/subProviders";
 
 // Interfaces
 import { AddressObj } from "../../utils/interfaces";

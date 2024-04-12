@@ -5,11 +5,10 @@ import { useContext, useEffect, useState } from "react";
 
 // Components - Generation
 import { CartContext } from "../../utils/subProviders";
-
 import CartItems from "./components/cartItems";
 
 const Cart = () => {
-  // Cart Store context
+  // Context
   const cartStore = useContext(CartContext);
   const [isLoading, setIsLoading] = useState(true);
   // Cart
@@ -29,8 +28,8 @@ const Cart = () => {
   }, [cartChecked]);
 
   return (
-    <CartItems cartStore={cartStore} cart={cart} isLoading={isLoading} />
+      <CartItems cartStore={cartStore} cart={cart} isLoading={isLoading} />
   );
-}
+};
 
 export default Cart;

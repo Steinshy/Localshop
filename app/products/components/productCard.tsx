@@ -4,14 +4,14 @@ import { FC } from "react";
 // NextJS - Link
 import Link from "next/link";
 
-// Components - AddToCart
+// NextUi
+import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react";
+
+// Components
 import AddToCart from "./addToCart";
 
 // Interfaces - Generation
 import { ProductCardProps, generateSlug, generateNewProductLogo } from "../../utils/interfaces";
-
-// NextUi
-import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const productRating = Math.round(product.rating) || 0;

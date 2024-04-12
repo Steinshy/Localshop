@@ -6,12 +6,12 @@ import { FC, useContext, useEffect, useState } from "react";
 // Components
 import CartSummary from "./cart/components/cartSummary";
 
+// https://github.com/Riyad-Arafat/formik-stepper?tab=readme-ov-file
+// https://dev.to/riyadelberkawy/formik-stepper-a-better-way-to-create-multi-step-forms-with-formik-3m6a
+
 // Utils
 import { CartContext, UserContext } from "../utils/subProviders";
-
-interface CartProps {
-  children: React.ReactNode;
-}
+import { CartProps } from "../utils/interfaces";
 
 const OrderLayout:FC<CartProps> = ({ children }) => {
   // Cart Store context

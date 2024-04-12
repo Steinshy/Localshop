@@ -4,7 +4,7 @@
 import { FC, useState } from "react";
 import { Image, Link } from "@nextui-org/react";
 
-// Interface - Utils
+// Interface
 import { ProductImagesProps } from "../../utils/interfaces";
 
 const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {

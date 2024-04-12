@@ -1,16 +1,21 @@
+// Icons
 import { FC } from "react";
-// NextLink - NextUI
+
+// NextUi
 import { Button } from "@nextui-org/react";
+
+// Next
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+// Components
 import CartCoupons from "./cartCoupons";
 
-// React Icons
+// Icons
 import { FaArrowRight } from "react-icons/fa";
 import { CartSummaryProps } from "../../../utils/interfaces";
 
 const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, taxesPrice, isLoading }) => {
-
   const pathname: string = usePathname();
 
   const buttonTextMap: { [key: string]: string } = {
