@@ -1,15 +1,10 @@
 // React
-import { FC } from 'react';
+import { FC } from "react";
 
-import { UserLayoutProps } from '../utils/interfaces';
+import { UserLayoutProps } from "../utils/interfaces";
 
-const UserLayout:FC<UserLayoutProps> = ({ children }) => {
-  
-  return (
-    <div className="max-w-screen-2xl flex flex-col flex-grow items-center my-8">
-      {children}
-    </div>
-  );
-}
+const UserLayout: FC<UserLayoutProps> = ({ children }) => {
+  return <div className="max-w-screen-2xl flex flex-col flex-growmy-8">{children}</div>;
+};
 
 export default UserLayout;

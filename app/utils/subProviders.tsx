@@ -29,7 +29,9 @@ const UserLoggedOutData = {
   firstname: "",
   lastname: "",
   email: "",
-  addresses: []
+  addresses: [],
+  orders: [],
+  payepaymentmethods: [],
 };
 
 const useUser = () => {

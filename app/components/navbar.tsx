@@ -23,6 +23,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Dropdown,
+  Divider,
 } from "@nextui-org/react";
 
 // Icons
@@ -117,13 +118,16 @@ const UsermenuLogged: FC<UsermenuLoggedProps> = ({
         <DropdownItem startContent={<FaShoppingBag />} key="addresses">
           Addresses
         </DropdownItem>
-        <DropdownItem startContent={<FaUserCog />} key="settings">
-          Settings
-        </DropdownItem>
         <DropdownItem startContent={<FaShoppingBag />} key="orders">
           Orders
         </DropdownItem>
-        <DropdownItem startContent={<FaSignOutAlt />} key="logout" color="danger">
+        <DropdownItem startContent={<FaUserCog />} key="settings">
+          Settings
+        </DropdownItem>
+        <DropdownItem>
+          <Divider />
+        </DropdownItem>
+        <DropdownItem startContent={<FaSignOutAlt />} key="logout" className="text-danger" color="danger">
           Logout
         </DropdownItem>
       </DropdownMenu>
@@ -218,6 +222,6 @@ const Header = () => {
       </NavbarMenu>
     </Navbar>
   );
-}
+};
 
 export default Header;

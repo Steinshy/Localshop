@@ -3,7 +3,7 @@ import { FC } from "react";
 
 // Components
 import ProductImages from "../../components/productImages";
-import Breadcrumb from "./components/breadCrumb";
+import Breadcrumb from "../../../components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 
 // Utils

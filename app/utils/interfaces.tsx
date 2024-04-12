@@ -193,6 +193,8 @@ export type UserItemsObj = {
   lastname: string;
   email: string;
   addresses: AddressObj[];
+  orders: OrdersObj[];
+  paymentmethods: PaymentObj[];
 };
 
 // Utils => UserProvider
@@ -219,6 +221,35 @@ export type AddressObj = {
   [key: string]: string | number | boolean;
   default: boolean;
 };
+ 
+export type OrdersObj = {
+  id: number;
+  label: string;
+  date: string;
+  productstotal: number;
+  status: string;
+  paymenttype: string;
+  ispaid: boolean;
+  products: OrderProducts[];
+};
+
+// ONE ORDER WITH FAKE Products
+export type OrderProducts = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  quantity: number;
+  thumbnail: string;
+};
+
+export type PaymentObj = {
+  id: number;
+  label: string;
+  default: boolean;
+};
+
+
 
 // User => Components -> AddressCard
 export type AddressListProps = {
@@ -233,6 +264,8 @@ export type AddressCardProps = {
   address: AddressObj;
   selectable?: boolean;
 };
+
+// ========== USER => ORDERS =========
 
 // Generation
 export function generateSlug(title: string): string {
@@ -315,6 +348,53 @@ export const UserDefaultData = {
       default: false,
     },
   ],
+  paymentmethods: [
+    {
+      id: 1,
+      label: "Credit Card",
+      default: true,
+    },
+    {
+      id: 2,
+      label: "Paypal",
+      default: false,
+    },
+    {
+      id: 3,
+      label: "Bank Transfer",
+      default: false,
+    },
+  ],
+  orders : [
+    {
+      id: 1,
+      label: "Order 1",
+      date: "2021-07-01",
+      productstotal: 2,
+      status: "Delivered",
+      paymenttype: "Credit Card",
+      ispaid: true,
+      products: [
+        {
+          id: 1,
+          title: "Product 1",
+          description: "Product 1 description",
+          price: 100,
+          quantity: 2,
+          thumbnail: "",
+        },
+        {
+          id: 2,
+          title: "Product 2",
+          description: "Product 2 description",
+          price: 100,
+          quantity: 2,
+          thumbnail: "",
+        },
+      ],
+    },
+  ],
+
 } as UserItemsObj;
 
 // Order => Cart => Components -> CartCoupons

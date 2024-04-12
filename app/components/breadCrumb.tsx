@@ -11,7 +11,7 @@ import { Link as NextLink } from "@nextui-org/react";
 import { FaHome } from "react-icons/fa";
 
 // Interface
-import { BreadcrumbProps } from "../../../../utils/interfaces";
+import { BreadcrumbProps } from "../utils/interfaces";
 
 const Separator = () => <span className="text-small text-foreground/50">/</span>;
 
