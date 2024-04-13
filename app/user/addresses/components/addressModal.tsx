@@ -2,27 +2,20 @@
 import { FC, useContext } from "react";
 
 // NextUI
-import {
-  Input,
-  Button,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-  Checkbox,
-  Card,
-} from "@nextui-org/react";
+import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox,
+         Card } from "@nextui-org/react";
 
 // Modules
 import { Formik, Form, Field } from "formik";
+
+// Icons
 import { FaPlus, FaEdit } from "react-icons/fa";
 
 // Utils
 import { UserContext } from "../../../utils/subProviders";
 
 // Interfaces
-import { AddressObj } from "../../../utils/interfaces";
+import { AddressObj } from "../../../interfaces/user";
 
 const defaultAdress = {
   id: 0,

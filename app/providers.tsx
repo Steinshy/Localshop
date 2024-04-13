@@ -3,17 +3,19 @@
 // React
 import { FC } from "react";
 
+// NextThemes
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
 // NextUIProvider - ThemeProvider
 import { NextUIProvider } from "@nextui-org/react";
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 // Providers
 import { UserProvider, CartProvider } from "./utils/subProviders";
 
 // Interface
-import { ProvidersProps } from "./utils/interfaces";
+import { LayoutProps } from "./interfaces/general";
 
-const Providers:FC<ProvidersProps> = ({ children }) => (
+const Providers:FC<LayoutProps> = ({ children }) => (
   <NextUIProvider className="flex flex-col flex-grow">
     <NextThemesProvider attribute="class" defaultTheme="light">
       <UserProvider>

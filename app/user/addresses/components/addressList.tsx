@@ -8,8 +8,10 @@ import AddressCard from "./addressCard";
 import AddressModal from "./addressModal";
 
 // Utils
-import { AddressListProps } from "../../../utils/interfaces";
 import { UserContext } from "../../../utils/subProviders";
+
+// Interfaces
+import { AddressListProps } from "../../../interfaces/user";
 
 const AddressList:FC<AddressListProps> = ({ selected, setSelected, selectable = false }) => {
   const userStore = useContext(UserContext);

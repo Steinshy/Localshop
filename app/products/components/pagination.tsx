@@ -1,32 +1,32 @@
 // React
 import { FC } from "react";
 
-// NextUI
-import { Button } from "@nextui-org/react";
-
 // Icons
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-// Squeleton
-import { Skeleton } from "@nextui-org/react";
+// NextUI
+import { Button, Skeleton } from "@nextui-org/react";
 
-// Interface - Generation
-import { PaginationProps, PaginationButtonInterface, generateClamp } from "../../utils/interfaces";
+// Interface
+import { PaginationProps, PaginationButtonProps } from "../../interfaces/pagination";
 
-const PaginationButton: FC<PaginationButtonInterface> = ({ isDisabled, onClick, children, startContent, endContent }) => (
-    <Button
-      isDisabled={isDisabled}
-      size="sm"
-      variant="flat"
-      onClick={onClick}
-      startContent={startContent}
-      endContent={endContent}>
-      
-      {children}
-    </Button>
+// Helpers
+import { generateClamp } from "../../utils/helpers";
+
+const PaginationButton:FC<PaginationButtonProps> = ({ isDisabled, onClick, children, startContent, endContent }) => (
+  <Button
+    isDisabled={isDisabled}
+    size="sm"
+    variant="flat"
+    onClick={onClick}
+    startContent={startContent}
+    endContent={endContent}>
+    
+    {children}
+  </Button>
 );
 
-const Pagination: FC<PaginationProps> = ({ isLoading, total, skip, limit, previousPage, nextPage }) => {
+const Pagination:FC<PaginationProps> = ({ isLoading, total, skip, limit, previousPage, nextPage }) => {
   
   return (
     <div className="flex flex-grow justify-between px-2 mb-4">

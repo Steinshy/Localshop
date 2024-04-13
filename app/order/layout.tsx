@@ -15,9 +15,9 @@ import CartSummary from "./cart/components/cartSummary";
 
 // Utils
 import { CartContext, UserContext } from "../utils/subProviders";
-import { CartProps } from "../utils/interfaces";
+import { LayoutProps } from "../interfaces/general";
 
-const OrderLayout:FC<CartProps> = ({ children }) => {
+const OrderLayout:FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
 
   // Cart Store context

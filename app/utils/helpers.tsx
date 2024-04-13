@@ -1,0 +1,111 @@
+// Interfaces
+import { CouponsObject } from "../interfaces/cart";
+
+// Data
+import { paymentmethods } from "../data/payment";
+
+/**
+ * Generates a slug from a title.
+ * @param {string} title The title to generate a slug from.
+ * @returns {string} The generated slug.
+ */
+const generateSlug = (title: string): string => {
+  return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
+}
+
+/**
+ * Clamps a number between a minimum and maximum value.
+ * @param {number} num The number to clamp.
+ * @param {number} min The minimum value.
+ * @param {number} max The maximum value.
+ * @returns {number} The clamped number.
+ */
+const generateClamp = (num: number, min: number, max: number): number => {
+  return Math.min(Math.max(num, min), max);
+}
+
+/**
+ * Generates a random boolean.
+ * @returns {boolean} The random boolean.
+ */
+const generateRandomBool = (): boolean => {
+  return Math.random() >= 0.5;
+}
+
+/**
+ * Calculates the discount based on the selected coupon.
+ * @param {CouponsObject} selectedCoupon The selected coupon.
+ * @param {number} totalPrice The total price.
+ * @returns {number} The calculated discount.
+ */
+const calculatedDiscount = (selectedCoupon: CouponsObject, totalPrice: number): number => {
+  return totalPrice - totalPrice * (selectedCoupon.discount / 100);
+}
+
+/**
+ * Generates an array of default addresses.
+ * @returns {Array} The array of default addresses.
+ */
+const generateDefaultAdresses = () => {
+  const addresses = [];
+  for (let i = 1; i < 6; i++) {
+    addresses.push({
+      id: i,
+      label: `Home ${i}`,
+      firstname: "John",
+      lastname: "Doe",
+      address: "123 Street",
+      city: "New York",
+      country: "USA",
+      postalCode: "12345",
+      default: i === 3,
+    });
+  }
+  return addresses;
+}
+
+/**
+ * Generates an array of default orders.
+ * @returns {Array} The array of default orders.
+ */
+const generateDefaultOrders = () => {
+  const orders = [];
+  for (let i = 1; i < 6; i++) {
+    orders.push({
+      id: i,
+      label: `Order ${i}`,
+      date: "2021-07-01",
+      productsTotal: 2,
+      status: "Delivered",
+      paymentType: paymentmethods[0].label,
+      isPaid: true,
+      total: 2298,
+      products: [
+        {
+          id: 1,
+          title: "iPhone 9",
+          price: 549,
+          quantity: 2,
+          thumbnail: "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg",
+        },
+        {
+          id: 6,
+          title: "MacBook Pro",
+          price: 1749,
+          quantity: 1,
+          thumbnail: "https://cdn.dummyjson.com/product-images/6/thumbnail.png",
+        },
+      ],
+    });
+  }
+  return orders;
+}
+
+export {
+  generateSlug,
+  generateClamp,
+  generateRandomBool,
+  calculatedDiscount,
+  generateDefaultAdresses,
+  generateDefaultOrders
+}

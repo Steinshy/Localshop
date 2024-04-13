@@ -6,17 +6,17 @@ import { FC, useContext } from "react";
 // Providers
 import { CartContext } from "../../utils/subProviders";
 
-// Next
+// NextJS
 import { useRouter } from "next/navigation";
 
-// NextUi
+// NextUI
 import { Button } from "@nextui-org/react";
 
 // Icon
 import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
 // Interface
-import { ProductCardProps } from "../../utils/interfaces";
+import { ProductCardProps } from "../../interfaces/product";
 
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
   const { id, title, category, thumbnail, price, stock } = product;

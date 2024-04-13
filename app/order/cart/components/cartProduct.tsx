@@ -11,7 +11,10 @@ import { Image, Button, Input } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 
 // Interfaces
-import { generateSlug, CartProductProps } from "../../../utils/interfaces";
+import { CartProductProps } from "../../../interfaces/cart";
+
+// Helpers
+import { generateSlug } from "../../../utils/helpers";
 
 const CartProduct: FC<CartProductProps> = ({ cartStore, itemcart }) => {
   const slug = generateSlug(itemcart.title);
@@ -84,4 +87,5 @@ const CartProduct: FC<CartProductProps> = ({ cartStore, itemcart }) => {
     </li>
   );
 };
+
 export default CartProduct;

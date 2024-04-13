@@ -17,9 +17,9 @@ import { Input, Chip } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
 
 // Interfaces
-import { ProductObj, ProductDataProps } from "../utils/interfaces";
+import { ProductObj, ProductDataProps } from "../interfaces/product";
 
-// Image
+// Images
 import BG from '../assets/bg-products.webp';
 
 const ProductsPage = () => {

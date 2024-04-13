@@ -1,17 +1,20 @@
-// React Context
+// React
 import { FC } from "react";
 
-// NextJS - Link
+// NextJS
 import Link from "next/link";
 
-// NextUi
+// NextUI
 import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react";
 
 // Components
 import AddToCart from "./addToCart";
 
-// Interfaces - Generation
-import { ProductCardProps, generateSlug, generateNewProductLogo } from "../../utils/interfaces";
+// Interfaces
+import { ProductCardProps } from "../../interfaces/product";
+
+// Helpers
+import { generateSlug, generateRandomBool } from "../../utils/helpers";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const productRating = Math.round(product.rating) || 0;
@@ -44,7 +47,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         radius="sm"
       >
         <CardHeader className="absolute z-10 top-2 right-2 flex-col items-end">
-          {generateNewProductLogo() && (
+          {generateRandomBool() && (
             <p className="text-tiny text-white uppercase font-bold bg-red-500 p-1 rounded-md shadow-lg">New!</p>
           )}
         </CardHeader>

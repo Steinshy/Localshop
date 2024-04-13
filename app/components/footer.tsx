@@ -9,22 +9,20 @@ import { DiCssdeck } from "react-icons/di";
 import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare } from "react-icons/fa";
 
 // Interfaces
-import { FooterProps } from "../utils/interfaces";
+import { FooterProps } from "../interfaces/footer";
 
-const FooterItemLink: FC<FooterProps> = ({ text, isTag = false, tagText }) => {
-  return (
-    <li>
-      <Link href="#" className="text-sm" color="foreground">
-        {text}
-        {isTag && (
-          <Chip className="ml-1" variant="flat" color="primary" size="sm" radius="sm">
-            {tagText}
-          </Chip>
-        )}
-      </Link>
-    </li>
-  );
-};
+const FooterItemLink:FC<FooterProps> = ({ text, isTag = false, tagText }) => (
+  <li>
+    <Link href="#" className="text-sm" color="foreground">
+      {text}
+      {isTag && (
+        <Chip className="ml-1" variant="flat" color="primary" size="sm" radius="sm">
+          {tagText}
+        </Chip>
+      )}
+    </Link>
+  </li>
+);
 
 const Footer = () => (
   <footer className="border-t border-current text-default-100 pb-2">

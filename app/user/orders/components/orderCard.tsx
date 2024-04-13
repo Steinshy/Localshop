@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Card, CardBody } from "@nextui-org/react";
 
 // Interfaces
-import { OrdersObj } from "../../../utils/interfaces";
+import { OrdersObj } from "../../../interfaces/user";
 
 interface OrderCardProps {
   order: OrdersObj;

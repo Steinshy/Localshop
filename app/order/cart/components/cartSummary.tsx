@@ -1,32 +1,35 @@
-// Icons
+// React
 import { FC } from "react";
 
-// NextUi
-import { Button } from "@nextui-org/react";
-
-// Next
+// NextJS
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+// NextUI
+import { Button } from "@nextui-org/react";
 
 // Components
 import CartCoupons from "./cartCoupons";
 
 // Icons
 import { FaArrowRight } from "react-icons/fa";
-import { CartSummaryProps } from "../../../utils/interfaces";
+
+// Interfaces
+import { CartSummaryProps } from "../../../interfaces/cart";
 
 const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, taxesPrice, isLoading }) => {
-  const pathname: string = usePathname();
+  const pathname:string = usePathname();
 
-  const buttonTextMap: { [key: string]: string } = {
+  const buttonTextMap:{ [key: string]: string } = {
     "/order/cart": "Proceed to Shipping",
     "/order/shipping": "Proceed to Payment",
     "/order/payment": "Return to Cart",
     default: "Proceed to Payment",
   };
-  const buttonText: string = buttonTextMap[pathname] || buttonTextMap.default;
 
-  const cartNavigation = (pathname: string) => {
+  const buttonText:string = buttonTextMap[pathname] || buttonTextMap.default;
+
+  const cartNavigation = (pathname:string) => {
     switch (pathname) {
       case "/order/cart":
         return "/order/shipping";
@@ -82,4 +85,5 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, ta
     </div>
   );
 };
+
 export default CartSummary;

@@ -1,14 +1,17 @@
 "use client";
 
-// React - NextUi
+// React
 import { FC, useState } from "react";
+
+// NextUI
 import { Image, Link } from "@nextui-org/react";
 
-// Interface
-import { ProductImagesProps } from "../../utils/interfaces";
+// Interfaces
+import { ProductImagesProps } from "../../interfaces/product";
 
-const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {
+const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }) => {
   const [mainImage, setMainImage] = useState(main);
+  
   const handleImageChange = (image: string) => {
     setMainImage(image);
   };

@@ -9,9 +9,9 @@ import AddressModal from "./addressModal";
 import RemoveAddress from "./removeAddress";
 
 // Interfaces
-import { AddressCardProps } from "../../../utils/interfaces";
+import { AddressCardProps } from "../../../interfaces/user";
 
-const AddressCard: FC<AddressCardProps> = ({ selected, setSelected, address, selectable = false }) => {
+const AddressCard:FC<AddressCardProps> = ({ selected, setSelected, address, selectable = false }) => {
   const handleSelect = () => {
     if (setSelected) {
       setSelected(address.id);

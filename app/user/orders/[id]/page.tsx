@@ -18,8 +18,8 @@ import Breadcrumb from "../../../components/breadCrumb";
 // Utils
 import { UserContext } from "@/app/utils/subProviders";
 
-// Interfaces
-import { generateSlug } from "@/app/utils/interfaces";
+// Helpers
+import { generateSlug } from "@/app/utils/helpers";
 
 interface OrdersPageProps {
   params: {

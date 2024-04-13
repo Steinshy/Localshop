@@ -1,9 +1,20 @@
-import React, { FC } from "react";
-import { Spinner, Button } from "@nextui-org/react";
-import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+// React
+import { FC } from "react";
+
+// NextJS
 import Link from "next/link";
-import { CartItemProps } from "../../../utils/interfaces";
+
+// NextUI
+import { Spinner, Button } from "@nextui-org/react";
+
+// Icons
+import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
+// Components
 import CartProduct from "./cartProduct";
+
+// Interfaces
+import { CartItemProps } from "../../../interfaces/cart";
 
 const CartItems: FC<CartItemProps> = ({ cartStore, cart, isLoading }) => {
   const ContinueShoppingButton = () => (
@@ -70,4 +81,5 @@ const CartItems: FC<CartItemProps> = ({ cartStore, cart, isLoading }) => {
     </div>
   );
 };
+
 export default CartItems;
