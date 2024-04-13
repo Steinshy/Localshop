@@ -18,16 +18,13 @@ import Breadcrumb from "../../../components/breadCrumb";
 // Utils
 import { UserContext } from "@/app/utils/subProviders";
 
+// Interfaces
+import { PageProps } from "@/app/interfaces/general";
+
 // Helpers
 import { generateSlug } from "@/app/utils/helpers";
 
-interface OrdersPageProps {
-  params: {
-    id: string;
-  };
-}
-
-const OrdersPage:FC<OrdersPageProps> = ({ params }) => {
+const OrdersPage:FC<PageProps> = ({ params }) => {
   const userStore = useContext(UserContext);
   const { orders } = userStore.user;
   const order = orders.find((order) => order.id.toString() === params.id);

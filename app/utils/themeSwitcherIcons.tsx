@@ -1,7 +1,7 @@
 // React
-import React from "react";
+import { FC } from "react";
 
-export const MoonIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
+const MoonIcon:FC = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
   <svg
     aria-hidden="true"
     focusable="false"
@@ -18,7 +18,7 @@ export const MoonIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<S
   </svg>
 );
 
-export const SunIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
+const SunIcon:FC = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) => (
   <svg
     aria-hidden="true"
     focusable="false"
@@ -34,3 +34,8 @@ export const SunIcon = (props: React.JSX.IntrinsicAttributes & React.SVGProps<SV
     </g>
   </svg>
 );
+
+export {
+  MoonIcon,
+  SunIcon
+}

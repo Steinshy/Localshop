@@ -1,5 +1,5 @@
 // React
-import React, { FC } from "react";
+import { FC } from "react";
 
 // NextJS
 import Link from "next/link";
@@ -16,7 +16,7 @@ import { CartProductProps } from "../../../interfaces/cart";
 // Helpers
 import { generateSlug } from "../../../utils/helpers";
 
-const CartProduct: FC<CartProductProps> = ({ cartStore, itemcart }) => {
+const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
   const slug = generateSlug(itemcart.title);
 
   const handleUpdateCart = (event: React.MouseEvent<HTMLElement>, id: number) => {

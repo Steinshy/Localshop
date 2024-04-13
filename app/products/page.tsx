@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState, useEffect, useCallback } from "react";
+import { FC, useState, useEffect, useCallback } from "react";
 
 // Utils
 import http from "../utils/http";
@@ -22,7 +22,7 @@ import { ProductObj, ProductDataProps } from "../interfaces/product";
 // Images
 import BG from '../assets/bg-products.webp';
 
-const ProductsPage = () => {
+const ProductsPage:FC = () => {
   const limit = 12, array = Array(12);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
