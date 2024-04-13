@@ -20,9 +20,9 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, ta
 
   const buttonTextMap: { [key: string]: string } = {
     "/order/cart": "Proceed to Shipping",
-    "/order/shipping": "Proceed to Checkout",
-    "/order/checkout": "Return to Cart",
-    default: "Proceed to Checkout",
+    "/order/shipping": "Proceed to Payment",
+    "/order/payment": "Return to Cart",
+    default: "Proceed to Payment",
   };
   const buttonText: string = buttonTextMap[pathname] || buttonTextMap.default;
 
@@ -31,8 +31,8 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, ta
       case "/order/cart":
         return "/order/shipping";
       case "/order/shipping":
-        return "/order/checkout";
-      case "/order/checkout":
+        return "/order/payment";
+      case "/order/payment":
         return "/order/cart";
       default:
         return "/order/cart";
@@ -62,7 +62,7 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, ta
         {/* COUPONS */}
         <CartCoupons totalPrice={totalPrice} isLoading={isLoading} />
 
-        {/* Checkout Redirection */}
+        {/* Payment Redirection */}
         <div className="grid grid-cols-2 gap-4">
           <Button
             color="success"

@@ -4,11 +4,9 @@
 import { useContext } from "react";
 
 // Components
-// import AddressCard from "../../user/components/addressCard";
-// import AddressModal from "../../user/components/addressModal";
+import OrderCard from "./orderCard";
 
 // Utils
-import OrderCard from "./orderCard";
 import { UserContext } from "../../../utils/subProviders";
 
 const OrdersList = () => {
@@ -24,7 +22,6 @@ const OrdersList = () => {
         />
       ))}
     </>
-
   );
 }
 

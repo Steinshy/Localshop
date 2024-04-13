@@ -2,11 +2,15 @@
 import { FC } from "react";
 
 // Components
+import Breadcrumb from "@/app/components/breadCrumb";
 import AddressList from "./components/addressList";
 
 const Addresses:FC = () => {
+  const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
+
   return (
     <div className="max-w-screen-md mx-auto w-full">
+      <Breadcrumb items={breadCrumbItems} />
       <h1 className="text-2xl mb-2">Addresses</h1>
       
       <div className="grid grid-cols-1 gap-3">

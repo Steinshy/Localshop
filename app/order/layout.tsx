@@ -3,7 +3,11 @@
 // React
 import { FC, useContext, useEffect, useState } from "react";
 
+// NextJS
+import { usePathname } from 'next/navigation';
+
 // Components
+import Stepper from "../components/stepper";
 import CartSummary from "./cart/components/cartSummary";
 
 // https://github.com/Riyad-Arafat/formik-stepper?tab=readme-ov-file
@@ -14,16 +18,23 @@ import { CartContext, UserContext } from "../utils/subProviders";
 import { CartProps } from "../utils/interfaces";
 
 const OrderLayout:FC<CartProps> = ({ children }) => {
+  const pathname = usePathname();
+
   // Cart Store context
   const cartStore = useContext(CartContext);
   const userStore = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(true);
+
   // Cart
   const [cartChecked, setCartChecked] = useState(false);
   const [cart, setCart] = useState(cartStore.data);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [shippingPrice, setshippingPrice] = useState<number>(0);
   const [taxesPrice, setTaxesPrice] = useState<number>(0);
+
+  // Stepper
+  const steps = ["Cart", "Shipping", "Payment"];
+  const currentStep = steps.findIndex((step) => step.toLowerCase() === pathname.split("/").pop());
 
   // Calculate Total Price
   useEffect(() => {
@@ -51,9 +62,12 @@ const OrderLayout:FC<CartProps> = ({ children }) => {
   }, [cartChecked]);
 
   return userStore.isLogged() ? (
-    <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
-      {children}
-      <CartSummary cart={cart} totalPrice={totalPrice} shippingPrice={shippingPrice} taxesPrice={taxesPrice} isLoading={isLoading} />
+    <div className="max-w-screen-2xl mx-auto my-8">
+      <Stepper steps={steps} current={currentStep} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {children}
+        <CartSummary cart={cart} totalPrice={totalPrice} shippingPrice={shippingPrice} taxesPrice={taxesPrice} isLoading={isLoading} />
+      </div>
     </div>
   ) : (
     <div className="flex flex-col flex-grow items-center justify-center">

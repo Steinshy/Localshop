@@ -194,7 +194,6 @@ export type UserItemsObj = {
   email: string;
   addresses: AddressObj[];
   orders: OrdersObj[];
-  paymentmethods: PaymentObj[];
 };
 
 // Utils => UserProvider
@@ -226,30 +225,13 @@ export type OrdersObj = {
   id: number;
   label: string;
   date: string;
-  productstotal: number;
+  productsTotal: number;
   status: string;
-  paymenttype: string;
-  ispaid: boolean;
-  products: OrderProducts[];
+  paymentType: string;
+  isPaid: boolean;
+  total: number;
+  products: CartItemObj[];
 };
-
-// ONE ORDER WITH FAKE Products
-export type OrderProducts = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  quantity: number;
-  thumbnail: string;
-};
-
-export type PaymentObj = {
-  id: number;
-  label: string;
-  default: boolean;
-};
-
-
 
 // User => Components -> AddressCard
 export type AddressListProps = {
@@ -286,115 +268,82 @@ export function calculatedDiscount(selectedCoupon: CouponsObject, totalPrice: nu
 }
 
 // SubProviders => DefaultUserrData
+const generateDefaultAdresses = () => {
+  const addresses = [];
+  for (let i = 1; i < 6; i++) {
+    addresses.push({
+      id: i,
+      label: `Home ${i}`,
+      firstname: "John",
+      lastname: "Doe",
+      address: "123 Street",
+      city: "New York",
+      country: "USA",
+      postalCode: "12345",
+      default: i === 3,
+    });
+  }
+  return addresses;
+}
+
+const paymentmethods = [
+  {
+    id: 1,
+    label: "Credit Card",
+    default: true,
+  },
+  {
+    id: 2,
+    label: "Paypal",
+    default: false,
+  },
+  {
+    id: 3,
+    label: "Bank Transfer",
+    default: false,
+  }
+];
+
+const generateDefaultOrders = () => {
+  const orders = [];
+  for (let i = 1; i < 6; i++) {
+    orders.push({
+      id: i,
+      label: `Order ${i}`,
+      date: "2021-07-01",
+      productsTotal: 2,
+      status: "Delivered",
+      paymentType: paymentmethods[0].label,
+      isPaid: true,
+      total: 2298,
+      products: [
+        {
+          id: 1,
+          title: "iPhone 9",
+          price: 549,
+          quantity: 2,
+          thumbnail: "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg",
+        },
+        {
+          id: 6,
+          title: "MacBook Pro",
+          price: 1749,
+          quantity: 1,
+          thumbnail: "https://cdn.dummyjson.com/product-images/6/thumbnail.png",
+        },
+      ],
+    });
+  }
+  return orders;
+}
+
 export const UserDefaultData = {
   id: 1,
   firstname: "John",
   lastname: "Doe",
   email: "john.doe@gmail.com",
-  addresses: [
-    {
-      id: 1,
-      label: "Home",
-      firstname: "John",
-      lastname: "Doe",
-      address: "123 Street",
-      city: "New York",
-      country: "USA",
-      postalCode: "12345",
-      default: false,
-    },
-    {
-      id: 2,
-      label: "Home 2",
-      firstname: "John",
-      lastname: "Doe",
-      address: "123 Street",
-      city: "New York",
-      country: "USA",
-      postalCode: "12345",
-      default: false,
-    },
-    {
-      id: 3,
-      label: "Home 3",
-      firstname: "John",
-      lastname: "Doe",
-      address: "123 Street",
-      city: "New York",
-      country: "USA",
-      postalCode: "12345",
-      default: true,
-    },
-    {
-      id: 4,
-      label: "Home 4",
-      firstname: "John",
-      lastname: "Doe",
-      address: "123 Street",
-      city: "New York",
-      country: "USA",
-      postalCode: "12345",
-      default: false,
-    },
-    {
-      id: 5,
-      label: "Home 5",
-      firstname: "John",
-      lastname: "Doe",
-      address: "123 Street",
-      city: "New York",
-      country: "USA",
-      postalCode: "12345",
-      default: false,
-    },
-  ],
-  paymentmethods: [
-    {
-      id: 1,
-      label: "Credit Card",
-      default: true,
-    },
-    {
-      id: 2,
-      label: "Paypal",
-      default: false,
-    },
-    {
-      id: 3,
-      label: "Bank Transfer",
-      default: false,
-    },
-  ],
-  orders : [
-    {
-      id: 1,
-      label: "Order 1",
-      date: "2021-07-01",
-      productstotal: 2,
-      status: "Delivered",
-      paymenttype: "Credit Card",
-      ispaid: true,
-      products: [
-        {
-          id: 1,
-          title: "Product 1",
-          description: "Product 1 description",
-          price: 100,
-          quantity: 2,
-          thumbnail: "",
-        },
-        {
-          id: 2,
-          title: "Product 2",
-          description: "Product 2 description",
-          price: 100,
-          quantity: 2,
-          thumbnail: "",
-        },
-      ],
-    },
-  ],
-
+  addresses: generateDefaultAdresses(),
+  orders: generateDefaultOrders()
 } as UserItemsObj;
 
 // Order => Cart => Components -> CartCoupons

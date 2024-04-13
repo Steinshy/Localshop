@@ -1,4 +1,7 @@
-const HomePage = () => (
+// React
+import { FC } from "react";
+
+const HomePage:FC = () => (
   <div className="flex flex-col flex-grow justify-center items-center">
     <h1 className="text-5xl">Welcome to Localshop!</h1>
 

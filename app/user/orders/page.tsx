@@ -1,34 +1,55 @@
-"use client";
+'use client';
 
-import { useContext } from "react";
-import { Button } from "@nextui-org/react";
+// React
+import { FC, useContext } from "react";
+
+// NextJS
 import Link from "next/link";
+
+// NextUI
+import { Button } from "@nextui-org/react";
+
+// Icons
 import { FaArrowRight } from "react-icons/fa";
+
+// Components
+import OrdersList from "./components/ordersList";
 import Breadcrumb from "../../components/breadCrumb";
-import { UserContext } from "../../utils/subProviders";
 
-const OrdersPage = () => {
+// Utils
+import { UserContext } from "@/app/utils/subProviders";
+
+const OrdersPage:FC = () => {
   const userStore = useContext(UserContext);
+  const { orders } = userStore.user;
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Orders" }];
-  console.log("userStore" , userStore)
-  return (
-    <>
-      <Breadcrumb items={breadCrumbItems} />
 
-      <div className="flex flex-col flex-grow items-center justify-center">
-        <h1 className="text-md text-heading xl:text-lg lg:text-md">No order has been made yet</h1>
-        <Button
-          color="primary"
-          variant="flat"
-          href="/products"
-          as={Link}
-          className="mt-4"
-          endContent={<FaArrowRight />}
-        >
-          Start shopping
-        </Button>
-      </div>
-    </>
+  return (
+    <div className="max-w-screen-md mx-auto w-full">
+      <Breadcrumb items={breadCrumbItems} />
+      <h1 className="text-2xl mb-2">Orders</h1>
+      
+      {orders.length === 0 ? (
+          <div className="flex flex-col flex-grow items-center justify-center">
+            <p className="text-md">No order has been made yet</p>
+            <Button
+              color="primary"
+              variant="flat"
+              href="/products"
+              as={Link}
+              className="mt-4"
+              endContent={<FaArrowRight />}
+            >
+              Start shopping
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-3">
+            <OrdersList />
+          </div>
+        )
+      }
+    </div>
   );
 };
 

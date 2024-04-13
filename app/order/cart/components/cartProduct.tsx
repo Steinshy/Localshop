@@ -1,7 +1,16 @@
+// React
 import React, { FC } from "react";
-import { Image, Button, Input } from "@nextui-org/react";
-import { FaTrash } from "react-icons/fa";
+
+// NextJS
 import Link from "next/link";
+
+// NextUI
+import { Image, Button, Input } from "@nextui-org/react";
+
+// Icons
+import { FaTrash } from "react-icons/fa";
+
+// Interfaces
 import { generateSlug, CartProductProps } from "../../../utils/interfaces";
 
 const CartProduct: FC<CartProductProps> = ({ cartStore, itemcart }) => {
