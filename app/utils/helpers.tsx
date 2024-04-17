@@ -25,6 +25,15 @@ const generateClamp = (num: number, min: number, max: number): number => {
 }
 
 /**
+ * Converts a value to a string.
+ * @param {number} value The value to convert.
+ * @returns {string} The converted value.
+ */
+const stringify = (value: number): string => {
+  return value.toString();
+}
+
+/**
  * Generates a random boolean.
  * @returns {boolean} The random boolean.
  */
@@ -107,5 +116,6 @@ export {
   generateRandomBool,
   calculatedDiscount,
   generateDefaultAdresses,
-  generateDefaultOrders
+  generateDefaultOrders,
+  stringify
 }

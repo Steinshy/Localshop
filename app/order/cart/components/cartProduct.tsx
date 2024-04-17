@@ -14,10 +14,11 @@ import { FaTrash } from "react-icons/fa";
 import { CartProductProps } from "../../../interfaces/cart";
 
 // Helpers
-import { generateSlug } from "../../../utils/helpers";
+import { generateSlug, stringify } from "../../../utils/helpers";
 
 const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
   const slug = generateSlug(itemcart.title);
+  const itemqQantity = stringify(itemcart.quantity || 0);
 
   const handleUpdateCart = (event: React.MouseEvent<HTMLElement>, id: number) => {
     event.preventDefault();
@@ -29,7 +30,7 @@ const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
   const handleQuantityChange = (value: string, id: number) => {
     const newCart = cartStore.data.map((item) => {
       if (item.id === id) {
-        return { ...item, quantity: parseInt(value) };
+        return { ...item, quantity: parseInt(value) || 0 };
       }
       return item;
     });
@@ -78,8 +79,10 @@ const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
       <div className="grid grid-cols-3 gap-4">
         <p className="text-lg text-foreground">{itemcart.price}€</p>
         <Input
+          isRequired
+          min="0"
           type="number"
-          value={itemcart.quantity?.toString() || ""}
+          value={itemqQantity}
           onChange={(e) => handleQuantityChange(e.target.value, itemcart.id)}
         />
         <p className="text-lg text-foreground">{itemcart.price * itemcart.quantity}€</p>
