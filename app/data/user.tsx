@@ -1,5 +1,5 @@
 // Interfaces
-import { UserItemsObj } from "../interfaces/user";
+import { UserItemsObj, AddressObj } from "../interfaces/user";
 
 // Utils
 import { generateDefaultAdresses, generateDefaultOrders } from "../utils/helpers";
@@ -10,9 +10,28 @@ const UserDefaultData = {
   lastname: "Doe",
   email: "john.doe@gmail.com",
   addresses: generateDefaultAdresses(),
-  orders: generateDefaultOrders()
+  orders: generateDefaultOrders(),
 } as UserItemsObj;
 
-export {
-  UserDefaultData
-}
+const UserLoggedOutData = {
+  id: 0,
+  firstname: "",
+  lastname: "",
+  email: "",
+  addresses: [],
+  orders: [],
+} as UserItemsObj;
+
+const defaultAdress = {
+  id: 0,
+  label: "",
+  firstname: "",
+  lastname: "",
+  address: "",
+  city: "",
+  country: "",
+  postalCode: "",
+  default: false,
+} as AddressObj;
+
+export { UserDefaultData, UserLoggedOutData, defaultAdress };

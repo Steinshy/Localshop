@@ -8,7 +8,7 @@ import { UserItemsObj, UserContextType } from "../interfaces/user";
 import { CartItemObj, CartContextType } from "../interfaces/cart";
 
 // Data
-import { UserDefaultData } from "../data/user";
+import { UserDefaultData, UserLoggedOutData } from "../data/user";
 
 // CART
 const useCart = () => {
@@ -36,16 +36,6 @@ const CartContext = createContext<CartContextType>({
   data: [],
   update: () => {},
 });
-
-// USER
-const UserLoggedOutData = {
-  id: 0,
-  firstname: "",
-  lastname: "",
-  email: "",
-  addresses: [],
-  orders: []
-};
 
 const useUser = () => {
   const [user, setUser] = useState<UserItemsObj>(UserDefaultData || (JSON.parse(localStorage.getItem("user") as string) as UserItemsObj));

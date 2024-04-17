@@ -8,14 +8,34 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
 // NextUI
-import { Link as NextLink, NavbarContent, NavbarMenuToggle, NavbarMenuItem, NavbarMenu, NavbarItem, Navbar,
-         Button, Badge, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown,
-         Divider } from "@nextui-org/react";
+import {
+  Link as NextLink,
+  NavbarContent,
+  NavbarMenuToggle,
+  NavbarMenuItem,
+  NavbarMenu,
+  NavbarItem,
+  Navbar,
+  Button,
+  Badge,
+  Avatar,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown,
+  Divider,
+} from "@nextui-org/react";
 
 // Icons
 import { DiCssdeck } from "react-icons/di";
-import { FaCartArrowDown, FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag,
-         FaSignOutAlt } from "react-icons/fa";
+import {
+  FaCartArrowDown,
+  FaChevronDown,
+  FaRegUserCircle,
+  FaUserCog,
+  FaShoppingBag,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 // Interfaces
 import { NavbarProps, CartBadgeProps, UsermenuNotLoggedProps, UsermenuLoggedProps } from "../interfaces/navbar";
@@ -66,7 +86,7 @@ const UsermenuLogged: FC<UsermenuLoggedProps> = ({
   userFirstName,
   handleUserMenuOpen,
   isUserMenuOpen,
-  handleUserKeySelection
+  handleUserKeySelection,
 }) => {
   return (
     <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>

@@ -19,7 +19,7 @@ import { CartItemProps } from "../../../interfaces/cart";
 const CartItems: FC<CartItemProps> = ({ cartStore, cart, isLoading }) => {
   return (
     <div className="flex flex-col col-span-1 lg:col-span-2">
-      {cart.length <= 0 ? (
+      {cart.length === 0 ? (
         <div className="flex flex-col flex-grow items-center justify-center">
           {isLoading ? (
             <Spinner size="lg" color="warning" label="Loading Cart..." />

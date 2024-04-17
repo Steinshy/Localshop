@@ -33,18 +33,6 @@ type AddressObj = {
   [key: string]: string | number | boolean;
   default: boolean;
 };
- 
-type OrdersObj = {
-  id: number;
-  label: string;
-  date: string;
-  productsTotal: number;
-  status: string;
-  paymentType: string;
-  isPaid: boolean;
-  total: number;
-  products: CartItemObj[];
-};
 
 type AddressListProps = {
   selected?: number | null;
@@ -59,11 +47,41 @@ type AddressCardProps = {
   selectable?: boolean;
 };
 
+type OrdersObj = {
+  id: number;
+  label: string;
+  date: string;
+  productsTotal: number;
+  status: string;
+  paymentType: string;
+  isPaid: boolean;
+  total: number;
+  products: CartItemObj[];
+};
+
+type OrderPageProps = {
+  params: {
+    id: string;
+  };
+};
+
+type OrderCardProps = {
+  order: OrdersObj;
+};
+
+type OrderProductCardProps = {
+  key: number;
+  product: CartItemObj;
+};
+
 export type {
   UserItemsObj,
   UserContextType,
   AddressObj,
-  OrdersObj,
   AddressListProps,
-  AddressCardProps
-}
+  AddressCardProps,
+  OrdersObj,
+  OrderPageProps,
+  OrderProductCardProps,
+  OrderCardProps,
+};

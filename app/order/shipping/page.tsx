@@ -16,7 +16,6 @@ const Shipping: FC = () => {
   return (
     <div className="flex flex-col col-span-1 lg:col-span-2 px-2 w-full">
       <h2 className="text-2xl mb-4">Shipping Address</h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         <AddressList selected={selectedShippingAddressId} setSelected={setSelectedShippingAddressId} selectable />
       </div>
@@ -24,7 +23,6 @@ const Shipping: FC = () => {
       <Divider className="my-4" />
 
       <h2 className="text-2xl mb-4">Billing Address</h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
         <AddressList selected={selectedBillingAddressId} setSelected={setSelectedBillingAddressId} selectable />
       </div>

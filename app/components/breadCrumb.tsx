@@ -23,11 +23,13 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ items = [] }) => (
 
     <Separator />
 
-    {items.map((item, index) => (
+    {items.map((item, index) =>
       item.href ? (
         <>
           <NextLink
-            key={`breadcrumb_${index}`} as={Link} href={item.href}
+            key={`breadcrumb_${index}`}
+            as={Link}
+            href={item.href}
             className="text-small font-bold text-foreground/75"
           >
             {item.title}
@@ -40,7 +42,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ items = [] }) => (
           {item.title}
         </span>
       )
-    ))}
+    )}
   </nav>
 );
 

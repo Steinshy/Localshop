@@ -1,0 +1,55 @@
+// React
+import { FC } from "react";
+
+// NextUI
+import { Image } from "@nextui-org/react";
+
+// NextJS
+import Link from "next/link";
+
+// Helpers
+import { generateSlug } from "@/app/utils/helpers";
+
+// Interface
+import { OrderProductCardProps } from "@/app/interfaces/user";
+
+const OrderProductCard: FC<OrderProductCardProps> = ({ product }) => {
+  const slug = generateSlug(product.title);
+
+  return (
+    <li key={product.id} className="p-2 bg-background border-1 rounded-md">
+      <div className="grid grid-cols-2">
+        <div className="flex justify-start items-center">
+          <Link href={`/products/${product.id}/${slug}`}>
+            <Image
+              src={product.thumbnail}
+              alt={product.title}
+              classNames={{
+                img: "w-16 h-16 object-cover",
+                wrapper: "mr-4",
+              }}
+              radius="md"
+              shadow="none"
+            />
+          </Link>
+          <p className="text-lg text-foreground font-semibold">{product.title}</p>
+        </div>
+      </div>
+      {/* Single item information */}
+      <hr className="my-4" />
+
+      <div className="grid grid-cols-3 gap-4">
+        <p className="text-md text-foreground/50">Price</p>
+        <p className="text-md text-foreground/50">Quantity</p>
+        <p className="text-md text-foreground/50">Total</p>
+      </div>
+
+      <div className="grid grid-cols-3 gap-4">
+        <p className="text-lg text-foreground">{product.price}€</p>
+        <p className="text-lg text-foreground">{product.quantity}</p>
+        <p className="text-lg text-foreground">{product.price * product.quantity}€</p>
+      </div>
+    </li>
+  );
+};
+export default OrderProductCard;
