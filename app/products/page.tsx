@@ -20,10 +20,11 @@ import { FaSearch } from "react-icons/fa";
 import { ProductObj, ProductDataProps } from "../interfaces/product";
 
 // Images
-import BG from '../assets/bg-products.webp';
+import BG from "../assets/bg-products.webp";
 
-const ProductsPage:FC = () => {
-  const limit = 12, array = Array(12);
+const ProductsPage: FC = () => {
+  const limit = 12,
+    array = Array(12);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<ProductObj[]>([]);
@@ -80,7 +81,7 @@ const ProductsPage:FC = () => {
 
   const clearQuery = () => {
     setQuery("");
-  }
+  };
 
   return (
     <div className="flex flex-col flex-grow">
@@ -89,7 +90,7 @@ const ProductsPage:FC = () => {
         style={{
           backgroundImage: `url(${BG.src})`,
           backgroundSize: "cover",
-          backgroundPosition: "center"
+          backgroundPosition: "center",
         }}
       >
         <div className="absolute inset-0 bg-black opacity-50" />
@@ -98,13 +99,11 @@ const ProductsPage:FC = () => {
             Products
           </h1>
           <p className="text-white text-md text-heading xl:text-lg lg:text-md">
-            Welcome to our product catalog, where innovation meets excellence!
-            We are thrilled to present a curated selection of top-notch products
-            designed to meet your diverse needs and exceed your expectations.
-            Whether you&#39;re a seasoned professional or just starting your
-            journey, our range of products is carefully crafted to enhance your
-            experience and make every task seamless. From cutting-edge
-            technology to timeless classics, we have something for everyone.
+            Welcome to our product catalog, where innovation meets excellence! We are thrilled to present a curated
+            selection of top-notch products designed to meet your diverse needs and exceed your expectations. Whether
+            you&#39;re a seasoned professional or just starting your journey, our range of products is carefully crafted
+            to enhance your experience and make every task seamless. From cutting-edge technology to timeless classics,
+            we have something for everyone.
           </p>
         </div>
 
@@ -121,16 +120,16 @@ const ProductsPage:FC = () => {
           type="search"
           value={query}
           onChange={handleQueryChange}
+          onClear={clearQuery}
           startContent={<FaSearch />}
           size="lg"
+          isDisabled={isLoading}
           isClearable
-          onClear={clearQuery}
         />
       </form>
 
       {/* Products Card */}
       <div className="flex flex-col flex-grow justify-between">
-
         {query.length > 0 && (
           <div className="flex items-center gap-4 mb-4 px-2">
             <Chip onClose={clearQuery}>{query}</Chip>
@@ -138,30 +137,24 @@ const ProductsPage:FC = () => {
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 px-2 pb-4">
-          {isLoading &&
-            Array.from(array.keys()).map((index) => ( 
-              <SkeletonProduct key={index} />
-            ))}
-
-          {!isLoading &&
-            total > 0 &&
-            products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          {isLoading
+            ? Array.from(array).map((_, index) => <SkeletonProduct key={index} />)
+            : total > 0 && products.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       </div>
 
-      {/* Pagination */}
-      <Pagination
-        isLoading={isLoading}
-        total={total}
-        limit={limit}
-        skip={skip}
-        previousPage={previousPage}
-        nextPage={nextPage}
-      />
+      {!isLoading &&
+        <Pagination
+          isLoading={isLoading}
+          total={total}
+          limit={limit}
+          skip={skip}
+          previousPage={previousPage}
+          nextPage={nextPage}
+        />
+      }
     </div>
   );
-}
+};
 
 export default ProductsPage;
