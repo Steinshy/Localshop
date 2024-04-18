@@ -9,9 +9,9 @@ import { Image, Link } from "@nextui-org/react";
 // Interfaces
 import { ProductImagesProps } from "../../interfaces/product";
 
-const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }) => {
+const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {
   const [mainImage, setMainImage] = useState(main);
-  
+
   const handleImageChange = (image: string) => {
     setMainImage(image);
   };
@@ -22,7 +22,7 @@ const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }) => {
         alt={alt}
         src={mainImage}
         classNames={{
-          img: "w-[300px] h-[300px] object-cover"
+          img: "w-[300px] h-[300px] object-cover",
         }}
         shadow="none"
         radius="sm"
@@ -31,16 +31,12 @@ const ProductImages:FC<ProductImagesProps> = ({ alt, main, images }) => {
 
       <div className="grid grid-flow-col mt-2 gap-3 max-w-[300px]">
         {images.map((image, index) => (
-          <Link
-            key={index}
-            href="#"
-            onMouseOver={() => handleImageChange(image)}
-          >
+          <Link key={index} onMouseOver={() => handleImageChange(image)}>
             <Image
               alt={alt}
               src={image}
               classNames={{
-                img: "w-[40px] h-[40px] object-cover"
+                img: "w-[40px] h-[40px] object-cover",
               }}
               shadow="none"
               radius="sm"

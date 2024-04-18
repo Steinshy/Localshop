@@ -13,31 +13,12 @@ import AddToCart from "./addToCart";
 // Interfaces
 import { ProductCardProps } from "../../interfaces/product";
 
+import StarsReviews from "./starsReviews";
+
 // Helpers
 import { generateSlug, generateRandomBool } from "../../utils/helpers";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const productRating = Math.round(product.rating) || 0;
-
-  const Reviews: FC<{ productRating: number }> = ({ productRating }) => {
-    return (
-      <div className="flex items-center gap-1 ml-auto">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <svg
-            key={i}
-            xmlns="http://www.w3.org/2000/svg"
-            className={`h-4 w-4 ${i < productRating ? "text-yellow-500" : "text-gray-300"}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-          </svg>
-        ))}
-      </div>
-    );
-  }
-
   return (
     <article>
       <Card
@@ -61,7 +42,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         </CardBody>
         <div className="flex items-center text-base p-3">
           <h5 className="">{product.title}</h5>
-          <Reviews productRating={productRating} />
+          <StarsReviews productRating={product.rating} />
         </div>
         <CardFooter className="col relative flex justify-between">
           <h4 className="">{product.price} €</h4>

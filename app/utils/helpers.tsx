@@ -34,6 +34,16 @@ const stringify = (value: number): string => {
 }
 
 /**
+ * Converts a value to rounded number.
+ * @param {number} value The value to convert.
+ * @returns {number} The converted value.
+ */
+
+const round = (value: number): number => {
+  return Math.round(value) || 0;
+}
+
+/**
  * Generates a random boolean.
  * @returns {boolean} The random boolean.
  */
@@ -117,5 +127,6 @@ export {
   calculatedDiscount,
   generateDefaultAdresses,
   generateDefaultOrders,
-  stringify
+  stringify,
+  round
 }
