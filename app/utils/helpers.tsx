@@ -14,6 +14,16 @@ const generateSlug = (title: string): string => {
 }
 
 /**
+ * Generates a random number between two values.
+ * @param {number} min The minimum value.
+ * @param {number} max The maximum value.
+ * @returns {number} The generated random number.
+ */
+const generateRandomNumberBetween = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+/**
  * Clamps a number between a minimum and maximum value.
  * @param {number} num The number to clamp.
  * @param {number} min The minimum value.
@@ -128,5 +138,6 @@ export {
   generateDefaultAdresses,
   generateDefaultOrders,
   stringify,
-  round
+  round,
+  generateRandomNumberBetween
 }

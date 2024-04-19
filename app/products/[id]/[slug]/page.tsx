@@ -7,6 +7,9 @@ import Breadcrumb from "../../../components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 import ProductReviews from "./components/productReviews";
 
+// Data
+import { reviewsDefaultData } from "@/app/data/reviews";
+
 // Utils
 import http from "../../../utils/http";
 
@@ -40,11 +43,13 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-grow">
-        <h2 className="text-2xl font-semibold text-center sm:text-start">User Reviews</h2>
-      </div>
-      <div className="grid grid-cols-4 gap-4">
-        {Array.from({ length: 5 }).map((_, index) => (<ProductReviews key={index} productRating={product.rating}/>))}
+      <div className="flex flex-col flex-grow justify-center p-4">
+        <h2 className="text-2xl font-semibold text-center mb-4">User Reviews</h2>
+        <div className="grid grid-cols-4 gap-4">
+          {reviewsDefaultData.map((review) => (
+            <ProductReviews key={`review_${review.id}`} review={review}/>
+          ))}
+        </div>
       </div>
     </>
   ) : (
