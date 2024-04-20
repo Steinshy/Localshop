@@ -14,6 +14,16 @@ const generateSlug = (title: string): string => {
 }
 
 /**
+ * Converts a date to a readable format.
+ * @param {string} date The date to convert.
+ * @returns {string} The readable date.
+ */
+const readableDate = (date: string): string => {
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return new Date(date).toLocaleDateString("en-US", options);
+}
+
+/**
  * Generates a random number between two values.
  * @param {number} min The minimum value.
  * @param {number} max The maximum value.
@@ -99,14 +109,20 @@ const generateDefaultAdresses = () => {
  */
 const generateDefaultOrders = () => {
   const orders = [];
+  const orderStatus = ["Delivered", "Processing", "Canceled"];
+
+  const randomPastDate = () => {
+    return new Date(Date.now() - Math.floor(Math.random() * (1000 * 60 * 60 * 24 * 365)));
+  }
+
   for (let i = 1; i < 6; i++) {
     orders.push({
       id: i,
       label: `Order ${i}`,
-      date: "2021-07-01",
+      date: readableDate(randomPastDate().toString()),
       productsTotal: 2,
-      status: "Delivered",
-      paymentType: paymentmethods[0].label,
+      status: orderStatus[generateRandomNumberBetween(0, orderStatus.length-1)],
+      paymentType: paymentmethods[generateRandomNumberBetween(0, paymentmethods.length-1)].label,
       isPaid: true,
       total: 2298,
       products: [
@@ -139,5 +155,6 @@ export {
   generateDefaultOrders,
   stringify,
   round,
-  generateRandomNumberBetween
+  generateRandomNumberBetween,
+  readableDate
 }

@@ -17,6 +17,7 @@ import Breadcrumb from "../../../components/breadCrumb";
 
 // Utils
 import { UserContext } from "@/app/utils/subProviders";
+import { readableDate } from "@/app/utils/helpers";
 
 // Interfaces
 import { OrderPageProps } from "@/app/interfaces/user";
@@ -49,8 +50,8 @@ const OrdersPage: FC<OrderPageProps> = ({ params }) => {
               <p className="text-md font-semibold">Payment: {order.paymentType}</p>
             </div>
             <div className="flex items-center justify-between mt-2">
-              <p className="text-md">Total: ${order.total}</p>
-              <p className="text-md">Date: {order.date}</p>
+              <p className="text-md">Total: {order.total}€</p>
+              <p className="text-md">Date: {readableDate(order.date)}</p>
             </div>
           </div>
 
