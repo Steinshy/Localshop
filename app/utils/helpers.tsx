@@ -26,25 +26,6 @@ const readableDate = (date: string): string => {
 };
 
 /**
- * Generates a random past date.
- * @returns {string} The generated random past date.
- */
-
-const randomPastDate = () => {
-  return new Date(Date.now() - Math.floor(Math.random() * (1000 * 60 * 60 * 24 * 365)));
-};
-
-/**
- * Generates a random number between two values.
- * @param {number} min The minimum value.
- * @param {number} max The maximum value.
- * @returns {number} The generated random number.
- */
-const generateRandomNumberBetween = (min: number, max: number): number => {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-/**
  * Clamps a number between a minimum and maximum value.
  * @param {number} num The number to clamp.
  * @param {number} min The minimum value.
@@ -138,10 +119,10 @@ const generateDefaultOrders = () => {
     orders.push({
       id: i,
       label: `Order ${i}`,
-      date: readableDate(randomPastDate().toString()),
+      date: readableDate(new Date().toString()),
       productsTotal: 2,
-      status: orderStatus[generateRandomNumberBetween(0, orderStatus.length - 1)],
-      paymentType: paymentmethods[generateRandomNumberBetween(0, paymentmethods.length - 1)].label,
+      status: orderStatus[generateClamp(i-1, 0, orderStatus.length-1)],
+      paymentType: paymentmethods[generateClamp(i-1, 0, paymentmethods.length-1)].label,
       isPaid: true,
       total: 2298,
       products: [
@@ -174,7 +155,6 @@ export {
   generateDefaultOrders,
   stringify,
   round,
-  generateRandomNumberBetween,
   readableDate,
   products_url,
   products_search_url
