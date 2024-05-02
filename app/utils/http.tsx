@@ -67,4 +67,4 @@ const setupInterceptors = (instance:AxiosInstance):AxiosInstance => {
   return setupCache(instance);
 };
 
-export default setupInterceptors(http);
+export default setupInterceptors(http)

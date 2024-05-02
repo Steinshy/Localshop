@@ -19,17 +19,18 @@ import { FaSearch } from "react-icons/fa";
 // Interfaces
 import { ProductObj, ProductDataProps } from "../interfaces/product";
 
+import { products_url, products_search_url } from "../utils/helpers";
+
 // Images
 import BG from "../assets/bg-products.webp";
 
 const ProductsPage: FC = () => {
-  const limit = 12,
-    array = Array(12);
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<ProductObj[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState<string>("");
+  const limit = 12;
 
   const previousPage = () => {
     setIsLoading(true);
@@ -43,9 +44,7 @@ const ProductsPage: FC = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const base_url = `/products?limit=${limit}&skip=${skip}`;
-      const search_url = `/products/search?limit=${limit}&skip=${skip}&q=${query}`;
-      const url = query.length > 0 ? search_url : base_url;
+      const url = query.length > 0 ? products_search_url(limit, skip, query) : products_url(limit, skip);
       const response = await http.get<ProductDataProps>(url);
       const { products, total } = response?.data || {};
       setProducts(Array.isArray(products) ? products : [products]);
@@ -138,12 +137,12 @@ const ProductsPage: FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 px-2 pb-4">
           {isLoading
-            ? Array.from(array).map((_, index) => <SkeletonProduct key={index} />)
+            ? Array(12).map((_, index) => <SkeletonProduct key={index} />)
             : total > 0 && products.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       </div>
 
-      {!isLoading &&
+      {!isLoading && (
         <Pagination
           isLoading={isLoading}
           total={total}
@@ -152,7 +151,7 @@ const ProductsPage: FC = () => {
           previousPage={previousPage}
           nextPage={nextPage}
         />
-      }
+      )}
     </div>
   );
 };

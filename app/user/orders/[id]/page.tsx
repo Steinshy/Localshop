@@ -33,7 +33,7 @@ const OrdersPage: FC<OrderPageProps> = ({ params }) => {
   const breadCrumbItems = [
     { title: "User", href: "/user" },
     { title: "Orders", href: "/user/orders" },
-    { title: `Order ${params.id}` },
+    { title: `Order ${params.id}`, href: "" },
   ];
 
   return (

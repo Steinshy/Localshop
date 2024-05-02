@@ -10,18 +10,29 @@ import { paymentmethods } from "../data/payment";
  * @returns {string} The generated slug.
  */
 const generateSlug = (title: string): string => {
-  return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
-}
+  return title
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+};
 
 /**
  * Converts a date to a readable format.
  * @param {string} date The date to convert.
- * @returns {string} The readable date.
+ * @returns {string} The converted date.
  */
 const readableDate = (date: string): string => {
-  const options = { year: "numeric", month: "long", day: "numeric" };
-  return new Date(date).toLocaleDateString("en-US", options);
-}
+  return new Intl.DateTimeFormat('en-US').format(new Date(date));
+};
+
+/**
+ * Generates a random past date.
+ * @returns {string} The generated random past date.
+ */
+
+const randomPastDate = () => {
+  return new Date(Date.now() - Math.floor(Math.random() * (1000 * 60 * 60 * 24 * 365)));
+};
 
 /**
  * Generates a random number between two values.
@@ -31,7 +42,7 @@ const readableDate = (date: string): string => {
  */
 const generateRandomNumberBetween = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
+};
 
 /**
  * Clamps a number between a minimum and maximum value.
@@ -42,7 +53,7 @@ const generateRandomNumberBetween = (min: number, max: number): number => {
  */
 const generateClamp = (num: number, min: number, max: number): number => {
   return Math.min(Math.max(num, min), max);
-}
+};
 
 /**
  * Converts a value to a string.
@@ -51,7 +62,7 @@ const generateClamp = (num: number, min: number, max: number): number => {
  */
 const stringify = (value: number): string => {
   return value.toString();
-}
+};
 
 /**
  * Converts a value to rounded number.
@@ -61,7 +72,7 @@ const stringify = (value: number): string => {
 
 const round = (value: number): number => {
   return Math.round(value) || 0;
-}
+};
 
 /**
  * Generates a random boolean.
@@ -69,7 +80,7 @@ const round = (value: number): number => {
  */
 const generateRandomBool = (): boolean => {
   return Math.random() >= 0.5;
-}
+};
 
 /**
  * Calculates the discount based on the selected coupon.
@@ -79,6 +90,18 @@ const generateRandomBool = (): boolean => {
  */
 const calculatedDiscount = (selectedCoupon: CouponsObject, totalPrice: number): number => {
   return totalPrice - totalPrice * (selectedCoupon.discount / 100);
+};
+
+/**
+ Products & Products Search URL
+ */
+
+const products_url = (limit: number, skip: number) => {
+  return `/products?limit=${limit}&skip=${skip}`;
+};
+
+const products_search_url = (limit: number, skip: number, query: string) => {
+  return `/products/search?limit=${limit}&skip=${skip}&q=${query}`;
 }
 
 /**
@@ -101,7 +124,7 @@ const generateDefaultAdresses = () => {
     });
   }
   return addresses;
-}
+};
 
 /**
  * Generates an array of default orders.
@@ -111,18 +134,14 @@ const generateDefaultOrders = () => {
   const orders = [];
   const orderStatus = ["Delivered", "Processing", "Canceled"];
 
-  const randomPastDate = () => {
-    return new Date(Date.now() - Math.floor(Math.random() * (1000 * 60 * 60 * 24 * 365)));
-  }
-
   for (let i = 1; i < 6; i++) {
     orders.push({
       id: i,
       label: `Order ${i}`,
       date: readableDate(randomPastDate().toString()),
       productsTotal: 2,
-      status: orderStatus[generateRandomNumberBetween(0, orderStatus.length-1)],
-      paymentType: paymentmethods[generateRandomNumberBetween(0, paymentmethods.length-1)].label,
+      status: orderStatus[generateRandomNumberBetween(0, orderStatus.length - 1)],
+      paymentType: paymentmethods[generateRandomNumberBetween(0, paymentmethods.length - 1)].label,
       isPaid: true,
       total: 2298,
       products: [
@@ -144,7 +163,7 @@ const generateDefaultOrders = () => {
     });
   }
   return orders;
-}
+};
 
 export {
   generateSlug,
@@ -156,5 +175,7 @@ export {
   stringify,
   round,
   generateRandomNumberBetween,
-  readableDate
-}
+  readableDate,
+  products_url,
+  products_search_url
+};

@@ -23,26 +23,21 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ items = [] }) => (
 
     <Separator />
 
-    {items.map((item, index) =>
-      item.href ? (
-        <>
-          <NextLink
-            key={`breadcrumb_${index}`}
-            as={Link}
-            href={item.href}
-            className="text-small font-bold text-foreground/75"
-          >
-            {item.title}
-          </NextLink>
+    {items.map((item, index) => (
+      <span key={`breadcrumb_${index}`} className="flex items-center gap-1">
+        {item.href ? (
+          <>
+            <NextLink as={Link} href={item.href} className="text-small font-bold text-foreground/75">
+              {item.title}
+            </NextLink>
 
-          {index < items.length - 1 && <Separator />}
-        </>
-      ) : (
-        <span key={`breadcrumb_${index}`} className="text-small font-bold text-foreground/50">
-          {item.title}
-        </span>
-      )
-    )}
+            {index < items.length - 1 && <Separator />}
+          </>
+        ) : (
+          <span className="text-small font-bold text-foreground/50">{item.title}</span>
+        )}
+      </span>
+    ))}
   </nav>
 );
 
