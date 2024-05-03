@@ -15,7 +15,7 @@ import CartCoupons from "./cartCoupons";
 import { FaArrowRight } from "react-icons/fa";
 
 // Interfaces
-import { CartSummaryProps } from "../../../interfaces/cart";
+import { CartSummaryProps } from "@/app/interfaces/cart";
 
 const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, taxesPrice, isLoading }) => {
   const pathname:string = usePathname();

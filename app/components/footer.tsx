@@ -9,7 +9,7 @@ import { DiCssdeck } from "react-icons/di";
 import { FaFacebookSquare, FaTwitterSquare, FaInstagramSquare } from "react-icons/fa";
 
 // Interfaces
-import { FooterProps } from "../interfaces/footer";
+import { FooterProps } from "@/app/interfaces/footer";
 
 const FooterItemLink:FC<FooterProps> = ({ text, isTag = false, tagText }) => (
   <li>

@@ -28,25 +28,18 @@ import {
 
 // Icons
 import { DiCssdeck } from "react-icons/di";
-import {
-  FaCartArrowDown,
-  FaChevronDown,
-  FaRegUserCircle,
-  FaUserCog,
-  FaShoppingBag,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaCartArrowDown, FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
 
 // Interfaces
-import { NavbarProps, CartBadgeProps, UsermenuNotLoggedProps, UsermenuLoggedProps } from "../interfaces/navbar";
+import { NavbarProps, CartBadgeProps, UsermenuNotLoggedProps, UsermenuLoggedProps } from "@/app/interfaces/navbar";
 
-// Data
-import { UserDefaultData } from "../data/user";
+//data
+import { UserDefaultData } from "@/app/data/user";
+import { websiteName, navItems } from "@/app/data/navbar";
 
 // Utils
-import { siteConfig } from "../utils/siteConfig";
-import { UserContext, CartContext } from "../utils/subProviders";
-import ThemeSwitcher from "../utils/themeSwitcher";
+import { UserContext, CartContext } from "@/app/utils/subProviders";
+import ThemeSwitcher from "@/app/utils/themeSwitcher";
 
 const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
   return (
@@ -182,9 +175,9 @@ const Header = () => {
       <NavbarContent className="hidden sm:flex" justify="start">
         <NavbarItemLink href="/" isActive={pathname === "/"}>
           <DiCssdeck />
-          <p className="ml-1 font-light">{siteConfig.name}</p>
+          <p className="ml-1 font-light">{websiteName}</p>
         </NavbarItemLink>
-        {siteConfig.navItems.map((item) => (
+        {navItems.map((item) => (
           <NavbarItemLink key={item.href} href={item.href} isActive={pathname === item.href}>
             {item.label}
           </NavbarItemLink>
@@ -216,7 +209,7 @@ const Header = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        {siteConfig.navItems.map((item) => (
+        {navItems.map((item) => (
           <NavbarMenuItem key={item.href}>
             <Link href={item.href} onClick={() => setIsMenuOpen(false)}>
               {item.label}

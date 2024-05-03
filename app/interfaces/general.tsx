@@ -2,8 +2,6 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-
-
 type BreadcrumbProps = {
   items: Array<{ title: string; href?: string | undefined }>;
 };
@@ -11,10 +9,6 @@ type BreadcrumbProps = {
 type StepperProps = {
   steps: string[];
   current: number;
-}
+};
 
-export type {
-  LayoutProps,
-  BreadcrumbProps,
-  StepperProps
-}
+export type { LayoutProps, BreadcrumbProps, StepperProps };

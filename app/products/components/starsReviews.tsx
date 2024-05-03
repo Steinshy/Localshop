@@ -2,12 +2,10 @@
 import { FC } from "react";
 
 // Utils
-import { round } from "../../utils/helpers";
+import { round } from "@/app/utils/helpers";
 
 // Interfaces
-interface StarsReviewsProps {
-  rating: number;
-}
+import { StarsReviewsProps } from "@/app/interfaces/reviews";
 
 const StarsReviews: FC<StarsReviewsProps> = ({ rating }) => (
   <div className="flex items-center gap-1">

@@ -8,12 +8,12 @@ import AddressCard from "./addressCard";
 import AddressModal from "./addressModal";
 
 // Utils
-import { UserContext } from "../../../utils/subProviders";
+import { UserContext } from "@/app/utils/subProviders";
 
 // Interfaces
-import { AddressListProps } from "../../../interfaces/user";
+import { AddressListProps } from "@/app/interfaces/user";
 
-const AddressList:FC<AddressListProps> = ({ selected, setSelected, selectable = false }) => {
+const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false }) => {
   const userStore = useContext(UserContext);
   const { addresses } = userStore.user;
 
@@ -37,6 +37,6 @@ const AddressList:FC<AddressListProps> = ({ selected, setSelected, selectable = 
       ))}
     </>
   );
-}
+};
 
 export default AddressList;

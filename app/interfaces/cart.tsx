@@ -57,5 +57,5 @@ export type {
   CartProductProps,
   CartSummaryProps,
   CartCouponsProps,
-  CouponsObject
-}
+  CouponsObject,
+};

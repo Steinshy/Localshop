@@ -11,8 +11,8 @@ import Stepper from "../components/stepper";
 import CartSummary from "./cart/components/cartSummary";
 
 // Utils
-import { CartContext, UserContext } from "../utils/subProviders";
-import { LayoutProps } from "../interfaces/general";
+import { CartContext, UserContext } from "@/app/utils/subProviders";
+import { LayoutProps } from "@/app/interfaces/general";
 
 const OrderLayout: FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();

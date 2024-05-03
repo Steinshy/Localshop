@@ -2,7 +2,7 @@
 import { FC } from "react";
 
 // Interfaces
-import { StepperProps } from "../interfaces/general";
+import { StepperProps } from "@/app/interfaces/general";
 
 const Stepper:FC<StepperProps> = ({ steps, current }) => (
   <div className="flex w-full">

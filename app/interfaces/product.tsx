@@ -34,10 +34,4 @@ type ProductImagesProps = {
   images: [string];
 };
 
-export type {
-  ProductPageProps,
-  ProductObj,
-  ProductDataProps,
-  ProductCardProps,
-  ProductImagesProps
-}
+export type { ProductPageProps, ProductObj, ProductDataProps, ProductCardProps, ProductImagesProps };

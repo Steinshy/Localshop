@@ -14,7 +14,7 @@ import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons
 import CartProduct from "./cartProduct";
 
 // Interfaces
-import { CartItemProps } from "../../../interfaces/cart";
+import { CartItemProps } from "@/app/interfaces/cart";
 
 const CartItems: FC<CartItemProps> = ({ cartStore, cart, isLoading }) => {
   return (

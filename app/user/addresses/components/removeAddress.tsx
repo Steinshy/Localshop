@@ -8,7 +8,7 @@ import { Button } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 
 // Providers
-import { UserContext } from "../../../utils/subProviders";
+import { UserContext } from "@/app/utils/subProviders";
 
 const RemoveAddress: FC<{ id: number }> = ({ id }) => {
   const userStore = useContext(UserContext);

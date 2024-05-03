@@ -4,7 +4,8 @@
 import { FC, useState, useEffect, useCallback } from "react";
 
 // Utils
-import http from "../utils/http";
+import http from "@/app/utils/http";
+import { products_url, products_search_url } from "@/app/utils/helpers";
 
 // Component
 import ProductCard from "./components/productCard";
@@ -17,9 +18,7 @@ import { Input, Chip } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
 
 // Interfaces
-import { ProductObj, ProductDataProps } from "../interfaces/product";
-
-import { products_url, products_search_url } from "../utils/helpers";
+import { ProductObj, ProductDataProps } from "@/app/interfaces/product";
 
 // Images
 import BG from "../assets/bg-products.webp";

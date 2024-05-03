@@ -4,7 +4,7 @@
 import { FC, useContext } from "react";
 
 // Providers
-import { CartContext } from "../../utils/subProviders";
+import { CartContext } from "@/app/utils/subProviders";
 
 // NextJS
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ import { Button } from "@nextui-org/react";
 import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
 // Interface
-import { ProductCardProps } from "../../interfaces/product";
+import { ProductCardProps } from "@/app/interfaces/product";
 
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
   const { id, title, category, thumbnail, price, stock } = product;

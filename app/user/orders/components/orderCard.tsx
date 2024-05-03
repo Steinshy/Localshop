@@ -8,10 +8,10 @@ import Link from "next/link";
 import { Card, CardBody, Chip } from "@nextui-org/react";
 
 // Utils
-import { readableDate } from "../../../utils/helpers";
+import { readableDate } from "@/app/utils/helpers";
 
 // Interfaces
-import { OrderCardProps } from "../../../interfaces/general";
+import { OrderCardProps } from "@/app/interfaces/user";
 
 const OrderCard: FC<OrderCardProps> = ({ order }) => {
   const { id, label, status, date, total, productsTotal } = order;

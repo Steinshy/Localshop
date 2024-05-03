@@ -4,16 +4,16 @@
 import { useState, createContext } from "react";
 
 // Interfaces
-import { UserItemsObj, UserContextType } from "../interfaces/user";
-import { CartItemObj, CartContextType } from "../interfaces/cart";
+import { UserItemsObj, UserContextType } from "@/app/interfaces/user";
+import { CartItemObj, CartContextType } from "@/app/interfaces/cart";
 
 // Data
-import { UserDefaultData, UserLoggedOutData } from "../data/user";
+import { UserDefaultData, UserLoggedOutData } from "@/app/data/user";
 
 // CART
 const useCart = () => {
-  const [cart, setCart] = useState<CartItemObj[]>( [] || 
-    (JSON.parse(localStorage.getItem("cart") as string) as CartItemObj[])
+  const [cart, setCart] = useState<CartItemObj[]>(
+    [] || (JSON.parse(localStorage.getItem("cart") as string) as CartItemObj[])
   );
   const [cartChecked, setCartChecked] = useState<boolean>(false);
 
@@ -38,7 +38,9 @@ const CartContext = createContext<CartContextType>({
 });
 
 const useUser = () => {
-  const [user, setUser] = useState<UserItemsObj>(UserDefaultData || (JSON.parse(localStorage.getItem("user") as string) as UserItemsObj));
+  const [user, setUser] = useState<UserItemsObj>(
+    UserDefaultData || (JSON.parse(localStorage.getItem("user") as string) as UserItemsObj)
+  );
 
   // Update User
   const update = (newData: UserItemsObj) => {
@@ -68,11 +70,4 @@ const UserContext = createContext<UserContextType>({
   logout: () => {},
 });
 
-export {
-  UserProvider,
-  CartProvider,
-  UserContext,
-  CartContext,
-  useCart,
-  useUser
-}
+export { UserProvider, CartProvider, UserContext, CartContext, useCart, useUser };

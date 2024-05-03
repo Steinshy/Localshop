@@ -1,6 +1,9 @@
 // React
 import { FC } from "react";
 
+// Helpers
+import { generateClamp } from "@/app/utils/helpers";
+
 // Icons
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -8,10 +11,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Button, Skeleton } from "@nextui-org/react";
 
 // Interface
-import { PaginationProps, PaginationButtonProps } from "../../interfaces/pagination";
-
-// Helpers
-import { generateClamp } from "../../utils/helpers";
+import { PaginationProps, PaginationButtonProps } from "@/app/interfaces/pagination";
 
 const PaginationButton:FC<PaginationButtonProps> = ({ isDisabled, onClick, children, startContent, endContent }) => (
   <Button

@@ -15,7 +15,4 @@ type PaginationButtonProps = {
   endContent?: React.ReactNode;
 };
 
-export type {
-  PaginationProps,
-  PaginationButtonProps
-}
+export type { PaginationProps, PaginationButtonProps };

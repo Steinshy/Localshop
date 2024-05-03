@@ -12,22 +12,13 @@ import { Formik, Form, Field } from "formik";
 import { FaPlus, FaEdit } from "react-icons/fa";
 
 // Utils
-import { UserContext } from "../../../utils/subProviders";
+import { UserContext } from "@/app/utils/subProviders";
+
+// Data
+import { defaultAdress } from "@/app/data/user";
 
 // Interfaces
-import { AddressObj } from "../../../interfaces/user";
-
-const defaultAdress = {
-  id: 0,
-  label: "",
-  firstname: "",
-  lastname: "",
-  address: "",
-  city: "",
-  country: "",
-  postalCode: "",
-  default: false,
-};
+import { AddressObj } from "@/app/interfaces/user";
 
 const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

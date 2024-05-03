@@ -7,7 +7,7 @@ import { useContext } from "react";
 import OrderCard from "./orderCard";
 
 // Utils
-import { UserContext } from "../../../utils/subProviders";
+import { UserContext } from "@/app/utils/subProviders";
 
 const OrdersList = () => {
   const userStore = useContext(UserContext);

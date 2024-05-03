@@ -1,4 +1,3 @@
-// app/components/ThemeSwitcher.tsx
 "use client";
 
 // React
@@ -25,9 +24,7 @@ const ThemeSwitcher = () => {
     setTheme(isSelected ? "light" : "dark");
   };
 
-  const renderIcon = ({ isSelected }: { isSelected: boolean; }) => (
-    isSelected ? <SunIcon /> : <MoonIcon />
-  );
+  const renderIcon = ({ isSelected }: { isSelected: boolean }) => (isSelected ? <SunIcon /> : <MoonIcon />);
 
   return mounted ? (
     <Switch
@@ -38,12 +35,7 @@ const ThemeSwitcher = () => {
       thumbIcon={renderIcon}
     />
   ) : (
-    <Switch
-      isSelected={true}
-      size="lg"
-      color="danger"
-      thumbIcon={<SunIcon />}
-    />
+    <Switch isSelected={true} size="lg" color="danger" thumbIcon={<SunIcon />} />
   );
 };
 

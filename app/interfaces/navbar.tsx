@@ -20,9 +20,4 @@ type UsermenuNotLoggedProps = {
   handleUserLogin: () => void;
 };
 
-export type {
-  NavbarProps,
-  CartBadgeProps,
-  UsermenuLoggedProps,
-  UsermenuNotLoggedProps
-}
+export type { NavbarProps, CartBadgeProps, UsermenuLoggedProps, UsermenuNotLoggedProps };

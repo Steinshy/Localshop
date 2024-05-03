@@ -4,33 +4,22 @@ import { FC } from "react";
 // NextUI
 import { Card, CardBody, CardHeader, Avatar, Divider } from "@nextui-org/react";
 
+// React Icons
+import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
+
 // Components
 import StarsReviews from "@/app/products/components/starsReviews";
-
-// Interfaces
-interface ReviewProps {
-  review: {
-    id: number;
-    author: string;
-    comment: string;
-    rating: number;
-  }
-}
+// Interface
+import { ReviewProps } from "@/app/interfaces/reviews";
 
 const ProductReviews: FC<ReviewProps> = ({ review }) => (
   <Card className="max-w-[500px]">
     <CardHeader className="flex gap-3">
-      <Avatar
-        isBordered
-        className="shrink-0"
-        color="primary"
-        size="sm"
-        src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
-      />
-      <div className="flex flex-col">
-        <div>{review.author}</div>
-        <StarsReviews rating={review.rating} />
-      </div>
+      <Avatar isBordered className="shrink-0" color="primary" size="sm" src={review.avatar} />
+
+      <div className="flex flex-col">{review.author}</div>
+      <StarsReviews rating={review.rating} />
+      {review.rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />}
     </CardHeader>
     <Divider />
     <CardBody className="flex">

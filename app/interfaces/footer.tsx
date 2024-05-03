@@ -4,6 +4,4 @@ type FooterProps = {
   tagText?: string;
 };
 
-export type {
-  FooterProps
-}
+export type { FooterProps };

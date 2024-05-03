@@ -1,4 +1,4 @@
-import { generateClamp } from '../utils/helpers';
+import { generateClamp } from '@/app/utils/helpers';
 
 const names = [
   "John Doe",
@@ -26,14 +26,16 @@ const comments = [
   "I'm very impressed with this product."
 ];
 
+
 const reviews = () => {
   const reviews = [];
   for (let i = 1; i < 10; i++) {
     reviews.push({
       id: i,
+      avatar: `https://i.pravatar.cc/300?img=${i}`,
       author: names[i],
       comment: comments[i],
-      rating: generateClamp(i, 1, 5),
+      rating: generateClamp(i, 1, 5)
     });
   }
   return reviews;

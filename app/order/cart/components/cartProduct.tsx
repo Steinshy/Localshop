@@ -11,10 +11,10 @@ import { Image, Button, Input } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 
 // Interfaces
-import { CartProductProps } from "../../../interfaces/cart";
+import { CartProductProps } from "@/app/interfaces/cart";
 
 // Helpers
-import { generateSlug, stringify } from "../../../utils/helpers";
+import { generateSlug, stringify } from "@/app/utils/helpers";
 
 const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
   const slug = generateSlug(itemcart.title);

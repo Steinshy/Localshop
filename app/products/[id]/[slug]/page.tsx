@@ -1,6 +1,9 @@
 // React
 import { FC } from "react";
 
+// Utils
+import http from "@/app/utils/http";
+
 // Components
 import ProductImages from "../../components/productImages";
 import Breadcrumb from "../../../components/breadCrumb";
@@ -10,11 +13,8 @@ import ProductReviews from "./components/productReviews";
 // Data
 import { reviewsDefaultData } from "@/app/data/reviews";
 
-// Utils
-import http from "../../../utils/http";
-
 // Interfaces
-import { ProductPageProps, ProductObj } from "../../../interfaces/product";
+import { ProductPageProps, ProductObj } from "@/app/interfaces/product";
 
 const getProduct = async (id: string) => {
   const response = await http.get(`/products/${id}`);

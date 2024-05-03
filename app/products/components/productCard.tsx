@@ -1,6 +1,9 @@
 // React
 import { FC } from "react";
 
+// Helpers
+import { generateSlug, generateRandomBool } from "@/app/utils/helpers";
+
 // NextJS
 import Link from "next/link";
 
@@ -9,14 +12,10 @@ import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react
 
 // Components
 import AddToCart from "./addToCart";
-
-// Interfaces
-import { ProductCardProps } from "../../interfaces/product";
-
 import StarsReviews from "./starsReviews";
 
-// Helpers
-import { generateSlug, generateRandomBool } from "../../utils/helpers";
+// Interfaces
+import { ProductCardProps } from "@/app/interfaces/product";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   return (

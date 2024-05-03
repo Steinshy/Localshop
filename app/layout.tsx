@@ -9,7 +9,7 @@ import Footer from "./components/footer";
 import Providers from "./providers";
 
 // Interface
-import { LayoutProps } from "./interfaces/general";
+import { LayoutProps } from "@/app/interfaces/general";
 
 // APP CSS
 import "./styles/App.css";

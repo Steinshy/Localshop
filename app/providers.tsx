@@ -10,10 +10,10 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { NextUIProvider } from "@nextui-org/react";
 
 // Providers
-import { UserProvider, CartProvider } from "./utils/subProviders";
+import { UserProvider, CartProvider } from "@/app/utils/subProviders";
 
 // Interface
-import { LayoutProps } from "./interfaces/general";
+import { LayoutProps } from "@/app/interfaces/general";
 
 const Providers:FC<LayoutProps> = ({ children }) => (
   <NextUIProvider className="flex flex-col flex-grow">

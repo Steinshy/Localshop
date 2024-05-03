@@ -1,8 +1,8 @@
 // Interfaces
-import { CouponsObject } from "../interfaces/cart";
+import { CouponsObject } from "@/app/interfaces/cart";
 
 // Data
-import { paymentmethods } from "../data/payment";
+import { paymentmethods } from "@/app/data/payment";
 
 /**
  * Generates a slug from a title.
@@ -22,7 +22,7 @@ const generateSlug = (title: string): string => {
  * @returns {string} The converted date.
  */
 const readableDate = (date: string): string => {
-  return new Intl.DateTimeFormat('en-US').format(new Date(date));
+  return new Intl.DateTimeFormat("en-US").format(new Date(date));
 };
 
 /**
@@ -83,7 +83,7 @@ const products_url = (limit: number, skip: number) => {
 
 const products_search_url = (limit: number, skip: number, query: string) => {
   return `/products/search?limit=${limit}&skip=${skip}&q=${query}`;
-}
+};
 
 /**
  * Generates an array of default addresses.
@@ -121,8 +121,8 @@ const generateDefaultOrders = () => {
       label: `Order ${i}`,
       date: readableDate(new Date().toString()),
       productsTotal: 2,
-      status: orderStatus[generateClamp(i-1, 0, orderStatus.length-1)],
-      paymentType: paymentmethods[generateClamp(i-1, 0, paymentmethods.length-1)].label,
+      status: orderStatus[generateClamp(i - 1, 0, orderStatus.length - 1)],
+      paymentType: paymentmethods[generateClamp(i - 1, 0, paymentmethods.length - 1)].label,
       isPaid: true,
       total: 2298,
       products: [
@@ -157,5 +157,5 @@ export {
   round,
   readableDate,
   products_url,
-  products_search_url
+  products_search_url,
 };
