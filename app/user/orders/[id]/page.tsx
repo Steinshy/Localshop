@@ -7,7 +7,7 @@ import { FC, useContext } from "react";
 import Link from "next/link";
 
 // NextUI
-import { Button } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFoote, Button, Chip } from "@nextui-org/react";
 
 // Icons
 import { FaArrowRight } from "react-icons/fa";
@@ -24,6 +24,8 @@ import { OrderPageProps } from "@/app/interfaces/user";
 
 // Components
 import OrderProductCard from "./components/orderProductCard";
+// Data
+import { chipColor } from "@/app/data/orders";
 
 const OrdersPage: FC<OrderPageProps> = ({ params }) => {
   const userStore = useContext(UserContext);
@@ -33,27 +35,28 @@ const OrdersPage: FC<OrderPageProps> = ({ params }) => {
   const breadCrumbItems = [
     { title: "User", href: "/user" },
     { title: "Orders", href: "/user/orders" },
-    { title: `Order ${params.id}`, href: "" },
+    { title: `Order ${params.id}` },
   ];
 
   return (
     <div className="max-w-screen-md mx-auto w-full">
       <Breadcrumb items={breadCrumbItems} />
-      <h1 className="text-2xl mb-2">Order {params.id}</h1>
+      <h1 className="text-2xl mb-2 text-center">Order {params.id}</h1>
 
       {order ? (
-        <div className="grid grid-cols-1 gap-3">
-          <div className="bg-white p-4 rounded-lg shadow-md">
-            <div className="flex items-center justify-between">
-              <p className="text-md font-semibold">Order ID: {order.id}</p>
-              <p className="text-md font-semibold">Status: {order.status}</p>
-              <p className="text-md font-semibold">Payment: {order.paymentType}</p>
-            </div>
-            <div className="flex items-center justify-between mt-2">
-              <p className="text-md">Total: {order.total}€</p>
-              <p className="text-md">Date: {readableDate(order.date)}</p>
-            </div>
-          </div>
+        <div className="grid gap-3">
+          <Card className="max-w-[500px]">
+            <CardBody>
+              <div className="grid grid-cols-1 gap-3">
+              <Chip size="sm" className="text-white" color={chipColor(order.status)}>{order.status}</Chip>
+                <p className="text-md font-semibold">Payment: {order.paymentType}</p>
+              </div>
+              <div className="flex items-center justify-between mt-2">
+                <p className="text-md">Total: {order.total}€</p>
+                <p className="text-md">Date: {readableDate(order.date)}</p>
+              </div>
+            </CardBody>
+          </Card>
 
           <div className="bg-white p-4 rounded-lg shadow-md">
             <p className="text-md font-semibold">Products ({order.productsTotal})</p>

@@ -114,12 +114,14 @@ const generateDefaultAdresses = () => {
 const generateDefaultOrders = () => {
   const orders = [];
   const orderStatus = ["Delivered", "Processing", "Canceled"];
+  const orderDate = [ "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01"]
 
   for (let i = 1; i < 6; i++) {
     orders.push({
       id: i,
       label: `Order ${i}`,
-      date: readableDate(new Date().toString()),
+      invoice: `#INV-000${i}`,
+      date: orderDate[generateClamp(i - 1, 0, orderDate.length - 1)],
       productsTotal: 2,
       status: orderStatus[generateClamp(i - 1, 0, orderStatus.length - 1)],
       paymentType: paymentmethods[generateClamp(i - 1, 0, paymentmethods.length - 1)].label,

@@ -5,7 +5,7 @@ import { FC } from "react";
 import Link from "next/link";
 
 // NextUI
-import { Card, CardBody, Chip } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, Chip } from "@nextui-org/react";
 
 // Utils
 import { readableDate } from "@/app/utils/helpers";
@@ -13,38 +13,28 @@ import { readableDate } from "@/app/utils/helpers";
 // Interfaces
 import { OrderCardProps } from "@/app/interfaces/user";
 
-const OrderCard: FC<OrderCardProps> = ({ order }) => {
-  const { id, label, status, date, total, productsTotal } = order;
+import { chipColor } from "@/app/data/orders";
 
-  const chipColor = (status: string) => {
-    switch (status) {
-      case "Delivered":
-        return "success";
-      case "Processing":
-        return "warning";
-      case "Canceled":
-        return "danger";
-      default:
-        return "default";
-    }
-  }
+const OrderCard: FC<OrderCardProps> = ({ order, user }) => {
+  const { id, invoice, status, date, total, productsTotal } = order;
+  const { firstname, lastname } = user;
 
   return (
-    <Card
-      className={`border-2 w-full h-full`}
-      isPressable
-      as={Link}
-      href={`/user/orders/${id}`}
-    >
-      <CardBody>
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold">{label}</h2>
-          <Chip size="sm" className="text-white" color={chipColor(status)}>{status}</Chip>
-        </div>
-        
+    <Card className={`border-2 w-full h-full`} isPressable as={Link} href={`/user/orders/${id}`}>
+      <CardHeader className="flex items-center justify-between bg-gray-100">
         <p>Date: {readableDate(date)}</p>
         <p>Total: {total}€</p>
-        <p>{productsTotal} products</p>
+        <p>Dispatched to:{lastname} {firstname}</p>
+        <p>Order ID: {invoice}</p>
+        <Chip size="sm" className="text-white" color={chipColor(status)}>
+          {status}
+        </Chip>
+      </CardHeader>
+
+      <CardBody>
+        <div className="flex items-center justify-between">
+          <p>{productsTotal} products</p>
+        </div>
       </CardBody>
     </Card>
   );

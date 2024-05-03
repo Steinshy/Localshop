@@ -19,6 +19,7 @@ const OrdersList = () => {
         <OrderCard
           key={order.id}
           order={order}
+          user={userStore.user}
         />
       ))}
     </>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 // React
 import { FC, useContext } from "react";
@@ -19,7 +19,7 @@ import Breadcrumb from "../../components/breadCrumb";
 // Utils
 import { UserContext } from "@/app/utils/subProviders";
 
-const OrdersPage:FC = () => {
+const OrdersPage: FC = () => {
   const userStore = useContext(UserContext);
   const { orders } = userStore.user;
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Orders" }];
@@ -27,28 +27,27 @@ const OrdersPage:FC = () => {
   return (
     <div className="max-w-screen-md mx-auto w-full">
       <Breadcrumb items={breadCrumbItems} />
-      <h1 className="text-2xl mb-2">Orders</h1>
-      
-      {orders.length === 0 ? (
-          <div className="flex flex-col flex-grow items-center justify-center">
-            <p className="text-md">No order has been made yet</p>
-            <Button
-              color="primary"
-              variant="flat"
-              href="/products"
-              as={Link}
-              className="mt-4"
-              endContent={<FaArrowRight />}
-            >
-              Start shopping
-            </Button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-3 gap-3">
-            <OrdersList />
-          </div>
-        )
-      }
+      <h1 className="text-2xl mb-2 text-center">Orders</h1>
+
+      {orders.length > 0 ? (
+        <div className="grid grid-cols-1 gap-3">
+          <OrdersList />
+        </div>
+      ) : (
+        <div className="flex flex-col flex-grow items-center justify-center">
+          <p className="text-md">No order has been made yet</p>
+          <Button
+            color="primary"
+            variant="flat"
+            href="/products"
+            as={Link}
+            className="mt-4"
+            endContent={<FaArrowRight />}
+          >
+            Start shopping
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

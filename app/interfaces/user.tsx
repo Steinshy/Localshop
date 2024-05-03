@@ -49,6 +49,7 @@ type AddressCardProps = {
 
 type OrdersObj = {
   id: number;
+  invoice: string;
   label: string;
   date: string;
   productsTotal: number;
@@ -67,6 +68,7 @@ type OrderPageProps = {
 
 type OrderCardProps = {
   order: OrdersObj;
+  user: UserItemsObj;
 };
 
 type OrderProductCardProps = {

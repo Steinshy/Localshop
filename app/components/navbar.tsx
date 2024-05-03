@@ -109,22 +109,22 @@ const UsermenuLogged: FC<UsermenuLoggedProps> = ({
         </Button>
       </DropdownTrigger>
       <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
-        <DropdownItem startContent={<FaRegUserCircle />} key="profile">
+        <DropdownItem startContent={<FaRegUserCircle />} key="profile" textValue="profile">
           Profile
         </DropdownItem>
-        <DropdownItem startContent={<FaShoppingBag />} key="addresses">
+        <DropdownItem startContent={<FaShoppingBag />} key="addresses" textValue="addresses">
           Addresses
         </DropdownItem>
-        <DropdownItem startContent={<FaShoppingBag />} key="orders">
+        <DropdownItem startContent={<FaShoppingBag />} key="orders" textValue="order">
           Orders
         </DropdownItem>
-        <DropdownItem startContent={<FaUserCog />} key="settings">
+        <DropdownItem startContent={<FaUserCog />} key="settings" textValue="settings">
           Settings
         </DropdownItem>
         <DropdownItem>
           <Divider />
         </DropdownItem>
-        <DropdownItem startContent={<FaSignOutAlt />} key="logout" className="text-danger" color="danger">
+        <DropdownItem startContent={<FaSignOutAlt />} key="logout" textValue="logout" className="text-danger" color="danger">
           Logout
         </DropdownItem>
       </DropdownMenu>

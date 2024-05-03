@@ -39,13 +39,15 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             src={product.thumbnail}
           />
         </CardBody>
-        <div className="flex items-center text-base p-3">
-          <h5 className="">{product.title}</h5>
-          <StarsReviews productRating={product.rating} />
+        <div className="flex justify-center text-center">
+          <h2>{product.title}</h2>
         </div>
-        <CardFooter className="col relative flex justify-between">
-          <h4 className="">{product.price} €</h4>
-          <h3 className="text-sm text-gray-500">{product.stock} left</h3>
+        <div className="flex col justify-end p-2">
+        <StarsReviews rating={product.rating} />
+        </div>
+        <CardFooter className="flex col justify-between">
+          <h3>{product.price} €</h3>
+          <h4 className="text-sm text-gray-500">{product.stock} left</h4>
           <AddToCart product={product} isIconOnly />
         </CardFooter>
       </Card>
