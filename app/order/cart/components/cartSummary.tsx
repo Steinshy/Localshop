@@ -17,7 +17,7 @@ import { FaArrowRight } from "react-icons/fa";
 // Interfaces
 import { CartSummaryProps } from "@/app/interfaces/cart";
 
-const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, taxesPrice, isLoading }) => {
+const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
   const pathname:string = usePathname();
 
   const buttonTextMap:{ [key: string]: string } = {
@@ -54,12 +54,12 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, shippingPrice, ta
 
         <div className="grid grid-cols-2 gap-4 text-foreground">
           <p className="text-lg">Shipping:</p>
-          <p className="text-lg">{shippingPrice}€</p>
+          <p className="text-lg">0€</p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 text-foreground">
           <p className="text-lg">Taxes:</p>
-          <p className="text-lg">{taxesPrice}€</p>
+          <p className="text-lg">0€</p>
         </div>
 
         {/* COUPONS */}

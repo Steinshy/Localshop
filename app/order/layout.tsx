@@ -26,8 +26,6 @@ const OrderLayout: FC<LayoutProps> = ({ children }) => {
   const [cartChecked, setCartChecked] = useState(false);
   const [cart, setCart] = useState(cartStore.data);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [shippingPrice, setshippingPrice] = useState<number>(0);
-  const [taxesPrice, setTaxesPrice] = useState<number>(0);
 
   // Stepper
   const steps = ["Cart", "Shipping", "Payment"];
@@ -68,8 +66,6 @@ const OrderLayout: FC<LayoutProps> = ({ children }) => {
         <CartSummary
           cart={cart}
           totalPrice={totalPrice}
-          shippingPrice={shippingPrice}
-          taxesPrice={taxesPrice}
           isLoading={isLoading}
         />
       </div>

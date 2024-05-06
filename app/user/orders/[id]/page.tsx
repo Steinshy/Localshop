@@ -7,7 +7,7 @@ import { FC, useContext } from "react";
 import Link from "next/link";
 
 // NextUI
-import { Card, CardHeader, CardBody, CardFoote, Button, Chip } from "@nextui-org/react";
+import { Card, CardBody, Button, Chip } from "@nextui-org/react";
 
 // Icons
 import { FaArrowRight } from "react-icons/fa";

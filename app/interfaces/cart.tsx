@@ -33,8 +33,6 @@ type CartProductProps = {
 type CartSummaryProps = {
   cart: CartItemObj[];
   totalPrice: number;
-  shippingPrice: number;
-  taxesPrice: number;
   isLoading: boolean;
 };
 
