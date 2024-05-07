@@ -23,7 +23,7 @@ import { readableDate } from "@/app/utils/helpers";
 import { OrderPageProps } from "@/app/interfaces/user";
 
 // Components
-import OrderProductCard from "./components/orderProductCard";
+import OrderProductCard from "@/app/user/orders/components/orderProductCard";
 // Data
 import { chipColor } from "@/app/data/orders";
 
