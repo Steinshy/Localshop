@@ -5,20 +5,23 @@ type ProductPageProps = {
 };
 
 type ProductObj = {
-  id: string;
-  attributes: {
-    id: number;
-    description: string;
-    price: number;
-    title: string;
-    stock: number;
-    rating: number;
-    category: string;
-    thumbnail: {
-      url: string;
+  data: {
+    id: string;
+    attributes: {
+      id: number;
+      description: string;
+      price: number;
+      title: string;
+      stock: number;
+      rating: number;
+      category: string;
+      thumbnail: {
+        url: string;
+        full: string;
+      };
+      images: [ProductImageProps];
     };
-    images: [string];
-  };
+  }
 };
 
 type ProductDataProps = {
@@ -38,10 +41,15 @@ type ProductCardProps = {
   isIconOnly?: boolean;
 };
 
+type ProductImageProps = {
+  thumbnail: string;
+  full: string;
+};
+
 type ProductImagesProps = {
   alt: string;
   main: string;
-  images: [string];
+  images: [ProductImageProps];
 };
 
 export type { ProductPageProps, ProductObj, ProductDataProps, ProductCardProps, ProductImagesProps };

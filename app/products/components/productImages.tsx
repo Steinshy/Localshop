@@ -31,10 +31,10 @@ const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {
 
       <div className="grid grid-flow-col mt-2 gap-3 max-w-[300px]">
         {images.map((image, index) => (
-          <Link key={index} onMouseOver={() => handleImageChange(image)}>
+          <Link key={index} onMouseOver={() => handleImageChange(image.full)}>
             <Image
               alt={alt}
-              src={image}
+              src={image.thumbnail}
               classNames={{
                 img: "w-[40px] h-[40px] object-cover",
               }}

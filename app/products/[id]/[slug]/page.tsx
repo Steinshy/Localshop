@@ -24,19 +24,22 @@ const getProduct = async (id: string) => {
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const product = await getProduct(params.id);
-  const breadCrumbItems = [{ title: "Products", href: "/products" }, { title: product.title }];
+  console.log(product);
+  const { attributes, id } = product.data;
+  const { title, description, thumbnail, price, images } = attributes;
+  const breadCrumbItems = [{ title: "Products", href: "/products" }, { title: title }];
 
   return product ? (
     <>
       <Breadcrumb items={breadCrumbItems} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4">
-        <ProductImages key={product.id} alt={product.title} main={product.thumbnail} images={product.images} />
+        <ProductImages key={id} alt={title} main={thumbnail.full} images={images} />
 
         <div className="flex flex-col gap-4">
-          <h1 className="text-3xl font-semibold text-center sm:text-start">{product.title}</h1>
-          <p className="text-md text-foreground/75">{product.description}</p>
-          <p className="text-md font-semibold">{product.price}€</p>
+          <h1 className="text-3xl font-semibold text-center sm:text-start">{title}</h1>
+          <p className="text-md text-foreground/75">{description}</p>
+          <p className="text-md font-semibold">{price}€</p>
 
           <div className="flex justify-center sm:justify-start">
             <AddToCard product={product} />
