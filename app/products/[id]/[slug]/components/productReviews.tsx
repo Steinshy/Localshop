@@ -1,6 +1,3 @@
-// React
-import { FC } from "react";
-
 // NextUI
 import { Card, CardBody, CardHeader, Avatar, Divider } from "@nextui-org/react";
 
@@ -12,20 +9,26 @@ import StarsReviews from "@/app/products/components/starsReviews";
 // Interface
 import { ReviewProps } from "@/app/interfaces/reviews";
 
-const ProductReviews: FC<ReviewProps> = ({ review }) => (
-  <Card className="max-w-[500px]">
-    <CardHeader className="flex gap-3">
-      <Avatar isBordered className="shrink-0" color="primary" size="sm" src={review.avatar} />
+const ProductReviews = ({ review }: { review:ReviewProps }) => {
+  const { attributes } = review;
+  const { body, rating, author } = attributes;
+  const { firstname, lastname, avatar } = author;
 
-      <div className="flex flex-col">{review.author}</div>
-      <StarsReviews rating={review.rating} />
-      {review.rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />}
-    </CardHeader>
-    <Divider />
-    <CardBody className="flex">
-      <p>{review.comment}</p>
-    </CardBody>
-  </Card>
-);
+  return (
+    <Card className="max-w-[500px]">
+      <CardHeader className="flex gap-3">
+        <Avatar isBordered className="shrink-0" color="primary" size="sm" src={avatar.small} />
+
+        <div className="flex flex-col">{firstname} {lastname}</div>
+        <StarsReviews rating={rating} />
+        {rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />}
+      </CardHeader>
+      <Divider />
+      <CardBody className="flex">
+        <p>{body}</p>
+      </CardBody>
+    </Card>
+  );
+};
 
 export default ProductReviews;

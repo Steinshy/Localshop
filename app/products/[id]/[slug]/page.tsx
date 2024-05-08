@@ -10,22 +10,26 @@ import Breadcrumb from "../../../components/breadCrumb";
 import AddToCard from "../../components/addToCart";
 import ProductReviews from "./components/productReviews";
 
-// Data
-import { reviewsDefaultData } from "@/app/data/reviews";
-
 // Interfaces
+import { ReviewProps } from "@/app/interfaces/reviews";
 import { ProductPageProps, ProductObj } from "@/app/interfaces/product";
 
 const getProduct = async (id: string) => {
   const response = await http.get(`/products/${id}`);
-  const product = response?.data as ProductObj;
+  const product = response?.data as { data: ProductObj };
   return product;
 };
 
+const getProductReviews = async (id: string) => {
+  const response = await http.get(`/products/${id}/reviews`);
+  const { reviews } = response?.data as { reviews: { data: ReviewProps[] } };
+  return reviews;
+};
+
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
-  const product = await getProduct(params.id);
-  console.log(product);
-  const { attributes, id } = product.data;
+  const { data:product } = await getProduct(params.id);
+  const { data:reviews } = await getProductReviews(params.id);
+  const { attributes, id } = product;
   const { title, description, thumbnail, price, images } = attributes;
   const breadCrumbItems = [{ title: "Products", href: "/products" }, { title: title }];
 
@@ -49,7 +53,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
       <div className="flex flex-col flex-grow justify-center p-4">
         <h2 className="text-2xl font-semibold text-center mb-4">User Reviews</h2>
         <div className="grid grid-cols-4 gap-4">
-          {reviewsDefaultData.map((review) => (
+          {reviews.map((review) => (
             <ProductReviews key={`review_${review.id}`} review={review}/>
           ))}
         </div>

@@ -5,23 +5,21 @@ type ProductPageProps = {
 };
 
 type ProductObj = {
-  data: {
-    id: string;
-    attributes: {
-      id: number;
-      description: string;
-      price: number;
-      title: string;
-      stock: number;
-      rating: number;
-      category: string;
-      thumbnail: {
-        url: string;
-        full: string;
-      };
-      images: [ProductImageProps];
+  id: string;
+  attributes: {
+    id: number;
+    description: string;
+    price: number;
+    title: string;
+    stock: number;
+    rating: number;
+    category: string;
+    thumbnail: {
+      url: string;
+      full: string;
     };
-  }
+    images: [ProductImageProps];
+  };
 };
 
 type ProductDataProps = {

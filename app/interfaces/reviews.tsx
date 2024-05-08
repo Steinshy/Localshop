@@ -1,11 +1,22 @@
+type AuthorProps = {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
+  avatar: {
+    small: string;
+  }
+}
+
 type ReviewProps = {
-  review: {
-    id: number;
-    avatar: string;
-    author: string;
-    comment: string;
+  id: string;
+  attributes: {
+    title: string;
+    body: string;
     rating: number;
-  };
+    createdAt: string;
+    author: AuthorProps
+  }
 };
 
 type StarsReviewsProps = {
