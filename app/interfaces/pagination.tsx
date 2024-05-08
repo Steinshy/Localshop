@@ -1,7 +1,6 @@
 type PaginationProps = {
-  total: number;
-  skip: number;
-  limit: number;
+  pages: number;
+  page: number;
   isLoading: boolean;
   previousPage: () => void;
   nextPage: () => void;

@@ -24,7 +24,7 @@ import { ProductObj, ProductDataProps } from "@/app/interfaces/product";
 import BG from "../assets/bg-products.webp";
 
 const ProductsPage: FC = () => {
-  const [skip, setSkip] = useState(0);
+  const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [products, setProducts] = useState<ProductObj[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,37 +33,40 @@ const ProductsPage: FC = () => {
 
   const previousPage = () => {
     setIsLoading(true);
-    setSkip(skip - limit);
+    setPage(page - 1);
   };
 
   const nextPage = () => {
     setIsLoading(true);
-    setSkip(skip + limit);
+    setPage(page + 1);
   };
 
   const fetchData = useCallback(async () => {
     try {
-      const url = query.length > 0 ? products_search_url(limit, skip, query) : products_url(limit, skip);
+      const url = query.length > 0 ? products_search_url(page, query) : products_url(page);
       const response = await http.get<ProductDataProps>(url);
-      const { products, total } = response?.data || {};
-      setProducts(Array.isArray(products) ? products : [products]);
-      setTotal(total || 0);
+      const { products, pagy } = response?.data || {};
+      const { pages } = pagy;
+      const { data } = products;
+
+      setProducts(Array.isArray(data) ? data : [data]);
+      setTotal(pages || 0);
       setIsLoading(false);
     } catch (error) {
       setProducts([]);
     }
-  }, [limit, skip, query]);
+  }, [page, query]);
 
   // Fetch data
   useEffect(() => {
     fetchData().catch((error) => {
       console.error("An error occurred while fetching data:", error);
     });
-  }, [fetchData, query, skip]);
+  }, [fetchData, query, page]);
 
   // Reset skip when query changes
   useEffect(() => {
-    setSkip(0);
+    setPage(1);
   }, [query]);
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -137,16 +140,15 @@ const ProductsPage: FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 px-2 pb-4">
           {isLoading
             ? Array(12).map((_, index) => <SkeletonProduct key={index} />)
-            : total > 0 && products.map((product) => <ProductCard key={product.id} product={product} />)}
+            : products.length > 0 && products.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       </div>
 
       {!isLoading && (
         <Pagination
           isLoading={isLoading}
-          total={total}
-          limit={limit}
-          skip={skip}
+          pages={total}
+          page={page}
           previousPage={previousPage}
           nextPage={nextPage}
         />

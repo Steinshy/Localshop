@@ -77,12 +77,12 @@ const calculatedDiscount = (selectedCoupon: CouponsObject, totalPrice: number): 
  Products & Products Search URL
  */
 
-const products_url = (limit: number, skip: number) => {
-  return `/products?limit=${limit}&skip=${skip}`;
+const products_url = (page: number) => {
+  return `/products?page=${page}`;
 };
 
-const products_search_url = (limit: number, skip: number, query: string) => {
-  return `/products/search?limit=${limit}&skip=${skip}&q=${query}`;
+const products_search_url = (page: number, query: string) => {
+  return `/products/search?page=${page}&q=${query}`;
 };
 
 /**

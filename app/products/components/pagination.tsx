@@ -1,9 +1,6 @@
 // React
 import { FC } from "react";
 
-// Helpers
-import { generateClamp } from "@/app/utils/helpers";
-
 // Icons
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
@@ -26,12 +23,12 @@ const PaginationButton:FC<PaginationButtonProps> = ({ isDisabled, onClick, child
   </Button>
 );
 
-const Pagination:FC<PaginationProps> = ({ isLoading, total, skip, limit, previousPage, nextPage }) => {
+const Pagination:FC<PaginationProps> = ({ isLoading, pages, page, previousPage, nextPage }) => {
   
   return (
     <div className="flex flex-grow justify-between px-2 mb-4">
       <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
-        <PaginationButton isDisabled={skip <= 0} onClick={previousPage} startContent={<FaChevronLeft />}>
+        <PaginationButton isDisabled={page === 1} onClick={previousPage} startContent={<FaChevronLeft />}>
           Previous
         </PaginationButton>
       </Skeleton>
@@ -40,12 +37,12 @@ const Pagination:FC<PaginationProps> = ({ isLoading, total, skip, limit, previou
         base: isLoading ? "rounded-full hidden sm:block" : "hidden sm:block"
       }}>
         <p className="text-sm text-foreground/40">
-          Displaying {generateClamp(skip + limit, 0, total)} items of {total}
+          Displaying page {page} of {pages}
         </p>
       </Skeleton>
 
       <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
-        <PaginationButton isDisabled={skip + limit >= total} onClick={nextPage} endContent={<FaChevronRight />}>
+        <PaginationButton isDisabled={page >= pages} onClick={nextPage} endContent={<FaChevronRight />}>
           Next
         </PaginationButton>
       </Skeleton>
