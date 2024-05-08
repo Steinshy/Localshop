@@ -29,7 +29,6 @@ const ProductsPage: FC = () => {
   const [products, setProducts] = useState<ProductObj[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [query, setQuery] = useState<string>("");
-  const limit = 12;
 
   const previousPage = () => {
     setIsLoading(true);

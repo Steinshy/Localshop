@@ -18,7 +18,6 @@ import StarsReviews from "./starsReviews";
 import { ProductCardProps } from "@/app/interfaces/product";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  console.log(product);
   const { attributes } = product;
   const { id, title, thumbnail, rating, price, stock } = attributes;
 
