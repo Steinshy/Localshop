@@ -21,7 +21,10 @@ import { ProductCardProps } from "@/app/interfaces/product";
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
   const { id, title, category, thumbnail, price, stock } = product;
   const cartStore = useContext(CartContext);
-  const item = cartStore.data.find((item) => item.id === product.id);
+
+  const { attributes } = cartStore.data;
+  const { items } = attributes;
+  const item = items.find((item) => item.id === product.id);
   const quantity = item ? item.quantity : 0;
   const router = useRouter();
 

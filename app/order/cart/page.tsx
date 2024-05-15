@@ -1,34 +1,28 @@
-"use client";
-
-// React context
+// React
 import { useContext, useEffect, useState } from "react";
 
-// Components - Generation
-import { CartContext } from "@/app/utils/subProviders";
+// Components
 import CartItems from "./components/cartItems";
 
-const Cart = () => {
-  // Context
-  const cartStore = useContext(CartContext);
-  const [isLoading, setIsLoading] = useState(true);
-  // Cart
-  const [cartChecked, setCartChecked] = useState(false);
-  const [cart, setCart] = useState(cartStore.data);
+// Utils
+import http from "@/app/utils/http";
 
-  // Cart check
-  useEffect(() => {
-    setCart(cartStore.data);
-    setCartChecked(true);
-  }, [cartStore.data]);
+// Interfaces
+import { CartResponse } from "@/app/interfaces/cart";
 
-  // Cart check with loading
-  useEffect(() => {
-    if (!cartChecked) return;
-    setIsLoading(false);
-  }, [cartChecked]);
+const getCart = async () => {
+  const response = await http.get('/cart');
+  const { data } = response?.data as { data: CartResponse };
+  return data;
+};
+
+const Cart = async () => {
+  const data = await getCart();
+  const { attributes } = data;
+  const { items } = attributes;
 
   return (
-      <CartItems cartStore={cartStore} cart={cart} isLoading={isLoading} />
+    <CartItems items={items} />
   );
 };
 

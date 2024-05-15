@@ -145,7 +145,9 @@ const Header = () => {
     pathname = usePathname(),
     cartStore = useContext(CartContext),
     userStore = useContext(UserContext);
-  const cartQuantity = cartStore.data.reduce((acc, item) => acc + item.quantity, 0);
+
+  const { attributes } = cartStore.data;
+  const { totalItems } = attributes;
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
@@ -201,7 +203,7 @@ const Header = () => {
           </NavbarItem>
         )}
         <NavbarItem>
-          <CartBadge quantity={cartQuantity} />
+          <CartBadge quantity={totalItems || 0} />
         </NavbarItem>
         <NavbarItem key="themswitcher">
           <ThemeSwitcher />

@@ -1,11 +1,13 @@
+'use client';
+
 // React
-import { FC } from "react";
+import { FC, useState } from "react";
 
 // NextJS
 import Link from "next/link";
 
 // NextUI
-import { Spinner, Button } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
 // Icons
 import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
@@ -16,35 +18,40 @@ import CartProduct from "./cartProduct";
 // Interfaces
 import { CartItemProps } from "@/app/interfaces/cart";
 
-const CartItems: FC<CartItemProps> = ({ cartStore, cart, isLoading }) => {
+const CartItems: FC<CartItemProps> = ({ items }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleClearCart = () => {
+    setIsLoading(true);
+
+    const apiFetch = async () => {
+      // Call the API to clear the cart
+      setIsLoading(false);
+    }
+  }
+
   return (
     <div className="flex flex-col col-span-1 lg:col-span-2">
-      {cart.length === 0 ? (
+      {items.length === 0 ? (
         <div className="flex flex-col flex-grow items-center justify-center">
-          {isLoading ? (
-            <Spinner size="lg" color="warning" label="Loading Cart..." />
-          ) : (
-            <>
-              <FaCartArrowDown className="text-8xl text-foreground" />
-              <p className="text-lg text-center mt-4">Your cart is empty</p>
-              <Button
-                color="primary"
-                variant="flat"
-                href="/products"
-                as={Link}
-                className="mt-4"
-                endContent={<FaArrowRight />}
-              >
-                Start shopping
-              </Button>
-            </>
-          )}
+          <FaCartArrowDown className="text-8xl text-foreground" />
+          <p className="text-lg text-center mt-4">Your cart is empty</p>
+          <Button
+            color="primary"
+            variant="flat"
+            href="/products"
+            as={Link}
+            className="mt-4"
+            endContent={<FaArrowRight />}
+          >
+            Start shopping
+          </Button>
         </div>
       ) : (
         <>
           <ul className="flex flex-col flex-grow gap-2">
-            {cart.map((itemcart) => (
-              <CartProduct key={itemcart.id} cartStore={cartStore} itemcart={itemcart} />
+            {items.map((cartItem) => (
+              <CartProduct key={cartItem.id} cartItem={cartItem} />
             ))}
           </ul>
 
@@ -63,7 +70,7 @@ const CartItems: FC<CartItemProps> = ({ cartStore, cart, isLoading }) => {
             <Button
               color="default"
               variant="light"
-              onClick={() => cartStore.update([])}
+              onClick={handleClearCart}
               startContent={<FaTrash className="text-foreground/50" />}
               isDisabled={isLoading}
               className="text-foreground/50"

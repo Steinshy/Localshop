@@ -1,5 +1,5 @@
 // React
-import { FC } from "react";
+import { FC, useContext } from "react";
 
 // NextJS
 import Link from "next/link";
@@ -14,37 +14,62 @@ import { FaTrash } from "react-icons/fa";
 import { CartProductProps } from "@/app/interfaces/cart";
 
 // Helpers
-import { generateSlug, stringify } from "@/app/utils/helpers";
+import { generateSlug } from "@/app/utils/helpers";
 
-const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
-  const slug = generateSlug(itemcart.title);
-  const itemqQantity = stringify(itemcart.quantity || 0);
+// Store
+import { CartContext } from "@/app/utils/subProviders";
 
-  const handleUpdateCart = (event: React.MouseEvent<HTMLElement>, id: number) => {
+// type CartItemObj = {
+//   id: number;
+//   quantity: number;
+//   price: number;
+//   product: {
+//     id: number;
+//     title: string;
+//     description: string;
+//     price: number;
+//     discountPercentage: number;
+//     rating: number;
+//     stock: number;
+//     brand: string;
+//     thumbnail: {
+//       url: string;
+//       full: string;
+//     };
+//     images: {
+//       thumbnail: string;
+//       full: string;
+//     }[];
+//   };
+// };
+
+const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
+  // const cartStore = useContext(CartContext);
+  const { quantity, price, product } = cartItem;
+  const { id, title, thumbnail } = product;
+
+  const slug = generateSlug(title);
+
+  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>, id: number) => {
     event.preventDefault();
 
-    const newCart = cartStore.data.filter((item) => item.id !== id);
-    cartStore.update(newCart);
+    // API call to remove the item from the cart
+    // cartStore.update(newCart);
   };
 
-  const handleQuantityChange = (value: string, id: number) => {
-    const newCart = cartStore.data.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: parseInt(value) || 0 };
-      }
-      return item;
-    });
-    cartStore.update(newCart);
-  };
+  // const handleQuantityChange = (id: number) => {
+  //   // API call to update the quantity of the item
+  //   // cartStore.update();
+  // };
 
   return (
-    <li key={itemcart.id} className="p-2 bg-background border-1 rounded-md">
+    <li key={id} className="p-2 bg-background border-1 rounded-md">
       <div className="grid grid-cols-2">
         <div className="flex justify-start items-center">
-          <Link href={`/products/${itemcart.id}/${slug}`}>
+          <Link href={`/products/${id}/${slug}`}>
             <Image
-              src={itemcart.thumbnail}
-              alt={itemcart.title}
+              src={thumbnail.url}
+              alt={title}
               classNames={{
                 img: "w-16 h-16 object-cover",
                 wrapper: "mr-4",
@@ -53,14 +78,14 @@ const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
               shadow="none"
             />
           </Link>
-          <p className="text-lg text-foreground font-semibold">{itemcart.title}</p>
+          <p className="text-lg text-foreground font-semibold">{title}</p>
         </div>
         <div className="flex justify-end items-start">
           <Button
             color="default"
             variant="light"
             className="text-foreground/25"
-            onClick={(e) => handleUpdateCart(e, itemcart.id)}
+            onClick={(e) => handleRemoveItem(e, id)}
             startContent={<FaTrash />}
             isIconOnly
             size="sm"
@@ -77,15 +102,15 @@ const CartProduct:FC<CartProductProps> = ({ cartStore, itemcart }) => {
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <p className="text-lg text-foreground">{itemcart.price}€</p>
-        <Input
+        <p className="text-lg text-foreground">{price}€</p>
+        {/* <Input
           isRequired
           min="0"
           type="number"
-          value={itemqQantity}
-          onChange={(e) => handleQuantityChange(e.target.value, itemcart.id)}
-        />
-        <p className="text-lg text-foreground">{itemcart.price * itemcart.quantity}€</p>
+          value={quantity.toString()}
+          onChange={(e) => handleQuantityChange(e.target.value, id)}
+        /> */}
+        <p className="text-lg text-foreground">{price * quantity}€</p>
       </div>
     </li>
   );

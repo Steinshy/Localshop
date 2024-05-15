@@ -1,33 +1,56 @@
 // React
 import { Dispatch, SetStateAction } from "react";
 
+type CartResponse = {
+  id: string;
+  type: string;
+
+  attributes: {
+    id: number;
+    createdAt: string;
+    updatedAt: string;
+    items: CartItemObj[];
+    totalPrice: number;
+    totalItems: number;
+    totalUniqueItems: number;
+  };
+}
+
 type CartItemObj = {
   id: number;
-  color?: string;
-  size?: string;
-  discount: number;
   quantity: number;
   price: number;
-  title: string;
-  category: string;
-  stock: number;
-  thumbnail: string;
+  product: {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    discountPercentage: number;
+    rating: number;
+    stock: number;
+    brand: string;
+    thumbnail: {
+      url: string;
+      full: string;
+    };
+    images: {
+      thumbnail: string;
+      full: string;
+    }[];
+  };
 };
 
 type CartContextType = {
-  data: CartItemObj[];
-  update: Dispatch<SetStateAction<CartItemObj[]>>;
+  data: CartResponse;
+  update: Dispatch<SetStateAction<CartResponse>>;
 };
 
 type CartItemProps = {
-  cartStore: CartContextType;
-  cart: CartItemObj[];
-  isLoading: boolean;
+  items: CartItemObj[];
 };
 
 type CartProductProps = {
-  cartStore: CartContextType;
-  itemcart: CartItemObj;
+  cartItem: CartItemObj;
 };
 
 type CartSummaryProps = {
@@ -49,6 +72,7 @@ type CouponsObject = {
 };
 
 export type {
+  CartResponse,
   CartItemObj,
   CartContextType,
   CartItemProps,

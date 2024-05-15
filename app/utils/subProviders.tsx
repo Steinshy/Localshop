@@ -7,45 +7,43 @@ import http from "@/app/utils/http";
 
 // Interfaces
 import { UserItemsObj, UserContextType } from "@/app/interfaces/user";
-import { CartItemObj, CartContextType } from "@/app/interfaces/cart";
+import { CartResponse, CartContextType } from "@/app/interfaces/cart";
 
 // Data
 import { UserDefaultData, UserLoggedOutData } from "@/app/data/user";
 
-interface cartResponse {
-  id: string;
-  type: string;
-
-  attributes: {
-    id: string;
-    product: string;
-    quantity: number;
-    price: number;
-    total: number;
-  };
-}
-
 // CART
-const globalCart = () => {
-  const [cart, setCart] = useState<cartResponse>({});
+const defaultCart = {
+  id: "",
+  type: "",
+  attributes: {
+    id: 0,
+    createdAt: "",
+    updatedAt: "",
+    items: [],
+    totalPrice: 0,
+    totalItems: 0,
+    totalUniqueItems: 0,
+  },
+};
+
+const useCart = () => {
+  const [cart, setCart] = useState<CartResponse>(defaultCart as CartResponse);
+
   useEffect(() => {
     const getCart = async () => {
       const response = await http.get(`/cart`);
-      const { cart } = response?.data as { data: cartResponse };
-      setCart(cart);
+      const { data } = response?.data as { data: CartResponse };
+      setCart(data);
+
+      console.log("Cart", data);
     };
+    
     getCart();
   }, []);
+
+  return { data: cart, update: setCart };
 };
-
-// Update cart data
-// const update = (newData: CartResponse[]) => {
-//   setCart(newData);
-//   setCartChecked(true);
-//   localStorage.setItem("cart", JSON.stringify(newData));
-// };
-
-// return { data: cart, update, cartChecked };
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const userCart = useCart();
@@ -54,7 +52,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const CartContext = createContext<CartContextType>({
-  data: [],
+  data: {} as CartResponse,
   update: () => {},
 });
 
