@@ -10,10 +10,7 @@ import { paymentmethods } from "@/app/data/payment";
  * @returns {string} The generated slug.
  */
 const generateSlug = (title: string): string => {
-  return title
-    .toLowerCase()
-    .replace(/ /g, "-")
-    .replace(/[^\w-]+/g, "");
+  return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "") || "";
 };
 
 /**
