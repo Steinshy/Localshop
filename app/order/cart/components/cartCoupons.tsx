@@ -20,7 +20,7 @@ import { calculatedDiscount } from "@/app/utils/helpers";
 // Data
 import { couponsDefaultData } from "@/app/data/coupons";
 
-const CartCoupons: FC<CartCouponsProps> = ({ totalPrice, isLoading }) => {
+const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
   const [appliedCoupon, setAppliedCoupon] = useState<number | null>(null);
   const [discount, setDiscount] = useState<number>(0);
   const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
@@ -133,12 +133,12 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice, isLoading }) => {
             id="coupon"
             name="coupon"
             type="text"
-            isDisabled={isLoading || totalPrice === 0}
+            isDisabled={totalPrice === 0}
             radius="sm"
             placeholder="Coupon code"            
             startContent={<FaTags className="text-foreground" />}
             endContent={
-              <Button type="submit" size="sm" radius="sm" variant="solid" color="primary" isDisabled={isLoading || totalPrice === 0}>
+              <Button type="submit" size="sm" radius="sm" variant="solid" color="primary" isDisabled={totalPrice === 0}>
                 Apply
               </Button>
             }

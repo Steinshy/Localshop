@@ -27,6 +27,8 @@ const CartItems: FC<CartItemProps> = ({ items }) => {
     const apiFetch = async () => {
       // Call the API to clear the cart
       setIsLoading(false);
+
+      console.log('cart cleared');
     }
   }
 

@@ -1,5 +1,5 @@
 // React
-import { FC } from "react";
+import { useContext } from "react";
 
 // NextJS
 import Link from "next/link";
@@ -14,11 +14,14 @@ import CartCoupons from "./cartCoupons";
 // Icons
 import { FaArrowRight } from "react-icons/fa";
 
-// Interfaces
-import { CartSummaryProps } from "@/app/interfaces/cart";
+// Utils
+import { CartContext } from "@/app/utils/subProviders";
 
-const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
-  const pathname:string = usePathname();
+const CartSummary = () => {
+  const pathname:string = usePathname(), cartStore = useContext(CartContext);
+  const { data:cartData } = cartStore;
+  const { attributes } = cartData;
+  const { items, totalPrice } = attributes;
 
   const buttonTextMap:{ [key: string]: string } = {
     "/order/cart": "Proceed to Shipping",
@@ -63,7 +66,7 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
         </div>
 
         {/* COUPONS */}
-        <CartCoupons totalPrice={totalPrice} isLoading={isLoading} />
+        <CartCoupons totalPrice={totalPrice} />
 
         {/* Payment Redirection */}
         <div className="grid grid-cols-2 gap-4">
@@ -76,7 +79,7 @@ const CartSummary: FC<CartSummaryProps> = ({ cart, totalPrice, isLoading }) => {
             className="text-white col-span-2"
             size="lg"
             radius="sm"
-            isDisabled={cart.length <= 0 || isLoading}
+            isDisabled={items.length <= 0}
           >
             {buttonText}
           </Button>

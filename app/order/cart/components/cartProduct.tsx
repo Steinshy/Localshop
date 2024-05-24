@@ -1,5 +1,7 @@
+'use client';
+
 // React
-import { FC, useContext } from "react";
+import { FC, useContext, useState } from "react";
 
 // NextJS
 import Link from "next/link";
@@ -11,7 +13,7 @@ import { Image, Button, Input } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 
 // Interfaces
-import { CartProductProps } from "@/app/interfaces/cart";
+import { CartProductProps, CartResponse } from "@/app/interfaces/cart";
 
 // Helpers
 import { generateSlug } from "@/app/utils/helpers";
@@ -19,48 +21,42 @@ import { generateSlug } from "@/app/utils/helpers";
 // Store
 import { CartContext } from "@/app/utils/subProviders";
 
-// type CartItemObj = {
-//   id: number;
-//   quantity: number;
-//   price: number;
-//   product: {
-//     id: number;
-//     title: string;
-//     description: string;
-//     price: number;
-//     discountPercentage: number;
-//     rating: number;
-//     stock: number;
-//     brand: string;
-//     thumbnail: {
-//       url: string;
-//       full: string;
-//     };
-//     images: {
-//       thumbnail: string;
-//       full: string;
-//     }[];
-//   };
-// };
+// Utils
+import http from "@/app/utils/http";
 
 const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
-  // const cartStore = useContext(CartContext);
+  const cartStore = useContext(CartContext);
   const { quantity, price, product } = cartItem;
   const { id, title, thumbnail } = product;
 
+  const [currentQuantity, setCurrentQuantity] = useState<string>(quantity.toString());
+
   const slug = generateSlug(title);
 
-  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>, id: number) => {
+  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
     // API call to remove the item from the cart
-    // cartStore.update(newCart);
+    const apiCall = async () => {
+      const response = await http.post('/cart/add_item', { product_id: product.id });
+      const { data } = response?.data as { data: CartResponse };
+      cartStore.update(data);
+    }
+
+    void apiCall();
   };
 
-  // const handleQuantityChange = (id: number) => {
-  //   // API call to update the quantity of the item
-  //   // cartStore.update();
-  // };
+  const handleQuantityChange = (quantity: string) => {
+    // API call to update the quantity of the item
+    const apiCall = async () => {
+      setCurrentQuantity(quantity);
+      const response = await http.post('/cart/update_quantity', { product_id: product.id, quantity: quantity});
+      const { data } = response?.data as { data: CartResponse };
+      cartStore.update(data);
+    }
+
+    void apiCall();
+  };
 
   return (
     <li key={id} className="p-2 bg-background border-1 rounded-md">
@@ -85,7 +81,7 @@ const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
             color="default"
             variant="light"
             className="text-foreground/25"
-            onClick={(e) => handleRemoveItem(e, id)}
+            onClick={(e) => handleRemoveItem(e)}
             startContent={<FaTrash />}
             isIconOnly
             size="sm"
@@ -103,14 +99,14 @@ const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
 
       <div className="grid grid-cols-3 gap-4">
         <p className="text-lg text-foreground">{price}€</p>
-        {/* <Input
+        <Input
           isRequired
           min="0"
           type="number"
-          value={quantity.toString()}
-          onChange={(e) => handleQuantityChange(e.target.value, id)}
-        /> */}
-        <p className="text-lg text-foreground">{price * quantity}€</p>
+          value={currentQuantity.toString()}
+          onChange={(e) => handleQuantityChange(e.target.value)}
+        />
+        <p className="text-lg text-foreground">{price * Number(currentQuantity)}€</p>
       </div>
     </li>
   );

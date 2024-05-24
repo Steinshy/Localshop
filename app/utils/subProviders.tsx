@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useCallback } from "react";
 
 import http from "@/app/utils/http";
 
@@ -30,19 +30,17 @@ const defaultCart = {
 const useCart = () => {
   const [cart, setCart] = useState<CartResponse>(defaultCart as CartResponse);
 
-  useEffect(() => {
-    const getCart = async () => {
-      const response = await http.get(`/cart`);
-      const { data } = response?.data as { data: CartResponse };
-      setCart(data);
-
-      console.log("Cart", data);
-    };
-    
-    getCart();
+  const refresh = useCallback(async () => {
+    const response = await http.get('/cart');
+    const { data } = response?.data as { data: CartResponse };
+    setCart(data);
   }, []);
 
-  return { data: cart, update: setCart };
+  useEffect(() => {
+    void refresh();
+  }, []);
+
+  return { data: cart, update: setCart, refresh };
 };
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -54,6 +52,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
   update: () => {},
+  refresh: async () => {}
 });
 
 const useUser = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useContext, useEffect } from "react";
 
 // NextJS
 import { usePathname } from "next/navigation";
@@ -18,43 +18,16 @@ const OrderLayout: FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
 
   // Cart Store context
-  const cartStore = useContext(CartContext);
-  const userStore = useContext(UserContext);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Cart
-  const [cartChecked, setCartChecked] = useState(false);
-  const [cart, setCart] = useState(cartStore.data);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const cartStore = useContext(CartContext), userStore = useContext(UserContext);
 
   // Stepper
   const steps = ["Cart", "Shipping", "Payment"];
   const currentStep = steps.findIndex((step) => step.toLowerCase() === pathname.split("/").pop());
 
-  // Calculate Total Price
+  // Refresh Cart Data
   useEffect(() => {
-    const calculateTotal = () => {
-      let total = 0;
-      cartStore.data.forEach((item) => {
-        total += item.price * item.quantity;
-      });
-      setTotalPrice(total);
-    };
-
-    calculateTotal();
-  }, [cartStore.data]);
-
-  // Cart check
-  useEffect(() => {
-    setCart(cartStore.data);
-    setCartChecked(true);
-  }, [cartStore.data]);
-
-  // Cart check with loading
-  useEffect(() => {
-    if (!cartChecked) return;
-    setIsLoading(false);
-  }, [cartChecked]);
+    void cartStore.refresh();
+  }, []);
 
   return userStore.isLogged() ? (
     <>
@@ -63,11 +36,7 @@ const OrderLayout: FC<LayoutProps> = ({ children }) => {
       </div>
       <div className="max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-8">
         {children}
-        <CartSummary
-          cart={cart}
-          totalPrice={totalPrice}
-          isLoading={isLoading}
-        />
+        <CartSummary />
       </div>
     </>
   ) : (

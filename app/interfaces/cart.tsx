@@ -43,6 +43,7 @@ type CartItemObj = {
 type CartContextType = {
   data: CartResponse;
   update: Dispatch<SetStateAction<CartResponse>>;
+  refresh: () => Promise<void>;
 };
 
 type CartItemProps = {
@@ -53,15 +54,8 @@ type CartProductProps = {
   cartItem: CartItemObj;
 };
 
-type CartSummaryProps = {
-  cart: CartItemObj[];
-  totalPrice: number;
-  isLoading: boolean;
-};
-
 type CartCouponsProps = {
   totalPrice: number;
-  isLoading: boolean;
 };
 
 type CouponsObject = {
@@ -77,7 +71,6 @@ export type {
   CartContextType,
   CartItemProps,
   CartProductProps,
-  CartSummaryProps,
   CartCouponsProps,
   CouponsObject,
 };

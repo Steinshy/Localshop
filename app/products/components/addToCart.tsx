@@ -17,50 +17,41 @@ import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
 // Interface
 import { ProductCardProps } from "@/app/interfaces/product";
+import { CartResponse } from "@/app/interfaces/cart";
+
+// Utils
+import http from "@/app/utils/http";
 
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
-  const { id, title, category, thumbnail, price, stock } = product;
-  const cartStore = useContext(CartContext);
-
+  const router = useRouter(), cartStore = useContext(CartContext);
   const { attributes } = cartStore.data;
   const { items } = attributes;
-  const item = items.find((item) => item.id === product.id);
-  const quantity = item ? item.quantity : 0;
-  const router = useRouter();
 
+  const item = items.find(({ product:cartProduct }) => cartProduct.id.toString() === product.id);
+  const quantity = item ? item.quantity : 0;
+  
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
     if (quantity > 0) {
-      return router.push("/order/cart");
+      return router.push('/order/cart');
     }
 
-    if (item) {
-      item.quantity += 1;
-      cartStore.update((prev) =>
-        prev.map((i) => (i.id === item.id ? item : i))
-      );
-    } else {
-      const newItem = {
-        id,
-        discount: 0,
-        quantity: 1,
-        price,
-        title,
-        stock,
-        category,
-        thumbnail,
-      };
-
-      cartStore.update((prev) => [...prev, newItem]);
+    // CALL API ADD ITEM
+    const apiCall = async () => {
+      const response = await http.post('/cart/add_item', { product_id: product.id });
+      const { data } = response?.data as { data: CartResponse };
+      cartStore.update(data);
     }
+
+    void apiCall();
   };
 
   return (
     <Button
-      color={quantity > 0 ? "success" : "primary"}
+      color={quantity > 0 ? 'success' : 'primary'}
       variant="solid"
-      size={isIconOnly ? "sm" : "md"}
+      size={isIconOnly ? 'sm' : 'md'}
       radius="sm"
       onClick={handleClick}
       startContent={
@@ -68,7 +59,7 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
         !isIconOnly && <FaArrowRight className="text-lg text-white" />
       }
       isIconOnly={isIconOnly}
-      className={quantity > 0 ? "text-white" : ""}
+      className={quantity > 0 ? 'text-white' : ''}
     >
       {isIconOnly ? (
         quantity > 0 ? (
@@ -77,9 +68,9 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
           <FaShoppingCart className="text-lg" />
         )
       ) : quantity > 0 ? (
-        "Go to Cart"
+        'Go to Cart'
       ) : (
-        `Add to Cart`
+        'Add to Cart'
       )}
     </Button>
   );
