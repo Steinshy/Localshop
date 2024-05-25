@@ -4,14 +4,14 @@
 import { FC, useEffect, useContext } from "react";
 
 // Components
-import AddressCard from "./addressCard";
-import AddressModal from "./addressModal";
+import AddressCard from "@components/user/addressCard";
+import AddressModal from "@components/user/addressModal";
 
 // Utils
-import { UserContext } from "@/app/utils/subProviders";
+import { UserContext } from "@utils/subProviders";
 
 // Interfaces
-import { AddressListProps } from "@/app/interfaces/user";
+import { AddressListProps } from "@interfaces/user";
 
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false }) => {
   const userStore = useContext(UserContext);

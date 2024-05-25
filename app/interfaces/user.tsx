@@ -2,7 +2,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 // Interfaces
-import { CartItemObj } from "./cart";
+import { CartItemObj } from "@interfaces/cart";
 
 type UserItemsObj = {
   id: number;

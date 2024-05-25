@@ -1,11 +1,8 @@
-// React
-import { FC } from "react";
-
 // Components
-import Breadcrumb from "@/app/components/breadCrumb";
-import AddressList from "./components/addressList";
+import Breadcrumb from "@components/layout/breadCrumb";
+import AddressList from "@components/user/addressList";
 
-const Addresses:FC = () => {
+const Addresses = () => {
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
 
   return (

@@ -1,10 +1,7 @@
-// React
-import { FC } from "react";
-
 // NextJS
 import { redirect } from 'next/navigation';
 
-const UserPage:FC = () => {
+const UserPage = () => {
   redirect('/user/profile');
 }
 

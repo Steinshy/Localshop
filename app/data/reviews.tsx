@@ -1,4 +1,4 @@
-import { generateClamp } from '@/app/utils/helpers';
+import { generateClamp } from '@utils/helpers';
 
 const names = [
   "John Doe",

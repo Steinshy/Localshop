@@ -1,5 +1,5 @@
 import { Card, Image } from "@nextui-org/react";
-import { IMAGE_WIDTH, IMAGE_HEIGHT, ProductsOffers } from "@/app/data/offers";
+import { IMAGE_WIDTH, IMAGE_HEIGHT, ProductsOffers } from "@data/offers";
 
 const OffersDisplay = () => {
 

@@ -13,19 +13,19 @@ import { Card, CardBody, Button, Chip } from "@nextui-org/react";
 import { FaArrowRight } from "react-icons/fa";
 
 // Components
-import Breadcrumb from "../../../components/breadCrumb";
+import Breadcrumb from "@components/layout/breadCrumb";
 
 // Utils
-import { UserContext } from "@/app/utils/subProviders";
-import { readableDate } from "@/app/utils/helpers";
+import { UserContext } from "@utils/subProviders";
+import { readableDate } from "@utils/helpers";
 
 // Interfaces
-import { OrderPageProps } from "@/app/interfaces/user";
+import { OrderPageProps } from "@interfaces/user";
 
 // Components
-import OrderProductCard from "@/app/user/orders/components/orderProductCard";
+import OrderProductCard from "@components/user/orderProductCard";
 // Data
-import { chipColor } from "@/app/data/orders";
+import { chipColor } from "@data/orders";
 
 const OrdersPage: FC<OrderPageProps> = ({ params }) => {
   const userStore = useContext(UserContext);

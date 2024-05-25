@@ -1,5 +1,5 @@
 // Interfaces
-import { CouponsObject } from "@/app/interfaces/cart";
+import { CouponsObject } from "@interfaces/cart";
 
 const couponsDefaultData = [
   {

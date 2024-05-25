@@ -5,9 +5,9 @@ import { Card, CardBody, CardHeader, Avatar, Divider } from "@nextui-org/react";
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 
 // Components
-import StarsReviews from "@/app/products/components/starsReviews";
+import StarsReviews from "@components/product/starsReviews";
 // Interface
-import { ReviewProps } from "@/app/interfaces/reviews";
+import { ReviewProps } from "@interfaces/reviews";
 
 const ProductReviews = ({ review }: { review:ReviewProps }) => {
   const { attributes } = review;

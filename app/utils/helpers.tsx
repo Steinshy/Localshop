@@ -1,8 +1,8 @@
 // Interfaces
-import { CouponsObject } from "@/app/interfaces/cart";
+import { CouponsObject } from "@interfaces/cart";
 
 // Data
-import { paymentmethods } from "@/app/data/payment";
+import { paymentmethods } from "@data/payment";
 
 /**
  * Generates a slug from a title.

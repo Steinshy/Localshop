@@ -8,10 +8,10 @@ import { Image } from "@nextui-org/react";
 import Link from "next/link";
 
 // Helpers
-import { generateSlug } from "@/app/utils/helpers";
+import { generateSlug } from "@utils/helpers";
 
 // Interface
-import { OrderProductCardProps } from "@/app/interfaces/user";
+import { OrderProductCardProps } from "@interfaces/user";
 
 const OrderProductCard: FC<OrderProductCardProps> = ({ product }) => {
   const slug = generateSlug(product.title);

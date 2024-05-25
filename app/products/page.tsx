@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
 // React
 import { FC, useState, useEffect, useCallback } from "react";
 
-// Utils
-import http from "@/app/utils/http";
-import { products_url, products_search_url } from "@/app/utils/helpers";
-
 // Component
-import ProductCard from "./components/productCard";
-import SkeletonProduct from "./components/skeletonProduct";
-import Pagination from "./components/pagination";
-import OffersDisplay from "./components/offersDisplay";
+import ProductCard from "@components/product/productCard";
+import SkeletonProduct from "@components/product/skeletonProduct";
+import Pagination from "@components/product/pagination";
+import OffersDisplay from "@components/product/offersDisplay";
 
 // Icons
 import { Input, Chip } from "@nextui-org/react";
 import { FaSearch } from "react-icons/fa";
 
 // Interfaces
-import { ProductObj, ProductDataProps } from "@/app/interfaces/product";
+import { ProductObj, ProductDataProps } from "@interfaces/product";
+
+// Utils
+import http from "@utils/http";
+import { products_url, products_search_url } from "@utils/helpers";
 
 // Images
 import BG from "../assets/bg-products.webp";

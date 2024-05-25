@@ -2,17 +2,17 @@
 import { FC } from "react";
 
 // Utils
-import http from "@/app/utils/http";
+import http from "@utils/http";
 
 // Components
-import ProductImages from "../../components/productImages";
-import Breadcrumb from "../../../components/breadCrumb";
-import AddToCard from "../../components/addToCart";
-import ProductReviews from "./components/productReviews";
+import ProductImages from "@components/product/productImages";
+import Breadcrumb from "@components/layout/breadCrumb";
+import AddToCard from "@components/product/addToCart";
+import ProductReviews from "@components/product/productReviews";
 
 // Interfaces
-import { ReviewProps } from "@/app/interfaces/reviews";
-import { ProductPageProps, ProductObj } from "@/app/interfaces/product";
+import { ReviewProps } from "@interfaces/reviews";
+import { ProductPageProps, ProductObj } from "@interfaces/product";
 
 const getProduct = async (id: string) => {
   const response = await http.get(`/products/${id}`);

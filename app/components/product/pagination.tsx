@@ -8,7 +8,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { Button, Skeleton } from "@nextui-org/react";
 
 // Interface
-import { PaginationProps, PaginationButtonProps } from "@/app/interfaces/pagination";
+import { PaginationProps, PaginationButtonProps } from "@interfaces/pagination";
 
 const PaginationButton:FC<PaginationButtonProps> = ({ isDisabled, onClick, children, startContent, endContent }) => (
   <Button

@@ -3,9 +3,6 @@
 // React
 import { FC, useContext } from "react";
 
-// Providers
-import { CartContext } from "@/app/utils/subProviders";
-
 // NextJS
 import { useRouter } from "next/navigation";
 
@@ -16,11 +13,12 @@ import { Button } from "@nextui-org/react";
 import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
 // Interface
-import { ProductCardProps } from "@/app/interfaces/product";
-import { CartResponse } from "@/app/interfaces/cart";
+import { ProductCardProps } from "@interfaces/product";
+import { CartResponse } from "@interfaces/cart";
 
 // Utils
-import http from "@/app/utils/http";
+import { CartContext } from "@utils/subProviders";
+import http from "@utils/http";
 
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
   const router = useRouter(), cartStore = useContext(CartContext);

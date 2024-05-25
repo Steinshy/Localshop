@@ -3,14 +3,14 @@
 // React
 import { useState, createContext, useEffect, useCallback } from "react";
 
-import http from "@/app/utils/http";
+import http from "@utils/http";
 
 // Interfaces
-import { UserItemsObj, UserContextType } from "@/app/interfaces/user";
-import { CartResponse, CartContextType } from "@/app/interfaces/cart";
+import { UserItemsObj, UserContextType } from "@interfaces/user";
+import { CartResponse, CartContextType } from "@interfaces/cart";
 
 // Data
-import { UserDefaultData, UserLoggedOutData } from "@/app/data/user";
+import { UserDefaultData, UserLoggedOutData } from "@data/user";
 
 // CART
 const defaultCart = {

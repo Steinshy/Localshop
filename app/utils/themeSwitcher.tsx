@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 // React
 import { useEffect, useState } from "react";
@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 // NextUiTheme
 import { useTheme } from "next-themes";
 
-// NextUISwitch
+// NextUI
 import { Switch } from "@nextui-org/switch";
 
-// React Icons
+// Icons
 import { MoonIcon, SunIcon } from "./themeSwitcherIcons";
 
 const ThemeSwitcher = () => {

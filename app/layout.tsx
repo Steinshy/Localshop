@@ -2,14 +2,14 @@
 import { FC } from "react";
 
 // Components
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
+import Navbar from "@components/layout/navbar";
+import Footer from "@components/layout/footer";
 
 // Providers
 import Providers from "./providers";
 
 // Interface
-import { LayoutProps } from "@/app/interfaces/general";
+import { LayoutProps } from "@interfaces/general";
 
 // APP CSS
 import "./styles/App.css";

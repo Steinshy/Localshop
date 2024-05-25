@@ -1,10 +1,7 @@
-// React
-import { FC } from "react";
-
 // Components
-import Breadcrumb from "@/app/components/breadCrumb";
+import Breadcrumb from "@components/layout/breadCrumb";
 
-const SettingsPage:FC = () => {
+const SettingsPage = () => {
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Settings" }];
 
   return (

@@ -31,15 +31,15 @@ import { DiCssdeck } from "react-icons/di";
 import { FaCartArrowDown, FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
 
 // Interfaces
-import { NavbarProps, CartBadgeProps, UsermenuNotLoggedProps, UsermenuLoggedProps } from "@/app/interfaces/navbar";
+import { NavbarProps, CartBadgeProps, UsermenuNotLoggedProps, UsermenuLoggedProps } from "@interfaces/navbar";
 
 //data
-import { UserDefaultData } from "@/app/data/user";
-import { websiteName, navItems } from "@/app/data/navbar";
+import { UserDefaultData } from "@data/user";
+import { websiteName, navItems } from "@data/navbar";
 
 // Utils
-import { UserContext, CartContext } from "@/app/utils/subProviders";
-import ThemeSwitcher from "@/app/utils/themeSwitcher";
+import { UserContext, CartContext } from "@utils/subProviders";
+import ThemeSwitcher from "@utils/themeSwitcher";
 
 const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
   return (

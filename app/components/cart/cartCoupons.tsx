@@ -12,13 +12,13 @@ import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaTags } from "react-icons/fa";
 
 // Interfaces
-import { CartCouponsProps } from "@/app/interfaces/cart";
+import { CartCouponsProps } from "@interfaces/cart";
 
-// Helper
-import { calculatedDiscount } from "@/app/utils/helpers";
+// Utils
+import { calculatedDiscount } from "@utils/helpers";
 
 // Data
-import { couponsDefaultData } from "@/app/data/coupons";
+import { couponsDefaultData } from "@data/coupons";
 
 const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
   const [appliedCoupon, setAppliedCoupon] = useState<number | null>(null);

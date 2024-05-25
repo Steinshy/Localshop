@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
 // React
-import { FC, useContext } from "react";
+import { useContext } from "react";
 
 // NextJS
 import Link from "next/link";
@@ -13,13 +13,13 @@ import { Button } from "@nextui-org/react";
 import { FaArrowRight } from "react-icons/fa";
 
 // Components
-import OrdersList from "./components/ordersList";
-import Breadcrumb from "../../components/breadCrumb";
+import OrdersList from "@components/user/ordersList";
+import Breadcrumb from "@components/layout/breadCrumb";
 
 // Utils
-import { UserContext } from "@/app/utils/subProviders";
+import { UserContext } from "@utils/subProviders";
 
-const OrdersPage: FC = () => {
+const OrdersPage = () => {
   const userStore = useContext(UserContext);
   const { orders } = userStore.user;
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Orders" }];

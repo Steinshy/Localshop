@@ -1,8 +1,8 @@
 // Interfaces
-import { UserItemsObj, AddressObj } from "@/app/interfaces/user";
+import { UserItemsObj, AddressObj } from "@interfaces/user";
 
 // Utils
-import { generateDefaultAdresses, generateDefaultOrders } from "@/app/utils/helpers";
+import { generateDefaultAdresses, generateDefaultOrders } from "@utils/helpers";
 
 const UserDefaultData = {
   id: 1,

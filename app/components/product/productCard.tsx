@@ -2,7 +2,7 @@
 import { FC } from "react";
 
 // Helpers
-import { generateSlug, generateRandomBool } from "@/app/utils/helpers";
+import { generateSlug, generateRandomBool } from "@utils/helpers";
 
 // NextJS
 import Link from "next/link";
@@ -11,11 +11,11 @@ import Link from "next/link";
 import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react";
 
 // Components
-import AddToCart from "./addToCart";
-import StarsReviews from "./starsReviews";
+import AddToCart from "@components/product/addToCart";
+import StarsReviews from "@components/product/starsReviews";
 
 // Interfaces
-import { ProductCardProps } from "@/app/interfaces/product";
+import { ProductCardProps } from "@interfaces/product";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { attributes } = product;

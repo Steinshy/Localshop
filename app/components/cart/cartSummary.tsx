@@ -15,7 +15,7 @@ import CartCoupons from "./cartCoupons";
 import { FaArrowRight } from "react-icons/fa";
 
 // Utils
-import { CartContext } from "@/app/utils/subProviders";
+import { CartContext } from "@utils/subProviders";
 
 const CartSummary = () => {
   const pathname:string = usePathname(), cartStore = useContext(CartContext);

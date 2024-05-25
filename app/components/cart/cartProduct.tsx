@@ -13,16 +13,16 @@ import { Image, Button, Input } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 
 // Interfaces
-import { CartProductProps, CartResponse } from "@/app/interfaces/cart";
+import { CartProductProps, CartResponse } from "@interfaces/cart";
 
 // Helpers
-import { generateSlug } from "@/app/utils/helpers";
+import { generateSlug } from "@utils/helpers";
 
 // Store
-import { CartContext } from "@/app/utils/subProviders";
+import { CartContext } from "@utils/subProviders";
 
 // Utils
-import http from "@/app/utils/http";
+import http from "@utils/http";
 
 const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);
@@ -33,20 +33,22 @@ const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
 
   const slug = generateSlug(title);
 
+  const removeItem = async () => {
+    const response = await http.delete(`/cart/remove_item?product_id=${product.id}`);
+    const { data } = response?.data as { data: CartResponse };
+    cartStore.update(data);
+  }
+
   const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
 
     // API call to remove the item from the cart
-    const apiCall = async () => {
-      const response = await http.post('/cart/add_item', { product_id: product.id });
-      const { data } = response?.data as { data: CartResponse };
-      cartStore.update(data);
-    }
-
-    void apiCall();
+    void removeItem();
   };
 
   const handleQuantityChange = (quantity: string) => {
+    if (Number(quantity) <= 0) return void removeItem();
+
     // API call to update the quantity of the item
     const apiCall = async () => {
       setCurrentQuantity(quantity);

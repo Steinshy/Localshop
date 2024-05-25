@@ -8,12 +8,12 @@ import Link from "next/link";
 import { Card, CardHeader, CardBody, Chip } from "@nextui-org/react";
 
 // Utils
-import { readableDate } from "@/app/utils/helpers";
+import { readableDate } from "@utils/helpers";
 
 // Interfaces
-import { OrderCardProps } from "@/app/interfaces/user";
+import { OrderCardProps } from "@interfaces/user";
 
-import { chipColor } from "@/app/data/orders";
+import { chipColor } from "@data/orders";
 
 const OrderCard: FC<OrderCardProps> = ({ order, user }) => {
   const { id, invoice, status, date, total, productsTotal } = order;
