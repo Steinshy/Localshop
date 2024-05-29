@@ -4,10 +4,6 @@ type NavbarProps = {
   children: React.ReactNode;
 };
 
-type CartBadgeProps = {
-  quantity: number;
-};
-
 type UsermenuLoggedProps = {
   userLastName: string;
   userFirstName: string;
@@ -16,8 +12,4 @@ type UsermenuLoggedProps = {
   handleUserKeySelection: (value: React.Key) => void;
 };
 
-type UsermenuNotLoggedProps = {
-  handleUserLogin: () => void;
-};
-
-export type { NavbarProps, CartBadgeProps, UsermenuLoggedProps, UsermenuNotLoggedProps };
+export type { NavbarProps, UsermenuLoggedProps };

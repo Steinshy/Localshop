@@ -54,10 +54,6 @@ const useCart = () => {
     setCart(data);
   }, []);
 
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
-
   return { data: cart, update: setCart, refresh };
 };
 

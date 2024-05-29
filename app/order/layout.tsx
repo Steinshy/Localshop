@@ -21,7 +21,7 @@ const OrderLayout: FC<LayoutProps> = ({ children }) => {
   const steps = ["Cart", "Shipping", "Payment"];
   const currentStep = steps.findIndex((step) => step.toLowerCase() === pathname.split("/").pop());
 
-  return userStore.isLogged ? (
+  return userStore.isLogged() ? (
     <>
       <div className="max-w-screen-2xl mx-auto my-8">
         <Stepper steps={steps} current={currentStep} />

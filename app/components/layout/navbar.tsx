@@ -28,10 +28,17 @@ import {
 
 // Icons
 import { DiCssdeck } from "react-icons/di";
-import { FaCartArrowDown, FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaCartArrowDown,
+  FaChevronDown,
+  FaRegUserCircle,
+  FaUserCog,
+  FaShoppingBag,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 // Interfaces
-import { NavbarProps, CartBadgeProps, UsermenuNotLoggedProps, UsermenuLoggedProps } from "@interfaces/navbar";
+import { NavbarProps, UsermenuLoggedProps } from "@interfaces/navbar";
 
 //data
 import { websiteName, navItems } from "@data/navbar";
@@ -47,29 +54,6 @@ const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
         {children}
       </NextLink>
     </NavbarItem>
-  );
-};
-
-const CartBadge: FC<CartBadgeProps> = ({ quantity }) => {
-  return (
-    <Badge
-      content={quantity > 0 ? quantity : null}
-      color="danger"
-      placement="top-right"
-      variant="shadow"
-      isInvisible={quantity === 0}
-    >
-      <Button
-        startContent={<FaCartArrowDown className="text-2xl" />}
-        as={Link}
-        href="/order/cart"
-        size="md"
-        variant="ghost"
-        radius="md"
-      >
-        Cart
-      </Button>
-    </Badge>
   );
 };
 
@@ -123,19 +107,17 @@ const UsermenuLogged: FC<UsermenuLoggedProps> = ({
         <DropdownItem>
           <Divider />
         </DropdownItem>
-        <DropdownItem startContent={<FaSignOutAlt />} key="logout" textValue="logout" className="text-danger" color="danger">
+        <DropdownItem
+          startContent={<FaSignOutAlt />}
+          key="logout"
+          textValue="logout"
+          className="text-danger"
+          color="danger"
+        >
           Logout
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
-  );
-};
-
-const UsermenuNotLogged: FC<UsermenuNotLoggedProps> = ({ handleUserLogin }) => {
-  return (
-    <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
-      <span className="font-semibold">Login</span>
-    </Button>
   );
 };
 
@@ -144,18 +126,20 @@ const Header = () => {
     pathname = usePathname(),
     cartStore = useContext(CartContext),
     userStore = useContext(UserContext);
-    console.log(userStore.data)
+    console.log(userStore.data, "USER DATA");
+    console.log(cartStore.data, "CART DATA");
 
-  const { attributes:cartAttributes } = cartStore.data;
+  const { attributes: cartAttributes } = cartStore.data;
   const { totalItems } = cartAttributes;
 
-  const { attributes:userAttributes } = userStore.data;
-  const { lastname, firstname } = userAttributes ?? {}
+  const { attributes: userAttributes } = userStore.data;
+  const { lastname, firstname } = userAttributes ?? {};
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
   const handleUserLogout = (value: React.Key): void => {
+    // Dosn't work
     if (value === "logout") {
       if (pathname.match(/user\/.*/)) router.push("/");
       return userStore.logout();
@@ -164,7 +148,8 @@ const Header = () => {
   };
 
   const handleUserLogin = async () => {
-    await userStore.refresh()
+    // Click on login => Refresh data from subprovider refresh const
+    await userStore.refresh(), cartStore.refresh()
   };
 
   const handleUserMenuOpen = (bool: boolean) => {
@@ -202,11 +187,30 @@ const Header = () => {
           </NavbarItem>
         ) : (
           <NavbarItem>
-            <UsermenuNotLogged handleUserLogin={handleUserLogin} />
+            <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
+              <span className="font-semibold">Login</span>
+            </Button>
           </NavbarItem>
         )}
         <NavbarItem>
-          <CartBadge quantity={totalItems || 0} />
+          <Badge
+            content={totalItems > 0 ? totalItems : null}
+            color="danger"
+            placement="top-right"
+            variant="shadow"
+            isInvisible={totalItems === 0}
+          >
+            <Button
+              startContent={<FaCartArrowDown className="text-2xl" />}
+              as={Link}
+              href="/order/cart"
+              size="md"
+              variant="ghost"
+              radius="md"
+            >
+              Cart
+            </Button>
+          </Badge>
         </NavbarItem>
         <NavbarItem key="themswitcher">
           <ThemeSwitcher />
