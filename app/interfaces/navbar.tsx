@@ -4,12 +4,12 @@ type NavbarProps = {
   children: React.ReactNode;
 };
 
-type UsermenuLoggedProps = {
-  userLastName: string;
-  userFirstName: string;
+type UserDropdownProps = {
+  lastname: string;
+  firstname: string;
   handleUserMenuOpen: (bool: boolean) => void;
   isUserMenuOpen: boolean;
   handleUserKeySelection: (value: React.Key) => void;
 };
 
-export type { NavbarProps, UsermenuLoggedProps };
+export type { NavbarProps, UserDropdownProps };

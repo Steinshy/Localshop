@@ -7,6 +7,8 @@ import { useContext, useState, FC } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
+import UserDropdown from "@components/layout/navbar"
+
 // NextUI
 import {
   Link as NextLink,
@@ -18,27 +20,14 @@ import {
   Navbar,
   Button,
   Badge,
-  Avatar,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Dropdown,
-  Divider,
 } from "@nextui-org/react";
 
 // Icons
 import { DiCssdeck } from "react-icons/di";
-import {
-  FaCartArrowDown,
-  FaChevronDown,
-  FaRegUserCircle,
-  FaUserCog,
-  FaShoppingBag,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaCartArrowDown } from "react-icons/fa";
 
 // Interfaces
-import { NavbarProps, UsermenuLoggedProps } from "@interfaces/navbar";
+import { NavbarProps } from "@interfaces/navbar";
 
 //data
 import { websiteName, navItems } from "@data/navbar";
@@ -57,77 +46,13 @@ const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
   );
 };
 
-const UsermenuLogged: FC<UsermenuLoggedProps> = ({
-  userLastName,
-  userFirstName,
-  handleUserMenuOpen,
-  isUserMenuOpen,
-  handleUserKeySelection,
-}) => {
-  return (
-    <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>
-      <DropdownTrigger>
-        <Button
-          variant="light"
-          className="pl-1"
-          radius="full"
-          startContent={
-            <Avatar
-              isBordered
-              className="transition-transform"
-              color="primary"
-              size="sm"
-              src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
-          }
-          endContent={
-            <div className={`transition-transform	${isUserMenuOpen ? "rotate-180" : "rotate-0"}`}>
-              <FaChevronDown />
-            </div>
-          }
-        >
-          <span className="pl-2 hidden sm:block font-semibold">
-            {userLastName} {userFirstName}
-          </span>
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
-        <DropdownItem startContent={<FaRegUserCircle />} key="profile" textValue="profile">
-          Profile
-        </DropdownItem>
-        <DropdownItem startContent={<FaShoppingBag />} key="addresses" textValue="addresses">
-          Addresses
-        </DropdownItem>
-        <DropdownItem startContent={<FaShoppingBag />} key="orders" textValue="order">
-          Orders
-        </DropdownItem>
-        <DropdownItem startContent={<FaUserCog />} key="settings" textValue="settings">
-          Settings
-        </DropdownItem>
-        <DropdownItem>
-          <Divider />
-        </DropdownItem>
-        <DropdownItem
-          startContent={<FaSignOutAlt />}
-          key="logout"
-          textValue="logout"
-          className="text-danger"
-          color="danger"
-        >
-          Logout
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
-  );
-};
-
 const Header = () => {
   const router = useRouter(),
     pathname = usePathname(),
     cartStore = useContext(CartContext),
     userStore = useContext(UserContext);
-    console.log(userStore.data, "USER DATA");
-    console.log(cartStore.data, "CART DATA");
+  console.log(userStore.data, "USER DATA");
+  console.log(cartStore.data, "CART DATA");
 
   const { attributes: cartAttributes } = cartStore.data;
   const { totalItems } = cartAttributes;
@@ -149,7 +74,7 @@ const Header = () => {
 
   const handleUserLogin = async () => {
     // Click on login => Refresh data from subprovider refresh const
-    await userStore.refresh(), cartStore.refresh()
+    void (await userStore.refresh(), cartStore.refresh());
   };
 
   const handleUserMenuOpen = (bool: boolean) => {
@@ -177,9 +102,10 @@ const Header = () => {
       <NavbarContent justify="end">
         {userStore.isLogged() ? (
           <NavbarItem>
-            <UsermenuLogged
-              userLastName={lastname}
-              userFirstName={firstname}
+            <UserDropdown
+              // lastname error make the crash the app
+              lastname={lastname}
+              firstname={firstname}
               handleUserMenuOpen={handleUserMenuOpen}
               isUserMenuOpen={isUserMenuOpen}
               handleUserLogout={handleUserLogout}
@@ -192,6 +118,7 @@ const Header = () => {
             </Button>
           </NavbarItem>
         )}
+
         <NavbarItem>
           <Badge
             content={totalItems > 0 ? totalItems : null}
