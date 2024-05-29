@@ -5,11 +5,11 @@ type NavbarProps = {
 };
 
 type UserDropdownProps = {
-  lastname: string;
-  firstname: string;
+  lastname?: string;
+  firstname?: string;
   handleUserMenuOpen: (bool: boolean) => void;
   isUserMenuOpen: boolean;
-  handleUserKeySelection: (value: React.Key) => void;
+  handleUserLogout: (value: React.Key) => void;
 };
 
 export type { NavbarProps, UserDropdownProps };

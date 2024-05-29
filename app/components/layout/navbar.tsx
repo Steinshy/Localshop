@@ -102,14 +102,7 @@ const Header = () => {
       <NavbarContent justify="end">
         {userStore.isLogged() ? (
           <NavbarItem>
-            <UserDropdown
-              // lastname error make the crash the app
-              lastname={lastname}
-              firstname={firstname}
-              handleUserMenuOpen={handleUserMenuOpen}
-              isUserMenuOpen={isUserMenuOpen}
-              handleUserLogout={handleUserLogout}
-            />
+            <UserDropdown lastname={lastname} firstname={firstname} handleUserMenuOpen={handleUserMenuOpen} isUserMenuOpen={isUserMenuOpen} handleUserLogout={handleUserLogout} />
           </NavbarItem>
         ) : (
           <NavbarItem>

@@ -10,7 +10,7 @@ import { FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag, FaSignOutAlt 
 // Interface
 import { UserDropdownProps } from "@interfaces/navbar";
 
-const UserDropdown: FC<UserDropdownProps> = ({ lastname, firstname, handleUserMenuOpen, isUserMenuOpen, handleUserKeySelection }) => {
+const UserDropdown: FC<UserDropdownProps> = ({ lastname, firstname, handleUserMenuOpen, isUserMenuOpen, handleUserLogout }) => {
   return (
     <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>
       <DropdownTrigger>
@@ -38,7 +38,7 @@ const UserDropdown: FC<UserDropdownProps> = ({ lastname, firstname, handleUserMe
           </span>
         </Button>
       </DropdownTrigger>
-      <DropdownMenu onAction={handleUserKeySelection} aria-label="Profile Actions" variant="flat">
+      <DropdownMenu onAction={handleUserLogout} aria-label="Profile Actions" variant="flat">
         <DropdownItem startContent={<FaRegUserCircle />} key="profile" textValue="profile">
           Profile
         </DropdownItem>
