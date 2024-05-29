@@ -4,19 +4,29 @@ import { Dispatch, SetStateAction } from "react";
 // Interfaces
 import { CartItemObj } from "@interfaces/cart";
 
-type UserItemsObj = {
+type UserResponse = {
   id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
+  type: string;
   addresses: AddressObj[];
   orders: OrdersObj[];
+
+  attributes: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    email: string;
+    avatar: {
+      small: string;
+      large: string;
+    };
+  };
 };
 
+
 type UserContextType = {
-  user: UserItemsObj;
-  userChecked: boolean;
-  update: Dispatch<SetStateAction<UserItemsObj>>;
+  data: UserResponse;
+  update: Dispatch<SetStateAction<UserResponse>>;
+  refresh: () => Promise<void>;
   isLogged: () => boolean;
   logout: () => void;
 };
@@ -68,16 +78,16 @@ type OrderPageProps = {
 
 type OrderCardProps = {
   order: OrdersObj;
-  user: UserItemsObj;
+  user: UserResponse;
 };
 
 type OrderProductCardProps = {
   key: number;
-  product: CartItemObj;
+  orderProduct: CartItemObj;
 };
 
 export type {
-  UserItemsObj,
+  UserResponse,
   UserContextType,
   AddressObj,
   AddressListProps,

@@ -61,8 +61,8 @@ const OrdersPage: FC<OrderPageProps> = ({ params }) => {
           <div className="bg-white p-4 rounded-lg shadow-md">
             <p className="text-md font-semibold">Products ({order.productsTotal})</p>
             <ul className="grid grid-cols-1 gap-3 mt-2">
-              {order.products.map((product) => (
-                <OrderProductCard key={product.id} product={product} />
+              {order.products.map((orderProduct) => (
+                <OrderProductCard key={orderProduct.id} orderProduct={orderProduct} />
               ))}
             </ul>
           </div>

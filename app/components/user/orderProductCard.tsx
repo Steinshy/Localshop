@@ -13,17 +13,17 @@ import { generateSlug } from "@utils/helpers";
 // Interface
 import { OrderProductCardProps } from "@interfaces/user";
 
-const OrderProductCard: FC<OrderProductCardProps> = ({ product }) => {
-  const slug = generateSlug(product.title);
+const OrderProductCard: FC<OrderProductCardProps> = ({ orderProduct }) => {
+  const slug = generateSlug(orderProduct.product.title);
 
   return (
-    <li key={product.id} className="p-2 bg-background border-1 rounded-md">
+    <li key={orderProduct.id} className="p-2 bg-background border-1 rounded-md">
       <div className="grid grid-cols-2">
         <div className="flex justify-start items-center">
-          <Link href={`/products/${product.id}/${slug}`}>
+          <Link href={`/products/${orderProduct.id}/${slug}`}>
             <Image
-              src={product.thumbnail}
-              alt={product.title}
+              src={orderProduct.product.thumbnail.url}
+              alt={orderProduct.product.title}
               classNames={{
                 img: "w-16 h-16 object-cover",
                 wrapper: "mr-4",
@@ -32,7 +32,7 @@ const OrderProductCard: FC<OrderProductCardProps> = ({ product }) => {
               shadow="none"
             />
           </Link>
-          <p className="text-lg text-foreground font-semibold">{product.title}</p>
+          <p className="text-lg text-foreground font-semibold">{orderProduct.product.title}</p>
         </div>
       </div>
       {/* Single item information */}
@@ -45,9 +45,9 @@ const OrderProductCard: FC<OrderProductCardProps> = ({ product }) => {
       </div>
 
       <div className="grid grid-cols-3 gap-4">
-        <p className="text-lg text-foreground">{product.price}€</p>
-        <p className="text-lg text-foreground">{product.quantity}</p>
-        <p className="text-lg text-foreground">{product.price * product.quantity}€</p>
+        <p className="text-lg text-foreground">{orderProduct.product.price}€</p>
+        <p className="text-lg text-foreground">{orderProduct.quantity}</p>
+        <p className="text-lg text-foreground">{orderProduct.price * orderProduct.quantity}€</p>
       </div>
     </li>
   );

@@ -6,11 +6,11 @@ import { useState, createContext, useEffect, useCallback } from "react";
 import http from "@utils/http";
 
 // Interfaces
-import { UserItemsObj, UserContextType } from "@interfaces/user";
+import { UserResponse, UserContextType } from "@interfaces/user";
 import { CartResponse, CartContextType } from "@interfaces/cart";
 
 // Data
-import { UserDefaultData, UserLoggedOutData } from "@data/user";
+// import { UserDefaultData, UserLoggedOutData } from "@data/user";
 
 // CART
 const defaultCart = {
@@ -27,18 +27,36 @@ const defaultCart = {
   },
 };
 
+const defaultUser = {
+  id: 0,
+  type: "",
+  addresses: [],
+  orders: [],
+
+  attributes: {
+    id: 0,
+    firstname: "",
+    lastname: "",
+    email: "",
+    avatar: {
+      small: "",
+      large: "",
+    },
+  },
+};
+
 const useCart = () => {
   const [cart, setCart] = useState<CartResponse>(defaultCart as CartResponse);
 
   const refresh = useCallback(async () => {
-    const response = await http.get('/cart');
+    const response = await http.get("/cart");
     const { data } = response?.data as { data: CartResponse };
     setCart(data);
   }, []);
 
   useEffect(() => {
     void refresh();
-  }, []);
+  }, [refresh]);
 
   return { data: cart, update: setCart, refresh };
 };
@@ -52,26 +70,25 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
   update: () => {},
-  refresh: async () => {}
+  refresh: async () => {},
 });
 
 const useUser = () => {
-  const [user, setUser] = useState<UserItemsObj>(
-    UserDefaultData || (JSON.parse(localStorage.getItem("user") as string) as UserItemsObj)
-  );
+  const [user, setUser] = useState<UserResponse>(defaultUser as UserResponse);
 
-  // Update User
-  const update = (newData: UserItemsObj) => {
-    setUser(newData);
-    localStorage.setItem("user", JSON.stringify(newData));
-  };
+  // Update user data
+  const refresh = useCallback(async () => {
+    const response = await http.get(`/user/`);
+    const { data } = response?.data as { data: UserResponse };
+    setUser(data);
+  }, []);
 
-  // Logout User
+  // Logout user
   const logout = () => {
-    setUser(UserLoggedOutData);
-    localStorage.removeItem("user");
-  };
-  return { user, update, logout, isLogged: () => user.id !== 0 };
+    setUser(defaultUser)
+    }
+
+  return { data: user, update: setUser, isLogged: () => user.id, logout, refresh };
 };
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -81,9 +98,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const UserContext = createContext<UserContextType>({
-  user: UserDefaultData,
-  userChecked: false,
+  data: {} as UserResponse,
   update: () => {},
+  refresh: async () => {},
   isLogged: () => false,
   logout: () => {},
 });

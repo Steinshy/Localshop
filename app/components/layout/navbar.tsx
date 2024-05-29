@@ -34,7 +34,6 @@ import { FaCartArrowDown, FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingB
 import { NavbarProps, CartBadgeProps, UsermenuNotLoggedProps, UsermenuLoggedProps } from "@interfaces/navbar";
 
 //data
-import { UserDefaultData } from "@data/user";
 import { websiteName, navItems } from "@data/navbar";
 
 // Utils
@@ -145,14 +144,18 @@ const Header = () => {
     pathname = usePathname(),
     cartStore = useContext(CartContext),
     userStore = useContext(UserContext);
+    console.log(userStore.data)
 
-  const { attributes } = cartStore.data;
-  const { totalItems } = attributes;
+  const { attributes:cartAttributes } = cartStore.data;
+  const { totalItems } = cartAttributes;
+
+  const { attributes:userAttributes } = userStore.data;
+  const { lastname, firstname } = userAttributes ?? {}
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
-  const handleUserKeySelection = (value: React.Key): void => {
+  const handleUserLogout = (value: React.Key): void => {
     if (value === "logout") {
       if (pathname.match(/user\/.*/)) router.push("/");
       return userStore.logout();
@@ -160,8 +163,8 @@ const Header = () => {
     router.push(`/user/${value}`);
   };
 
-  const handleUserLogin = () => {
-    userStore.update(UserDefaultData);
+  const handleUserLogin = async () => {
+    await userStore.refresh()
   };
 
   const handleUserMenuOpen = (bool: boolean) => {
@@ -190,11 +193,11 @@ const Header = () => {
         {userStore.isLogged() ? (
           <NavbarItem>
             <UsermenuLogged
-              userLastName={userStore.user.lastname}
-              userFirstName={userStore.user.firstname}
+              userLastName={lastname}
+              userFirstName={firstname}
               handleUserMenuOpen={handleUserMenuOpen}
               isUserMenuOpen={isUserMenuOpen}
-              handleUserKeySelection={handleUserKeySelection}
+              handleUserLogout={handleUserLogout}
             />
           </NavbarItem>
         ) : (
