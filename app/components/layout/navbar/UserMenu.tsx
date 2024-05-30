@@ -13,10 +13,13 @@ import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown, 
 import { FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
 
 // Utils
-import { UserContext } from "@utils/subProviders";
+import { UserContext, CartContext } from "@utils/subProviders";
 
-const UserMenu:FC = ():JSX.Element => {
-  const router = useRouter(), pathname = usePathname(), userStore = useContext(UserContext);
+const UserMenu:FC = () => {
+  const router = useRouter(),
+        pathname = usePathname(),
+        userStore = useContext(UserContext),
+        cartStore = useContext(CartContext);
   const { data, isLogged } = userStore;
   const { attributes } = data || {};
   const { firstname, lastname } = attributes || {};
@@ -39,12 +42,13 @@ const UserMenu:FC = ():JSX.Element => {
   const handleUserLogin = () => {
     // Click on login => Refresh data from subprovider refresh const
     void userStore.refresh();
+    void cartStore.refresh();
   };
 
-  // console.log(isLogged);
+  console.log(isLogged());
 
   return (
-    !isLogged ? (
+    !isLogged() ? (
       <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
         <span className="font-semibold">Login</span>
       </Button>

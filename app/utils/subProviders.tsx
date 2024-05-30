@@ -76,7 +76,6 @@ const useUser = () => {
   const refresh = useCallback(async () => {
     const response = await http.get('/user');
     const { data } = response?.data as { data: UserResponse };
-    console.log(data);
     setUser(data);
   }, []);
 

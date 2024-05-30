@@ -35,7 +35,7 @@ import { CartContext } from "@utils/subProviders";
 import ThemeSwitcher from "@utils/themeSwitcher";
 
 // Components
-import UserMenu from "@components/layout/navbar";
+import UserMenu from "@components/layout/navbar/UserMenu";
 
 const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
   return (
