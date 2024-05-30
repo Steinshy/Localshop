@@ -4,10 +4,8 @@
 import { useContext, useState, FC } from "react";
 
 // NextJS
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
-
-import UserDropdown from "@components/layout/navbar"
 
 // NextUI
 import {
@@ -33,8 +31,11 @@ import { NavbarProps } from "@interfaces/navbar";
 import { websiteName, navItems } from "@data/navbar";
 
 // Utils
-import { UserContext, CartContext } from "@utils/subProviders";
+import { CartContext } from "@utils/subProviders";
 import ThemeSwitcher from "@utils/themeSwitcher";
+
+// Components
+import UserMenu from "@components/layout/navbar";
 
 const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
   return (
@@ -47,39 +48,13 @@ const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
 };
 
 const Header = () => {
-  const router = useRouter(),
-    pathname = usePathname(),
-    cartStore = useContext(CartContext),
-    userStore = useContext(UserContext);
-  console.log(userStore.data, "USER DATA");
-  console.log(cartStore.data, "CART DATA");
+  const pathname = usePathname(), cartStore = useContext(CartContext);
 
+  // Cart
   const { attributes: cartAttributes } = cartStore.data;
   const { totalItems } = cartAttributes;
 
-  const { attributes: userAttributes } = userStore.data;
-  const { lastname, firstname } = userAttributes ?? {};
-
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
-
-  const handleUserLogout = (value: React.Key): void => {
-    // Dosn't work
-    if (value === "logout") {
-      if (pathname.match(/user\/.*/)) router.push("/");
-      return userStore.logout();
-    }
-    router.push(`/user/${value}`);
-  };
-
-  const handleUserLogin = async () => {
-    // Click on login => Refresh data from subprovider refresh const
-    void (await userStore.refresh(), cartStore.refresh());
-  };
-
-  const handleUserMenuOpen = (bool: boolean) => {
-    setIsUserMenuOpen(bool);
-  };
 
   return (
     <Navbar isBlurred isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
@@ -100,17 +75,9 @@ const Header = () => {
       </NavbarContent>
 
       <NavbarContent justify="end">
-        {userStore.isLogged() ? (
-          <NavbarItem>
-            <UserDropdown lastname={lastname} firstname={firstname} handleUserMenuOpen={handleUserMenuOpen} isUserMenuOpen={isUserMenuOpen} handleUserLogout={handleUserLogout} />
-          </NavbarItem>
-        ) : (
-          <NavbarItem>
-            <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
-              <span className="font-semibold">Login</span>
-            </Button>
-          </NavbarItem>
-        )}
+        <NavbarItem>
+          <UserMenu />
+        </NavbarItem>
 
         <NavbarItem>
           <Badge

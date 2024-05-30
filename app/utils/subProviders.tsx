@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { useState, createContext, useEffect, useCallback } from "react";
+import { useState, createContext, useCallback } from "react";
 
 import http from "@utils/http";
 
@@ -66,7 +66,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
   update: () => {},
-  refresh: async () => {},
+  refresh: async () => {}
 });
 
 const useUser = () => {
@@ -74,17 +74,18 @@ const useUser = () => {
 
   // Update user data
   const refresh = useCallback(async () => {
-    const response = await http.get(`/user/`);
+    const response = await http.get('/user');
     const { data } = response?.data as { data: UserResponse };
+    console.log(data);
     setUser(data);
   }, []);
 
   // Logout user
   const logout = () => {
-    setUser(defaultUser)
-    }
+    setUser(defaultUser);
+  }
 
-  return { data: user, update: setUser, isLogged: () => user.id, logout, refresh };
+  return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh };
 };
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -97,8 +98,8 @@ const UserContext = createContext<UserContextType>({
   data: {} as UserResponse,
   update: () => {},
   refresh: async () => {},
-  isLogged: () => false,
-  logout: () => {},
+  isLogged: () => true || false,
+  logout: () => {}
 });
 
 export { UserProvider, CartProvider, UserContext, CartContext, useCart, useUser };
