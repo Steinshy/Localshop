@@ -48,7 +48,8 @@ const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
 };
 
 const Header = () => {
-  const pathname = usePathname(), cartStore = useContext(CartContext);
+  const pathname = usePathname(),
+    cartStore = useContext(CartContext);
 
   // Cart
   const { attributes: cartAttributes } = cartStore.data;
