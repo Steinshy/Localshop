@@ -20,17 +20,13 @@ import { ProductCardProps } from "@interfaces/product";
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { attributes } = product;
   const { id, title, thumbnail, rating, price, stock } = attributes;
+  const isNew = generateRandomBool();
 
   return (
     <article>
-      <Card
-        className="w-full h-[350px]"
-        as={Link}
-        href={`/products/${id}/${generateSlug(title)}`}
-        radius="sm"
-      >
+      <Card className="w-full h-[350px]" as={Link} href={`/products/${id}/${generateSlug(title)}`} radius="sm">
         <CardHeader className="absolute z-10 top-2 right-2 flex-col items-end">
-          {generateRandomBool() && (
+          {isNew && (
             <p className="text-tiny text-white uppercase font-bold bg-red-500 p-1 rounded-md shadow-lg">New!</p>
           )}
         </CardHeader>
@@ -46,7 +42,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           <h2>{title}</h2>
         </div>
         <div className="flex col justify-end p-2">
-        <StarsReviews rating={rating} />
+          <StarsReviews rating={rating} />
         </div>
         <CardFooter className="flex col justify-between">
           <h3>{price} €</h3>

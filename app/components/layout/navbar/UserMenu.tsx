@@ -30,13 +30,18 @@ const UserMenu: FC = () => {
 
   const handleUserMenu = (value: React.Key): void => {
     if (value === "logout") {
-      if (pathname.match(/user\/.*/))
-        return router.push("/");
+      userStore.logout();
+      cartStore.logout();
+      router.push("/");
+      return;
     }
-    void userStore.logout();
-    void cartStore.logout();
+    if (pathname.includes("/user/")) {
+      router.push("/");
+      return;
+    }
+    router.push(`/user/${value}`);
   };
-  
+
   const handleUserMenuOpen = (bool: boolean) => {
     setIsUserMenuOpen(bool);
   };

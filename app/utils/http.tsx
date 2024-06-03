@@ -4,7 +4,7 @@ import axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig,
 import { setupCache } from "axios-cache-interceptor";
 
 const config: AxiosRequestConfig = {
-  baseURL: "http://api.localshop.test:3005/v1", //"https://dummyjson.com",
+  baseURL: "http://api.localshop.test:3005/v1",
   headers: { "Content-Type": "application/json" },
 };
 
@@ -13,22 +13,17 @@ const http: AxiosInstance = axios.create(config);
 
 // Request Interceptor
 const onRequest = (config:InternalAxiosRequestConfig):InternalAxiosRequestConfig => {
-  // const { method, url, headers } = config;
   return config;
 };
 
 // Response Interceptor
 const onResponse = (response:AxiosResponse):AxiosResponse => {
-  // const { method, url } = response.config;
-  // const { status } = response;
   return response;
 };
 
 // Error Response Interceptor
 const onErrorResponse = (error:AxiosError | Error):Promise<AxiosError> => {
   if (axios.isAxiosError(error)) {
-    // const { message } = error;
-    // const { method, url } = error.config as AxiosRequestConfig;
     const { status } = (error.response as AxiosResponse) ?? {}; // statusText
 
     switch (status) {

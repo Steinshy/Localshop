@@ -16,8 +16,7 @@ import { ProductPageProps, ProductObj } from "@interfaces/product";
 
 const getProduct = async (id: string) => {
   const response = await http.get(`/products/${id}`);
-  const product = response?.data as { data: ProductObj };
-  return product;
+  return response?.data as { data: ProductObj };
 };
 
 const getProductReviews = async (id: string) => {
