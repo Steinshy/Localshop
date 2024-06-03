@@ -54,7 +54,12 @@ const useCart = () => {
     setCart(data);
   }, []);
 
-  return { data: cart, update: setCart, refresh };
+  // Empty cart when user is log out
+  const logout = () => {
+    setCart(defaultCart);
+  }
+
+  return { data: cart, update: setCart, refresh, logout };
 };
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -66,7 +71,8 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
   update: () => {},
-  refresh: async () => {}
+  refresh: async () => {},
+  logout: () => {}
 });
 
 const useUser = () => {

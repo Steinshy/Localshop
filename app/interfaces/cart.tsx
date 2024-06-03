@@ -44,6 +44,7 @@ type CartContextType = {
   data: CartResponse;
   update: Dispatch<SetStateAction<CartResponse>>;
   refresh: () => Promise<void>;
+  logout: () => void;
 };
 
 type CartItemProps = {
