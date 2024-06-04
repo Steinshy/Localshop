@@ -1,6 +1,9 @@
 // React
 import { FC } from "react";
 
+// Modules
+import { Toaster } from "react-hot-toast";
+
 // Components
 import Navbar from "@components/layout/navbar";
 import Footer from "@components/layout/footer";
@@ -30,6 +33,7 @@ const RootLayout:FC<LayoutProps> = ({ children }) => (
         </Providers>
         <Footer />
       </main>
+      <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
     </body>
   </html>
 );

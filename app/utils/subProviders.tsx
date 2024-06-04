@@ -3,6 +3,8 @@
 // React
 import { useState, createContext, useCallback } from "react";
 
+// Utils
+import { showToast } from "@utils/helpers";
 import http from "@utils/http";
 
 // Interfaces - Data
@@ -20,12 +22,11 @@ const useCart = () => {
     setCart(data);
   }, []);
 
-  // Empty cart when user is log out
-  const logout = () => {
+  const reset = () => {
     setCart(defaultCart);
-  };
+  }
 
-  return { data: cart, update: setCart, refresh, logout };
+  return { data: cart, update: setCart, refresh, reset };
 };
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
@@ -38,7 +39,7 @@ const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
   update: () => {},
   refresh: async () => {},
-  logout: () => {},
+  reset: () => {},
 });
 
 const useUser = () => {
@@ -54,6 +55,7 @@ const useUser = () => {
   // Logout user
   const logout = () => {
     setUser(defaultUser);
+    showToast('Logged out!', 'success');
   };
 
   return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh };

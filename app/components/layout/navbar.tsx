@@ -48,8 +48,7 @@ const NavbarItemLink: FC<NavbarProps> = ({ href, isActive, children }) => {
 };
 
 const Header = () => {
-  const pathname = usePathname(),
-    cartStore = useContext(CartContext);
+  const pathname = usePathname(), cartStore = useContext(CartContext);
   const { attributes: cartAttributes } = cartStore.data;
   const { totalItems } = cartAttributes;
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);

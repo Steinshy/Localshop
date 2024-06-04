@@ -14,8 +14,7 @@ import { FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag, FaSignOutAlt 
 
 // Utils
 import { UserContext, CartContext } from "@utils/subProviders";
-
-import toast, { Toaster } from "react-hot-toast";
+import { showToast } from "@utils/helpers";
 
 const UserMenu: FC = () => {
   const router = useRouter(),
@@ -31,7 +30,7 @@ const UserMenu: FC = () => {
   const handleUserMenu = (value: React.Key): void => {
     if (value === "logout") {
       userStore.logout();
-      cartStore.logout();
+      void cartStore.reset();
       router.push("/");
       return;
     }
@@ -46,32 +45,14 @@ const UserMenu: FC = () => {
     setIsUserMenuOpen(bool);
   };
 
-  const showLogoutToast = () => {
-    toast("Logged out successfully", {
-      duration: 2000,
-      position: "top-center",
-      iconTheme: {
-        primary: "var(--semantic-color-text-primary)",
-        secondary: "var(--semantic-color-background-primary)",
-      },
-      ariaProps: {
-        role: "status",
-        "aria-live": "polite",
-      },
-    });
-  };
-
   const handleUserLogin = () => {
     void userStore.refresh();
     void cartStore.refresh();
-    void showLogoutToast();
+    showToast('Logged in!', 'success');
   };
-
-  console.log(isLogged(), "isLogged");
 
   return !isLogged() ? (
     <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
-      <Toaster />
       <span className="font-semibold">Login</span>
     </Button>
   ) : (

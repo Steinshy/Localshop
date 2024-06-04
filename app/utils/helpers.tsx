@@ -1,3 +1,6 @@
+// Modules
+import toast, { ToastType } from "react-hot-toast";
+
 // Interfaces
 import { CouponsObject } from "@interfaces/cart";
 
@@ -145,6 +148,11 @@ const generateDefaultOrders = () => {
   return orders;
 };
 
+const showToast = (text:string, status:ToastType) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  status === 'error' ? toast.error(text) : toast.success(text);
+};
+
 export {
   generateSlug,
   generateClamp,
@@ -157,4 +165,5 @@ export {
   readableDate,
   products_url,
   products_search_url,
+  showToast
 };
