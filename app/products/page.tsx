@@ -18,7 +18,7 @@ import { ProductObj, ProductDataProps } from "@interfaces/product";
 
 // Utils
 import http from "@utils/http";
-import { products_url, products_search_url } from "@utils/helpers";
+
 
 // Images
 import BG from "../assets/bg-products.webp";
@@ -42,7 +42,7 @@ const ProductsPage: FC = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const url = query.length > 0 ? products_search_url(page, query) : products_url(page);
+      const url = query.length > 0 ? `/products/search?page=${page}&q=${query}` : `/products?page=${page}`;
       const response = await http.get<ProductDataProps>(url);
       const { products, pagy } = response?.data || {};
       const { pages } = pagy;

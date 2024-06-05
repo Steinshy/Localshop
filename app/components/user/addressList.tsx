@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { FC, useEffect, useContext } from "react";
+import { FC, useState, useEffect, useContext } from "react";
 
 // Components
 import AddressCard from "@components/user/addressCard";
@@ -14,8 +14,13 @@ import { UserContext } from "@utils/subProviders";
 import { AddressListProps } from "@interfaces/user";
 
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false }) => {
+  const [addresses, setAddresses] = useState([]);
   const userStore = useContext(UserContext);
-  const { addresses } = userStore.user;
+  console.log(addresses, "addresses")
+
+  useEffect(() => {
+    setAddresses(userStore.getAddress());
+  }, []);
 
   useEffect(() => {
     if (setSelected) {

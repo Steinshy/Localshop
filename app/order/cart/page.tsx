@@ -24,7 +24,6 @@ import { CartContext } from "@utils/subProviders";
 
 const Cart = () => {
   const cartStore = useContext(CartContext);
-
   const { data } = cartStore;
   const { attributes } = data;
   const { items } = attributes;

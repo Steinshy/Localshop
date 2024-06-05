@@ -1,9 +1,3 @@
-// Interfaces
-import { AddressObj } from "@interfaces/user";
-
-// Utils
-import { generateDefaultAdresses, generateDefaultOrders } from "@utils/helpers";
-
 const defaultUser = {
   id: 0,
   type: "",
@@ -22,16 +16,4 @@ const defaultUser = {
   },
 };
 
-const defaultAdress = {
-  id: 0,
-  label: "",
-  firstname: "",
-  lastname: "",
-  address: "",
-  city: "",
-  country: "",
-  postalCode: "",
-  default: false,
-} as AddressObj;
-
-export { defaultUser, defaultAdress };
+export { defaultUser};

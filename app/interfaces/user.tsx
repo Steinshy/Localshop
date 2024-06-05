@@ -22,26 +22,28 @@ type UserResponse = {
   };
 };
 
-
 type UserContextType = {
   data: UserResponse;
   update: Dispatch<SetStateAction<UserResponse>>;
   refresh: () => Promise<void>;
+  getAddress: () => void;
   isLogged: () => boolean;
   logout: () => void;
 };
 
 type AddressObj = {
   id: number;
-  label: string;
-  firstname: string;
-  lastname: string;
-  address: string;
-  city: string;
-  country: string;
-  postalCode: string;
-  [key: string]: string | number | boolean;
-  default: boolean;
+
+  attributes: {
+    type: string;
+    default: boolean,
+  };
+  address: {
+    city: string;
+    state: string;
+    country: string;
+    zip: number;
+  };
 };
 
 type AddressListProps = {
@@ -59,15 +61,12 @@ type AddressCardProps = {
 
 type OrdersObj = {
   id: number;
-  invoice: string;
-  label: string;
-  date: string;
-  productsTotal: number;
-  status: string;
-  paymentType: string;
-  isPaid: boolean;
-  total: number;
-  products: CartItemObj[];
+
+  attributes: {
+    status: string;
+    total: number;
+    // products: CartItemObj[];
+  };
 };
 
 type OrderPageProps = {

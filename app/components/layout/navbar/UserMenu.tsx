@@ -28,12 +28,6 @@ const UserMenu: FC = () => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
   const handleUserMenu = (value: React.Key): void => {
-    if (value === "logout") {
-      userStore.logout();
-      void cartStore.reset();
-      router.push("/");
-      return;
-    }
     if (pathname.includes("/user/")) {
       router.push("/");
       return;

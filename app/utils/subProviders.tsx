@@ -13,6 +13,8 @@ import { CartResponse, CartContextType } from "@interfaces/cart";
 import { defaultUser } from "@data/user";
 import { defaultCart } from "@data/cart";
 
+// CART PROVIDERS //
+
 const useCart = () => {
   const [cart, setCart] = useState(defaultCart as CartResponse);
 
@@ -24,7 +26,7 @@ const useCart = () => {
 
   const reset = () => {
     setCart(defaultCart);
-  }
+  };
 
   return { data: cart, update: setCart, refresh, reset };
 };
@@ -42,23 +44,30 @@ const CartContext = createContext<CartContextType>({
   reset: () => {},
 });
 
+// USER PROVIDERS //
+
 const useUser = () => {
   const [user, setUser] = useState(defaultUser as UserResponse);
 
-  // Update user data
+  const getAddress = useCallback(async () => {
+    const response = await http.get("user/addresses");
+    const { addresses } = response?.data as { addresses: UserResponse };
+    console.log(addresses, "address")
+    return addresses
+  }, []);
+
   const refresh = useCallback(async () => {
     const response = await http.get("/user");
     const { data } = response?.data as { data: UserResponse };
     setUser(data);
   }, []);
 
-  // Logout user
   const logout = () => {
     setUser(defaultUser);
-    showToast('Logged out!', 'success');
+    showToast("Logged out!", "success");
   };
 
-  return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh };
+  return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh, getAddress };
 };
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -71,8 +80,10 @@ const UserContext = createContext<UserContextType>({
   data: {} as UserResponse,
   update: () => {},
   refresh: async () => {},
+  getAddress: () => {},
   isLogged: () => true || false,
   logout: () => {},
+  
 });
 
 export { UserProvider, CartProvider, UserContext, CartContext, useCart, useUser };

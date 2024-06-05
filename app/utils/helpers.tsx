@@ -74,18 +74,6 @@ const calculatedDiscount = (selectedCoupon: CouponsObject, totalPrice: number): 
 };
 
 /**
- Products & Products Search URL
- */
-
-const products_url = (page: number) => {
-  return `/products?page=${page}`;
-};
-
-const products_search_url = (page: number, query: string) => {
-  return `/products/search?page=${page}&q=${query}`;
-};
-
-/**
  * Generates an array of default addresses.
  * @returns {Array} The array of default addresses.
  */
@@ -163,7 +151,5 @@ export {
   stringify,
   round,
   readableDate,
-  products_url,
-  products_search_url,
   showToast
 };
