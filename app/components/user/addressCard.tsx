@@ -11,12 +11,15 @@ import RemoveAddress from "@components/user/removeAddress";
 // Interfaces
 import { AddressCardProps } from "@interfaces/user";
 
-const AddressCard: FC<AddressCardProps> = ({ selected, setSelected, address, selectable = false }) => {
+const AddressCard: FC<AddressCardProps> = ({ addresses, selected, setSelected, address, selectable = false }) => {
   const handleSelect = () => {
     if (setSelected) {
       setSelected(address.id);
     }
   };
+
+  const { attributes } = address;
+  const { label, firstname, lastname, address: addressLine, city, country, zip, default: addressDefault } = attributes;
 
   return (
     <div className="relative h-[124px]">
@@ -26,23 +29,23 @@ const AddressCard: FC<AddressCardProps> = ({ selected, setSelected, address, sel
         onClick={handleSelect}
       >
         <CardBody>
-          <h2 className="font-semibold">{address.label}</h2>
+          <h2 className="font-semibold">{label}</h2>
           <p>
-            {address.firstname} {address.lastname}
+            {firstname} {lastname}
           </p>
-          <p>{address.address}</p>
+          <p>{addressLine}</p>
           <p>
-            {address.city}, {address.country} {address.postalCode}
+            {city}, {country} {zip}
           </p>
         </CardBody>
       </Card>
       <div className="absolute top-2 right-2 flex gap-1">
-        {address.default && (
+        {addressDefault && (
           <Chip variant="flat" color="primary" size="sm" radius="sm">
             Default
           </Chip>
         )}
-        <AddressModal id={address.id} />
+        <AddressModal id={address.id} addresses={addresses} />
         <RemoveAddress id={address.id} />
       </div>
     </div>

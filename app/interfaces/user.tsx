@@ -7,8 +7,6 @@ import { CartItemObj } from "@interfaces/cart";
 type UserResponse = {
   id: number;
   type: string;
-  addresses: AddressObj[];
-  orders: OrdersObj[];
 
   attributes: {
     id: number;
@@ -26,33 +24,41 @@ type UserContextType = {
   data: UserResponse;
   update: Dispatch<SetStateAction<UserResponse>>;
   refresh: () => Promise<void>;
-  getAddress: () => void;
   isLogged: () => boolean;
   logout: () => void;
 };
 
+type AddressAttr = {
+  id: number;
+  label: string;
+  firstname: string;
+  lastname: string;
+  phone: number;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: number;
+  default: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type AddressObj = {
   id: number;
-
-  attributes: {
-    type: string;
-    default: boolean,
-  };
-  address: {
-    city: string;
-    state: string;
-    country: string;
-    zip: number;
-  };
+  type: string;
+  attributes: AddressAttr;
 };
 
 type AddressListProps = {
+  items: AddressObj[];
   selected?: number | null;
   setSelected?: (id: number) => void;
   selectable?: boolean;
 };
 
 type AddressCardProps = {
+  addresses: AddressObj[];
   selected?: number | null;
   setSelected?: (id: number) => void;
   address: AddressObj;
@@ -88,6 +94,7 @@ type OrderProductCardProps = {
 export type {
   UserResponse,
   UserContextType,
+  AddressAttr,
   AddressObj,
   AddressListProps,
   AddressCardProps,

@@ -1,43 +1,65 @@
 "use client";
 
 // React
-import { FC, useState, useEffect, useContext } from "react";
+import { FC, useState } from "react";
 
 // Components
 import AddressCard from "@components/user/addressCard";
 import AddressModal from "@components/user/addressModal";
 
-// Utils
-import { UserContext } from "@utils/subProviders";
-
 // Interfaces
-import { AddressListProps } from "@interfaces/user";
+import { AddressListProps, AddressAttr } from "@interfaces/user";
 
-const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false }) => {
-  const [addresses, setAddresses] = useState([]);
-  const userStore = useContext(UserContext);
-  console.log(addresses, "addresses")
+const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
+  const [addresses, setAddresses] = useState(items);
 
-  useEffect(() => {
-    setAddresses(userStore.getAddress());
-  }, []);
-
-  useEffect(() => {
-    if (setSelected) {
-      setSelected(addresses.find((address) => address.default === true)?.id ?? addresses[0]?.id ?? null);
+  const AddAddress = (values: AddressAttr) => {
+    const apiFetch = async () => {
+      // Add request
+      console.log(values);
     }
-  }, [addresses, setSelected]);
+
+    void apiFetch();
+  }
+
+  const updateAddress = (id: string, values: AddressAttr) => {
+    const apiFetch = async () => {
+      // Update request
+      console.log(values);
+    }
+
+    void apiFetch();
+  }
+
+  const removeAddress = (id: string) => {
+    const apiFetch = async () => {
+      // Remove request
+      console.log(id);
+    }
+
+    void apiFetch();
+  }
+
+  // useEffect(() => {
+  //   if (setSelected) {
+  //     setSelected(addresses.find((address) => address.default === true)?.id ?? addresses[0]?.id ?? null);
+  //   }
+  // }, [addresses, setSelected]);
 
   return (
     <>
-      <AddressModal />
+      <AddressModal addresses={addresses} AddAddress={AddAddress} updateAddress={updateAddress} />
       {addresses.map((address) => (
         <AddressCard
           key={address.id}
+          addresses={addresses}
           address={address}
           selectable={selectable}
           selected={selected}
           setSelected={setSelected}
+          AddAddress={AddAddress}
+          updateAddress={updateAddress}
+          removeAddress={removeAddress}
         />
       ))}
     </>

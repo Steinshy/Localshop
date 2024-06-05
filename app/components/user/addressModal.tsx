@@ -1,5 +1,5 @@
 // Recat
-import { FC, useContext } from "react";
+import { FC } from "react";
 
 // NextUI
 import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox,
@@ -11,41 +11,57 @@ import { Formik, Form, Field } from "formik";
 // Icons
 import { FaPlus, FaEdit } from "react-icons/fa";
 
-// Utils
-import { UserContext } from "@utils/subProviders";
-
-// Data
-import { defaultAdress } from "@data/user";
-
 // Interfaces
-import { AddressObj } from "@interfaces/user";
+import { AddressObj, AddressAttr } from "@interfaces/user";
 
-const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
+interface AddressModal {
+  addresses: AddressObj[];
+  id?: number;
+  AddAddress: (values: AddressAttr) => void;
+  UpdateAddress: (id: string, values: AddressAttr) => void;
+}
+
+const defaultAddress = {
+  id: 0,
+  label: '',
+  firstname: '',
+  lastname: '',
+  phone: 0,
+  address: '',
+  city: '',
+  state: '',
+  country: '',
+  zip: 0,
+  default: false,
+  createdAt: '',
+  updatedAt: ''
+}
+
+const AddressModal: FC<AddressModal> = ({ AddAddress, UpdateAddress, addresses, id = 0 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const userStore = useContext(UserContext);
-  const { update } = userStore;
-  const { addresses } = userStore.user;
-  const address = addresses.find((obj) => obj.id === id) || defaultAdress;
+  
+  const findAddress = () => {
+    const address = addresses.find((obj) => obj.id === id);
+    if (address) {
+      const { attributes } = address;
+      return attributes;
+    }
+    return defaultAddress;
+  }
 
-  const addAddress = (values: AddressObj) => {
-    const newAddress = { ...address, ...values, id: addresses.length + 1 };
-    update({ ...userStore.user, addresses: [newAddress, ...addresses] });
+  const address = id > 0 ? findAddress() : defaultAddress;
+
+  const addAddress = (values: AddressAttr) => {
+    // Add Request
+    AddAddress(values);
   };
 
-  const editaddAddress = (values: AddressObj) => {
-    const newAddress = { ...address, ...values };
-    const index = addresses.findIndex((obj) => obj.id === id);
-    if (newAddress.default == true) {
-      addresses.forEach((obj) => (obj.default = false));
-    }
-    if (newAddress.default == false) {
-      addresses[index].default = false;
-    }
-    addresses[index] = newAddress;
-    update({ ...userStore.user, addresses });
+  const editaddAddress = (values: AddressAttr) => {
+    // Update request
+    UpdateAddress(id.toString(), values);
   };
 
-  const handleSubmit = (values: AddressObj) => {
+  const handleSubmit = (values: AddressAttr) => {
     const newAddress = { ...address, ...values };
     id > 0 ? editaddAddress(newAddress) : addAddress(newAddress);
   };
@@ -71,18 +87,18 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
               <ModalBody>
                 <Formik
                   initialValues={address}
-                  validate={(values: AddressObj) => {
-                    console.log("validate");
-                    const errors: { [key: string]: string } = {};
-                    Object.keys(values).forEach((key) => {
-                      if (!values[key]) {
-                        console.log(key);
-                        errors[key] = "Required";
-                      }
-                    });
-                    // return errors;
-                  }}
-                  onSubmit={(values: AddressObj, { setSubmitting }) => {
+                  // validate={(values: AddressAttr) => {
+                  //   console.log("validate");
+                  //   const errors: { [key: string]: string } = {};
+                  //   Object.keys(values).forEach((key) => {
+                  //     if (!values[key]) {
+                  //       console.log(key);
+                  //       errors[key] = "Required";
+                  //     }
+                  //   });
+                  //   // return errors;
+                  // }}
+                  onSubmit={(values: AddressAttr, { setSubmitting }) => {
                     setTimeout(() => {
                       console.log("submit");
                       handleSubmit(values);
@@ -170,10 +186,10 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
                       <Field
                         isRequired
                         as={Input}
-                        label="PostalCode"
+                        label="Zip"
                         className="col-span-1"
-                        id="postalCode"
-                        name="postalCode"
+                        id="zip"
+                        name="zip"
                         type="number"
                         radius="sm"
                         placeholder="00000"
@@ -187,7 +203,7 @@ const AddressModal: FC<{ id?: number }> = ({ id = 0 }) => {
                       name="default"
                       label="Set as default"
                       className="col-span-1"
-                      defaultSelected={address.default}
+                      defaultSelected={address.default || false}
                     >
                       Set as default
                     </Field>
