@@ -8,7 +8,7 @@ import AddressCard from "@components/user/addressCard";
 import AddressModal from "@components/user/addressModal";
 
 // Interfaces
-import { AddressListProps, AddressObj } from "@interfaces/user";
+import { AddressListProps, AddressObj } from "@interfaces/address";
 
 // Utils
 import http from "@utils/http";
@@ -19,13 +19,13 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
   const fetch = () => {
     const apiFetch = async () => {
       // fetch request
-      const response = await http.get('/addresses');
+      const response = await http.get("/addresses");
       const { data } = response.data as { data: AddressObj[] };
       setAddresses(data);
-    }
+    };
 
     void apiFetch();
-  }
+  };
 
   useEffect(() => {
     if (setSelected) {

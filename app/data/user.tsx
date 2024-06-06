@@ -16,20 +16,4 @@ const defaultUser = {
   },
 };
 
-const defaultAddress = {
-  id: 0,
-  label: '',
-  firstname: '',
-  lastname: '',
-  phone: 0,
-  address: '',
-  city: '',
-  state: '',
-  country: '',
-  zip: 0,
-  default: false,
-  createdAt: '',
-  updatedAt: ''
-}
-
-export { defaultUser, defaultAddress };
+export { defaultUser };

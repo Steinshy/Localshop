@@ -3,7 +3,7 @@ import Breadcrumb from "@components/layout/breadCrumb";
 import AddressList from "@components/user/addressList";
 
 // Interfaces
-import { AddressObj } from "@interfaces/user";
+import { AddressObj } from "@interfaces/address";
 
 // Utils
 import http from "@utils/http";
