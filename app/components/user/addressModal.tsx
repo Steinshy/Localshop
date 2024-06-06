@@ -68,10 +68,10 @@ const AddressModal: FC<AddressModal> = ({ fetch, addresses, id = 0 }) => {
     const apiFetch = async () => {
       const formData = { address: values }
       await http.post('/addresses', formData);
+      fetch();
     }
 
     void apiFetch();
-    fetch();
   };
 
   const update = (values: AddressValues) => {
@@ -79,10 +79,10 @@ const AddressModal: FC<AddressModal> = ({ fetch, addresses, id = 0 }) => {
     const apiFetch = async () => {
       const formData = { address: values }
       await http.put(`/addresses/${id}`, formData);
+      fetch();
     }
 
     void apiFetch();
-    fetch();
   };
 
   const handleSubmit = (values: AddressValues) => {

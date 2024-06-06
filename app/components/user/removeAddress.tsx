@@ -4,13 +4,29 @@ import { FC } from "react";
 // NextUI
 import { Button } from "@nextui-org/react";
 
-// Modules
+// Icons
 import { FaTrash } from "react-icons/fa";
 
-const RemoveAddress: FC<{ id: number }> = ({ id }) => {
+// Utils
+import { showToast } from "@utils/helpers";
+import http from "@utils/http";
+
+interface RemoveAddressProps {
+  id: number;
+  fetch: () => void;
+}
+
+const RemoveAddress: FC<RemoveAddressProps> = ({ fetch, id }) => {
 
   const handleRemove = () => {
     // Remove request
+    const apiFetch = async () => {
+      await http.delete(`/addresses/${id}`);
+      fetch();
+      showToast('Address deleted!', 'success');
+    }
+
+    void apiFetch();
   };
 
   return (

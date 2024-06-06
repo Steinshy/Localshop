@@ -46,7 +46,7 @@ const AddressCard: FC<AddressCardProps> = ({ fetch, addresses, selected, setSele
           </Chip>
         )}
         <AddressModal fetch={fetch} id={address.id} addresses={addresses} />
-        <RemoveAddress id={address.id} />
+        <RemoveAddress fetch={fetch} id={address.id} />
       </div>
     </div>
   );

@@ -49,13 +49,6 @@ const CartContext = createContext<CartContextType>({
 const useUser = () => {
   const [user, setUser] = useState(defaultUser as UserResponse);
 
-  // const getAddress = useCallback(async () => {
-  //   const response = await http.get("user/addresses");
-  //   const { addresses } = response?.data as { addresses: UserResponse };
-  //   console.log(addresses, "address")
-  //   return addresses
-  // }, []);
-
   const refresh = useCallback(async () => {
     const response = await http.get("/user");
     const { data } = response?.data as { data: UserResponse };
