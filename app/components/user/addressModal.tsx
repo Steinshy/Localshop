@@ -2,17 +2,8 @@
 import { FC } from "react";
 
 // NextUI
-import {
-  Input,
-  Button,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-  Checkbox,
-  Card,
-} from "@nextui-org/react";
+import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox,
+         Card } from "@nextui-org/react";
 
 // Modules
 import { Formik, Form, Field } from "formik";
@@ -20,15 +11,47 @@ import { Formik, Form, Field } from "formik";
 // Icons
 import { FaPlus, FaEdit } from "react-icons/fa";
 
-// Data
-import { defaultAddress } from "@data/user";
-
 // Interfaces
-import { AddressAttr, AddressModalProps } from "@interfaces/user";
+import { AddressObj } from "@interfaces/user";
 
-const AddressModal: FC<AddressModalProps> = ({ id = 0, addresses, AddAddress, UpdateAddress }) => {
+// Utils
+import http from "@utils/http";
+
+interface AddressModal {
+  addresses: AddressObj[];
+  id?: number;
+  fetch: () => void;
+}
+
+type AddressValues = {
+  label: string;
+  firstname: string;
+  lastname: string;
+  phone: number;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  zip: number;
+  default: boolean;
+}
+
+const defaultAddress = {
+  label: '',
+  firstname: '',
+  lastname: '',
+  phone: 0,
+  address: '',
+  city: '',
+  state: '',
+  country: '',
+  zip: 0,
+  default: false
+}
+
+const AddressModal: FC<AddressModal> = ({ fetch, addresses, id = 0 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+  
   const findAddress = () => {
     const address = addresses.find((obj) => obj.id === id);
     if (address) {
@@ -36,23 +59,35 @@ const AddressModal: FC<AddressModalProps> = ({ id = 0, addresses, AddAddress, Up
       return attributes;
     }
     return defaultAddress;
-  };
+  }
 
   const address = id > 0 ? findAddress() : defaultAddress;
 
-  const addAddress = (values: AddressAttr) => {
+  const add = (values: AddressValues) => {
     // Add Request
-    AddAddress(values);
+    const apiFetch = async () => {
+      const formData = { address: values }
+      await http.post('/addresses', formData);
+    }
+
+    void apiFetch();
+    fetch();
   };
 
-  const editaddAddress = (values: AddressAttr) => {
+  const update = (values: AddressValues) => {
     // Update request
-    UpdateAddress(id.toString(), values);
+    const apiFetch = async () => {
+      const formData = { address: values }
+      await http.put(`/addresses/${id}`, formData);
+    }
+
+    void apiFetch();
+    fetch();
   };
 
-  const handleSubmit = (values: AddressAttr) => {
+  const handleSubmit = (values: AddressValues) => {
     const newAddress = { ...address, ...values };
-    id > 0 ? editaddAddress(newAddress) : addAddress(newAddress);
+    id > 0 ? update(newAddress) : add(newAddress);
   };
 
   return (
@@ -87,7 +122,7 @@ const AddressModal: FC<AddressModalProps> = ({ id = 0, addresses, AddAddress, Up
                   //   });
                   //   // return errors;
                   // }}
-                  onSubmit={(values: AddressAttr, { setSubmitting }) => {
+                  onSubmit={(values: AddressValues, { setSubmitting }) => {
                     setTimeout(() => {
                       console.log("submit");
                       handleSubmit(values);
@@ -178,6 +213,7 @@ const AddressModal: FC<AddressModalProps> = ({ id = 0, addresses, AddAddress, Up
                         label="Zip"
                         className="col-span-1"
                         id="zip"
+
                         name="zip"
                         type="number"
                         radius="sm"

@@ -11,7 +11,7 @@ import RemoveAddress from "@components/user/removeAddress";
 // Interfaces
 import { AddressCardProps } from "@interfaces/user";
 
-const AddressCard: FC<AddressCardProps> = ({ addresses, selected, setSelected, address, selectable = false }) => {
+const AddressCard: FC<AddressCardProps> = ({ fetch, addresses, selected, setSelected, address, selectable = false }) => {
   const handleSelect = () => {
     if (setSelected) {
       setSelected(address.id);
@@ -45,7 +45,7 @@ const AddressCard: FC<AddressCardProps> = ({ addresses, selected, setSelected, a
             Default
           </Chip>
         )}
-        <AddressModal id={address.id} addresses={addresses} AddAddress={() => {}} UpdateAddress={() => {}} />
+        <AddressModal fetch={fetch} id={address.id} addresses={addresses} />
         <RemoveAddress id={address.id} />
       </div>
     </div>

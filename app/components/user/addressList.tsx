@@ -1,54 +1,41 @@
 "use client";
 
 // React
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 
 // Components
 import AddressCard from "@components/user/addressCard";
 import AddressModal from "@components/user/addressModal";
 
 // Interfaces
-import { AddressListProps, AddressAttr } from "@interfaces/user";
+import { AddressListProps, AddressObj } from "@interfaces/user";
+
+// Utils
+import http from "@utils/http";
 
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
-  const [addresses, setAddresses] = useState(items);
+  const [addresses, setAddresses] = useState<AddressObj[]>(items);
 
-  const AddAddress = (values: AddressAttr) => {
+  const fetch = () => {
     const apiFetch = async () => {
-      // Add request
-      console.log(values);
+      // fetch request
+      const response = await http.get('/addresses');
+      const { data } = response.data as { data: AddressObj[] };
+      setAddresses(data);
     }
 
     void apiFetch();
   }
 
-  const updateAddress = (id: string, values: AddressAttr) => {
-    const apiFetch = async () => {
-      // Update request
-      console.log(values);
+  useEffect(() => {
+    if (setSelected) {
+      setSelected(addresses.find((address) => address.attributes.default === true)?.id ?? addresses[0]?.id ?? null);
     }
-
-    void apiFetch();
-  }
-
-  const removeAddress = (id: string) => {
-    const apiFetch = async () => {
-      // Remove request
-      console.log(id);
-    }
-
-    void apiFetch();
-  }
-
-  // useEffect(() => {
-  //   if (setSelected) {
-  //     setSelected(addresses.find((address) => address.default === true)?.id ?? addresses[0]?.id ?? null);
-  //   }
-  // }, [addresses, setSelected]);
+  }, [addresses, setSelected]);
 
   return (
     <>
-      <AddressModal addresses={addresses} AddAddress={AddAddress} updateAddress={updateAddress} />
+      <AddressModal addresses={addresses} fetch={fetch} />
       {addresses.map((address) => (
         <AddressCard
           key={address.id}
@@ -57,9 +44,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
           selectable={selectable}
           selected={selected}
           setSelected={setSelected}
-          AddAddress={AddAddress}
-          updateAddress={updateAddress}
-          removeAddress={removeAddress}
+          fetch={fetch}
         />
       ))}
     </>
