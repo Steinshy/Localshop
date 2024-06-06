@@ -1,8 +1,8 @@
 // NextJS
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 const UserPage = () => {
-  redirect('/user/profile');
-}
+  redirect("/user/profile");
+};
 
 export default UserPage;

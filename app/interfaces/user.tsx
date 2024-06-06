@@ -50,6 +50,13 @@ type AddressObj = {
   attributes: AddressAttr;
 };
 
+type AddressModalProps = {
+  addresses: AddressObj[];
+  id?: number;
+  AddAddress: (values: AddressAttr) => void;
+  UpdateAddress: (id: string, values: AddressAttr) => void;
+}
+
 type AddressListProps = {
   items: AddressObj[];
   selected?: number | null;
@@ -95,6 +102,7 @@ export type {
   UserResponse,
   UserContextType,
   AddressAttr,
+  AddressModalProps,
   AddressObj,
   AddressListProps,
   AddressCardProps,

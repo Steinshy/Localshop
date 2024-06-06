@@ -2,8 +2,17 @@
 import { FC } from "react";
 
 // NextUI
-import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox,
-         Card } from "@nextui-org/react";
+import {
+  Input,
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  useDisclosure,
+  Checkbox,
+  Card,
+} from "@nextui-org/react";
 
 // Modules
 import { Formik, Form, Field } from "formik";
@@ -11,35 +20,15 @@ import { Formik, Form, Field } from "formik";
 // Icons
 import { FaPlus, FaEdit } from "react-icons/fa";
 
+// Data
+import { defaultAddress } from "@data/user";
+
 // Interfaces
-import { AddressObj, AddressAttr } from "@interfaces/user";
+import { AddressAttr, AddressModalProps } from "@interfaces/user";
 
-interface AddressModal {
-  addresses: AddressObj[];
-  id?: number;
-  AddAddress: (values: AddressAttr) => void;
-  UpdateAddress: (id: string, values: AddressAttr) => void;
-}
-
-const defaultAddress = {
-  id: 0,
-  label: '',
-  firstname: '',
-  lastname: '',
-  phone: 0,
-  address: '',
-  city: '',
-  state: '',
-  country: '',
-  zip: 0,
-  default: false,
-  createdAt: '',
-  updatedAt: ''
-}
-
-const AddressModal: FC<AddressModal> = ({ AddAddress, UpdateAddress, addresses, id = 0 }) => {
+const AddressModal: FC<AddressModalProps> = ({ id = 0, addresses, AddAddress, UpdateAddress }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  
+
   const findAddress = () => {
     const address = addresses.find((obj) => obj.id === id);
     if (address) {
@@ -47,7 +36,7 @@ const AddressModal: FC<AddressModal> = ({ AddAddress, UpdateAddress, addresses, 
       return attributes;
     }
     return defaultAddress;
-  }
+  };
 
   const address = id > 0 ? findAddress() : defaultAddress;
 

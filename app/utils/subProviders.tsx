@@ -49,12 +49,12 @@ const CartContext = createContext<CartContextType>({
 const useUser = () => {
   const [user, setUser] = useState(defaultUser as UserResponse);
 
-  const getAddress = useCallback(async () => {
-    const response = await http.get("user/addresses");
-    const { addresses } = response?.data as { addresses: UserResponse };
-    console.log(addresses, "address")
-    return addresses
-  }, []);
+  // const getAddress = useCallback(async () => {
+  //   const response = await http.get("user/addresses");
+  //   const { addresses } = response?.data as { addresses: UserResponse };
+  //   console.log(addresses, "address")
+  //   return addresses
+  // }, []);
 
   const refresh = useCallback(async () => {
     const response = await http.get("/user");
@@ -67,7 +67,7 @@ const useUser = () => {
     showToast("Logged out!", "success");
   };
 
-  return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh, getAddress };
+  return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh };
 };
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -80,7 +80,6 @@ const UserContext = createContext<UserContextType>({
   data: {} as UserResponse,
   update: () => {},
   refresh: async () => {},
-  getAddress: () => {},
   isLogged: () => true || false,
   logout: () => {},
   

@@ -1,6 +1,5 @@
 // Axios instance with interceptors
-import axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig,
-                InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { setupCache } from "axios-cache-interceptor";
 
 const config: AxiosRequestConfig = {
@@ -12,17 +11,17 @@ const config: AxiosRequestConfig = {
 const http: AxiosInstance = axios.create(config);
 
 // Request Interceptor
-const onRequest = (config:InternalAxiosRequestConfig):InternalAxiosRequestConfig => {
+const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
   return config;
 };
 
 // Response Interceptor
-const onResponse = (response:AxiosResponse):AxiosResponse => {
+const onResponse = (response: AxiosResponse): AxiosResponse => {
   return response;
 };
 
 // Error Response Interceptor
-const onErrorResponse = (error:AxiosError | Error):Promise<AxiosError> => {
+const onErrorResponse = (error: AxiosError | Error): Promise<AxiosError> => {
   if (axios.isAxiosError(error)) {
     const { status } = (error.response as AxiosResponse) ?? {}; // statusText
 
@@ -55,11 +54,11 @@ const onErrorResponse = (error:AxiosError | Error):Promise<AxiosError> => {
   return Promise.reject(error);
 };
 
-const setupInterceptors = (instance:AxiosInstance):AxiosInstance => {
+const setupInterceptors = (instance: AxiosInstance): AxiosInstance => {
   instance.interceptors.request.use(onRequest, onErrorResponse);
   instance.interceptors.response.use(onResponse, onErrorResponse);
 
   return setupCache(instance);
 };
 
-export default setupInterceptors(http)
+export default setupInterceptors(http);

@@ -74,28 +74,6 @@ const calculatedDiscount = (selectedCoupon: CouponsObject, totalPrice: number): 
 };
 
 /**
- * Generates an array of default addresses.
- * @returns {Array} The array of default addresses.
- */
-const generateDefaultAdresses = () => {
-  const addresses = [];
-  for (let i = 1; i < 6; i++) {
-    addresses.push({
-      id: i,
-      label: `Home ${i}`,
-      firstname: "John",
-      lastname: "Doe",
-      address: "123 Street",
-      city: "New York",
-      country: "USA",
-      postalCode: "12345",
-      default: i === 3,
-    });
-  }
-  return addresses;
-};
-
-/**
  * Generates an array of default orders.
  * @returns {Array} The array of default orders.
  */
@@ -137,7 +115,6 @@ const generateDefaultOrders = () => {
 };
 
 const showToast = (text:string, status:ToastType) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   status === 'error' ? toast.error(text) : toast.success(text);
 };
 
@@ -146,7 +123,6 @@ export {
   generateClamp,
   generateRandomBool,
   calculatedDiscount,
-  generateDefaultAdresses,
   generateDefaultOrders,
   stringify,
   round,
