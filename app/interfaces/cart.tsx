@@ -14,7 +14,7 @@ type CartResponse = {
     totalItems: number;
     totalUniqueItems: number;
   };
-}
+};
 
 type CartItemObj = {
   id: number;

@@ -59,7 +59,6 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
       </div>
     </>
   ) : (
-    // No product found
     <div className="flex flex-grow justify-center items-center">
       <p>No products found</p>
     </div>

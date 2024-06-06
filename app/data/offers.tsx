@@ -1,5 +1,5 @@
-const IMAGE_WIDTH = 300;
-const IMAGE_HEIGHT = 300;
+const imageWidth = 300;
+const imageHeight = 300;
 const ProductsOffers = [
   {
     id: 1,
@@ -22,4 +22,4 @@ const ProductsOffers = [
       "https://pickbazar-react-rest.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F906%2Foffer-1.png&w=1200&q=75",
   },
 ];
-export { IMAGE_WIDTH, IMAGE_HEIGHT, ProductsOffers };
+export { imageWidth, imageHeight, ProductsOffers };

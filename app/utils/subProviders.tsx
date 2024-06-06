@@ -75,7 +75,6 @@ const UserContext = createContext<UserContextType>({
   refresh: async () => {},
   isLogged: () => true || false,
   logout: () => {},
-  
 });
 
 export { UserProvider, CartProvider, UserContext, CartContext, useCart, useUser };

@@ -13,7 +13,12 @@ import { paymentmethods } from "@data/payment";
  * @returns {string} The generated slug.
  */
 const generateSlug = (title: string): string => {
-  return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "") || "";
+  return (
+    title
+      .toLowerCase()
+      .replace(/ /g, "-")
+      .replace(/[^\w-]+/g, "") || ""
+  );
 };
 
 /**
@@ -80,7 +85,7 @@ const calculatedDiscount = (selectedCoupon: CouponsObject, totalPrice: number): 
 const generateDefaultOrders = () => {
   const orders = [];
   const orderStatus = ["Delivered", "Processing", "Canceled"];
-  const orderDate = [ "2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01"]
+  const orderDate = ["2021-01-01", "2021-02-01", "2021-03-01", "2021-04-01", "2021-05-01"];
 
   for (let i = 1; i < 6; i++) {
     orders.push({
@@ -114,8 +119,8 @@ const generateDefaultOrders = () => {
   return orders;
 };
 
-const showToast = (text:string, status:ToastType) => {
-  status === 'error' ? toast.error(text) : toast.success(text);
+const showToast = (text: string, status: ToastType) => {
+  status === "error" ? toast.error(text) : toast.success(text);
 };
 
 export {
@@ -127,5 +132,5 @@ export {
   stringify,
   round,
   readableDate,
-  showToast
+  showToast,
 };

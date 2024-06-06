@@ -23,7 +23,7 @@ export const metadata = {
   description: "LocalShop - Your local shop online",
 };
 
-const RootLayout:FC<LayoutProps> = ({ children }) => (
+const RootLayout: FC<LayoutProps> = ({ children }) => (
   <html lang="en">
     <body className="flex flex-col min-h-svh">
       <main className="flex flex-col flex-grow">

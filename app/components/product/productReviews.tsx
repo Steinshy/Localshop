@@ -9,7 +9,7 @@ import StarsReviews from "@components/product/starsReviews";
 // Interface
 import { ReviewProps } from "@interfaces/reviews";
 
-const ProductReviews = ({ review }: { review:ReviewProps }) => {
+const ProductReviews = ({ review }: { review: ReviewProps }) => {
   const { attributes } = review;
   const { body, rating, author } = attributes;
   const { firstname, lastname, avatar } = author;
@@ -18,10 +18,13 @@ const ProductReviews = ({ review }: { review:ReviewProps }) => {
     <Card className="max-w-[500px]">
       <CardHeader className="flex gap-3">
         <Avatar isBordered className="shrink-0" color="primary" size="sm" src={avatar.small} />
-
-        <div className="flex flex-col">{firstname} {lastname}</div>
+        <div className="flex flex-col">
+          {firstname} {lastname}
+        </div>
         <StarsReviews rating={rating} />
-        {rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />}
+        <div className={`${rating > 3 ? "text-green-500" : "text-red-500"}`}>
+          {rating > 3 ? <FaRegThumbsUp /> : <FaRegThumbsDown />}
+        </div>
       </CardHeader>
       <Divider />
       <CardBody className="flex">

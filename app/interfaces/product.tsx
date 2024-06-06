@@ -25,10 +25,10 @@ type ProductObj = {
 type ProductDataProps = {
   products: {
     data: ProductObj;
-  }
+  };
   pagy: {
     pages: number;
-  }
+  };
   total: number;
   limit: number;
 };

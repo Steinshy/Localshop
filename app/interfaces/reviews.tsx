@@ -5,8 +5,8 @@ type AuthorProps = {
   email: string;
   avatar: {
     small: string;
-  }
-}
+  };
+};
 
 type ReviewProps = {
   id: string;
@@ -15,8 +15,8 @@ type ReviewProps = {
     body: string;
     rating: number;
     createdAt: string;
-    author: AuthorProps
-  }
+    author: AuthorProps;
+  };
 };
 
 type StarsReviewsProps = {

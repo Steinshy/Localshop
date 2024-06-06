@@ -9,5 +9,5 @@ const chipColor = (status: string) => {
     default:
       return "default";
   }
-}
-export {chipColor}
+};
+export { chipColor };

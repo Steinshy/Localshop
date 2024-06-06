@@ -1,4 +1,4 @@
-import { generateClamp } from '@utils/helpers';
+import { generateClamp } from "@utils/helpers";
 
 const names = [
   "John Doe",
@@ -10,7 +10,7 @@ const names = [
   "Eve Williams",
   "Frank Miller",
   "Grace Davis",
-  "Heidi Garcia"
+  "Heidi Garcia",
 ];
 
 const comments = [
@@ -23,9 +23,8 @@ const comments = [
   "This product is not what I expected.",
   "I'm very unhappy with this product.",
   "I'm very pleased with this product.",
-  "I'm very impressed with this product."
+  "I'm very impressed with this product.",
 ];
-
 
 const reviews = () => {
   const reviews = [];
@@ -35,14 +34,12 @@ const reviews = () => {
       avatar: `https://i.pravatar.cc/300?img=${i}`,
       author: names[i],
       comment: comments[i],
-      rating: generateClamp(i, 1, 5)
+      rating: generateClamp(i, 1, 5),
     });
   }
   return reviews;
-}
+};
 
 const reviewsDefaultData = reviews();
 
-export {
-  reviewsDefaultData
-}
+export { reviewsDefaultData };

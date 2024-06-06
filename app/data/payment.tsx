@@ -2,20 +2,18 @@ const paymentmethods = [
   {
     id: 1,
     label: "Credit Card",
-    default: true
+    default: true,
   },
   {
     id: 2,
     label: "Paypal",
-    default: false
+    default: false,
   },
   {
     id: 3,
     label: "Bank Transfer",
-    default: false
-  }
+    default: false,
+  },
 ];
 
-export {
-  paymentmethods
-}
+export { paymentmethods };

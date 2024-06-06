@@ -1,4 +1,3 @@
-
 type NavbarProps = {
   href: string;
   isActive: boolean;

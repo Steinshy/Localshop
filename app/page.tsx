@@ -9,8 +9,6 @@ const HomePage = () => (
     <p className="text-lg text-center">
       We believe that local businesses are the backbone of our communities and we want to help them thrive.
     </p>
-
-    {/* Add a background image, put it behind the text */}
   </div>
 );
 
