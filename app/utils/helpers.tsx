@@ -46,9 +46,6 @@ const generateClamp = (num: number, min: number, max: number): number => {
  * @param {number} value The value to convert.
  * @returns {string} The converted value.
  */
-const stringify = (value: number): string => {
-  return value.toString();
-};
 
 /**
  * Converts a value to rounded number.
@@ -129,7 +126,6 @@ export {
   generateRandomBool,
   calculatedDiscount,
   generateDefaultOrders,
-  stringify,
   round,
   readableDate,
   showToast,
