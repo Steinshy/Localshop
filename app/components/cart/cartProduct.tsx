@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 // React
 import { FC, useContext, useState } from "react";
@@ -24,40 +24,34 @@ import { CartContext } from "@utils/subProviders";
 // Utils
 import http from "@utils/http";
 
-const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
+const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);
   const { quantity, price, product } = cartItem;
   const { id, title, thumbnail } = product;
-
   const [currentQuantity, setCurrentQuantity] = useState<string>(quantity.toString());
-
   const slug = generateSlug(title);
 
   const removeItem = async () => {
     const response = await http.delete(`/cart/remove_item?product_id=${product.id}`);
     const { data } = response?.data as { data: CartResponse };
     cartStore.update(data);
-  }
-
-  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-
-    // API call to remove the item from the cart
-    void removeItem();
   };
 
   const handleQuantityChange = (quantity: string) => {
     if (Number(quantity) <= 0) return void removeItem();
-
-    // API call to update the quantity of the item
     const apiCall = async () => {
       setCurrentQuantity(quantity);
-      const response = await http.post('/cart/update_quantity', { product_id: product.id, quantity: quantity});
+      const response = await http.post("/cart/update_quantity", { product_id: product.id, quantity: quantity });
       const { data } = response?.data as { data: CartResponse };
       cartStore.update(data);
-    }
+    };
 
     void apiCall();
+  };
+
+  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    void removeItem();
   };
 
   return (
@@ -83,7 +77,7 @@ const CartProduct:FC<CartProductProps> = ({ cartItem }) => {
             color="default"
             variant="light"
             className="text-foreground/25"
-            onClick={(e) => handleRemoveItem(e)}
+            onClick={handleRemoveItem}
             startContent={<FaTrash />}
             isIconOnly
             size="sm"

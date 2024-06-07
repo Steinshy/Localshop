@@ -18,32 +18,25 @@ import { FaArrowRight } from "react-icons/fa";
 import { CartContext } from "@utils/subProviders";
 
 const CartSummary = () => {
-  const pathname:string = usePathname(), cartStore = useContext(CartContext);
-  const { data:cartData } = cartStore;
+  const pathname: string = usePathname(),
+    cartStore = useContext(CartContext);
+  const { data: cartData } = cartStore;
   const { attributes } = cartData;
   const { items, totalPrice } = attributes;
 
-  const buttonTextMap:{ [key: string]: string } = {
-    "/order/cart": "Proceed to Shipping",
-    "/order/shipping": "Proceed to Payment",
-    "/order/payment": "Return to Cart",
-    default: "Proceed to Payment",
-  };
+  // Button Text
+  const buttonText: string =
+    {
+      "/order/cart": "Proceed to Shipping",
+      "/order/shipping": "Proceed to Payment",
+      "/order/payment": "Return to Cart",
+      default: "Proceed to Payment",
+    }[pathname] || "Proceed to Payment";
 
-  const buttonText:string = buttonTextMap[pathname] || buttonTextMap.default;
-
-  const cartNavigation = (pathname:string) => {
-    switch (pathname) {
-      case "/order/cart":
-        return "/order/shipping";
-      case "/order/shipping":
-        return "/order/payment";
-      case "/order/payment":
-        return "/order/cart";
-      default:
-        return "/order/cart";
-    }
-  };
+  // Navigation
+  const paths = ["/order/cart", "/order/shipping", "/order/payment"];
+  const index = paths.indexOf(pathname);
+  const navPaths = paths[(index + 1) % paths.length];
 
   return (
     <div>
@@ -73,7 +66,7 @@ const CartSummary = () => {
           <Button
             color="success"
             variant="solid"
-            href={cartNavigation(pathname)}
+            href={navPaths}
             as={Link}
             endContent={<FaArrowRight />}
             className="text-white col-span-2"

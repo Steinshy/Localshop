@@ -55,23 +55,10 @@ type CartProductProps = {
   cartItem: CartItemObj;
 };
 
-type CartCouponsProps = {
-  totalPrice: number;
-};
-
-type CouponsObject = {
-  code: string;
-  discount: number;
-  active: boolean;
-  expired: boolean;
-};
-
 export type {
   CartResponse,
   CartItemObj,
   CartContextType,
   CartItemProps,
   CartProductProps,
-  CartCouponsProps,
-  CouponsObject,
 };
