@@ -1,9 +1,6 @@
 // Modules
 import toast, { ToastType } from "react-hot-toast";
 
-// Interfaces
-import { CouponsObject } from "@interfaces/cart";
-
 // Data
 import { paymentmethods } from "@data/payment";
 
@@ -66,16 +63,6 @@ const generateRandomBool = (): boolean => {
 };
 
 /**
- * Calculates the discount based on the selected coupon.
- * @param {CouponsObject} selectedCoupon The selected coupon.
- * @param {number} totalPrice The total price.
- * @returns {number} The calculated discount.
- */
-const calculatedDiscount = (selectedCoupon: CouponsObject, totalPrice: number): number => {
-  return totalPrice - totalPrice * (selectedCoupon.discount / 100);
-};
-
-/**
  * Generates an array of default orders.
  * @returns {Array} The array of default orders.
  */
@@ -124,7 +111,6 @@ export {
   generateSlug,
   generateClamp,
   generateRandomBool,
-  calculatedDiscount,
   generateDefaultOrders,
   round,
   readableDate,

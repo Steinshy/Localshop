@@ -15,70 +15,55 @@ import { FaTags } from "react-icons/fa";
 import { CartCouponsProps } from "@interfaces/cart";
 
 // Utils
-import { calculatedDiscount } from "@utils/helpers";
+import http from "@utils/http";
 
-// Data
-import { couponsDefaultData } from "@data/coupons";
+interface Coupon {
+  id: string;
+  type: string;
+  attributes: {
+    id: number;
+    code: string;
+    expiration: string;
+    discount: number;
+    expired: boolean;
+    createdAt: string;
+    updatedAt: string
+  }
+}
+
+interface CouponForm {
+  code?: string;
+}
 
 const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
-  const [appliedCoupon, setAppliedCoupon] = useState<number | null>(null);
-  const [discount, setDiscount] = useState<number>(0);
+  const [appliedCoupon, setAppliedCoupon] = useState<Coupon | null>(null);
   const [totalPriceDiscount, setTotalPriceDiscount] = useState<number>(0);
 
   useEffect(() => {
-    if (appliedCoupon !== null) {
-      setTotalPriceDiscount(calculatedDiscountValue(appliedCoupon, totalPrice));
+    if (appliedCoupon === null) {
+      return setTotalPriceDiscount(0);
     }
+
+    const { attributes: { discount } } = appliedCoupon;
+    const newPrice = totalPrice - totalPrice * (discount / 100);
+    setTotalPriceDiscount(newPrice);
   }, [totalPrice, appliedCoupon]);
 
-  // Coupon Handler - Apply
-  const handleDiscount = (index: number) => {
-    if (!checkCouponValidation(index)) {
-      return false;
-    }
-    setAppliedCoupon(index);
-    setDiscount(couponsDefaultData[index].discount);
-    setTotalPriceDiscount(calculatedDiscountValue(index, totalPrice));
-    return true;
-  };
-
-  // Coupon Validation - Helper
-  const checkCouponValidation = (index: number) => {
-    if (!couponsDefaultData[index].active || totalPrice === 0 || couponsDefaultData[index].expired) {
-      return false;
-    }
-    return true;
-  }
-
-  // Calculate Discount Value - Helper
-  const calculatedDiscountValue = (index: number, totalPrice: number) => {
-    const value = calculatedDiscount(couponsDefaultData[index], totalPrice);
-    return value;
-  }
-
-  // Coupon Handler - Remove
   const handleRemoveCoupon = () => {
     setAppliedCoupon(null);
-    setDiscount(0);
-    setTotalPriceDiscount(0);
   };
 
-  // Formik => Validate Coupon - Helper
-  const ValidateCoupon = (couponIndex: number) => {
-    if (totalPrice === 0) {
-      alert("Your cart is empty!");
-      return false;
+  const handleSubmit = (values: CouponForm) => {
+    const apiFetch = async () => {
+      const response = await http.get(`/coupon/${values.code}`);
+      const { data } = response.data as { data: Coupon };
+      setAppliedCoupon(data);
     }
-    if (couponIndex === -1) {
-      alert("Your coupon is invalid!");
-      return false;
-    }
-    if (!handleDiscount(couponIndex)) {
-      alert("Your coupon is expired!");
-      return false;
-    }
-    return true;
-  };
+
+    void apiFetch();
+  }
+
+  const discount = appliedCoupon?.attributes.discount || 0;
 
   return (
     <>
@@ -91,7 +76,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
       <div className="grid grid-cols-2 gap-4 text-foreground">
         <p className="text-lg">Total:</p>
         {/* Here place the total with or wothout discount */}
-        <p className="text-lg">
+        <div className="text-lg">
           {totalPrice}€
           {appliedCoupon !== null && (
             <>
@@ -99,7 +84,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
               <div className="text-md text-foreground">{totalPriceDiscount}€</div>
             </>
           )}
-        </p>
+        </div>
       </div>
 
       <hr className="my-4" />
@@ -107,22 +92,18 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
 
       {/* Coupon Validation */}
       <Formik
-        initialValues={{ coupon: "" }}
-        validate={(values) => {
-          const errors: { coupon?: string } = {};
-          if (!values.coupon) {
-            errors.coupon = "Required";
+        initialValues={{ code: '' }}
+        validate={(values:CouponForm) => {
+          const errors:CouponForm = {};
+          if (!values.code) {
+            errors.code = "Required";
           }
           return errors;
         }}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            const couponIndex = couponsDefaultData.findIndex((coupon) => coupon.code === values.coupon);
-            if (ValidateCoupon(couponIndex)) {
-              values.coupon = "";
-            }
-            setSubmitting(false);
-          }, 400);
+          setSubmitting(true);
+          handleSubmit(values);
+          setSubmitting(false);
         }}
       >
         <Form className="grid col-auto gap-4 my-4">
@@ -130,8 +111,8 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
             className="col-span-2"
             isRequired
             as={Input}
-            id="coupon"
-            name="coupon"
+            id="code"
+            name="code"
             type="text"
             isDisabled={totalPrice === 0}
             radius="sm"
@@ -155,7 +136,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
           variant="solid"
           onClose={appliedCoupon !== null ? handleRemoveCoupon : undefined}
         >
-          {appliedCoupon !== null ? `${couponsDefaultData[appliedCoupon].code} applied` : "No coupon applied"}
+          {appliedCoupon !== null ? `${appliedCoupon.attributes.code} applied` : "No coupon applied"}
         </Chip>
       </div>
     </>
