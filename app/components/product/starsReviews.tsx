@@ -9,7 +9,7 @@ import { StarsReviewsProps } from "@interfaces/reviews";
 
 const StarsReviews: FC<StarsReviewsProps> = ({ rating }) => {
   const roundedRating = round(rating);
-  
+
   const svgStars = Array.from({ length: 5 }, (_, i) => {
     const isFullStar = i < roundedRating;
     const starColor = isFullStar ? "text-yellow-500" : "text-gray-300";
@@ -28,6 +28,5 @@ const StarsReviews: FC<StarsReviewsProps> = ({ rating }) => {
   });
   return <div className="flex items-center gap-1">{svgStars}</div>;
 };
-
 
 export default StarsReviews;

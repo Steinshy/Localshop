@@ -1,4 +1,7 @@
+// NextUI
 import { Card, Image } from "@nextui-org/react";
+
+// Data
 import { imageWidth, imageHeight, ProductsOffers } from "@data/offers";
 
 const OffersDisplay = () => {

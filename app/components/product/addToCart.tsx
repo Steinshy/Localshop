@@ -43,7 +43,7 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
 
     void apiCall();
   };
-  
+
   const btnOptions: ButtonProps = {
     color: quantity > 0 ? "success" : "primary",
     startContent: quantity > 0 && !isIconOnly && <FaArrowRight className="text-lg text-white" />,
@@ -51,14 +51,10 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
   };
 
   const buttonContent = isIconOnly ? (
-    <>
-      {quantity > 0 ? (
-        <FaArrowRight className="text-lg text-white" />
-      ) : (
-        <FaShoppingCart className="text-lg" />
-      )}
-    </>
-  ) : btnOptions.children;
+    <>{quantity > 0 ? <FaArrowRight className="text-lg text-white" /> : <FaShoppingCart className="text-lg" />}</>
+  ) : (
+    btnOptions.children
+  );
 
   return isLogged() ? (
     <Button

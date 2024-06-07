@@ -4,7 +4,7 @@
 import { FC, useState, useCallback } from "react";
 
 // NextUI
-import { Image, Link } from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 
 // Interfaces
 import { ProductImagesProps } from "@interfaces/product";
@@ -29,19 +29,16 @@ const ProductImages: FC<ProductImagesProps> = ({ alt, main, images }) => {
 
       <div className="grid grid-flow-col mt-2 gap-3 max-w-[300px]">
         {images.map((image) => (
-          <Link
+          <Image
+            className="w-[40px] h-[40px] object-cover"
             key={image.full}
+            alt={alt}
+            src={image.thumbnail}
+            shadow="none"
+            radius="sm"
+            isZoomed
             onMouseOver={() => handleImageChange(image.full)}
-          >
-            <Image
-              alt={alt}
-              src={image.thumbnail}
-              className="w-[40px] h-[40px] object-cover"
-              shadow="none"
-              radius="sm"
-              isZoomed
-            />
-          </Link>
+          />
         ))}
       </div>
     </div>

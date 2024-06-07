@@ -19,14 +19,12 @@ const AddressCard: FC<AddressCardProps> = ({
   address,
   selectable = false,
 }) => {
-  const handleSelect = () => {
-    if (setSelected) {
-      setSelected(address.id);
-    }
-  };
-
   const { attributes } = address;
   const { label, firstname, lastname, address: addressLine, city, country, zip, default: addressDefault } = attributes;
+
+  const handleSelect = () => {
+    setSelected?.(address.id);
+  };
 
   return (
     <div className="relative h-[124px]">
@@ -42,19 +40,20 @@ const AddressCard: FC<AddressCardProps> = ({
           </p>
           <p>{addressLine}</p>
           <p>
-            {city}, {country} {zip}
+            {city} {country} {zip}
           </p>
+
+          <div className="absolute top-2 right-2 flex gap-1">
+            {addressDefault && (
+              <Chip variant="flat" color="primary" size="sm" radius="sm">
+                Default
+              </Chip>
+            )}
+            <AddressModal fetch={fetch} id={address.id} addresses={addresses} />
+            <RemoveAddress fetch={fetch} id={address.id} />
+          </div>
         </CardBody>
       </Card>
-      <div className="absolute top-2 right-2 flex gap-1">
-        {addressDefault && (
-          <Chip variant="flat" color="primary" size="sm" radius="sm">
-            Default
-          </Chip>
-        )}
-        <AddressModal fetch={fetch} id={address.id} addresses={addresses} />
-        <RemoveAddress fetch={fetch} id={address.id} />
-      </div>
     </div>
   );
 };

@@ -1,3 +1,5 @@
+// React
+import { FC } from "react";
 // NextUI
 import { Card, CardBody, CardHeader, Avatar, Divider } from "@nextui-org/react";
 
@@ -9,26 +11,32 @@ import StarsReviews from "@components/product/starsReviews";
 // Interface
 import { ReviewProps } from "@interfaces/reviews";
 
-const ProductReviews = ({ review }: { review: ReviewProps }) => {
+const ProductReviews: FC<{ review: ReviewProps }> = ({ review }) => {
   const { attributes } = review;
   const { body, rating, author } = attributes;
   const { firstname, lastname, avatar } = author;
 
   return (
     <Card className="max-w-[500px]">
-      <CardHeader className="flex gap-3">
-        <Avatar isBordered className="shrink-0" color="primary" size="sm" src={avatar.small} />
+      <CardHeader className="flex justify-between items-center gap-3">
+        <Avatar isBordered color="primary" size="sm" src={avatar.small} />
         <div className="flex flex-col">
-          {firstname} {lastname}
+          <span className="font-semibold">{`${firstname} ${lastname}`}</span>
+          <StarsReviews rating={rating} />
         </div>
-        <StarsReviews rating={rating} />
-        <div className={`${rating > 3 ? "text-green-500" : "text-red-500"}`}>
-          {rating > 3 ? <FaRegThumbsUp /> : <FaRegThumbsDown />}
-        </div>
+        {rating > 3 ? (
+          <div className="text-green-500">
+            <FaRegThumbsUp />
+          </div>
+        ) : (
+          <div className="text-red-500">
+            <FaRegThumbsDown />
+          </div>
+        )}
       </CardHeader>
       <Divider />
-      <CardBody className="flex">
-        <p>{body}</p>
+      <CardBody>
+        <p className="whitespace-pre-line">{body}</p>
       </CardBody>
     </Card>
   );
