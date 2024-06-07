@@ -31,13 +31,19 @@ import http from "@utils/http";
 import { showToast } from "@utils/helpers";
 
 const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+  const cleanAttr = (attributes:AddressValuesProps) => {
+    const unwantedKeys = ['id', 'createdAt', 'updatedAt'];
+    unwantedKeys.forEach((e:string) => delete attributes[e as keyof AddressValuesProps]);
+    return attributes;
+  }
 
   const findAddress = () => {
     const address = addresses.find((obj) => obj.id === id);
     if (address) {
       const { attributes } = address;
-      return attributes;
+      return cleanAttr(attributes);
     }
     return defaultAddress;
   };
@@ -50,6 +56,8 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
       const formData = { address: values };
       await http.post("/addresses", formData);
       fetch();
+      showToast("Address Added!", "success");
+      onClose();
     };
 
     void apiFetch();
@@ -62,6 +70,7 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
       await http.put(`/addresses/${id}`, formData);
       fetch();
       showToast("Address Updated!", "success");
+      onClose();
     };
 
     void apiFetch();
@@ -71,6 +80,8 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
     const newAddress = { ...address, ...values };
     id > 0 ? update(newAddress) : add(newAddress);
   };
+
+  const inputOptions = { isRequired: true, as: Input, radius: 'sm', type: 'text' };
 
   return (
     <>
@@ -87,150 +98,121 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
       )}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">{id > 0 ? "Edit" : "Create"} Address</ModalHeader>
-              <ModalBody>
-                <Formik
-                  initialValues={address}
-                  // validate={(values: AddressAttr) => {
-                  //   console.log("validate");
-                  //   const errors: { [key: string]: string } = {};
-                  //   Object.keys(values).forEach((key) => {
-                  //     if (!values[key]) {
-                  //       console.log(key);
-                  //       errors[key] = "Required";
-                  //     }
-                  //   });
-                  //   // return errors;
-                  // }}
-                  onSubmit={(values: AddressValuesProps, { setSubmitting }) => {
-                    setTimeout(() => {
-                      console.log("submit");
-                      handleSubmit(values);
-                      setSubmitting(false);
-                      onClose();
-                    }, 400);
-                  }}
+          <ModalHeader className="flex flex-col gap-1">{id > 0 ? "Edit" : "Create"} Address</ModalHeader>
+          <ModalBody>
+            <Formik
+              initialValues={address}
+              // validate={(values: AddressValuesProps) => {
+              //   const errors: { [key: string]: string } = {};
+              //   Object.keys(values).forEach((key) => {
+              //     if (!values[key as keyof AddressValuesProps]) {
+              //       errors[key] = "Required";
+              //     }
+              //   });
+              //   return errors;
+              // }}
+              onSubmit={(values: AddressValuesProps, { setSubmitting }) => {
+                setSubmitting(false);
+                handleSubmit(values);
+                setSubmitting(false);
+              }}
+            >
+              <Form className="grid gap-4 my-4">
+                <Field
+                  {...inputOptions}
+                  label="Label"
+                  id="label"
+                  name="label"
+                  placeholder="Home"
+                />
+                <div className="grid grid-cols-2 gap-4">
+                  <Field
+                    {...inputOptions}
+                    className="col-span-1"
+                    label="First Name"
+                    id="firstname"
+                    name="firstname"
+                    placeholder="First Name"
+                  />
+
+                  <Field
+                    {...inputOptions}
+                    label="Last Name"
+                    className="col-span-1"
+                    id="lastname"
+                    name="lastname"
+                    placeholder="Last Name"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 gap-4">
+                  <Field
+                    {...inputOptions}
+                    label="Adress"
+                    className="col-span-2"
+                    id="address"
+                    name="address"
+                    placeholder="122 Example St"
+                  />
+                </div>
+
+                <div className="grid grid-cols-3 gap-4">
+                  <Field
+                    {...inputOptions}
+                    label="Country"
+                    className="col-span-1"
+                    id="country"
+                    name="country"
+                    placeholder="USA"
+                  />
+
+                  <Field
+                    {...inputOptions}
+                    label="City"
+                    className="col-span-1"
+                    id="city"
+                    name="city"
+                    placeholder="Las Vegas"
+                  />
+
+                  <Field
+                    {...inputOptions}
+                    label="Zip"
+                    className="col-span-1"
+                    id="zip"
+                    name="zip"
+                    type="number"
+                    placeholder="00000"
+                  />
+                </div>
+
+                <Field
+                  as={Checkbox}
+                  type="checkbox"
+                  id="default"
+                  name="default"
+                  label="Set as default"
+                  className="col-span-1"
+                  defaultSelected={address.default || false}
                 >
-                  <Form className="grid gap-4 my-4">
-                    <Field
-                      isRequired
-                      as={Input}
-                      label="Label"
-                      id="label"
-                      name="label"
-                      type="text"
-                      radius="sm"
-                      placeholder="Home"
-                    />
-                    <div className="grid grid-cols-2 gap-4">
-                      <Field
-                        isRequired
-                        as={Input}
-                        className="col-span-1"
-                        label="First Name"
-                        id="firstname"
-                        name="firstname"
-                        type="text"
-                        radius="sm"
-                        placeholder="First Name"
-                      />
+                  Set as default
+                </Field>
 
-                      <Field
-                        isRequired
-                        as={Input}
-                        label="Last Name"
-                        className="col-span-1"
-                        id="lastname"
-                        name="lastname"
-                        type="text"
-                        radius="sm"
-                        placeholder="Last Name"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4">
-                      <Field
-                        isRequired
-                        as={Input}
-                        label="Adress"
-                        className="col-span-2"
-                        id="address"
-                        name="address"
-                        type="text"
-                        radius="sm"
-                        placeholder="122 Example St"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-4">
-                      <Field
-                        isRequired
-                        as={Input}
-                        label="Country"
-                        className="col-span-1"
-                        id="country"
-                        name="country"
-                        type="text"
-                        radius="sm"
-                        placeholder="USA"
-                      />
-
-                      <Field
-                        isRequired
-                        as={Input}
-                        label="City"
-                        className="col-span-1"
-                        id="city"
-                        name="city"
-                        type="text"
-                        radius="sm"
-                        placeholder="Las Vegas"
-                      />
-
-                      <Field
-                        isRequired
-                        as={Input}
-                        label="Zip"
-                        className="col-span-1"
-                        id="zip"
-                        name="zip"
-                        type="number"
-                        radius="sm"
-                        placeholder="00000"
-                      />
-                    </div>
-
-                    <Field
-                      as={Checkbox}
-                      type="checkbox"
-                      id="default"
-                      name="default"
-                      label="Set as default"
-                      className="col-span-1"
-                      defaultSelected={address.default || false}
-                    >
-                      Set as default
-                    </Field>
-
-                    <div className="flex justify-center">
-                      <Button
-                        type="submit"
-                        color="primary"
-                        variant="solid"
-                        className="text-white"
-                        size="md"
-                        radius="sm"
-                      >
-                        {id > 0 ? "Confirm Edit" : "Create Address"}
-                      </Button>
-                    </div>
-                  </Form>
-                </Formik>
-              </ModalBody>
-            </>
-          )}
+                <div className="flex justify-center">
+                  <Button
+                    type="submit"
+                    color="primary"
+                    variant="solid"
+                    className="text-white"
+                    size="md"
+                    radius="sm"
+                  >
+                    {id > 0 ? "Confirm Edit" : "Create Address"}
+                  </Button>
+                </div>
+              </Form>
+            </Formik>
+          </ModalBody>
         </ModalContent>
       </Modal>
     </>
