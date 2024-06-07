@@ -1,3 +1,5 @@
+// React
+import { FC } from "react";
 // Modules
 import { Formik, Form, Field } from "formik";
 
@@ -8,15 +10,14 @@ import { Button, Input } from "@nextui-org/react";
 import { FaTags } from "react-icons/fa";
 
 // interface
+import { CouponFormProps, CouponValidationProps } from "@interfaces/coupon";
 
-import { CouponForm } from "@interfaces/coupon";
-
-const CouponValidation = ({ handleSubmit, totalPrice }) => {
+const CouponValidation: FC<CouponValidationProps> = ({ handleSubmit, totalPrice }) => {
   return (
     <Formik
       initialValues={{ code: "" }}
-      validate={(values: CouponForm) => {
-        const errors: CouponForm = {};
+      validate={(values: CouponFormProps) => {
+        const errors: CouponFormProps = {};
         if (!values.code) {
           errors.code = "Required";
         }

@@ -8,7 +8,7 @@ import { Chip } from "@nextui-org/react";
 import { FaRegCircleCheck } from "react-icons/fa6";
 
 // Interfaces
-import { CouponObj, CartCouponsProps, CouponForm } from "@interfaces/coupon";
+import { CouponObj, CartCouponsProps, CouponFormProps } from "@interfaces/coupon";
 
 // Utils
 import http from "@utils/http";
@@ -34,7 +34,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ totalPrice }) => {
     setAppliedCoupon(null);
   };
 
-  const handleSubmit = (values: CouponForm) => {
+  const handleSubmit = (values: CouponFormProps) => {
     const apiFetch = async () => {
       const response = await http.get(`/coupon/${values.code}`);
       const { data } = response.data as { data: CouponObj };

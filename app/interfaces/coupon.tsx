@@ -16,8 +16,13 @@ type CartCouponsProps = {
   totalPrice: number;
 };
 
-type CouponForm = {
+type CouponFormProps = {
   code?: string;
 };
 
-export type { CouponObj, CartCouponsProps, CouponForm };
+interface CouponValidationProps {
+  handleSubmit: (values: CouponFormProps) => void;
+  totalPrice: number;
+}
+
+export type { CouponObj, CartCouponsProps, CouponFormProps, CouponValidationProps };
