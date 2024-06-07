@@ -10,44 +10,69 @@ import { useRouter, usePathname } from "next/navigation";
 import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown, Divider } from "@nextui-org/react";
 
 // Icon
-import { FaChevronDown, FaRegUserCircle, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
+import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
 
 // Utils
 import { UserContext, CartContext } from "@utils/subProviders";
 import { showToast } from "@utils/helpers";
 
-const UserMenu: FC = () => {
+const UserMenu = () => {
   const router = useRouter(),
-    pathname = usePathname(),
     userStore = useContext(UserContext),
     cartStore = useContext(CartContext);
   const { data, isLogged } = userStore;
   const { attributes } = data || {};
   const { firstname, lastname } = attributes || {};
 
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-  const handleUserMenu = (value: React.Key): void => {
-    if (pathname.includes("/user/")) {
-      router.push("/");
-      return;
+  const handleUserMenu = (key: React.Key) => {
+    const menuItem = menuItems.find((item) => item.key === key);
+    if (menuItem) {
+      switch (menuItem.key) {
+        case "profile":
+          router.push("/user/profile");
+          break;
+        case "addresses":
+          router.push("/user/addresses");
+          break;
+        case "orders":
+          router.push("/user/orders");
+          break;
+        case "settings":
+          router.push("/user/settings");
+          break;
+        case "logout":
+          void userStore.logout();
+          void cartStore.reset();
+          break;
+        default:
+          break;
+      }
     }
-    router.push(`/user/${value}`);
   };
 
-  const handleUserMenuOpen = (bool: boolean) => {
-    setIsUserMenuOpen(bool);
+  const handleUserMenuOpen = (isOpen: boolean) => {
+    setIsUserMenuOpen(isOpen);
   };
 
   const handleUserLogin = () => {
     void userStore.refresh();
     void cartStore.refresh();
-    showToast('Logged in!', 'success');
+    showToast("Logged in!", "success");
   };
+
+  const menuItems = [
+    { label: "Profile", key: "profile", icon: <FaUserCog /> },
+    { label: "Addresses", key: "addresses", icon: <FaShoppingBag /> },
+    { label: "Orders", key: "orders", icon: <FaShoppingBag /> },
+    { label: "Settings", key: "settings", icon: <FaUserCog /> },
+    { label: "Logout", key: "logout", icon: <FaSignOutAlt /> },
+  ];
 
   return !isLogged() ? (
     <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
-      <span className="font-semibold">Login</span>
+      Login
     </Button>
   ) : (
     <Dropdown placement="bottom-end" onOpenChange={handleUserMenuOpen}>
@@ -65,42 +90,20 @@ const UserMenu: FC = () => {
               src="https:i.pravatar.cc/150?u=a042581f4e29026704d"
             />
           }
-          endContent={
-            <div className={`transition-transform	${isUserMenuOpen ? "rotate-180" : "rotate-0"}`}>
-              <FaChevronDown />
-            </div>
-          }
+          endContent={<FaChevronDown className={`transition-transform	${isUserMenuOpen ? "rotate-180" : "rotate-0"}`} />}
         >
-          <span className="pl-2 hidden sm:block font-semibold">
-            {lastname} {firstname}
-          </span>
+          {lastname} {firstname}
         </Button>
       </DropdownTrigger>
-      <DropdownMenu onAction={handleUserMenu} aria-label="Profile Actions" variant="flat">
-        <DropdownItem startContent={<FaRegUserCircle />} key="profile" textValue="profile">
-          Profile
-        </DropdownItem>
-        <DropdownItem startContent={<FaShoppingBag />} key="addresses" textValue="addresses">
-          Addresses
-        </DropdownItem>
-        <DropdownItem startContent={<FaShoppingBag />} key="orders" textValue="order">
-          Orders
-        </DropdownItem>
-        <DropdownItem startContent={<FaUserCog />} key="settings" textValue="settings">
-          Settings
-        </DropdownItem>
-        <DropdownItem>
-          <Divider />
-        </DropdownItem>
-        <DropdownItem
-          startContent={<FaSignOutAlt />}
-          key="logout"
-          textValue="logout"
-          className="text-danger"
-          color="danger"
-        >
-          Logout
-        </DropdownItem>
+      <DropdownMenu onAction={(key) => handleUserMenu(key)} aria-label="Profile Actions" variant="flat">
+        {menuItems.map(({ label, key, icon }) => (
+          <DropdownItem key={key}>
+            <div className="flex items-center gap-2">
+              {icon}
+              {label}
+            </div>
+          </DropdownItem>
+        ))}
       </DropdownMenu>
     </Dropdown>
   );
