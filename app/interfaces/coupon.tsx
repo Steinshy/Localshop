@@ -1,15 +1,10 @@
-type CouponObj = {
-  id: string;
-  type: string;
-  attributes: {
-    id: number;
-    code: string;
-    expiration: string;
-    discount: number;
-    expired: boolean;
-    createdAt: string;
-    updatedAt: string;
-  };
+type CouponsObject = {
+  id: number;
+  category_id: number;
+  code: string;
+
+  discount: number;
+  expiration: string;
 };
 
 type CartCouponsProps = {
@@ -20,9 +15,10 @@ type CouponFormProps = {
   code?: string;
 };
 
-interface CouponValidationProps {
+type CouponValidationProps = {
   handleSubmit: (values: CouponFormProps) => void;
+  handleRemoveCoupon: (event: React.MouseEvent<HTMLButtonElement>) => void;
   totalPrice: number;
-}
+};
 
-export type { CouponObj, CartCouponsProps, CouponFormProps, CouponValidationProps };
+export type { CartCouponsProps, CouponFormProps, CouponsObject, CouponValidationProps };

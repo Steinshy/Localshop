@@ -17,12 +17,10 @@ import { CartProductProps, CartResponse } from "@interfaces/cart";
 
 // Helpers
 import { generateSlug } from "@utils/helpers";
-
-// Store
-import { CartContext } from "@utils/subProviders";
-
-// Utils
 import http from "@utils/http";
+
+// Providers
+import { CartContext } from "@utils/subProviders";
 
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);

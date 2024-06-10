@@ -27,6 +27,7 @@ const CouponValidation: FC<CouponValidationProps> = ({ handleSubmit, totalPrice 
         setSubmitting(true);
         handleSubmit(values);
         setSubmitting(false);
+        values.code = "";
       }}
     >
       <Form className="grid col-auto gap-4 my-4">
@@ -42,9 +43,11 @@ const CouponValidation: FC<CouponValidationProps> = ({ handleSubmit, totalPrice 
           placeholder="Coupon code"
           startContent={<FaTags className="text-foreground" />}
           endContent={
-            <Button type="submit" size="sm" radius="sm" variant="solid" color="primary" isDisabled={totalPrice === 0}>
-              Apply
-            </Button>
+            <>
+              <Button type="submit" size="sm" radius="sm" variant="solid" color="primary" isDisabled={totalPrice === 0}>
+                Apply
+              </Button>
+            </>
           }
         />
       </Form>

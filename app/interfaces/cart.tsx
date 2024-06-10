@@ -1,15 +1,6 @@
 // React
 import { Dispatch, SetStateAction } from "react";
-
-type Coupon = {
-  id: number;
-  code: string;
-  expiration: string;
-  discount: number;
-  expired: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+import { CouponsObject } from "@interfaces/coupon";
 
 type CartResponse = {
   id: string;
@@ -24,7 +15,7 @@ type CartResponse = {
     totalItems: number;
     totalUniqueItems: number;
     finalPrice: number;
-    coupon: Coupon;
+    coupon: CouponsObject;
   };
 };
 
@@ -67,24 +58,9 @@ type CartProductProps = {
   cartItem: CartItemObj;
 };
 
-type CartCouponsProps = {
-  totalPrice: number;
-};
+type CartButtonProcessProps = {
+  pathname: string;
+  items: CartItemObj[];
+}
 
-type CouponsObject = {
-  code: string;
-  discount: number;
-  active: boolean;
-  expired: boolean;
-};
-
-export type {
-  CartResponse,
-  CartItemObj,
-  CartContextType,
-  CartItemProps,
-  CartProductProps,
-  CartCouponsProps,
-  CouponsObject,
-  Coupon
-};
+export type { CartResponse, CartItemObj, CartContextType, CartItemProps, CartProductProps, CartButtonProcessProps  };

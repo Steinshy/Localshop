@@ -1,10 +1,7 @@
-// React
-import { FC } from 'react';
-
 // NextJS
 import { redirect } from 'next/navigation';
 
-const OrderPage:FC = () => {
+const OrderPage = () => {
   redirect('/order/cart');
 }
 
