@@ -13,9 +13,9 @@ import CartButtonProcess from "@components/cart/cartButtonProcess";
 const CartSummary = () => {
   const pathname: string = usePathname(),
     cartStore = useContext(CartContext);
-  const { data: cartData } = cartStore;
-  const { attributes } = cartData;
-  const { items, totalPrice } = attributes;
+  const { update, data } = cartStore;
+  const { attributes: { items, finalPrice, totalPrice, coupon }} = data;
+  const { discount } = coupon || {};
 
   return (
     <div>
@@ -31,7 +31,7 @@ const CartSummary = () => {
         </div>
 
         {/* COUPONS */}
-        <CartCoupons totalPrice={totalPrice} />
+        <CartCoupons discount={discount} coupon={coupon} finalPrice={finalPrice} totalPrice={totalPrice} update={update} />
 
           {/* Shipping - Payment Button */}
         <div className="grid grid-cols-2 gap-4">

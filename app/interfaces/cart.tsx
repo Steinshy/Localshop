@@ -10,11 +10,11 @@ type CartResponse = {
     id: number;
     createdAt: string;
     updatedAt: string;
-    items: CartItemObj[];
     totalPrice: number;
     totalItems: number;
     totalUniqueItems: number;
     finalPrice: number;
+    items: CartItemObj[];
     coupon: CouponsObject;
   };
 };

@@ -1,5 +1,5 @@
 // React
-import { FC, useContext } from "react";
+import { FC } from "react";
 
 // NextUI
 import { Chip } from "@nextui-org/react";
@@ -12,19 +12,12 @@ import { CartResponse } from "@interfaces/cart";
 import { CartCouponsProps, CouponFormProps } from "@interfaces/coupon";
 
 // Utils
-import { CartContext } from "@utils/subProviders";
 import http from "@utils/http";
 
 // Components
 import CouponValidation from "@components/cart/couponValidation";
 
-const CartCoupons: FC<CartCouponsProps> = () => {
-  const cartStore = useContext(CartContext);
-  const { update, data } = cartStore;
-  const {
-    attributes: { finalPrice, totalPrice, coupon },
-  } = data;
-  const discount = coupon ? coupon.discount : 0;
+const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, totalPrice, update }) => {
 
   const handleSubmit = (values: CouponFormProps) => {
     const apiFetch = async () => {
@@ -86,7 +79,7 @@ const CartCoupons: FC<CartCouponsProps> = () => {
             variant="solid"
             onClose={handleRemoveCoupon}
           >
-            Coupon value of {coupon.discount}% applied
+            Coupon value of {discount}% applied
           </Chip>
         ) : (
           <Chip size="sm" color="secondary" variant="solid">
