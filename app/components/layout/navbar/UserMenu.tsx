@@ -1,29 +1,25 @@
 "use client";
 
 // React
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 
 // NextJS
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 // NextUI
-import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown, Divider } from "@nextui-org/react";
+import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown } from "@nextui-org/react";
 
 // Icon
 import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
 
 // Utils
-import { UserContext, CartContext } from "@utils/subProviders";
 import { showToast } from "@utils/helpers";
 
-const UserMenu = () => {
-  const router = useRouter(),
-    userStore = useContext(UserContext),
-    cartStore = useContext(CartContext);
-  const { data, isLogged } = userStore;
-  const { attributes } = data || {};
-  const { firstname, lastname } = attributes || {};
+// Interface
+import { UserMenuProps } from "@interfaces/navbar";
 
+const UserMenu: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname, lastname }) => {
+  const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const handleUserMenu = (key: React.Key) => {
@@ -63,11 +59,11 @@ const UserMenu = () => {
   };
 
   const menuItems = [
-    { label: "Profile", key: "profile", icon: <FaUserCog /> },
-    { label: "Addresses", key: "addresses", icon: <FaShoppingBag /> },
-    { label: "Orders", key: "orders", icon: <FaShoppingBag /> },
-    { label: "Settings", key: "settings", icon: <FaUserCog /> },
-    { label: "Logout", key: "logout", icon: <FaSignOutAlt /> },
+    { key: "profile", label: "Profile", icon: <FaUserCog /> },
+    { key: "addresses", label: "Addresses", icon: <FaShoppingBag /> },
+    { key: "orders", label: "Orders", icon: <FaShoppingBag /> },
+    { key: "settings", label: "Settings", icon: <FaUserCog /> },
+    { key: "logout", label: "Logout", icon: <FaSignOutAlt /> },
   ];
 
   return !isLogged() ? (
@@ -96,7 +92,7 @@ const UserMenu = () => {
         </Button>
       </DropdownTrigger>
       <DropdownMenu onAction={(key) => handleUserMenu(key)} aria-label="Profile Actions" variant="flat">
-        {menuItems.map(({ label, key, icon }) => (
+        {menuItems.map(({ key, label, icon }) => (
           <DropdownItem key={key}>
             <div className="flex items-center gap-2">
               {icon}
