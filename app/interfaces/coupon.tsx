@@ -20,8 +20,8 @@ type CouponFormProps = {
   code?: string;
 };
 type CouponValidationProps = {
+  errors: CouponFormProps;
   handleSubmit: (values: CouponFormProps) => void;
-  handleRemoveCoupon: (event: React.MouseEvent<HTMLButtonElement>) => void;
   totalPrice: number;
 };
 

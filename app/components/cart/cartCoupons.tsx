@@ -1,5 +1,7 @@
+'use client';
+
 // React
-import { FC } from "react";
+import { FC, useState } from "react";
 
 // NextUI
 import { Chip } from "@nextui-org/react";
@@ -18,14 +20,23 @@ import http from "@utils/http";
 import CouponValidation from "@components/cart/couponValidation";
 
 const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, totalPrice, update }) => {
+  const [errors, setErrors] = useState<CouponFormProps>({});
 
   const handleSubmit = (values: CouponFormProps) => {
     const apiFetch = async () => {
-      const response = await http.post("/cart/coupon", { code: values.code });
-      const { data } = response.data as { data: CartResponse };
-      update(data);
+      try {
+        const response = await http.post("/cart/coupon", { code: values.code });
+        const { data } = response.data as { data: CartResponse };
+        update(data);
+
+      } catch (error) {
+        let message = 'Invalid';
+        if (error instanceof Error) { message = error.message; } // A revoir
+        setErrors({ code: message });
+      }
     };
 
+    setErrors({});
     void apiFetch();
   };
 
@@ -67,7 +78,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
       <p className="text-small mb-4 text-foreground/75 italic">Shipping and taxes will be calculated at checkout</p>
 
       {/* Coupon Validation */}
-      <CouponValidation handleSubmit={handleSubmit} handleRemoveCoupon={handleRemoveCoupon} totalPrice={totalPrice} />
+      <CouponValidation errors={errors} handleSubmit={handleSubmit} totalPrice={totalPrice} />
 
       {coupon &&
         <div className="flex justify-center mb-4">
