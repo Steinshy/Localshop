@@ -40,7 +40,7 @@ type AddressValuesProps = {
 };
 
 type AddressListProps = {
-  items: AddressObj[];
+  items?: AddressObj[];
   selected?: number | null;
   setSelected?: (id: number) => void;
   selectable?: boolean;

@@ -27,7 +27,7 @@ const AddressCard: FC<AddressCardProps> = ({
   };
 
   return (
-    <div className="relative h-[124px]">
+    <div className="relative">
       <Card
         className={`border-2 w-full h-full ${selected === address.id ? "border-primary" : "border-transparent"}`}
         isPressable={selectable}

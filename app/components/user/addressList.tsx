@@ -16,6 +16,12 @@ import http from "@utils/http";
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
   const [addresses, setAddresses] = useState<AddressObj[]>(items);
 
+  useEffect(() => {
+    if (addresses.length === 0) {
+      fetch();
+    }
+  }, [addresses]);
+
   const fetch = () => {
     const apiFetch = async () => {
       // fetch request

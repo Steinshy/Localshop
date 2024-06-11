@@ -15,8 +15,8 @@ import { UserContext } from "@utils/subProviders";
 import { LayoutProps } from "@interfaces/general";
 
 const OrderLayout: FC<LayoutProps> = ({ children }) => {
-  const pathname = usePathname(),
-    userStore = useContext(UserContext);
+  const pathname = usePathname(), userStore = useContext(UserContext);
+
   // Stepper
   const steps = ["Cart", "Shipping", "Payment"];
   const currentStep = steps.findIndex((step) => step.toLowerCase() === pathname.split("/").pop());

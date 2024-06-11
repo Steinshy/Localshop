@@ -10,8 +10,7 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
-  Checkbox,
-  Card,
+  Checkbox
 } from "@nextui-org/react";
 
 // Icons
@@ -90,11 +89,9 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
           <FaEdit className="text-lg" />
         </Button>
       ) : (
-        <Card isPressable onPress={onOpen} className="flex justify-center items-center h-[124px]">
-          <h2 className="flex justify-center items-center font-semibold">
-            <FaPlus className="mr-1" /> New
-          </h2>
-        </Card>
+        <Button onPress={onOpen} variant="flat" color="primary">
+          <FaPlus className="mr-1" /> New
+        </Button>
       )}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
         <ModalContent>

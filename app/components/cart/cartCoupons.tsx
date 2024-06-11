@@ -43,7 +43,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
     <>
       <div className="grid grid-cols-2 gap-4 text-foreground">
         <p className="text-lg">Discount:</p>
-        <p className="text-lg">{discount}%</p>
+        <p className="text-lg">{discount || 0}%</p>
       </div>
       <hr className="my-4" />
       <div className="grid grid-cols-2 gap-4 text-foreground">
@@ -69,8 +69,8 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
       {/* Coupon Validation */}
       <CouponValidation handleSubmit={handleSubmit} handleRemoveCoupon={handleRemoveCoupon} totalPrice={totalPrice} />
 
-      <div className="flex justify-center mb-4">
-        {coupon ? (
+      {coupon &&
+        <div className="flex justify-center mb-4">
           <Chip
             className="text-white"
             startContent={<FaRegCircleCheck size={18} />}
@@ -81,12 +81,8 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
           >
             Coupon value of {discount}% applied
           </Chip>
-        ) : (
-          <Chip size="sm" color="secondary" variant="solid">
-            No coupon applied
-          </Chip>
-        )}
-      </div>
+        </div>
+      }
     </>
   );
 };
