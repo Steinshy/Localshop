@@ -16,7 +16,7 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { CartContext, UserContext } from "@utils/subProviders";
 
 // Components
-import UserMenu from "@components/layout/navbar/UserMenu";
+import UserMenu from "@components/layout/navbar/userMenu";
 
 const Header = () => {
   const navItems = [
