@@ -14,7 +14,7 @@ const getAddresses = async () => {
   return data;
 };
 
-const Addresses = async () => {
+const AddressesPage = async () => {
   const addresses = await getAddresses();
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
 
@@ -30,4 +30,4 @@ const Addresses = async () => {
   );
 }
 
-export default Addresses;
+export default AddressesPage;

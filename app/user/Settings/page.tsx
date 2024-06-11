@@ -1,4 +1,5 @@
 // Components
+import ThemeSwitcher from "@utils/themeSwitcher";
 import Breadcrumb from "@components/layout/breadCrumb";
 
 const SettingsPage = () => {
@@ -7,7 +8,7 @@ const SettingsPage = () => {
   return (
     <div className="max-w-screen-md mx-auto w-full">
       <Breadcrumb items={breadCrumbItems} />
-      <h1 className="text-2xl mb-2">Settings</h1>
+      <ThemeSwitcher />
     </div>
   );
 }

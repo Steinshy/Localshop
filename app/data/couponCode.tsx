@@ -1,39 +1,38 @@
-// Rob
-
 [
   {
     "id": 1,
-    "category_id": null,
-    "code": "US_RYN4ERASEJQ",
+    "code": "DISCOUNT10",
     "discount": 10,
-    "expiration": "2024-07-07T12:20:25.978Z",
+    "expiration": "2025-06-11T14:46:28.331Z"
   },
   {
     "id": 2,
-    "category_id": null,
-    "code": "D_WMNSQLO0GRPW",
+    "code": "DISCOUNT25",
     "discount": 25,
-    "expiration": "2024-07-07T12:20:26.016Z",
+    "expiration": "2025-06-11T14:46:28.343Z"
   },
   {
     "id": 3,
-    "category_id": null,
-    "code": "QKGUCMQTX-ICHG",
+    "code": "DISCOUNT50",
     "discount": 50,
-    "expiration": "2024-07-07T12:20:26.023Z",
+    "expiration": "2025-06-11T14:46:28.347Z"
   },
   {
     "id": 4,
-    "category_id": null,
-    "code": "IJERADTZAIN1YG",
+    "code": "DISCOUNT75",
     "discount": 75,
-    "expiration": "2024-07-07T12:20:26.028Z",
+    "expiration": "2025-06-11T14:46:28.349Z"
   },
   {
     "id": 5,
-    "category_id": null,
-    "code": "YGYNCPWJGPH3KG",
+    "code": "DISCOUNT100",
     "discount": 100,
-    "expiration": "2024-07-07T12:20:26.035Z",
+    "expiration": "2025-06-11T14:46:28.355Z"
+  },
+  {
+    "id": 6,
+    "code": "EXPIRED",
+    "discount": 10,
+    "expiration": "2024-05-11T14:46:28.358Z"
   }
 ]

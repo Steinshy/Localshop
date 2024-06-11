@@ -13,8 +13,8 @@ const defaultCart = {
     items: [],
     coupon: {
       id: "",
-      type: "",
       category_id: 0,
+      type: "",
       code: "",
       discount: 0,
       expiration: "",

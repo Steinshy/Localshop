@@ -1,5 +1,7 @@
 // React
 import { Dispatch, SetStateAction } from "react";
+
+// Interface
 import { CouponsObject } from "@interfaces/coupon";
 
 type CartResponse = {
@@ -61,6 +63,6 @@ type CartProductProps = {
 type CartButtonProcessProps = {
   pathname: string;
   items: CartItemObj[];
-}
+};
 
-export type { CartResponse, CartItemObj, CartContextType, CartItemProps, CartProductProps, CartButtonProcessProps  };
+export type { CartResponse, CartItemObj, CartContextType, CartItemProps, CartProductProps, CartButtonProcessProps };

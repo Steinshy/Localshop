@@ -14,7 +14,6 @@ import { defaultUser } from "@data/user";
 import { defaultCart } from "@data/cart";
 
 // CART PROVIDERS //
-
 const useCart = () => {
   const [cart, setCart] = useState(defaultCart as CartResponse);
 
@@ -45,7 +44,6 @@ const CartContext = createContext<CartContextType>({
 });
 
 // USER PROVIDERS //
-
 const useUser = () => {
   const [user, setUser] = useState(defaultUser as UserResponse);
 

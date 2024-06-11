@@ -1,4 +1,6 @@
-import { CartResponse } from "@interfaces/cart"
+// Interface
+import { CartResponse } from "@interfaces/cart";
+
 type CouponsObject = {
   id: string;
   type: string;

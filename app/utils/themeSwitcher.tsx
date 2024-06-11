@@ -10,7 +10,7 @@ import { useTheme } from "next-themes";
 import { Switch } from "@nextui-org/switch";
 
 // Icons
-import { MoonIcon, SunIcon } from "./themeSwitcherIcons";
+import { MoonIcon, SunIcon } from "@utils/themeSwitcherIcons";
 
 const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
