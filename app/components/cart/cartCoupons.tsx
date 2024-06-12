@@ -1,23 +1,22 @@
-'use client';
+"use client";
 
 // React
 import { FC, useState } from "react";
 
 // NextUI
-import { Chip } from "@nextui-org/react";
+import { Chip, Button, Input } from "@nextui-org/react";
+
+import { Formik, Form, Field } from "formik";
 
 // Icons
 import { FaRegCircleCheck } from "react-icons/fa6";
+import { FaTags } from "react-icons/fa";
 
 // Interfaces
 import { CartResponse } from "@interfaces/cart";
 import { CartCouponsProps, CouponFormProps } from "@interfaces/coupon";
-
 // Utils
 import http from "@utils/http";
-
-// Components
-import CouponValidation from "@components/cart/couponValidation";
 
 const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, totalPrice, update }) => {
   const [errors, setErrors] = useState<CouponFormProps>({});
@@ -28,10 +27,11 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
         const response = await http.post("/cart/coupon", { code: values.code });
         const { data } = response.data as { data: CartResponse };
         update(data);
-
       } catch (error) {
-        let message = 'Invalid';
-        if (error instanceof Error) { message = error.message; } // A revoir
+        let message = "Invalid";
+        if (error instanceof Error) {
+          message = error.message;
+        } // A revoir
         setErrors({ code: message });
       }
     };
@@ -78,9 +78,36 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
       <p className="text-small mb-4 text-foreground/75 italic">Shipping and taxes will be calculated at checkout</p>
 
       {/* Coupon Validation */}
-      <CouponValidation errors={errors} handleSubmit={handleSubmit} totalPrice={totalPrice} />
+      <Formik
+        initialValues={{ code: "" }}
+        onSubmit={(values) => {
+          handleSubmit(values);
+          values.code = "";
+        }}
+      >
+        <Form className="grid col-auto gap-4 my-4">
+          <Field
+            className="col-span-2"
+            isRequired
+            as={Input}
+            id="code"
+            name="code"
+            type="text"
+            radius="sm"
+            placeholder="Coupon code"
+            startContent={<FaTags className="text-foreground" />}
+            endContent={
+              <Button type="submit" size="sm" radius="sm" variant="solid" color="primary" isDisabled={totalPrice <= 0}>
+                Apply
+              </Button>
+            }
+            isDisabled={totalPrice <= 0}
+          />
+          {errors.code && <div className="text-tiny text-red-400">{errors.code}</div>}
+        </Form>
+      </Formik>
 
-      {coupon &&
+      {coupon && (
         <div className="flex justify-center mb-4">
           <Chip
             className="text-white"
@@ -93,7 +120,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
             Coupon value of {discount}% applied
           </Chip>
         </div>
-      }
+      )}
     </>
   );
 };

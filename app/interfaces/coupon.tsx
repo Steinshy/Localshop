@@ -21,10 +21,5 @@ type CartCouponsProps = {
 type CouponFormProps = {
   code?: string;
 };
-type CouponValidationProps = {
-  errors: CouponFormProps;
-  handleSubmit: (values: CouponFormProps) => void;
-  totalPrice: number;
-};
 
-export type { CartCouponsProps, CouponsObject, CouponFormProps, CouponValidationProps };
+export type { CartCouponsProps, CouponsObject, CouponFormProps };
