@@ -33,11 +33,13 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
     const address = addresses.find((obj) => Number(obj.id) === id);
     if (address) {
       const { attributes } = address;
-      return cleanAttributes(attributes);
+      const newAttributes = {...attributes};
+      return cleanAttributes(newAttributes);
     }
     return defaultAddress;
   };
-  const address = id > 0 ? findAddress() : defaultAddress;
+
+  const formAddress = id > 0 ? findAddress() : defaultAddress;
 
   const add = (values: AddressValuesProps) => {
     const apiFetch = async () => {
@@ -62,7 +64,7 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
   };
 
   const handleSubmit = (values: AddressValuesProps) => {
-    const newAddress = { ...address, ...values };
+    const newAddress = { ...formAddress, ...values };
     id > 0 ? update(newAddress) : add(newAddress);
   };
 
@@ -82,7 +84,7 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
           <ModalHeader className="flex flex-col gap-1">{id > 0 ? "Edit" : "Create"} Address</ModalHeader>
           <ModalBody>
             <Formik
-              initialValues={address}
+              initialValues={formAddress}
               // validate={(values: AddressValuesProps) => {
               //   const errors: { [key: string]: string } = {};
               //   Object.keys(values).forEach((key) => {
@@ -193,7 +195,7 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
                   name="default"
                   label="Set as default"
                   className="col-span-1"
-                  defaultSelected={address.default || false}
+                  defaultSelected={formAddress.default || false}
                   as={Checkbox}
                 >
                   Set as default

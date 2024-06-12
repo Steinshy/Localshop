@@ -13,6 +13,7 @@ const getAddresses = async () => {
   const { data } = response.data as { data: AddressObj[] };
   return data;
 };
+
 const AddressesPage = async () => {
   const addresses = await getAddresses();
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
