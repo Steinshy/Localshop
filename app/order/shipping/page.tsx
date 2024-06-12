@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { FC, useState } from "react";
+import { useState } from "react";
 
 // NextUI
 import { Divider } from "@nextui-org/react";
@@ -9,7 +9,7 @@ import { Divider } from "@nextui-org/react";
 // Components
 import AddressList from "@components/user/addressList";
 
-const Shipping: FC = () => {
+const Shipping = () => {
   const [selectedShippingAddressId, setSelectedShippingAddressId] = useState<number | null>(1);
   const [selectedBillingAddressId, setSelectedBillingAddressId] = useState<number | null>(1);
 

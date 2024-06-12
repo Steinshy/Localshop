@@ -15,7 +15,8 @@ import { UserContext } from "@utils/subProviders";
 import { LayoutProps } from "@interfaces/general";
 
 const OrderLayout: FC<LayoutProps> = ({ children }) => {
-  const pathname = usePathname(), userStore = useContext(UserContext);
+  const pathname = usePathname(),
+    userStore = useContext(UserContext);
 
   // Stepper
   const steps = ["Cart", "Shipping", "Payment"];
@@ -34,7 +35,7 @@ const OrderLayout: FC<LayoutProps> = ({ children }) => {
     </>
   ) : (
     <div className="flex flex-col flex-grow items-center justify-center">
-      <h1 className="text-md text-heading xl:text-lg lg:text-md">You need to be logged in to view your cart.</h1>
+      <h1 className="text-md text-heading xl:text-lg lg:text-md">Please login to view your cart.</h1>
     </div>
   );
 };

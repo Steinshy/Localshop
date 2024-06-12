@@ -1,8 +1,8 @@
 // NextJS
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 const OrderPage = () => {
-  redirect('/order/cart');
-}
+  redirect("/order/cart");
+};
 
 export default OrderPage;
