@@ -67,7 +67,7 @@ type CartButtonProcessProps = {
 
 type CartButtonDeleteProps = {
   cartStore: CartContextType;
-  productId: number;
+  productId?: number;
 };
 
 export type {
