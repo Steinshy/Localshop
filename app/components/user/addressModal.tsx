@@ -30,7 +30,7 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
   };
 
   const findAddress = () => {
-    const address = addresses.find((obj) => obj.id === id);
+    const address = addresses.find((obj) => Number(obj.id) === id);
     if (address) {
       const { attributes } = address;
       return cleanAttributes(attributes);

@@ -51,7 +51,6 @@ const AddressCard: FC<AddressCardProps> = ({
         onClick={handleSelect}
       >
         <CardBody>
-          <p className="text-sm">{id}</p>
           <h2 className="font-semibold">{label}</h2>
           <p>
             {firstname} {lastname}
