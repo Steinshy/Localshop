@@ -2,11 +2,17 @@
 import { FC } from "react";
 
 // NextUI
-import { Card, CardBody, Chip } from "@nextui-org/react";
+import { Card, CardBody, Chip, Button } from "@nextui-org/react";
+
+// Icons
+import { FaTrash } from "react-icons/fa";
 
 // Components
 import AddressModal from "@components/user/addressModal";
-import RemoveAddress from "@components/user/removeAddress";
+
+// Utils
+import http from "@utils/http";
+import { showToast } from "@utils/helpers";
 
 // Interfaces
 import { AddressCardProps } from "@interfaces/address";
@@ -20,10 +26,21 @@ const AddressCard: FC<AddressCardProps> = ({
   selectable = false,
 }) => {
   const { attributes } = address;
-  const { label, firstname, lastname, address: addressLine, city, country, zip, default: addressDefault } = attributes;
+  const { label, firstname, lastname, address: addressLine, city, country, zip, id, default: addressDefault } = attributes;
+
+  const handleRemove = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    const apiFetch = async () => {
+      await http.delete(`/addresses/${id}`);
+      fetch();
+      showToast("Address deleted!", "success");
+    };
+
+    void apiFetch();
+  };
 
   const handleSelect = () => {
-    setSelected?.(address.id);
+    setSelected?.(id);
   };
 
   return (
@@ -34,6 +51,7 @@ const AddressCard: FC<AddressCardProps> = ({
         onClick={handleSelect}
       >
         <CardBody>
+          <p className="text-sm">{id}</p>
           <h2 className="font-semibold">{label}</h2>
           <p>
             {firstname} {lastname}
@@ -49,8 +67,10 @@ const AddressCard: FC<AddressCardProps> = ({
                 Default
               </Chip>
             )}
-            <AddressModal fetch={fetch} id={address.id} addresses={addresses} />
-            <RemoveAddress fetch={fetch} id={address.id} />
+            <AddressModal fetch={fetch} id={id} addresses={addresses} />
+            <Button isIconOnly size="sm" onClick={handleRemove} variant="flat" color="danger">
+              <FaTrash className="text-lg" />
+            </Button>
           </div>
         </CardBody>
       </Card>

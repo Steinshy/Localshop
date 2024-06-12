@@ -2,16 +2,7 @@
 import { FC } from "react";
 
 // NextUI
-import {
-  Input,
-  Button,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  useDisclosure,
-  Checkbox
-} from "@nextui-org/react";
+import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox } from "@nextui-org/react";
 
 // Icons
 import { FaPlus, FaEdit } from "react-icons/fa";
@@ -32,28 +23,25 @@ import { showToast } from "@utils/helpers";
 const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
-  const cleanAttr = (attributes:AddressValuesProps) => {
-    const unwantedKeys = ['id', 'createdAt', 'updatedAt'];
-    unwantedKeys.forEach((e:string) => delete attributes[e as keyof AddressValuesProps]);
+  const cleanAttributes = (attributes: AddressValuesProps) => {
+    const unwantedKeys = ["id", "createdAt", "updatedAt"];
+    unwantedKeys.forEach((e: string) => delete attributes[e as keyof AddressValuesProps]);
     return attributes;
-  }
+  };
 
   const findAddress = () => {
     const address = addresses.find((obj) => obj.id === id);
     if (address) {
       const { attributes } = address;
-      return cleanAttr(attributes);
+      return cleanAttributes(attributes);
     }
     return defaultAddress;
   };
-
   const address = id > 0 ? findAddress() : defaultAddress;
 
   const add = (values: AddressValuesProps) => {
-    // Add Request
     const apiFetch = async () => {
-      const formData = { address: values };
-      await http.post("/addresses", formData);
+      await http.post("/addresses", { address: values });
       fetch();
       showToast("Address Added!", "success");
       onClose();
@@ -63,10 +51,8 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
   };
 
   const update = (values: AddressValuesProps) => {
-    // Update request
     const apiFetch = async () => {
-      const formData = { address: values };
-      await http.put(`/addresses/${id}`, formData);
+      await http.put(`/addresses/${id}`, { address: values });
       fetch();
       showToast("Address Updated!", "success");
       onClose();
@@ -79,8 +65,6 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
     const newAddress = { ...address, ...values };
     id > 0 ? update(newAddress) : add(newAddress);
   };
-
-  const inputOptions = { isRequired: true, as: Input, radius: 'sm', type: 'text' };
 
   return (
     <>
@@ -116,94 +100,107 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
             >
               <Form className="grid gap-4 my-4">
                 <Field
-                  {...inputOptions}
                   label="Label"
                   id="label"
                   name="label"
                   placeholder="Home"
+                  type="text"
+                  isRequired
+                  as={Input}
+                  radius="sm"
                 />
                 <div className="grid grid-cols-2 gap-4">
                   <Field
-                    {...inputOptions}
                     className="col-span-1"
                     label="First Name"
                     id="firstname"
                     name="firstname"
                     placeholder="First Name"
+                    type="text"
+                    isRequired
+                    as={Input}
+                    radius="sm"
                   />
 
                   <Field
-                    {...inputOptions}
                     label="Last Name"
                     className="col-span-1"
                     id="lastname"
                     name="lastname"
                     placeholder="Last Name"
+                    type="text"
+                    isRequired
+                    as={Input}
+                    radius="sm"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
                   <Field
-                    {...inputOptions}
                     label="Adress"
                     className="col-span-2"
                     id="address"
                     name="address"
                     placeholder="122 Example St"
+                    type="text"
+                    isRequired
+                    as={Input}
+                    radius="sm"
                   />
                 </div>
 
                 <div className="grid grid-cols-3 gap-4">
                   <Field
-                    {...inputOptions}
                     label="Country"
                     className="col-span-1"
                     id="country"
                     name="country"
                     placeholder="USA"
+                    type="text"
+                    isRequired
+                    as={Input}
+                    radius="sm"
                   />
 
                   <Field
-                    {...inputOptions}
                     label="City"
                     className="col-span-1"
                     id="city"
                     name="city"
+                    type="text"
                     placeholder="Las Vegas"
+                    isRequired
+                    as={Input}
+                    radius="sm"
                   />
 
                   <Field
-                    {...inputOptions}
                     label="Zip"
                     className="col-span-1"
                     id="zip"
                     name="zip"
                     type="number"
                     placeholder="00000"
+                    isRequired
+                    as={Input}
+                    radius="sm"
                   />
                 </div>
 
                 <Field
-                  as={Checkbox}
                   type="checkbox"
                   id="default"
                   name="default"
                   label="Set as default"
                   className="col-span-1"
                   defaultSelected={address.default || false}
+                  as={Checkbox}
                 >
                   Set as default
                 </Field>
 
                 <div className="flex justify-center">
-                  <Button
-                    type="submit"
-                    color="primary"
-                    variant="solid"
-                    className="text-white"
-                    size="md"
-                    radius="sm"
-                  >
+                  <Button type="submit" color="primary" variant="solid" className="text-white" size="md" radius="sm">
                     {id > 0 ? "Confirm Edit" : "Create Address"}
                   </Button>
                 </div>

@@ -24,7 +24,6 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
 
   const fetch = () => {
     const apiFetch = async () => {
-      // fetch request
       const response = await http.get("/addresses");
       const { data } = response.data as { data: AddressObj[] };
       setAddresses(data);
@@ -51,6 +50,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
           selected={selected}
           setSelected={setSelected}
           fetch={fetch}
+          setAddresses={setAddresses}
         />
       ))}
     </>
