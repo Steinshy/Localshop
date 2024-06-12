@@ -20,7 +20,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
     if (addresses.length === 0) {
       fetch();
     }
-  }, [addresses]);
+  }, []);
 
   const fetch = () => {
     const apiFetch = async () => {
@@ -50,7 +50,6 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
           selected={selected}
           setSelected={setSelected}
           fetch={fetch}
-          setAddresses={setAddresses}
         />
       ))}
     </>
