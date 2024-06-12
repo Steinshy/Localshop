@@ -65,4 +65,17 @@ type CartButtonProcessProps = {
   items: CartItemObj[];
 };
 
-export type { CartResponse, CartItemObj, CartContextType, CartItemProps, CartProductProps, CartButtonProcessProps };
+type CartButtonDeleteProps = {
+  cartStore: CartContextType;
+  productId: number;
+};
+
+export type {
+  CartResponse,
+  CartItemObj,
+  CartContextType,
+  CartItemProps,
+  CartProductProps,
+  CartButtonProcessProps,
+  CartButtonDeleteProps,
+};

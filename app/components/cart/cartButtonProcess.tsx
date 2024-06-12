@@ -1,9 +1,12 @@
 // React
 import { FC } from "react";
+
 // NextJS
 import Link from "next/link";
+
 // Icons
 import { FaArrowRight } from "react-icons/fa";
+
 // React
 import { Button } from "@nextui-org/react";
 

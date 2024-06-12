@@ -3,6 +3,7 @@ import { useContext } from "react";
 
 // NextJS
 import { usePathname } from "next/navigation";
+
 // Utils
 import { CartContext } from "@utils/subProviders";
 
@@ -14,7 +15,7 @@ const CartSummary = () => {
   const pathname: string = usePathname(),
     cartStore = useContext(CartContext);
   const { update, data } = cartStore;
-  const { attributes: { items, finalPrice, totalPrice, coupon }} = data;
+  const { attributes: { items, finalPrice, totalPrice, coupon } } = data;
   const { discount } = coupon || {};
 
   return (
@@ -31,9 +32,15 @@ const CartSummary = () => {
         </div>
 
         {/* COUPONS */}
-        <CartCoupons discount={discount} coupon={coupon} finalPrice={finalPrice} totalPrice={totalPrice} update={update} />
+        <CartCoupons
+          discount={discount}
+          coupon={coupon}
+          finalPrice={finalPrice}
+          totalPrice={totalPrice}
+          update={update}
+        />
 
-          {/* Shipping - Payment Button */}
+        {/* Shipping - Payment Button */}
         <div className="grid grid-cols-2 gap-4">
           <CartButtonProcess pathname={pathname} items={items} />
         </div>

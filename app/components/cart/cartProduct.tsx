@@ -7,10 +7,7 @@ import { FC, useContext, useState } from "react";
 import Link from "next/link";
 
 // NextUI
-import { Image, Button, Input } from "@nextui-org/react";
-
-// Icons
-import { FaTrash } from "react-icons/fa";
+import { Image, Input } from "@nextui-org/react";
 
 // Interfaces
 import { CartProductProps, CartResponse } from "@interfaces/cart";
@@ -30,7 +27,6 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const { id, title, thumbnail } = product;
   const [currentQuantity, setCurrentQuantity] = useState<string>(quantity.toString());
   const slug = generateSlug(title);
-
 
   const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -75,7 +71,9 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
         </div>
 
         {/* Remove item */}
-        <CartButtonDelete cartStore={cartStore} productId={product.id} />
+        <div className="flex justify-end items-start">
+          <CartButtonDelete cartStore={cartStore} productId={product.id} />
+        </div>
       </div>
       {/* Single item information */}
       <hr className="my-4" />
