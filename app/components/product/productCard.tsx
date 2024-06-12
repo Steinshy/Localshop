@@ -36,7 +36,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             src={thumbnail.url}
           />
           <div className="flex-col justify-center text-center p-2">
-            <h2 className="text-lg">{title}</h2>
+            <h2 className="text-md">{title}</h2>
             <div className="flex justify-center p-2">
               <StarsReviews rating={rating} />
             </div>

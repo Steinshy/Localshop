@@ -54,7 +54,7 @@ const Cart = () => {
             ))}
           </ul>
 
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mt-4">
             <Button
               color="default"
               variant="light"

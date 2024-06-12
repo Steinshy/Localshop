@@ -60,14 +60,14 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
               src={thumbnail.url}
               alt={title}
               classNames={{
-                img: "w-16 h-16 object-cover",
-                wrapper: "mr-4",
+                img: "w-16 h-16 object-cover"
               }}
               radius="md"
               shadow="none"
+              removeWrapper
             />
+            <span className="text-lg text-foreground font-semibold">{title}</span>
           </Link>
-          <p className="text-lg text-foreground font-semibold">{title}</p>
         </div>
 
         {/* Remove item */}

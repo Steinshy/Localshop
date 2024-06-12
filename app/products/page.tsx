@@ -80,7 +80,7 @@ const ProductsPage: FC = () => {
   };
 
   const clearQuery = () => {
-    setQuery("");
+    setQuery('');
   };
 
   return (
