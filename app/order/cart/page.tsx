@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 // React
 import { useContext, useEffect } from "react";
@@ -10,16 +10,13 @@ import Link from "next/link";
 import { Button } from "@nextui-org/react";
 
 // Icons
-import { FaTrash, FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaCartArrowDown, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 // Components
 import CartProduct from "@components/cart/cartProduct";
-
-// Interfaces
-import { CartResponse } from "@interfaces/cart";
+import CartButtonDelete from "@components/cart/cartButtonDelete";
 
 // Utils
-import http from "@utils/http";
 import { CartContext } from "@utils/subProviders";
 
 const Cart = () => {
@@ -31,19 +28,6 @@ const Cart = () => {
   useEffect(() => {
     void cartStore.refresh();
   }, []);
-
-  const handleClearCart = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-
-    // API call to remove the item from the cart
-    const apiCall = async () => {
-      const response = await http.delete(`/cart/clear`);
-      const { data } = response?.data as { data: CartResponse };
-      cartStore.update(data);
-    }
-
-    void apiCall();
-  };
 
   return (
     <div className="flex flex-col col-span-1 lg:col-span-2">
@@ -66,7 +50,7 @@ const Cart = () => {
         <>
           <ul className="flex flex-col flex-grow gap-2">
             {items.map((cartItem) => (
-              <CartProduct key={cartItem.id} cartItem={cartItem} />
+              <CartProduct key={cartItem.id} cartItem={cartItem}/>
             ))}
           </ul>
 
@@ -81,16 +65,7 @@ const Cart = () => {
             >
               Continue shopping
             </Button>
-
-            <Button
-              color="default"
-              variant="light"
-              onClick={handleClearCart}
-              startContent={<FaTrash className="text-foreground/50" />}
-              className="text-foreground/50"
-            >
-              Delete Cart
-            </Button>
+            <CartButtonDelete  cartStore={cartStore} />
           </div>
         </>
       )}

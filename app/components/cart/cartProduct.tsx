@@ -22,6 +22,8 @@ import http from "@utils/http";
 // Providers
 import { CartContext } from "@utils/subProviders";
 
+import CartButtonDelete from "@components/cart/cartButtonDelete";
+
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);
   const { quantity, price, product } = cartItem;
@@ -29,14 +31,20 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const [currentQuantity, setCurrentQuantity] = useState<string>(quantity.toString());
   const slug = generateSlug(title);
 
-  const removeItem = async () => {
-    const response = await http.delete(`/cart/remove_item?product_id=${product.id}`);
-    const { data } = response?.data as { data: CartResponse };
-    cartStore.update(data);
+
+  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    const apiCall = async () => {
+      const response = await http.delete(`/cart/remove_item?product_id=${product.id}`);
+      const { data } = response?.data as { data: CartResponse };
+      cartStore.update(data);
+    };
+
+    void apiCall();
   };
 
   const handleQuantityChange = (quantity: string) => {
-    if (Number(quantity) <= 0) return void removeItem();
+    if (Number(quantity) <= 0) return void handleRemoveItem({} as React.MouseEvent<HTMLElement>);
     const apiCall = async () => {
       setCurrentQuantity(quantity);
       const response = await http.post("/cart/update_quantity", { product_id: product.id, quantity: quantity });
@@ -47,16 +55,11 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
     void apiCall();
   };
 
-  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    void removeItem();
-  };
-
   return (
     <li key={id} className="p-2 bg-background border-1 rounded-md">
       <div className="grid grid-cols-2">
         <div className="flex justify-start items-center">
-          <Link href={`/products/${id}/${slug}`}>
+          <Link href={`/products/${product.id}/${slug}`}>
             <Image
               src={thumbnail.url}
               alt={title}
@@ -70,17 +73,9 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
           </Link>
           <p className="text-lg text-foreground font-semibold">{title}</p>
         </div>
-        <div className="flex justify-end items-start">
-          <Button
-            color="default"
-            variant="light"
-            className="text-foreground/25"
-            onClick={handleRemoveItem}
-            startContent={<FaTrash />}
-            isIconOnly
-            size="sm"
-          />
-        </div>
+
+        {/* Remove item */}
+        <CartButtonDelete cartStore={cartStore} productId={product.id} />
       </div>
       {/* Single item information */}
       <hr className="my-4" />
