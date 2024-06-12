@@ -4,12 +4,11 @@
 import { FC, useState } from "react";
 
 // NextUI
-import { Chip, Button, Input } from "@nextui-org/react";
+import { Chip, Input } from "@nextui-org/react";
 
 import { Formik, Form, Field } from "formik";
 
 // Icons
-import { FaRegCircleCheck } from "react-icons/fa6";
 import { FaTags } from "react-icons/fa";
 
 // Interfaces
@@ -96,11 +95,6 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
             radius="sm"
             placeholder="Coupon code"
             startContent={<FaTags className="text-foreground" />}
-            endContent={
-              <Button type="submit" size="sm" radius="sm" variant="solid" color="primary" isDisabled={totalPrice <= 0}>
-                Apply
-              </Button>
-            }
             isDisabled={totalPrice <= 0}
           />
           {errors.code && <div className="text-tiny text-red-400">{errors.code}</div>}
@@ -111,7 +105,6 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
         <div className="flex justify-center mb-4">
           <Chip
             className="text-white"
-            startContent={<FaRegCircleCheck size={18} />}
             size="sm"
             color="secondary"
             variant="solid"
