@@ -20,6 +20,7 @@ const AddressCard: FC<AddressCardProps> = ({
   setSelected,
   address,
   selectable = false,
+  handleUpdate,
   handleRemove
 }) => {
   const { attributes } = address;
@@ -52,7 +53,7 @@ const AddressCard: FC<AddressCardProps> = ({
                 Default
               </Chip>
             )}
-            <AddressModal fetch={fetch} id={id} addresses={addresses} />
+            <AddressModal fetch={fetch} id={id} addresses={addresses} handleUpdate={handleUpdate} />
             <Button isIconOnly size="sm" onClick={() => handleRemove(id)} variant="flat" color="danger">
               <FaTrash className="text-lg" />
             </Button>

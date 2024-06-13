@@ -20,7 +20,7 @@ import { defaultAddress } from "@data/address";
 import http from "@utils/http";
 import { showToast } from "@utils/helpers";
 
-const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
+const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, fetch, handleUpdate  }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const cleanAttributes = (attributes: AddressValuesProps) => {
@@ -52,20 +52,22 @@ const AddressModal: FC<AddressModalProp> = ({ fetch, addresses, id = 0 }) => {
     void apiFetch();
   };
 
-  const update = (values: AddressValuesProps) => {
-    const apiFetch = async () => {
-      await http.put(`/addresses/${id}`, { address: values });
-      fetch();
-      showToast("Address Updated!", "success");
-      onClose();
-    };
+  // const update = (values: AddressValuesProps) => {
+  //   const apiFetch = async () => {
+  //     await http.put(`/addresses/${id}`, { address: values });
+  //     fetch();
+  //     showToast("Address Updated!", "success");
+  //     onClose();
+  //   };
 
-    void apiFetch();
-  };
+  //   void apiFetch();
+  // };
 
-  const handleSubmit = (values: AddressValuesProps) => {
+  const handleSubmit = async (values: AddressValuesProps) => {
     const newAddress = { ...formAddress, ...values };
-    id > 0 ? update(newAddress) : add(newAddress);
+      await handleUpdate(id, newAddress);
+    showToast("Address Updated!", "success");
+    onClose();
   };
 
   return (

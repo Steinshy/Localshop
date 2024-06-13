@@ -8,10 +8,10 @@ import AddressCard from "@components/user/addressCard";
 import AddressModal from "@components/user/addressModal";
 
 // Interfaces
-import { AddressListProps, AddressObj } from "@interfaces/address";
+import { AddressListProps, AddressObj, AddressValuesProps } from "@interfaces/address";
 
 // Actions
-import { getAddresses, handleRemoveAddress } from "actions";
+import { getAddresses, handleRemoveAddress, handleUpdateAddress } from "actions";
 
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
   const [addresses, setAddresses] = useState<AddressObj[]>(items);
@@ -27,10 +27,15 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
     setAddresses(data);
   };
 
-  const handleRemove = async (id:number) => {
+  const handleRemove = async (id: number) => {
     const data = await handleRemoveAddress(id);
     setAddresses(data);
-  }
+  };
+
+  const handleUpdate = async (id: number, newAddress: AddressValuesProps) => {
+    const data = await handleUpdateAddress(id, newAddress);
+    setAddresses(data);
+  };
 
   useEffect(() => {
     if (setSelected) {
@@ -40,7 +45,11 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
 
   return (
     <>
-      <AddressModal addresses={addresses} fetch={fetch} />
+      <AddressModal 
+        addresses={addresses} 
+        fetch={fetch} 
+        handleUpdate={handleUpdate} 
+        />
       {addresses.map((address) => (
         <AddressCard
           key={address.id}
@@ -50,6 +59,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
           selected={selected}
           setSelected={setSelected}
           fetch={fetch}
+          handleUpdate={handleUpdate}
           handleRemove={handleRemove}
         />
       ))}
