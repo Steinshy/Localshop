@@ -10,27 +10,27 @@ import AddressModal from "@components/user/addressModal";
 // Interfaces
 import { AddressListProps, AddressObj } from "@interfaces/address";
 
-// Utils
-import http from "@utils/http";
+// Actions
+import { getAddresses, handleRemoveAddress } from "actions";
 
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
   const [addresses, setAddresses] = useState<AddressObj[]>(items);
 
   useEffect(() => {
     if (addresses.length === 0) {
-      fetch();
+      void fetch();
     }
   }, []);
 
-  const fetch = () => {
-    const apiFetch = async () => {
-      const response = await http.get("/addresses");
-      const { data } = response.data as { data: AddressObj[] };
-      setAddresses(data);
-    };
-
-    void apiFetch();
+  const fetch = async () => {
+    const data = await getAddresses();
+    setAddresses(data);
   };
+
+  const handleRemove = async (id:number) => {
+    const data = await handleRemoveAddress(id);
+    setAddresses(data);
+  }
 
   useEffect(() => {
     if (setSelected) {
@@ -50,6 +50,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
           selected={selected}
           setSelected={setSelected}
           fetch={fetch}
+          handleRemove={handleRemove}
         />
       ))}
     </>

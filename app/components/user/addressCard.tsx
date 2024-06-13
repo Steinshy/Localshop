@@ -10,10 +10,6 @@ import { FaTrash } from "react-icons/fa";
 // Components
 import AddressModal from "@components/user/addressModal";
 
-// Utils
-import http from "@utils/http";
-import { showToast } from "@utils/helpers";
-
 // Interfaces
 import { AddressCardProps } from "@interfaces/address";
 
@@ -24,20 +20,10 @@ const AddressCard: FC<AddressCardProps> = ({
   setSelected,
   address,
   selectable = false,
+  handleRemove
 }) => {
   const { attributes } = address;
   const { label, firstname, lastname, address: addressLine, city, country, zip, id, default: addressDefault } = attributes;
-
-  const handleRemove = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    const apiFetch = async () => {
-      await http.delete(`/addresses/${id}`);
-      fetch();
-      showToast("Address deleted!", "success");
-    };
-
-    void apiFetch();
-  };
 
   const handleSelect = () => {
     setSelected?.(id);
@@ -67,7 +53,7 @@ const AddressCard: FC<AddressCardProps> = ({
               </Chip>
             )}
             <AddressModal fetch={fetch} id={id} addresses={addresses} />
-            <Button isIconOnly size="sm" onClick={handleRemove} variant="flat" color="danger">
+            <Button isIconOnly size="sm" onClick={() => handleRemove(id)} variant="flat" color="danger">
               <FaTrash className="text-lg" />
             </Button>
           </div>

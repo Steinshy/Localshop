@@ -1,8 +1,14 @@
+'use server';
+
 // Components
 import Breadcrumb from "@components/layout/breadCrumb";
 import AddressList from "@components/user/addressList";
 
-const AddressesPage = () => {
+// Actions
+import { getAddresses } from "actions";
+
+const AddressesPage = async () => {
+  const addresses = await getAddresses();
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
 
   return (
@@ -11,7 +17,7 @@ const AddressesPage = () => {
       <h1 className="text-2xl mb-2">Addresses</h1>
       
       <div className="grid grid-cols-1 gap-3">
-        <AddressList/>
+        <AddressList items={addresses} />
       </div>
     </div>
   );
