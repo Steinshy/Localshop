@@ -54,7 +54,7 @@ const AddressCard: FC<AddressCardProps> = ({
               </Chip>
             )}
             <AddressModal fetch={fetch} id={id} addresses={addresses} handleUpdate={handleUpdate} />
-            <Button isIconOnly size="sm" onClick={() => handleRemove(id)} variant="flat" color="danger">
+            <Button isIconOnly size="sm" onClick={() => void handleRemove(id)} variant="flat" color="danger">
               <FaTrash className="text-lg" />
             </Button>
           </div>

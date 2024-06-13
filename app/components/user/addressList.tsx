@@ -48,7 +48,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
       <AddressModal 
         addresses={addresses} 
         fetch={fetch} 
-        handleUpdate={handleUpdate} 
+        handleUpdate={handleUpdate}
         />
       {addresses.map((address) => (
         <AddressCard
