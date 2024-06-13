@@ -14,17 +14,27 @@ import AddressModal from "@components/user/addressModal";
 import { AddressCardProps } from "@interfaces/address";
 
 const AddressCard: FC<AddressCardProps> = ({
-  fetch,
   addresses,
   selected,
   setSelected,
   address,
   selectable = false,
+  handleCreate,
   handleUpdate,
-  handleRemove
+  handleRemove,
 }) => {
   const { attributes } = address;
-  const { label, firstname, lastname, address: addressLine, city, country, zip, id, default: addressDefault } = attributes;
+  const {
+    label,
+    firstname,
+    lastname,
+    address: addressLine,
+    city,
+    country,
+    zip,
+    id,
+    default: addressDefault,
+  } = attributes;
 
   const handleSelect = () => {
     setSelected?.(id);
@@ -53,7 +63,7 @@ const AddressCard: FC<AddressCardProps> = ({
                 Default
               </Chip>
             )}
-            <AddressModal fetch={fetch} id={id} addresses={addresses} handleUpdate={handleUpdate} />
+            <AddressModal id={id} addresses={addresses} handleUpdate={handleUpdate} handleCreate={handleCreate} />
             <Button isIconOnly size="sm" onClick={() => void handleRemove(id)} variant="flat" color="danger">
               <FaTrash className="text-lg" />
             </Button>

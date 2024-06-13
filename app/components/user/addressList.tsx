@@ -11,30 +11,39 @@ import AddressModal from "@components/user/addressModal";
 import { AddressListProps, AddressObj, AddressValuesProps } from "@interfaces/address";
 
 // Actions
-import { getAddresses, handleRemoveAddress, handleUpdateAddress } from "actions";
+import { getAddresses, handleCreateAdress, handleUpdateAddress, handleRemoveAddress } from "actions";
+
+// Utils
+import { showToast } from "@utils/helpers";
 
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
   const [addresses, setAddresses] = useState<AddressObj[]>(items);
 
   useEffect(() => {
-    if (addresses.length === 0) {
-      void fetch();
-    }
-  }, []);
+    const fetchData = async () => {
+      if (addresses.length === 0) {
+        const fetchedAddresses = await getAddresses();
+        setAddresses(fetchedAddresses);
+      }
+    };
 
-  const fetch = async () => {
-    const data = await getAddresses();
+    void fetchData();
+  }, [addresses.length]);
+
+  const handleCreate = async (newAdress: AddressValuesProps ) => {
+    const data = await handleCreateAdress(newAdress);
+    setAddresses(data);
+  }
+
+  const handleUpdate = async (id: number, newAddress: AddressValuesProps) => {
+    const data = await handleUpdateAddress(id, newAddress);
     setAddresses(data);
   };
 
   const handleRemove = async (id: number) => {
     const data = await handleRemoveAddress(id);
     setAddresses(data);
-  };
-
-  const handleUpdate = async (id: number, newAddress: AddressValuesProps) => {
-    const data = await handleUpdateAddress(id, newAddress);
-    setAddresses(data);
+    showToast("Address Removed!", "success");
   };
 
   useEffect(() => {
@@ -46,8 +55,8 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
   return (
     <>
       <AddressModal 
-        addresses={addresses} 
-        fetch={fetch} 
+        addresses={addresses}
+        handleCreate={handleCreate}
         handleUpdate={handleUpdate}
         />
       {addresses.map((address) => (
@@ -58,7 +67,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
           selectable={selectable}
           selected={selected}
           setSelected={setSelected}
-          fetch={fetch}
+          handleCreate={handleCreate}
           handleUpdate={handleUpdate}
           handleRemove={handleRemove}
         />

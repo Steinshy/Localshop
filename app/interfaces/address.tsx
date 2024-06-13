@@ -23,7 +23,7 @@ type AddressObj = {
 type AddressModalProp = {
   addresses: AddressObj[];
   id?: number;
-  fetch: () => Promise<void>;
+  handleCreate: (newAddress: AddressValuesProps) => Promise<void>;
   handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<void>;
 };
 
@@ -53,9 +53,9 @@ type AddressCardProps = {
   setSelected?: (id: number) => void;
   address: AddressObj;
   selectable?: boolean;
-  fetch: () => Promise<void>;
-  handleRemove: (id:number) => Promise<void>;
+  handleCreate: (newAddress: AddressValuesProps) => Promise<void>;
   handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<void>;
+  handleRemove: (id: number) => Promise<void>;
 };
 
 export type { AddressAttr, AddressObj, AddressModalProp, AddressValuesProps, AddressListProps, AddressCardProps };

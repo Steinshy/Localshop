@@ -17,10 +17,9 @@ import { AddressModalProp, AddressValuesProps } from "@interfaces/address";
 import { defaultAddress } from "@data/address";
 
 // Utils
-import http from "@utils/http";
 import { showToast } from "@utils/helpers";
 
-const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, fetch, handleUpdate  }) => {
+const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, handleUpdate }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const cleanAttributes = (attributes: AddressValuesProps) => {
@@ -33,7 +32,7 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, fetch, handleUp
     const address = addresses.find((obj) => Number(obj.id) === id);
     if (address) {
       const { attributes } = address;
-      const newAttributes = {...attributes};
+      const newAttributes = { ...attributes };
       return cleanAttributes(newAttributes);
     }
     return defaultAddress;
@@ -41,33 +40,18 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, fetch, handleUp
 
   const formAddress = id > 0 ? findAddress() : defaultAddress;
 
-  const add = (values: AddressValuesProps) => {
-    const apiFetch = async () => {
-      await http.post("/addresses", { address: values });
-      fetch();
-      showToast("Address Added!", "success");
-      onClose();
-    };
-
-    void apiFetch();
-  };
-
-  // const update = (values: AddressValuesProps) => {
-  //   const apiFetch = async () => {
-  //     await http.put(`/addresses/${id}`, { address: values });
-  //     fetch();
-  //     showToast("Address Updated!", "success");
-  //     onClose();
-  //   };
-
-  //   void apiFetch();
-  // };
-
   const handleSubmit = async (values: AddressValuesProps) => {
     const newAddress = { ...formAddress, ...values };
-      await handleUpdate(id, newAddress);
-    showToast("Address Updated!", "success");
-    onClose();
+    try {
+      const promise = id > 0 ? handleUpdate(id, newAddress) : handleCreate(newAddress);
+      await promise;
+      const toastMessage = id > 0 ? "Address Updated!" : "Address Created!";
+      showToast(toastMessage, "success");
+    } catch (error) {
+      showToast("Something went wrong!", "error");
+    } finally {
+      onClose();
+    }
   };
 
   return (
@@ -96,10 +80,13 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, fetch, handleUp
               //   });
               //   return errors;
               // }}
-              onSubmit={(values: AddressValuesProps, { setSubmitting }) => {
+              onSubmit={async (values: AddressValuesProps, { setSubmitting }) => {
                 setSubmitting(false);
-                handleSubmit(values);
-                setSubmitting(false);
+                try {
+                  await handleSubmit(values);
+                } catch (error) {
+                  setSubmitting(false);
+                }
               }}
             >
               <Form className="grid gap-4 my-4">

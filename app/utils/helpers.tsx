@@ -107,12 +107,4 @@ const showToast = (text: string, status: ToastType) => {
   status === "error" ? toast.error(text) : toast.success(text);
 };
 
-export {
-  generateSlug,
-  generateClamp,
-  generateRandomBool,
-  generateDefaultOrders,
-  round,
-  readableDate,
-  showToast,
-};
+export { generateSlug, generateClamp, generateRandomBool, generateDefaultOrders, round, readableDate, showToast };

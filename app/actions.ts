@@ -11,9 +11,22 @@ export const getAddresses = async () => {
   return addresses;
 };
 
+export const handleCreateAdress = async (newAddress: AddressValuesProps) => {
+  revalidateTag("user");
+  await fetch("http://api.localshop.test:3005/v1/addresses", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ address: newAddress }),
+  });
+  return getAddresses();
+};
+
 export const handleRemoveAddress = async (id: number) => {
   revalidateTag("user");
-  await fetch(`http://api.localshop.test:3005/v1/addresses/${id}`, { method: "DELETE" });
+  await fetch(`http://api.localshop.test:3005/v1/addresses/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
   return getAddresses();
 };
 
@@ -24,7 +37,5 @@ export const handleUpdateAddress = async (id: number, newAddress: AddressValuesP
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ address: newAddress }),
   });
-  console.log(id, "id");
-  console.log(newAddress, "newAddress");
   return getAddresses();
 };
