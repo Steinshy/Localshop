@@ -1,22 +1,26 @@
 "use client";
 
-import { useState, useEffect, FC, useCallback } from "react";
+// React
+import { useState, useEffect, FC } from "react";
 
-import { ProductObj, ProductDataProps } from "@interfaces/product";
+// Components
 import ProductCard from "@components/product/productCard";
 import Pagination from "@components/product/pagination";
 
+// Interfaces
+import { ProductObj, ProductDataProps } from "@interfaces/product";
+
 interface ProductsListProp {
-  getProducts: (page?: number, query?: string) => Promise<ProductDataProps>;
+  getProducts: (page?: number | undefined, query?: string | undefined) => Promise<ProductDataProps>;
   products: ProductObj[];
   pages: number;
 }
 
 const ProductsList: FC<ProductsListProp> = ({ getProducts, products, pages }) => {
   const [localPage, setLocalPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [localProducts, setLocalProducts] = useState<ProductObj[]>([]);
-  const [query, setQuery] = useState<string>("");
+  const [totalPages, setTotalPages] = useState(pages);
+  const [localProducts, setLocalProducts] = useState<ProductObj[]>(products);
+  const [query, setQuery] = useState<string>('');
 
   // Pagination
   const previousPage = () => {
@@ -30,27 +34,19 @@ const ProductsList: FC<ProductsListProp> = ({ getProducts, products, pages }) =>
   };
 
   // Fetch data
-  const fetchData = useCallback (async () => {
-    try {
-      await getProducts(localPage, query);
-      setLocalProducts(products);
-    } catch (error) {
-      setLocalProducts([]);
-      console.error("An error occurred while fetching products:", error);
-    }
-  }, [localPage, query]);
-
-  // Fetch data when localPage or query changes
   useEffect(() => {
-    fetchData().catch((error) => {
-      console.error("An error occurred while fetching data:", error);
-    });
-  }, [fetchData, localPage, query]);
+    const fetchData = async () => {
+      const { data, pages } = await getProducts(localPage, query);
+      setLocalProducts(data);
+      setTotalPages(pages);
+    }
 
+    void fetchData();
+  }, [localPage, query]);
 
   // Set totalPages and query
   useEffect(() => {
-    setQuery( query || "");
+    setQuery(query || '');
     setTotalPages(pages || 0);
   }, [query, pages]);
 

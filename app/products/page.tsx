@@ -11,7 +11,7 @@ import OffersDisplay from "@components/product/offersDisplay";
 import BG from "../assets/bg-products.webp";
 
 const ProductsPage = async () => {
-  const { data, pages } = (await getProducts()) || {};
+  const { data, pages } = await getProducts() || {};
   const products = Array.isArray(data) ? data : [data].flat();
 
   return (

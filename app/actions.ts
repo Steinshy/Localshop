@@ -44,23 +44,17 @@ export const handleRemoveAddress = async (id: number) => {
 };
 
 // Products API - Get
+export const getProducts = async (page?: number, query?: string) => {
+  page = page || 1, query = query || '';
+  revalidateTag('products');
 
-export const getProducts = async (page: number, query: string) => {
-  page = page || 1;
-  query = query || "";
-  revalidateTag("products");
-  console.log(page, "page, query");
-  const testURL = `http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`;
-  console.log(testURL, "url");
   try {
     const response = await fetch(`http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
-    }
-    const { products, pagy } = (await response.json()) as ProductDataProps;
+    const { products, pagy } = await response.json() as ProductDataProps;
     const { pages } = pagy;
     const { data } = products;
     return { data, pages };
+
   } catch (error) {
     console.error("An error occurred while fetching products:", error);
     return { data: [], pages: 0 };
