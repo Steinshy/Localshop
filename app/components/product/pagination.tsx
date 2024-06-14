@@ -5,48 +5,30 @@ import { FC } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 // NextUI
-import { Button, Skeleton } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
-// Interface
-import { PaginationProps, PaginationButtonProps } from "@interfaces/pagination";
+interface PaginationProps {
+  totalPages: number;
+  localPage: number;
+  previousPage: () => void;
+  nextPage: () => void;
+}
 
-const PaginationButton:FC<PaginationButtonProps> = ({ isDisabled, onClick, children, startContent, endContent }) => (
-  <Button
-    isDisabled={isDisabled}
-    size="sm"
-    variant="flat"
-    onClick={onClick}
-    startContent={startContent}
-    endContent={endContent}>
-    
-    {children}
-  </Button>
-);
-
-const Pagination:FC<PaginationProps> = ({ isLoading, pages, page, previousPage, nextPage }) => {
-  
+const Pagination: FC<PaginationProps> = ({ totalPages, localPage, previousPage, nextPage }) => {
   return (
-    <div className="flex flex-grow justify-between px-2 mb-4">
-      <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
-        <PaginationButton isDisabled={page === 1} onClick={previousPage} startContent={<FaChevronLeft />}>
-          Previous
-        </PaginationButton>
-      </Skeleton>
+    <>
+      <Button isDisabled={localPage === 1} size="sm" variant="flat" onClick={previousPage} startContent={<FaChevronLeft />}>
+        Previous
+      </Button>
 
-      <Skeleton isLoaded={!isLoading} classNames={{
-        base: isLoading ? "rounded-full hidden sm:block" : "hidden sm:block"
-      }}>
-        <p className="text-sm text-foreground/40">
-          Displaying page {page} of {pages}
-        </p>
-      </Skeleton>
+      <p className="text-sm text-foreground/40">
+        Displaying page {localPage} of {totalPages}
+      </p>
 
-      <Skeleton isLoaded={!isLoading} classNames={{ base: "rounded-md" }}>
-        <PaginationButton isDisabled={page >= pages} onClick={nextPage} endContent={<FaChevronRight />}>
-          Next
-        </PaginationButton>
-      </Skeleton>
-    </div>
+      <Button isDisabled={localPage >= totalPages} size="sm" variant="flat" endContent={<FaChevronRight />} onClick={nextPage}>
+        Next
+      </Button>
+    </>
   );
 };
 

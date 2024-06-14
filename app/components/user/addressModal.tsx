@@ -45,7 +45,7 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
     try {
       const promise = id > 0 ? handleUpdate(id, newAddress) : handleCreate(newAddress);
       await promise;
-      const toastMessage = id > 0 ? "Address Updated!" : "Address Created!";
+      const toastMessage = id > 0 ? "Address has been Updated!" : "Address has been Created!";
       showToast(toastMessage, "success");
     } catch (error) {
       showToast("Something went wrong!", "error");

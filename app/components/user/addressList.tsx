@@ -43,7 +43,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
   const handleRemove = async (id: number) => {
     const data = await handleRemoveAddress(id);
     setAddresses(data);
-    showToast("Address Removed!", "success");
+    showToast("Address has been removed!", "success");
   };
 
   useEffect(() => {

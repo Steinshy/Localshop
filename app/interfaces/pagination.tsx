@@ -1,10 +1,4 @@
-type PaginationProps = {
-  pages: number;
-  page: number;
-  isLoading: boolean;
-  previousPage: () => void;
-  nextPage: () => void;
-};
+
 
 type PaginationButtonProps = {
   isDisabled: boolean;

@@ -4,7 +4,6 @@
 import { useState, createContext, useCallback } from "react";
 
 // Utils
-import { showToast } from "@utils/helpers";
 import http from "@utils/http";
 
 // Interfaces - Data
@@ -23,9 +22,9 @@ const useCart = () => {
     setCart(data);
   }, []);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setCart(defaultCart);
-  };
+  }, []);
 
   return { data: cart, update: setCart, refresh, reset };
 };
@@ -53,10 +52,9 @@ const useUser = () => {
     setUser(data);
   }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setUser(defaultUser);
-    showToast("Logged out!", "success");
-  };
+  }, []);
 
   return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh };
 };

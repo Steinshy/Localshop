@@ -41,6 +41,7 @@ const UserMenu: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname
         case "logout":
           void userStore.logout();
           void cartStore.reset();
+          showToast("You has been logged out!", "success");
           break;
         default:
           break;
@@ -55,7 +56,7 @@ const UserMenu: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname
   const handleUserLogin = () => {
     void userStore.refresh();
     void cartStore.refresh();
-    showToast("Logged in!", "success");
+    showToast("You has been logged in!", "success");
   };
 
   const menuItems = [
