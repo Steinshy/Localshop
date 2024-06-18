@@ -1,3 +1,5 @@
+"use server";
+
 // React
 import { FC } from "react";
 // NextUI
@@ -8,6 +10,7 @@ import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 
 // Components
 import StarsReviews from "@components/product/starsReviews";
+
 // Interface
 import { ReviewProps } from "@interfaces/reviews";
 
@@ -24,15 +27,7 @@ const ProductReviews: FC<{ review: ReviewProps }> = ({ review }) => {
           <span className="font-semibold">{`${firstname} ${lastname}`}</span>
           <StarsReviews rating={rating} />
         </div>
-        {rating > 3 ? (
-          <div className="text-green-500">
-            <FaRegThumbsUp />
-          </div>
-        ) : (
-          <div className="text-red-500">
-            <FaRegThumbsDown />
-          </div>
-        )}
+        {rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />}
       </CardHeader>
       <Divider />
       <CardBody>
