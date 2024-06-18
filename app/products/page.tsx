@@ -5,14 +5,17 @@ import { getProducts } from "actions";
 
 // Components
 import ProductsList from "@components/product/productsList";
-import OffersDisplay from "@components/product/offersDisplay";
 
-// Images
-import BG from "../assets/bg-products.webp";
+// NextUi
+import { Card, Image } from "@nextui-org/react";
+
+// Assets - Images
+import { offer1, offer2, offer3, offer4, BG } from "../assets/index";
 
 const ProductsPage = async () => {
-  const { data, pages } = await getProducts() || {};
+  const { data, pages } = (await getProducts()) || {};
   const products = Array.isArray(data) ? data : [data].flat();
+  const offersArray = [offer1, offer2, offer3, offer4];
 
   return (
     <>
@@ -30,12 +33,17 @@ const ProductsPage = async () => {
             range of options to choose from.
           </p>
         </div>
-        <div className="my-4">
-          <OffersDisplay />
+        <div className="aspectRatio:16/9 max-w-screen-lg mx-auto gap-2 px-2 pb-4 my-4 grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 ">
+          {offersArray.map((offer, index) => (
+            <Card key={index} className="max-w-screen-lg mx-auto">
+              <Image className="" width={520} height={270} alt="offersImage" src={offer.src} />
+            </Card>
+          ))}
         </div>
       </section>
-
-      <ProductsList getProducts={getProducts} products={products} pages={pages} />
+      <div className="gap-2 px-2 pb-4 my-4">
+        <ProductsList getProducts={getProducts} products={products} pages={pages} />
+      </div>
     </>
   );
 };

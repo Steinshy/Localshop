@@ -1,3 +1,5 @@
+"use server";
+
 // React
 import { FC } from "react";
 
