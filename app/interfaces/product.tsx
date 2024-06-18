@@ -33,6 +33,12 @@ type ProductDataProps = {
   limit: number;
 };
 
+type ProductsListProp = {
+  getProducts: (page?: number | undefined, query?: string | undefined) => Promise<ProductDataProps>;
+  products: ProductObj[];
+  pages: number;
+}
+
 type ProductCardProps = {
   product: ProductObj;
   isLoading?: boolean;
@@ -50,4 +56,4 @@ type ProductImagesProps = {
   images: [ProductImageProps];
 };
 
-export type { ProductPageProps, ProductObj, ProductDataProps, ProductCardProps, ProductImagesProps };
+export type { ProductPageProps, ProductObj, ProductDataProps, ProductsListProp, ProductCardProps, ProductImagesProps };
