@@ -52,8 +52,7 @@ export const getProducts = async (page?:number, query?:string) => {
 
   try {
     const response = await fetch(`http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`, { next: { tags: ['products'] } });
-    const { products, pagy } = await response.json() as ProductDataProps;
-    const { data } = products;
+    const { products: { data }, pagy } = await response.json() as ProductDataProps;
     return { data, pagy };
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
@@ -66,9 +65,8 @@ export const getProduct = async (value: string) => {
   try {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}`, { next: { tags: ['product'] } });
     const { data: product } = await response.json() as { data: ProductObj };
-    const { attributes, id } = product;
-    const { title, description, thumbnail, price, images } = attributes;
-    return { product, id, title, description, thumbnail, price, images };
+    const { attributes: { id, title, description, thumbnail: { url, full}, price, images } } = product;
+    return { product, id, title, description, url, full, price, images };
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
     return { data: {} };

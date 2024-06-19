@@ -19,8 +19,7 @@ import StarsReviews from "@components/product/starsReviews";
 import { ProductCardProps } from "@interfaces/product";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const { attributes } = product;
-  const { id, title, thumbnail, rating, price, stock } = attributes;
+  const { attributes: { id, title, thumbnail, rating, price, stock } } = product;
   // const isNew = generateRandomBool(); // Cause hydratation error
 
   return (

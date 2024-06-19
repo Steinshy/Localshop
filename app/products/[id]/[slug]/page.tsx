@@ -16,7 +16,7 @@ import ProductReviews from "@components/product/productReviews";
 import { ProductPageProps } from "@interfaces/product";
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
-  const { product, id, title, description, thumbnail, price, images } = await getProduct(params.id);
+  const { product, id, title, description, full, price, images } = await getProduct(params.id);
   const { reviews } = await getProductReviews(params.id);
   const breadCrumbItems = [{ title: "Products", href: "/products" }, { title: title }];
 
@@ -24,7 +24,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
     <>
       <Breadcrumb items={breadCrumbItems} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4">
-        <ProductImages key={id} title={title} mainImage={thumbnail.full} images={images} />
+        <ProductImages key={id} title={title} mainImage={full} images={images} />
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-semibold text-center sm:text-start">{title}</h1>
           <p className="text-md text-foreground/75">{description}</p>

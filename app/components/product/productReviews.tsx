@@ -12,11 +12,10 @@ import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import StarsReviews from "@components/product/starsReviews";
 
 // Interface
-import { ReviewProps } from "@interfaces/reviews";
+import { ProductReviewsProps } from "@interfaces/reviews";
  
-const ProductReviews: FC<{ review: ReviewProps }> = ({ review }) => {
-  const { attributes: { body, rating, author } } = review;
-  const { firstname, lastname, avatar: { small } } = author;
+const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
+  const { attributes: { body, rating, author: { firstname, lastname, avatar: { small } } } } = review
   const ratingIcon = rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />;
 
   return (
