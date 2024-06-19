@@ -13,21 +13,21 @@ import StarsReviews from "@components/product/starsReviews";
 
 // Interface
 import { ReviewProps } from "@interfaces/reviews";
-
+ 
 const ProductReviews: FC<{ review: ReviewProps }> = ({ review }) => {
-  const { attributes } = review;
-  const { body, rating, author } = attributes;
-  const { firstname, lastname, avatar } = author;
+  const { attributes: { body, rating, author } } = review;
+  const { firstname, lastname, avatar: { small } } = author;
+  const ratingIcon = rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />;
 
   return (
     <Card className="max-w-[500px]">
       <CardHeader className="flex justify-between items-center gap-3">
-        <Avatar isBordered color="primary" size="sm" src={avatar.small} />
+        <Avatar isBordered color="primary" size="sm" src={small} />
         <div className="flex flex-col">
           <span className="font-semibold">{`${firstname} ${lastname}`}</span>
           <StarsReviews rating={rating} />
         </div>
-        {rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />}
+        {ratingIcon}
       </CardHeader>
       <Divider />
       <CardBody>
