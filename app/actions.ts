@@ -2,7 +2,8 @@
 
 import { revalidateTag } from "next/cache";
 import { AddressObj, AddressValuesProps } from "@interfaces/address";
-import { ProductDataProps } from "@interfaces/product";
+import { ProductDataProps, ProductObj } from "@interfaces/product";
+import { ReviewDataProps } from "@interfaces/reviews";
 
 // User Address API - Get
 export const getAddresses = async () => {
@@ -60,3 +61,32 @@ export const getProducts = async (page?: number, query?: string) => {
     return { data: [], pages: 0 };
   }
 };
+
+// Product API - Get
+export const getProduct = async (value: string) => {
+  try {
+    const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}`);
+    const { data: product } = await response.json() as { data: ProductObj };
+    const { attributes, id } = product;
+    const { title, description, thumbnail, price, images } = attributes;
+
+    
+    return { product, id, title, description, thumbnail, price, images };
+  } catch (error) {
+    console.error("An error occurred while fetching products:", error);
+    return { data: {} };
+  }
+}
+
+// Product Review API - Get
+export const getProductReviews = async (value: string) => {
+  try {
+    const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}/reviews`);
+    const { reviews } =  await response.json()  as { reviews: { data: ReviewDataProps[] } };
+    return { reviews };
+  }
+  catch (error) {
+    console.error("An error occurred while fetching products:", error);
+    return { data: {} };
+  }
+}

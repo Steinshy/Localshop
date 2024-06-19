@@ -5,12 +5,15 @@ type AuthorProps = {
   email: string;
   avatar: {
     small: string;
+    large: string;
   };
 };
 
 type ReviewProps = {
   id: string;
+  type: string;
   attributes: {
+    id: number;
     title: string;
     body: string;
     rating: number;
@@ -19,8 +22,19 @@ type ReviewProps = {
   };
 };
 
+type ReviewDataProps = {
+  reviews: {
+    data: ReviewProps[];
+  };
+  pagy: {
+    pages: number;
+  };
+  total: number;
+  limit: number;
+};
+
 type StarsReviewsProps = {
   rating: number;
 };
 
-export type { ReviewProps, StarsReviewsProps };
+export type { ReviewProps, ReviewDataProps, StarsReviewsProps };

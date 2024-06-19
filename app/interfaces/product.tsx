@@ -51,8 +51,8 @@ type ProductImageProps = {
 };
 
 type ProductImagesProps = {
-  alt: string;
-  main: string;
+  title: string;
+  mainImage: string;
   images: [ProductImageProps];
 };
 
