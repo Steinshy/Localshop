@@ -6,6 +6,9 @@ import { useState, useEffect, FC, useCallback } from "react";
 // NextUI
 import { Input, Spinner } from "@nextui-org/react";
 
+// NextJS
+import { useSearchParams } from 'next/navigation';
+
 // Components
 import ProductCard from "@components/product/productCard";
 
@@ -20,9 +23,10 @@ import { ProductObj, ProductsListProp } from "@interfaces/product";
 import { getProducts } from "actions";
 
 const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
+  const searchParams = useSearchParams();
   const [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
         [localProducts, setLocalProducts] = useState<ProductObj[]>(products || []),
-        [query, setQuery] = useState<string>(''),
+        [query, setQuery] = useState<string>(searchParams.get('q') || ''),
         [isFetching, setIsFetching] = useState<boolean>(false);
 
   const fetchData = useCallback(async (page:number, query:string) => {
@@ -47,13 +51,27 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
     }
   }, [isFetching, localPagy.pages]);
 
+  const updateQueryURL = (value?:string) => {
+    value = value || undefined;
+    if (value !== undefined) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('q', value);
+      window.history.pushState(null, '', `?${params.toString()}`);
+    } else {
+      const url = window.location.href.split('?')[0]; 
+      window.history.pushState({}, '', url);
+    }
+  }
+
   const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+    void updateQueryURL(query);
     void fetchData(1, query);
   }
 
   const handleClear = () => {
     setQuery('');
+    void updateQueryURL();
     void fetchData(1, '');
   }
 

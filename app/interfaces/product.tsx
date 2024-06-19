@@ -55,4 +55,10 @@ type ProductImagesProps = {
   images: [ProductImageProps];
 };
 
-export type { ProductPageProps, ProductObj, ProductDataProps, ProductsListProp, ProductCardProps, ProductImagesProps };
+type ProductsPageProps = {
+  searchParams?: {
+    [key: string]: string | string[] | undefined
+  }; 
+}
+
+export type { ProductsPageProps, ProductPageProps, ProductObj, ProductDataProps, ProductsListProp, ProductCardProps, ProductImagesProps };

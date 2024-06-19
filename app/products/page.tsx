@@ -1,19 +1,24 @@
+// React
+import { FC } from "react";
+
 // Actions
 import { getProducts } from "actions";
 
 // Components
 import ProductsList from "@components/product/productsList";
 
-// NextUi
+// NextUI
 import { Card, Image } from "@nextui-org/react";
 
-// Assets - Images
+// Assets
 import { offer1, offer2, offer3, offer4, BG } from "../assets/index";
 
-const defaultProducts = { data: [], pagy: { page: 0, pages: 1 } };
+// Interfaces
+import { ProductsPageProps } from "@interfaces/product";
 
-const ProductsPage = async () => {
-  const { data, pagy } = await getProducts() || defaultProducts;
+const ProductsPage:FC<ProductsPageProps> = async ({ searchParams }) => {
+  const urlParams = searchParams || {}, defaultProducts = { data: [], pagy: { page: 0, pages: 1 } };
+  const { data, pagy } = await getProducts(1, urlParams['q']?.toString() || '') || defaultProducts;
   const offersArray = [offer1, offer2, offer3, offer4];
 
   return (
