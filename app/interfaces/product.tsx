@@ -1,3 +1,5 @@
+import { PagyProps } from "./general";
+
 type ProductPageProps = {
   params: {
     id: string;
@@ -24,19 +26,16 @@ type ProductObj = {
 
 type ProductDataProps = {
   products: {
-    data: ProductObj;
+    data: ProductObj[];
   };
-  pagy: {
-    pages: number;
-  };
+  pagy: PagyProps;
   total: number;
   limit: number;
 };
 
 type ProductsListProp = {
-  getProducts: (page?: number | undefined, query?: string | undefined) => Promise<ProductDataProps>;
   products: ProductObj[];
-  pages: number;
+  pagy: PagyProps;
 }
 
 type ProductCardProps = {

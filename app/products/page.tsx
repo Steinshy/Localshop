@@ -1,5 +1,3 @@
-"use server";
-
 // Actions
 import { getProducts } from "actions";
 
@@ -12,9 +10,10 @@ import { Card, Image } from "@nextui-org/react";
 // Assets - Images
 import { offer1, offer2, offer3, offer4, BG } from "../assets/index";
 
+const defaultProducts = { data: [], pagy: { page: 0, pages: 1 } };
+
 const ProductsPage = async () => {
-  const { data, pages } = (await getProducts()) || {};
-  const products = Array.isArray(data) ? data : [data].flat();
+  const { data, pagy } = await getProducts() || defaultProducts;
   const offersArray = [offer1, offer2, offer3, offer4];
 
   return (
@@ -42,7 +41,7 @@ const ProductsPage = async () => {
         </div>
       </section>
       <div className="gap-2 px-2 pb-4 my-4">
-        <ProductsList getProducts={getProducts} products={products} pages={pages} />
+        <ProductsList products={data} pagy={pagy} />
       </div>
     </>
   );

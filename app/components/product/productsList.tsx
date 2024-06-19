@@ -1,63 +1,113 @@
 "use client";
 
 // React
-import { useState, useEffect, FC } from "react";
+import { useState, useEffect, FC, useCallback } from "react";
+
+// NextUI
+import { Input, Spinner } from "@nextui-org/react";
 
 // Components
 import ProductCard from "@components/product/productCard";
 
+// Icons
+import { FaSearch } from "react-icons/fa";
+
 // Interfaces
+import { PagyProps } from "@interfaces/general";
 import { ProductObj, ProductsListProp } from "@interfaces/product";
 
-const ProductsList: FC<ProductsListProp> = ({ getProducts, products, pages }) => {
-  const [localPage, setLocalPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(pages);
-  const [localProducts, setLocalProducts] = useState<ProductObj[]>(products);
-  const [query, setQuery] = useState<string>("");
+// Actions
+import { getProducts } from "actions";
 
-  // Fetch data
-  useEffect(() => {
-    const fetchData = async () => {
-      if (localPage <= 1 || localPage > totalPages) return;
-      try {
-        const { data, pages } = await getProducts(localPage, query);
-        setLocalProducts((localProducts) => [...localProducts, ...data as ProductObj[]] as ProductObj[]);
-        setTotalPages(pages as number);
-      } catch (error) {
-        console.error("An error occurred while fetching products:", error);
+const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
+  const [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
+        [localProducts, setLocalProducts] = useState<ProductObj[]>(products || []),
+        [query, setQuery] = useState<string>(''),
+        [isFetching, setIsFetching] = useState<boolean>(false);
+
+  const fetchData = useCallback(async (page:number, query:string) => {
+    if (page > localPagy.pages || isFetching) return;
+    setIsFetching(true);
+
+    try {
+      const { data, pagy } = await getProducts(page, query);
+
+      if (page > 1) {
+        setLocalProducts((localProducts) => [...localProducts, ...data] as ProductObj[]);
+      } else {
+        setLocalProducts(data);
       }
-    };
 
-    void fetchData();
-  }, [localPage, query]);
+      setLocalPagy(pagy);
 
-  // Set totalPages and query at load page
-  useEffect(() => {
-    setQuery(query || "");
-    setTotalPages(pages);
-  }, [query, pages]);
+      setIsFetching(false);
+    } catch (error) {
+      setIsFetching(false);
+      console.error('An error occurred while fetching products: ', error);
+    }
+  }, [isFetching, localPagy.pages]);
 
-  // Set localPage to 1 when a query is added
-  useEffect(() => {
-    setLocalPage(1);
-  }, [query]);
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    void fetchData(1, query);
+  }
+
+  const handleClear = () => {
+    setQuery('');
+    void fetchData(1, '');
+  }
 
   // Infinite scrolling
   useEffect(() => {
     const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-      setLocalPage(localPage + 1);
+      const offsetY = 10;
+      if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - offsetY) return;
+      void fetchData(localPagy.page + 1, query);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [localPage]);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [localPagy.page, fetchData, query]);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 px-2 pb-4">
-      {localProducts.map((product) => (
-        <ProductCard key={`product_${product.id}`} product={product} />
-      ))}
-    </div>
+    <>
+      {/* Search form */}
+      <form onSubmit={handleSubmit} className="flex justify-center items-center px-2 mb-4">
+        <Input
+          aria-label="Search"
+          placeholder="Type..."
+          type="search"
+          value={query}
+          onValueChange={setQuery}
+          onClear={handleClear}
+          startContent={<FaSearch />}
+          size="md"
+          className="max-w-screen-2xl"
+          isDisabled={isFetching}
+          isClearable
+        />
+      </form>
+
+      {/* Products list */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 px-2 pb-4">
+        {localProducts.map((product) => (
+          <ProductCard key={`product_${product.id}`} product={product} />
+        ))}
+      </div>
+
+      {/* Infinite scrolling loading state */}
+      {isFetching && 
+        <div className="flex justify-center items-center my-2">
+          <Spinner />
+        </div>
+      }
+      
+      {/* Results - end of the pages */}
+      {(localPagy.page >= localPagy.pages) &&
+        <div className="flex justify-center items-center my-4">
+          <p className="text-sm text-foreground/50">{localProducts.length} Products</p>
+        </div>
+      }
+    </>
   );
 };
 
