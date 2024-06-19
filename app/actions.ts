@@ -46,16 +46,15 @@ export const handleRemoveAddress = async (id: number) => {
 
 // Products API - Get
 export const getProducts = async (page?: number, query?: string) => {
-  page = page || 1, query = query || '';
-  revalidateTag('products');
+  (page = page || 1), (query = query || "");
+  revalidateTag("products");
 
   try {
     const response = await fetch(`http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`);
-    const { products, pagy } = await response.json() as ProductDataProps;
+    const { products, pagy } = (await response.json()) as ProductDataProps;
     const { pages } = pagy;
     const { data } = products;
     return { data, pages };
-
   } catch (error) {
     console.error("An error occurred while fetching products:", error);
     return { data: [], pages: 0 };
@@ -66,27 +65,24 @@ export const getProducts = async (page?: number, query?: string) => {
 export const getProduct = async (value: string) => {
   try {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}`);
-    const { data: product } = await response.json() as { data: ProductObj };
+    const { data: product } = (await response.json()) as { data: ProductObj };
     const { attributes, id } = product;
     const { title, description, thumbnail, price, images } = attributes;
-
-    
     return { product, id, title, description, thumbnail, price, images };
   } catch (error) {
     console.error("An error occurred while fetching products:", error);
     return { data: {} };
   }
-}
+};
 
 // Product Review API - Get
 export const getProductReviews = async (value: string) => {
   try {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}/reviews`);
-    const { reviews } =  await response.json()  as { reviews: { data: ReviewDataProps[] } };
+    const { reviews } = (await response.json()) as { reviews: { data: ReviewDataProps[] } };
     return { reviews };
-  }
-  catch (error) {
+  } catch (error) {
     console.error("An error occurred while fetching products:", error);
     return { data: {} };
   }
-}
+};
