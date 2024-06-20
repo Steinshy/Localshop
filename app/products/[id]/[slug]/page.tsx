@@ -3,7 +3,7 @@
 // React
 import { FC } from "react";
 
-// API
+// Actions
 import { getProduct, getProductReviews } from "actions";
 
 // Components

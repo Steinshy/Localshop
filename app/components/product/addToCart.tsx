@@ -12,34 +12,34 @@ import { Button } from "@nextui-org/react";
 // Icon
 import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 
-// API
+// Actions
 import { addItemToCart } from "actions";
 
 // Interface
-import { ProductCardProps } from "@interfaces/product";
+import { ProductCardProps, ProductObj } from "@interfaces/product";
 
 // Utils
 import { UserContext, CartContext } from "@utils/subProviders";
 import { showToast } from "@utils/helpers";
 
 const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
-  const router = useRouter();
-  const userStore = useContext(UserContext);
-  const cartStore = useContext(CartContext);
-  const { isLogged } = userStore;
-  const { attributes } = cartStore.data;
-  const { items } = attributes;
+  const router = useRouter(),
+        userStore = useContext(UserContext),
+        cartStore = useContext(CartContext);
+  const { isLogged } = userStore,
+        { attributes } = cartStore.data,
+        { items } = attributes;
   const cartItem = items.find(({ product: cartProduct }) => cartProduct.id.toString() === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
-  const handleAddItemToCart = useCallback(() => {
+  const handleAddItem = useCallback(() => {
     if (quantity > 0) {
       return router.push("/order/cart");
     }
     try {
       const apiCall = async () => {
         const { data } = await addItemToCart(product.id);
-        cartStore.update(data);
+        cartStore.update(data)
         showToast("Item has been added to your cart !", "success");
       };
       void apiCall();
@@ -54,7 +54,7 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
       size={isIconOnly ? "sm" : "md"}
       radius="sm"
       color={quantity > 0 ? "success" : "primary"}
-      onClick={() => handleAddItemToCart()}
+      onClick={() => handleAddItem()}
       isIconOnly={isIconOnly}
       className={quantity > 0 ? "text-white" : ""}
       startContent={

@@ -7,7 +7,7 @@ import { useState, useEffect, FC, useCallback } from "react";
 import { Input, Spinner } from "@nextui-org/react";
 
 // NextJS
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams } from "next/navigation";
 
 // Components
 import ProductCard from "@components/product/productCard";
@@ -25,71 +25,72 @@ import { getProducts } from "actions";
 const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
   const searchParams = useSearchParams();
   const [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
-        [localProducts, setLocalProducts] = useState<ProductObj[]>(products || []),
-        [query, setQuery] = useState<string>(searchParams.get('q') || ''),
-        [isFetching, setIsFetching] = useState<boolean>(false);
+    [localProducts, setLocalProducts] = useState<ProductObj[]>(products || []),
+    [query, setQuery] = useState<string>(searchParams.get("q") || ""),
+    [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const fetchData = useCallback(async (page:number, query:string) => {
+  const fetchData = useCallback( async (page: number, query: string) => {
     if (page > localPagy.pages || isFetching) return;
-    setIsFetching(true);
+      setIsFetching(true);
 
-    try {
-      const { data, pagy } = await getProducts(page, query);
+      try {
+        const { data, pagy } = await getProducts(page, query);
 
-      if (page > 1) {
-        setLocalProducts((localProducts) => [...localProducts, ...data] as ProductObj[]);
-      } else {
-        setLocalProducts(data);
+        if (page > 1) {
+          setLocalProducts((localProducts) => [...localProducts, ...data] as ProductObj[]);
+        } else {
+          setLocalProducts(data);
+        }
+        setLocalPagy(pagy);
+        setIsFetching(false);
+
+      } catch (error) {
+        setIsFetching(false);
+        console.error("An error occurred while fetching products: ", error);
       }
+    },
+    [isFetching, localPagy.pages]
+  );
 
-      setLocalPagy(pagy);
-
-      setIsFetching(false);
-    } catch (error) {
-      setIsFetching(false);
-      console.error('An error occurred while fetching products: ', error);
-    }
-  }, [isFetching, localPagy.pages]);
-
-  const updateQueryURL = (value?:string) => {
-    value = value || undefined;
+  const updateQueryURL = (value?: string) => {value = value || undefined
     if (value !== undefined) {
       const params = new URLSearchParams(searchParams.toString());
-      params.set('q', value);
-      window.history.pushState(null, '', `?${params.toString()}`);
+      params.set("q", value);
+      window.history.pushState(null, "", `?${params.toString()}`);
     } else {
-      const url = window.location.href.split('?')[0]; 
-      window.history.pushState({}, '', url);
+      const url = window.location.href.split("?")[0];
+      window.history.pushState({}, "", url);
     }
-  }
-
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  };
+  
+  const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     void updateQueryURL(query);
     void fetchData(1, query);
-  }
+  };
 
   const handleClear = () => {
-    setQuery('');
+    setQuery("");
     void updateQueryURL();
-    void fetchData(1, '');
-  }
+    void fetchData(1, "");
+  };
 
   // Infinite scrolling
   useEffect(() => {
     const handleScroll = () => {
       const offsetY = 10;
-      if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - offsetY) return;
+      if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - offsetY)
+        return;
       void fetchData(localPagy.page + 1, query);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [localPagy.page, fetchData, query]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [localPagy.page, fetchData, query, isFetching]);
 
   return (
     <>
       {/* Search form */}
-      <form onSubmit={handleSubmit} className="flex justify-center items-center px-2 mb-4">
+      <form onSubmit={handleSearch} className="flex justify-center items-center px-2 mb-4">
         <Input
           aria-label="Search"
           placeholder="Type..."
@@ -113,18 +114,18 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
       </div>
 
       {/* Infinite scrolling loading state */}
-      {isFetching && 
+      {isFetching && (
         <div className="flex justify-center items-center my-2">
           <Spinner />
         </div>
-      }
-      
+      )}
+
       {/* Results - end of the pages */}
-      {(localPagy.page >= localPagy.pages) &&
+      {localPagy.page >= localPagy.pages && (
         <div className="flex justify-center items-center my-4">
           <p className="text-sm text-foreground/50">{localProducts.length} Products</p>
         </div>
-      }
+      )}
     </>
   );
 };

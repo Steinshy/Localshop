@@ -8,6 +8,7 @@ type ProductPageProps = {
 
 type ProductObj = {
   id: string;
+  type: string;
   attributes: {
     id: number;
     description: string;
@@ -26,11 +27,9 @@ type ProductObj = {
 
 type ProductDataProps = {
   products: {
-    data: ProductObj[];
+    data?: ProductObj[];
   };
   pagy: PagyProps;
-  total: number;
-  limit: number;
 };
 
 type ProductsListProp = {

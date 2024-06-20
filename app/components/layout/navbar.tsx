@@ -27,15 +27,11 @@ const Header = () => {
 
   // Cart
   const cartStore = useContext(CartContext);
-  const { attributes: cartAttributes } = cartStore.data;
-  const { totalItems } = cartAttributes;
+  const { attributes: { totalItems }} = cartStore.data;
 
   // User
   const userStore = useContext(UserContext);
-  const { data, isLogged } = userStore;
-  const { attributes } = data || {};
-  const { firstname, lastname } = attributes || {};
-
+  const { data: { attributes: { firstname, lastname} }, isLogged } = userStore;
 
   return (
     <Navbar isBlurred isBordered>

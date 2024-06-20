@@ -11,7 +11,7 @@ import AddressModal from "@components/user/addressModal";
 import { AddressListProps, AddressObj, AddressValuesProps } from "@interfaces/address";
 
 // Actions
-import { getAddresses, handleCreateAdress, handleUpdateAddress, handleRemoveAddress } from "actions";
+import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from "actions";
 
 // Utils
 import { showToast } from "@utils/helpers";
@@ -31,17 +31,17 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
   }, [addresses.length]);
 
   const handleCreate = async (newAdress: AddressValuesProps ) => {
-    const data = await handleCreateAdress(newAdress);
+    const data = await CreateAddress(newAdress);
     setAddresses(data);
   }
 
   const handleUpdate = async (id: number, newAddress: AddressValuesProps) => {
-    const data = await handleUpdateAddress(id, newAddress);
+    const data = await UpdateAddress(id, newAddress);
     setAddresses(data);
   };
 
   const handleRemove = async (id: number) => {
-    const data = await handleRemoveAddress(id);
+    const data = await RemoveAddress(id);
     setAddresses(data);
     showToast("Address has been removed!", "success");
   };

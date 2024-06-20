@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 
 // Interface
 import { CouponsObject } from "@interfaces/coupon";
+import { ProductImageProps } from "@interfaces/product";
 
 type CartResponse = {
   id: string;
@@ -23,25 +24,23 @@ type CartResponse = {
 
 type CartItemObj = {
   id: number;
+  type: string;
   quantity: number;
-  price: number;
   product: {
     id: number;
-    title: string;
     description: string;
     price: number;
-    discountPercentage: number;
-    rating: number;
+    title: string;
     stock: number;
+    rating: number;
+    category: string;
+    discountPercentage: number;
     brand: string;
     thumbnail: {
       url: string;
       full: string;
     };
-    images: {
-      thumbnail: string;
-      full: string;
-    }[];
+    images: [ProductImageProps];
   };
 };
 
