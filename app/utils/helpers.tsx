@@ -50,10 +50,6 @@ const generateClamp = (num: number, min: number, max: number): number => {
  * @returns {number} The converted value.
  */
 
-const round = (value: number): number => {
-  return Math.round(value) || 0;
-};
-
 /**
  * Generates a random boolean.
  * @returns {boolean} The random boolean.
@@ -107,4 +103,4 @@ const showToast = (text: string, status: ToastType) => {
   status === "error" ? toast.error(text) : toast.success(text);
 };
 
-export { generateSlug, generateClamp, generateRandomBool, generateDefaultOrders, round, readableDate, showToast };
+export { generateSlug, generateClamp, generateRandomBool, generateDefaultOrders, readableDate, showToast };

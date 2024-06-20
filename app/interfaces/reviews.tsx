@@ -26,4 +26,8 @@ type ProductReviewsProps = {
   review: ReviewDataProps;
 };
 
-export type { ReviewDataProps, ReviewAuthorProps, ProductReviewsProps };
+type StarsReviewsProps = {
+  rating: number;
+};
+
+export type { ReviewDataProps, ReviewAuthorProps, ProductReviewsProps, StarsReviewsProps };

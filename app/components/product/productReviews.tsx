@@ -11,7 +11,6 @@ import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 // Components
 import StarsReviews from "@components/product/starsReviews";
 
-// Interface
 import { ProductReviewsProps } from "@interfaces/reviews";
  
 const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
@@ -22,10 +21,10 @@ const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
     <Card className="max-w-[500px]">
       <CardHeader className="flex justify-between items-center gap-3">
         <Avatar isBordered color="primary" size="sm" src={small} />
-        <div className="flex flex-col">
-          <span className="font-semibold">{`${firstname} ${lastname}`}</span>
-          <StarsReviews rating={rating} />
-        </div>
+          <div className="flex flex-col">
+            <span className="font-semibold">{`${firstname} ${lastname}`}</span>
+            <StarsReviews rating={rating} />
+          </div>
         {ratingIcon}
       </CardHeader>
       <Divider />

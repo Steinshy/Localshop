@@ -16,7 +16,7 @@ import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 import { addItemToCart } from "actions";
 
 // Interface
-import { ProductCardProps, ProductObj } from "@interfaces/product";
+import { ProductCardProps } from "@interfaces/product";
 
 // Utils
 import { UserContext, CartContext } from "@utils/subProviders";
