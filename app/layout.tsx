@@ -17,12 +17,6 @@ import { LayoutProps } from "@interfaces/general";
 // APP CSS
 import "./styles/App.css";
 
-// Next metadata
-export const metadata = {
-  title: "LocalShop",
-  description: "LocalShop - Your local shop online",
-};
-
 const RootLayout: FC<LayoutProps> = ({ children }) => (
   <html lang="en">
     <body className="flex flex-col min-h-svh">
