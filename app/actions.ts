@@ -107,8 +107,9 @@ export const addItemToCart = async (product_id: string) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ product_id }),
     });
-    const { data } = (await response.json()) as { data: CartResponse };
-    return { data };
+    const data = await response.json() as { data: CartResponse };
+    return data;
+    
   } catch (error) {
     console.error('An error occurred while adding item to cart: ', error);
     return { data: {} };

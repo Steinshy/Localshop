@@ -14,7 +14,7 @@ import { defaultCart } from "@data/cart";
 
 // CART PROVIDERS //
 const useCart = () => {
-  const [cart, setCart] = useState(defaultCart as CartResponse);
+  const [cart, setCart] = useState<CartResponse>(defaultCart);
 
   const refresh = useCallback(async () => {
     const response = await http.get("/cart");
