@@ -16,7 +16,7 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { CartContext, UserContext } from "@utils/subProviders";
 
 // Components
-import UserMenu from "@components/layout/navbar/userMenu";
+import UserDropdown from "@components/layout/userDropdown";
 
 const Header = () => {
   const navItems = [
@@ -75,7 +75,7 @@ const Header = () => {
         ) : null}
 
         <NavbarItem>
-          <UserMenu
+          <UserDropdown
             userStore={userStore}
             cartStore={cartStore}
             isLogged={isLogged}

@@ -4,19 +4,17 @@
 import { revalidateTag } from 'next/cache';
 
 // Interface
-
 import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
 import { getProductResponse } from '@interfaces/product';
-// import { ProductDataProps, ProductResponse } from '@interfaces/product';
-// import { ReviewDataProps } from '@interfaces/reviews';
+import { ReviewResponse } from '@interfaces/reviews';
 import { CartResponse } from '@interfaces/cart';
 
 // User Address API - Get
 export const getAddresses = async () => {
   revalidateTag('user');
   const response = await fetch('http://api.localshop.test:3005/v1/addresses', { next: { tags: ['user'] } });
-  const data = (await response.json()) as { data: AddressResponse[] };
+  const data = await response.json() as { data: AddressResponse[] };
   const { data: addresses } = data;
   return addresses;
 };
@@ -61,7 +59,7 @@ export const getProducts = async (page?: number, query?: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`, {
       next: { tags: ['products'] },
     });
-    const { products, pagy } = (await response.json()) as getProductsResponse;
+    const { products, pagy } = await response.json() as getProductsResponse;
     return { products, pagy };
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
@@ -75,10 +73,11 @@ export const getProduct = async (productId: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${productId}`, {
       next: { tags: ['product'] },
     });
-    const { data } = (await response.json()) as getProductResponse;
+    const { data } = await response.json() as getProductResponse;
     const { attributes } = data;
     const { id, title, description, thumbnail, price, images } = attributes;
     return { id, title, description, thumbnail, price, images };
+
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
     return { data: {} };
@@ -91,8 +90,9 @@ export const getProductReviews = async (value: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}/reviews`, {
       next: { tags: ['reviews'] },
     });
-    const { reviews } = (await response.json()) as { reviews: { data: ReviewDataProps[] } };
-    return { reviews };
+    const { reviews } = await response.json() as { reviews: { data: ReviewResponse[] } };
+    return reviews;
+
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
     return { data: {} };

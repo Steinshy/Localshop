@@ -18,7 +18,7 @@ import { showToast } from "@utils/helpers";
 // Interface
 import { UserMenuProps } from "@interfaces/navbar";
 
-const UserMenu: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname, lastname }) => {
+const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname, lastname }) => {
   const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
@@ -41,7 +41,7 @@ const UserMenu: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname
         case "logout":
           void userStore.logout();
           void cartStore.reset();
-          showToast("You has been logged out!", "success");
+          showToast("You have been logged out!", "success");
           break;
         default:
           break;
@@ -56,7 +56,7 @@ const UserMenu: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname
   const handleUserLogin = () => {
     void userStore.refresh();
     void cartStore.refresh();
-    showToast("You has been logged in!", "success");
+    showToast("You have been logged in!", "success");
   };
 
   const menuItems = [
@@ -106,4 +106,4 @@ const UserMenu: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname
   );
 };
 
-export default UserMenu;
+export default UserDropdown;

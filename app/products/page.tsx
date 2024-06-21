@@ -5,7 +5,7 @@ import { FC } from "react";
 import { getProducts } from "actions";
 
 // Components
-import ProductsList from "@components/product/productsList";
+import ProductsList from "@components/products/productsList";
 
 // NextUI
 import { Card, Image } from "@nextui-org/react";
