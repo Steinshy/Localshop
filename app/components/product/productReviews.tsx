@@ -9,7 +9,7 @@ import { Card, CardBody, CardHeader, Avatar, Divider } from "@nextui-org/react";
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 
 // Components
-import StarsReviews from "@components/product/starsReviews";
+import ReviewsStars from "@components/product/reviewsStars";
 
 import { ProductReviewsProps } from "@interfaces/reviews";
  
@@ -23,7 +23,7 @@ const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
         <Avatar isBordered color="primary" size="sm" src={small} />
           <div className="flex flex-col">
             <span className="font-semibold">{`${firstname} ${lastname}`}</span>
-            <StarsReviews rating={rating} />
+            <ReviewsStars rating={rating} />
           </div>
         {ratingIcon}
       </CardHeader>

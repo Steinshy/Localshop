@@ -4,9 +4,9 @@
 import { FC } from 'react';
 
 // Interface
-import { StarsReviewsProps } from '@interfaces/reviews';
+import { ReviewsStarsProps } from '@interfaces/reviews';
 
-const StarsReviews: FC<StarsReviewsProps> = ({ rating }) => {
+const ReviewsStars: FC<ReviewsStarsProps> = ({ rating }) => {
   const roundedRating = Math.round(rating) || 0;
   const fractionalPart = rating - roundedRating;
   const svgStars = Array.from({ length: 5 }, (_, i) => i).map((i) => {
@@ -20,4 +20,4 @@ const StarsReviews: FC<StarsReviewsProps> = ({ rating }) => {
   return <div className='flex items-center gap-1'>{svgStars}</div>;
 };
 
-export default StarsReviews;
+export default ReviewsStars;

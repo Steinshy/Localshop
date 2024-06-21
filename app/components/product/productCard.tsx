@@ -1,4 +1,5 @@
 "use client";
+
 // React
 import { FC } from "react";
 
@@ -13,13 +14,14 @@ import { Card, CardBody, CardHeader, CardFooter, Image } from "@nextui-org/react
 
 // Components
 import AddToCart from "@components/product/addToCart";
-import StarsReviews from "@components/product/starsReviews";
+import ReviewsStars from "@components/product/reviewsStars";
 
 // Interfaces
 import { ProductCardProps } from "@interfaces/product";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const { attributes: { id, title, thumbnail: { url }, rating, price, stock } } = product;
+  const { attributes: { id, title, price, stock, rating, thumbnail } } = product;
+  const { url: image } = thumbnail;
 
   return (
     <article>
@@ -31,12 +33,12 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             removeWrapper
             className="z-0 w-full h-48 rounded-md object-cover"
             alt="Product Image"
-            src={url}
+            src={image}
           />
           <div className="flex-col justify-center text-center p-2">
             <h2 className="text-md">{title}</h2>
             <div className="flex justify-center p-2">
-              <StarsReviews rating={rating} />
+              <ReviewsStars rating={rating} />
             </div>
           </div>
         </CardBody>
