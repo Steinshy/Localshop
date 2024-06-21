@@ -17,7 +17,8 @@ import { FaSearch } from "react-icons/fa";
 
 // Interfaces
 import { PagyProps } from "@interfaces/general";
-import { ProductObj, ProductsListProp } from "@interfaces/product";
+import { ProductResponse } from '@interfaces/product'
+import { ProductsListProp } from "@interfaces/products";
 
 // Actions
 import { getProducts } from "actions";
@@ -25,7 +26,7 @@ import { getProducts } from "actions";
 const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
   const searchParams = useSearchParams();
   const [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
-    [localProducts, setLocalProducts] = useState<ProductObj[]>(products || []),
+    [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
     [query, setQuery] = useState<string>(searchParams.get("q") || ""),
     [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -34,12 +35,12 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
       setIsFetching(true);
 
       try {
-        const { data, pagy } = await getProducts(page, query);
+        const { products, pagy } = await getProducts(page, query);
 
         if (page > 1) {
-          setLocalProducts((localProducts) => [...localProducts, ...data] as ProductObj[]);
+          setLocalProducts((localProducts) => [...localProducts, ...products.data]);
         } else {
-          setLocalProducts(data);
+          setLocalProducts(products.data)
         }
         setLocalPagy(pagy);
         setIsFetching(false);

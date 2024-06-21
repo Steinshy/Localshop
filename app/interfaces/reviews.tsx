@@ -1,4 +1,4 @@
-type ReviewAuthorProps = {
+type ReviewAuthor = {
   id: number;
   firstname: string;
   lastname: string;
@@ -9,7 +9,7 @@ type ReviewAuthorProps = {
   };
 };
 
-type ReviewDataProps = {
+type ReviewResponse = {
   id: string;
   type: string;
   attributes: {
@@ -18,16 +18,16 @@ type ReviewDataProps = {
     body: string;
     rating: number;
     createdAt: string;
-    author: ReviewAuthorProps;
+    author: ReviewAuthor;
   };
 };
 
 type ProductReviewsProps = {
-  review: ReviewDataProps;
+  review: ReviewResponse;
 };
 
-type StarsReviewsProps = {
+type ReviewsStarsProps = {
   rating: number;
 };
 
-export type { ReviewDataProps, ReviewAuthorProps, ProductReviewsProps, StarsReviewsProps };
+export type { ReviewResponse, ReviewAuthor, ProductReviewsProps, ReviewsStarsProps };

@@ -1,10 +1,11 @@
 // React
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from 'react';
 
 // Interface
-import { CouponsObject } from "@interfaces/coupon";
-import { ProductImageProps } from "@interfaces/product";
+import { CouponsObject } from '@interfaces/coupon';
+import { ProductResponse } from '@interfaces/product';
 
+// General Interface
 type CartResponse = {
   id: string;
   type: string;
@@ -13,35 +14,20 @@ type CartResponse = {
     id: number;
     createdAt: string;
     updatedAt: string;
+    items: CartItems[];
     totalPrice: number;
+    coupon: CouponsObject;
+    finalPrice: number;
     totalItems: number;
     totalUniqueItems: number;
-    finalPrice: number;
-    items: CartItemObj[];
-    coupon: CouponsObject;
   };
 };
-
-type CartItemObj = {
+// CartResponse => CartItems
+type CartItems = {
   id: number;
-  type: string;
   quantity: number;
-  product: {
-    id: number;
-    description: string;
-    price: number;
-    title: string;
-    stock: number;
-    rating: number;
-    category: string;
-    discountPercentage: number;
-    brand: string;
-    thumbnail: {
-      url: string;
-      full: string;
-    };
-    images: [ProductImageProps];
-  };
+  price: number;
+  product: ProductResponse;
 };
 
 type CartContextType = {
@@ -51,17 +37,17 @@ type CartContextType = {
   reset: () => void;
 };
 
-type CartItemProps = {
-  items: CartItemObj[];
+type CartProductProps = {
+  cartItem: CartItems;
 };
 
-type CartProductProps = {
-  cartItem: CartItemObj;
+type CartItemProps = {
+  items: CartItems[];
 };
 
 type CartButtonProcessProps = {
   pathname: string;
-  items: CartItemObj[];
+  items: CartItems[];
 };
 
 type CartButtonDeleteProps = {
@@ -71,7 +57,7 @@ type CartButtonDeleteProps = {
 
 export type {
   CartResponse,
-  CartItemObj,
+  CartItems,
   CartContextType,
   CartItemProps,
   CartProductProps,

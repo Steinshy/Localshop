@@ -27,8 +27,10 @@ const Header = () => {
 
   // Cart
   const cartStore = useContext(CartContext);
-  const { attributes: { totalItems }} = cartStore.data;
-
+  const data = cartStore.data
+  const totalItems = data?.attributes?.totalItems || 0
+  console.log(data, "cartStore data")
+  console.log(totalItems, "totalItems")
   // User
   const userStore = useContext(UserContext);
   const { data: { attributes: { firstname, lastname} }, isLogged } = userStore;

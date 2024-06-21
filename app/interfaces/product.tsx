@@ -1,63 +1,70 @@
-import { PagyProps } from "./general";
+import { PagyProps } from './general';
 
+// General Interface
+type ProductResponse = {
+  id: string;
+  type: string;
+  attributes: {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    discountPercentage: number;
+    rating: number;
+    stock: number;
+    brand: string;
+    thumbnail: ProductThumbnail;
+    images: [ProductImage];
+  };
+};
+
+// ProductResponse => Thumbnail
+type ProductThumbnail = {
+  url: string;
+  full: string;
+};
+// ProductResponse => Images
+type ProductImage = {
+  thumbnail: string;
+  full: string;
+};
+
+// Product API - Get
+type getProductResponse = {
+  data: ProductResponse;
+};
+
+// Product => Page
 type ProductPageProps = {
   params: {
     id: string;
   };
 };
 
-type ProductObj = {
-  id: string;
-  type: string;
-  attributes: {
-    id: number;
-    description: string;
-    price: number;
-    title: string;
-    stock: number;
-    rating: number;
-    category: string;
-    thumbnail: {
-      url: string;
-      full: string;
-    };
-    images: [ProductImageProps];
-  };
-};
-
 type ProductDataProps = {
   products: {
-    data?: ProductObj[];
+    data?: ProductResponse[];
   };
   pagy: PagyProps;
 };
 
-type ProductsListProp = {
-  products: ProductObj[];
-  pagy: PagyProps;
-}
-
+// Product => productCard
 type ProductCardProps = {
-  product: ProductObj;
-  isLoading?: boolean;
+  product: ProductResponse;
   isIconOnly?: boolean;
-};
-
-type ProductImageProps = {
-  thumbnail: string;
-  full: string;
 };
 
 type ProductImagesProps = {
   title: string;
   mainImage: string;
-  images: [ProductImageProps];
+  images: [ProductImage];
 };
 
-type ProductsPageProps = {
-  searchParams?: {
-    [key: string]: string | string[] | undefined
-  }; 
-}
-
-export type { ProductsPageProps, ProductPageProps, ProductObj, ProductDataProps, ProductsListProp, ProductCardProps, ProductImagesProps };
+export type {
+  ProductPageProps,
+  ProductResponse,
+  ProductDataProps,
+  ProductCardProps,
+  ProductImagesProps,
+  getProductResponse,
+};

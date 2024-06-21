@@ -14,11 +14,14 @@ import { Card, Image } from "@nextui-org/react";
 import { offer1, offer2, offer3, offer4, BG } from "../assets/index";
 
 // Interfaces
-import { ProductsPageProps } from "@interfaces/product";
+import { ProductsPageProps } from "@interfaces/products";
+
+// Data
+import { defaultProducts } from "@data/products";
 
 const ProductsPage:FC<ProductsPageProps> = async ({ searchParams }) => {
-  const urlParams = searchParams || {}, defaultProducts = { data: [], pagy: { page: 0, pages: 1 } };
-  const { data, pagy } = await getProducts(1, urlParams['q']?.toString() || '') || defaultProducts;
+  const urlParams = searchParams || {}
+  const { products, pagy } = await getProducts(1, urlParams['q']?.toString() || '') || defaultProducts;
   const offersArray = [offer1, offer2, offer3, offer4];
 
   return (
@@ -46,7 +49,7 @@ const ProductsPage:FC<ProductsPageProps> = async ({ searchParams }) => {
         </div>
       </section>
       <div className="gap-2 px-2 pb-4 my-4">
-        <ProductsList products={data} pagy={pagy} />
+        <ProductsList products={products} pagy={pagy} />
       </div>
     </>
   );

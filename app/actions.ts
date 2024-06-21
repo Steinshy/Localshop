@@ -1,15 +1,22 @@
 'use server';
 
+// Next Cache
 import { revalidateTag } from 'next/cache';
-import { AddressObj, AddressValuesProps } from '@interfaces/address';
-import { ProductDataProps, ProductObj } from '@interfaces/product';
-import { ReviewDataProps } from '@interfaces/reviews';
+
+// Interface
+
+import { AddressResponse, AddressValuesProps } from '@interfaces/address';
+import { getProductsResponse } from '@interfaces/products';
+import { getProductResponse } from '@interfaces/product';
+// import { ProductDataProps, ProductResponse } from '@interfaces/product';
+// import { ReviewDataProps } from '@interfaces/reviews';
+import { CartResponse } from '@interfaces/cart';
 
 // User Address API - Get
 export const getAddresses = async () => {
   revalidateTag('user');
   const response = await fetch('http://api.localshop.test:3005/v1/addresses', { next: { tags: ['user'] } });
-  const data = (await response.json()) as { data: AddressObj[] };
+  const data = (await response.json()) as { data: AddressResponse[] };
   const { data: addresses } = data;
   return addresses;
 };
@@ -54,35 +61,24 @@ export const getProducts = async (page?: number, query?: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`, {
       next: { tags: ['products'] },
     });
-    const {
-      products: { data },
-      pagy,
-    } = (await response.json()) as ProductDataProps;
-    return { data, pagy };
+    const { products, pagy } = (await response.json()) as getProductsResponse;
+    return { products, pagy };
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
-    return { data: [], pagy: { page: 0, pages: 0 } };
+    return { products: { data: [] }, pagy: { page: 0, pages: 0 } };
   }
 };
 
 // Product API - Get
-export const getProduct = async (value: string) => {
+export const getProduct = async (productId: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}`, {
+    const response = await fetch(`http://api.localshop.test:3005/v1/products/${productId}`, {
       next: { tags: ['product'] },
     });
-    const { data: product } = (await response.json()) as { data: ProductObj };
-    const {
-      attributes: {
-        id,
-        title,
-        description,
-        thumbnail: { url, full },
-        price,
-        images,
-      },
-    } = product;
-    return { product, id, title, description, url, full, price, images };
+    const { data } = (await response.json()) as getProductResponse;
+    const { attributes } = data;
+    const { id, title, description, thumbnail, price, images } = attributes;
+    return { id, title, description, thumbnail, price, images };
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
     return { data: {} };
@@ -111,7 +107,7 @@ export const addItemToCart = async (product_id: string) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ product_id }),
     });
-    const { data } = (await response.json()) as { data: ProductObj };
+    const { data } = (await response.json()) as { data: CartResponse };
     return { data };
   } catch (error) {
     console.error('An error occurred while adding item to cart: ', error);
