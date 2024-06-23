@@ -9,8 +9,7 @@ import http from "@utils/http";
 // Interfaces - Data
 import { UserResponse, UserContextType } from "@interfaces/user";
 import { CartResponse, CartContextType } from "@interfaces/cart";
-import { defaultUser } from "@data/user";
-import { defaultCart } from "@data/cart";
+import { defaultCart, defaultUser } from "@data/general";
 
 // CART PROVIDERS //
 const useCart = () => {

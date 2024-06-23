@@ -14,7 +14,7 @@ import { Formik, Form, Field } from "formik";
 import { AddressModalProp, AddressValuesProps } from "@interfaces/address";
 
 // Data
-import { defaultAddress } from "@data/address";
+import { defaultAddress } from "@data/general";
 
 // Utils
 import { showToast } from "@utils/helpers";

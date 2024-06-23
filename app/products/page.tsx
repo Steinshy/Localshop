@@ -17,7 +17,7 @@ import { offer1, offer2, offer3, offer4, BG } from "../assets/index";
 import { ProductsPageProps } from "@interfaces/products";
 
 // Data
-import { defaultProducts } from "@data/products";
+import { defaultProducts } from "@data/general";
 
 const ProductsPage:FC<ProductsPageProps> = async ({ searchParams }) => {
   const urlParams = searchParams || {}
