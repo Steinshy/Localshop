@@ -13,6 +13,7 @@ dist
 dist-ssr
 .next
 next-env.d.ts
+.unlighthouse
 
 # Editor directories and files
 .vscode/*
