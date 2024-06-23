@@ -18,7 +18,7 @@ import { LayoutProps } from "@interfaces/general";
 import "./styles/App.css";
 
 const RootLayout: FC<LayoutProps> = ({ children }) => (
-  <html lang="en">
+  <html lang="en" title="LocalShop">
     <body className="flex flex-col min-h-svh">
       <main className="flex flex-col flex-grow">
         <Providers>
