@@ -2,7 +2,7 @@
 import toast, { ToastType } from "react-hot-toast";
 
 // Data
-import { paymentmethods } from "@data/payment";
+// import { paymentmethods } from "@data/payment";
 
 /**
  * Generates a slug from a title.
@@ -75,7 +75,7 @@ const generateDefaultOrders = () => {
       date: orderDate[generateClamp(i - 1, 0, orderDate.length - 1)],
       productsTotal: 2,
       status: orderStatus[generateClamp(i - 1, 0, orderStatus.length - 1)],
-      paymentType: paymentmethods[generateClamp(i - 1, 0, paymentmethods.length - 1)].label,
+      // paymentType: paymentmethods[generateClamp(i - 1, 0, paymentmethods.length - 1)].label,
       isPaid: true,
       total: 2298,
       products: [
