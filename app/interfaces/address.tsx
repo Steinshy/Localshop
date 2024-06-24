@@ -1,9 +1,12 @@
-type AddressAttr = {
+type AddressResponse = {
+  id: number;
+  type: string;
+
+  attributes: {
   id: number;
   label: string;
   firstname: string;
   lastname: string;
-  phone: number;
   address: string;
   city: string;
   state: string;
@@ -12,16 +15,11 @@ type AddressAttr = {
   default: boolean;
   createdAt: string;
   updatedAt: string;
-};
-
-type AddressObj = {
-  id: number;
-  type: string;
-  attributes: AddressAttr;
+  }
 };
 
 type AddressModalProp = {
-  addresses: AddressObj[];
+  addresses: AddressResponse[];
   id?: number;
   handleCreate: (newAddress: AddressValuesProps) => Promise<void>;
   handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<void>;
@@ -31,31 +29,30 @@ type AddressValuesProps = {
   label: string;
   firstname: string;
   lastname: string;
-  phone: number;
   address: string;
-  city: string;
-  state: string;
   country: string;
+  state: string;
+  city: string;
   zip: number;
   default: boolean;
 };
 
 type AddressListProps = {
-  items?: AddressObj[];
+  items?: AddressResponse[];
   selected?: number | null;
   setSelected?: (id: number) => void;
   selectable?: boolean;
 };
 
 type AddressCardProps = {
-  addresses: AddressObj[];
+  addresses: AddressResponse[];
   selected?: number | null;
   setSelected?: (id: number) => void;
-  address: AddressObj;
+  address: AddressResponse;
   selectable?: boolean;
   handleCreate: (newAddress: AddressValuesProps) => Promise<void>;
   handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<void>;
   handleRemove: (id: number) => Promise<void>;
 };
 
-export type { AddressAttr, AddressObj, AddressModalProp, AddressValuesProps, AddressListProps, AddressCardProps };
+export type { AddressResponse, AddressModalProp, AddressValuesProps, AddressListProps, AddressCardProps };
