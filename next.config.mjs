@@ -1,10 +1,8 @@
-// next.config.js
-
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['url'],
+    domains: ["url"],
   },
-  output: 'export',
 };
 
 export default nextConfig;
