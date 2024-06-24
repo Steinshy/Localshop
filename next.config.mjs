@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/** @type {import('next,module').NextConfig} */
 
 const cspHeader = `
   script-src 'self' 'unsafe-eval' 'unsafe-inline';
