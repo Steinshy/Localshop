@@ -7,7 +7,7 @@ import { revalidateTag } from 'next/cache';
 import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
 import { getProductResponse } from '@interfaces/product';
-import { ReviewResponse } from '@interfaces/reviews';
+import { getReviewResponse } from '@interfaces/reviews';
 import { CartResponse } from '@interfaces/cart';
 
 // User Address API - Get
@@ -57,6 +57,8 @@ export const getProducts = async (page?: number, query?: string) => {
 
   try {
     const response = await fetch(`http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
       next: { tags: ['products'] },
     });
     const { products, pagy } = await response.json() as getProductsResponse;
@@ -74,10 +76,7 @@ export const getProduct = async (productId: string) => {
       next: { tags: ['product'] },
     });
     const { data } = await response.json() as getProductResponse;
-    const { attributes } = data;
-    const { id, title, description, thumbnail, price, images } = attributes;
-    return { id, title, description, thumbnail, price, images };
-
+    return data;
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
     return { data: {} };
@@ -90,12 +89,12 @@ export const getProductReviews = async (value: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}/reviews`, {
       next: { tags: ['reviews'] },
     });
-    const { reviews } = await response.json() as { reviews: { data: ReviewResponse[] } };
-    return reviews;
+    const { reviews } = await response.json() as { reviews: { data: getReviewResponse } };
+    return { reviews: { data: reviews.data } };
 
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
-    return { data: {} };
+    return { reviews: { data: [] } };
   }
 };
 

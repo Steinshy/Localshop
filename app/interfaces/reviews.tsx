@@ -22,6 +22,12 @@ type ReviewResponse = {
   };
 };
 
+type getReviewResponse = {
+  reviews: {
+    data: ReviewResponse[];
+  }
+};
+
 type ProductReviewsProps = {
   review: ReviewResponse;
 };
@@ -30,4 +36,4 @@ type ReviewsStarsProps = {
   rating: number;
 };
 
-export type { ReviewResponse, ReviewAuthor, ProductReviewsProps, ReviewsStarsProps };
+export type { getReviewResponse, ReviewResponse, ProductReviewsProps, ReviewsStarsProps };

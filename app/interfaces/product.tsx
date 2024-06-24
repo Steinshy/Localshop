@@ -1,4 +1,4 @@
-import { PagyProps } from './general';
+import { PagyProps } from '@interfaces/general';
 
 // General Interface
 type ProductResponse = {
@@ -61,10 +61,10 @@ type ProductImagesProps = {
 };
 
 export type {
-  ProductPageProps,
   ProductResponse,
+  getProductResponse,
+  ProductPageProps,
   ProductDataProps,
   ProductCardProps,
   ProductImagesProps,
-  getProductResponse,
 };

@@ -14,6 +14,6 @@ type StepperProps = {
 type PagyProps = {
   page: number;
   pages: number;
-}
+};
 
-export type { PagyProps, LayoutProps, BreadcrumbProps, StepperProps };
+export type { LayoutProps, BreadcrumbProps, StepperProps, PagyProps };
