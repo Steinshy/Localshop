@@ -1,11 +1,17 @@
 type ReviewAuthor = {
-  id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  avatar: {
-    small: string;
-    large: string;
+  data: {
+    id: number;
+    type: string;
+    attributes: {
+      id: number;
+      firstname: string;
+      lastname: string;
+      email: string;
+      avatar: {
+        small: string;
+        large: string;
+      };
+    };
   };
 };
 
@@ -25,7 +31,7 @@ type ReviewResponse = {
 type getReviewResponse = {
   reviews: {
     data: ReviewResponse[];
-  }
+  };
 };
 
 type ProductReviewsProps = {

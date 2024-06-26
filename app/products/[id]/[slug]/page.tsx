@@ -14,7 +14,7 @@ import ProductReviews from '@components/product/productReviews';
 
 // Interfaces
 import { ProductPageProps, ProductResponse } from '@interfaces/product';
-import { ReviewResponse } from '@interfaces/reviews';
+import { getReviewResponse, ReviewResponse } from '@interfaces/reviews';
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const product = (await getProduct(params.id)) as ProductResponse;

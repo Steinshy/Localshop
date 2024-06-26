@@ -14,8 +14,9 @@ import ReviewsStars from "@components/product/reviewsStars";
 import { ProductReviewsProps } from "@interfaces/reviews";
  
 const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
-  const { attributes: { body, rating, author } } = review;
-  const { data: { attributes: { firstname, lastname, avatar: { small } } } } = author;
+  const { attributes } = review;
+  const { body, rating, author } = attributes;
+  const { firstname, lastname, avatar: { small } } = author.data.attributes
   const ratingIcon = rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />;
 
   return (

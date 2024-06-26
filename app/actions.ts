@@ -89,9 +89,8 @@ export const getProductReviews = async (value: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}/reviews`, {
       next: { tags: ['reviews'] },
     });
-    const { reviews } = await response.json() as { reviews: { data: getReviewResponse } };
-    return { reviews: { data: reviews.data } };
-
+    const reviews = await response.json() as getReviewResponse;
+    return reviews;
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
     return { reviews: { data: [] } };
@@ -108,7 +107,6 @@ export const addItemToCart = async (product_id: string) => {
     });
     const data = await response.json() as { data: CartResponse };
     return data;
-    
   } catch (error) {
     console.error('An error occurred while adding item to cart: ', error);
     return { data: {} };
