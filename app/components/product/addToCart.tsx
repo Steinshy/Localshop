@@ -31,7 +31,7 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
   const { isLogged } = userStore;
   const { attributes } = cartStore.data;
   const { items } = attributes;
-  const cartItem = items.find(({ product: cartProduct }) => cartProduct.id.toString() === product.id);
+  const cartItem = items.find(({ product: { data:cartProduct } }) => cartProduct.id.toString() === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const handleAddItem = (event: React.MouseEvent<HTMLElement>) => {
