@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 // React
 import { FC, useContext, useState } from "react";
@@ -9,30 +9,29 @@ import Link from "next/link";
 // NextUI
 import { Image, Input } from "@nextui-org/react";
 
-// Interfaces
-import { CartProductProps, CartResponse } from "@interfaces/cart";
+// Components
+import CartButtonDelete from "@components/cart/cartButtonDelete";
 
-// Helpers
+// Interfaces
+import { CartProductProps, CartGeneralResponse } from "@interfaces/cart";
+
+// Utils
 import { generateSlug } from "@utils/helpers";
 import http from "@utils/http";
-
-// Providers
 import { CartContext } from "@utils/subProviders";
-
-import CartButtonDelete from "@components/cart/cartButtonDelete";
 
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);
   const { quantity, price, product } = cartItem;
-  const { id, title, thumbnail } = product;
+  const { data: { attributes: { id, title, thumbnail } } } = product;
   const [currentQuantity, setCurrentQuantity] = useState<string>(quantity.toString());
   const slug = generateSlug(title);
 
   const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const apiCall = async () => {
-      const response = await http.delete(`/cart/remove_item?product_id=${product.id}`);
-      const { data } = response?.data as { data: CartResponse };
+      const response = await http.delete(`/cart/remove_item?product_id=${id}`);
+      const { data } = response?.data as { data: CartGeneralResponse };
       cartStore.update(data);
     };
 
@@ -43,8 +42,8 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
     if (Number(quantity) <= 0) return void handleRemoveItem({} as React.MouseEvent<HTMLElement>);
     const apiCall = async () => {
       setCurrentQuantity(quantity);
-      const response = await http.post("/cart/update_quantity", { product_id: product.id, quantity: quantity });
-      const { data } = response?.data as { data: CartResponse };
+      const response = await http.post("/cart/update_quantity", { product_id: id, quantity: quantity });
+      const { data } = response?.data as { data: CartGeneralResponse };
       cartStore.update(data);
     };
 
@@ -55,7 +54,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
     <li key={id} className="p-2 bg-background border-1 rounded-md">
       <div className="grid grid-cols-2">
         <div className="flex justify-start items-center">
-          <Link href={`/products/${product.id}/${slug}`}>
+          <Link href={`/products/${id}/${slug}`}>
             <Image
               src={thumbnail.url}
               alt={title}
@@ -72,7 +71,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
 
         {/* Remove item */}
         <div className="flex justify-end items-start">
-          <CartButtonDelete cartStore={cartStore} productId={product.id} />
+          <CartButtonDelete cartStore={cartStore} productId={id} />
         </div>
       </div>
       {/* Single item information */}
