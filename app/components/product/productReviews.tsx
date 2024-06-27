@@ -1,37 +1,45 @@
-"use server";
+'use server';
 
 // React
-import { FC } from "react";
+import { FC } from 'react';
 // NextUI
-import { Card, CardBody, CardHeader, Avatar, Divider } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Avatar, Divider } from '@nextui-org/react';
 
 // React Icons
-import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
+import { FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 
 // Components
-import ReviewsStars from "@components/product/reviewsStars";
+import ReviewsStars from '@components/product/reviewsStars';
 
-import { ProductReviewsProps } from "@interfaces/reviews";
- 
+import { ProductReviewsProps } from '@interfaces/reviews';
+
 const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
+  // Review
   const { attributes } = review;
   const { body, rating, author } = attributes;
-  const { firstname, lastname, avatar: { small } } = author.data.attributes
-  const ratingIcon = rating > 3 ? <FaRegThumbsUp className="text-green-500" /> : <FaRegThumbsDown className="text-red-500" />;
+
+  // Author
+  const { data } = author;
+  const { attributes: authorAttributes } = data;
+  const { firstname, lastname, avatar } = authorAttributes;
+  const { small: imgAvatar } = avatar
+
+  const ratingIcon =
+    rating > 3 ? <FaRegThumbsUp className='text-green-500' /> : <FaRegThumbsDown className='text-red-500' />;
 
   return (
-    <Card className="max-w-[500px]">
-      <CardHeader className="flex justify-between items-center gap-3">
-        <Avatar isBordered color="primary" size="sm" src={small} />
-          <div className="flex flex-col">
-            <span className="font-semibold">{`${firstname} ${lastname}`}</span>
-            <ReviewsStars rating={rating} />
-          </div>
+    <Card className='max-w-[500px]'>
+      <CardHeader className='flex justify-between items-center gap-3'>
+        <Avatar isBordered color='primary' size='sm' src={imgAvatar} />
+        <div className='flex flex-col'>
+          <span className='font-semibold'>{`${firstname} ${lastname}`}</span>
+          <ReviewsStars rating={rating} />
+        </div>
         {ratingIcon}
       </CardHeader>
       <Divider />
       <CardBody>
-        <p className="whitespace-pre-line">{body}</p>
+        <p className='whitespace-pre-line'>{body}</p>
       </CardBody>
     </Card>
   );

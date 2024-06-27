@@ -13,16 +13,14 @@ import AddToCard from '@components/product/addToCart';
 import ProductReviews from '@components/product/productReviews';
 
 // Interfaces
-import { ProductPageProps, ProductResponse } from '@interfaces/product';
-import { ReviewResponse } from '@interfaces/reviews';
+import { ProductResponse, ProductPageProps } from '@interfaces/product';
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
-  const product = (await getProduct(params.id)) as ProductResponse
-  const { attributes } = product
-  const { id, title, description, price, thumbnail, images } = attributes
-  
+  const product = (await getProduct(params.id)) as ProductResponse;
+  const { attributes } = product;
+  const { id, title, description, price, thumbnail, images } = attributes;
   const { reviews } = await getProductReviews(params.id);
-  
+
   const breadCrumbItems = [{ title: 'Products', href: '/products' }, { title: title }];
 
   return product ? (
@@ -42,20 +40,15 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
       </div>
       <div className='flex flex-col flex-grow justify-center p-4'>
         <h2 className='text-2xl font-semibold text-center mb-4'>User Reviews</h2>
-        <div className='grid grid-cols-4 gap-4'>
-          {Array.isArray(reviews?.data) && reviews.data.length > 0 ? (
-            reviews.data.map((review: ReviewResponse) => <ProductReviews key={review.id} review={review} />)
-          ) : (
-            <p>No reviews</p>
-          )}
-        </div>
+        <div className='grid grid-cols-4 gap-4'></div>
+        {reviews.data.length === 0 ? (
+          reviews.data.map((review) => <ProductReviews key={review.id} review={review} />)
+        ) : (
+          <p>No reviews yet</p>
+        )}
       </div>
     </>
-  ) : (
-    <div className='flex flex-grow justify-center items-center'>
-      <p>No products found</p>
-    </div>
-  );
+  ) : null;
 };
 
 export default ProductPage;

@@ -1,3 +1,12 @@
+import { PagyProps } from '@interfaces/general';
+
+// ReviewAuthor
+type AuthorAvatar = {
+  small: string;
+  large: string;
+};
+
+// ReviewResponse
 type ReviewAuthor = {
   data: {
     id: number;
@@ -7,14 +16,12 @@ type ReviewAuthor = {
       firstname: string;
       lastname: string;
       email: string;
-      avatar: {
-        small: string;
-        large: string;
-      };
+      avatar: AuthorAvatar;
     };
   };
 };
 
+// getReviewResponse | ProductReviewsProps
 type ReviewResponse = {
   id: string;
   type: string;
@@ -28,18 +35,22 @@ type ReviewResponse = {
   };
 };
 
+// Actions => getReviewResponse
 type getReviewResponse = {
+  pagy: PagyProps;
   reviews: {
     data: ReviewResponse[];
   };
 };
 
+// Components => Product => ProductReviews
 type ProductReviewsProps = {
   review: ReviewResponse;
 };
 
+// Components => Product => ReviewsStars
 type ReviewsStarsProps = {
   rating: number;
 };
 
-export type { getReviewResponse, ReviewResponse, ProductReviewsProps, ReviewsStarsProps };
+export type { getReviewResponse, ProductReviewsProps, ReviewsStarsProps };

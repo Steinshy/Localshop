@@ -1,67 +1,70 @@
-"use client";
+'use client';
 
 // React
-import { FC, useContext } from "react";
+import { FC, useContext } from 'react';
 
 // NextJS
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
 // NextUI
-import { Button, ButtonProps } from "@nextui-org/react";
+import { Button, ButtonProps } from '@nextui-org/react';
 
 // Icon
-import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
+import { FaShoppingCart, FaArrowRight } from 'react-icons/fa';
 
 // Actions
-import { addItemToCart } from "actions";
+import { addItemToCart } from 'actions';
 
 // Interface
-import { AddToCartProps } from "@interfaces/cart";
-import { CartGeneralResponse } from "@interfaces/cart";
+import { AddToCartProps } from '@interfaces/cart';
+import { CartGeneralResponse } from '@interfaces/cart';
 
 // Utils
-import { UserContext, CartContext } from "@utils/subProviders";
-import { showToast } from "@utils/helpers";
+import { UserContext, CartContext } from '@utils/subProviders';
+import { showToast } from '@utils/helpers';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
   const router = useRouter(),
-        userStore = useContext(UserContext),
-        cartStore = useContext(CartContext);
-
+    userStore = useContext(UserContext),
+    cartStore = useContext(CartContext);
+  
+  // userStore
   const { isLogged } = userStore;
+  
+  // cartStore
   const { attributes } = cartStore.data;
   const { items } = attributes;
 
-  const { id: product_id } = localProduct
-
+  // localProduct
+  const { id: product_id } = localProduct;
   const cartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === product_id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const handleAddItem = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     if (quantity > 0) {
-      return router.push("/order/cart");
+      return router.push('/order/cart');
     }
     try {
       const apiCall = async () => {
         const { data } = await addItemToCart(product_id);
         cartStore.update(data as CartGeneralResponse);
-        showToast("Item has been added to your cart !", "success");
+        showToast('Item has been added to your cart !', 'success');
       };
       void apiCall();
     } catch (error) {
-      showToast("Something went wrong !", "error");
+      showToast('Something went wrong !', 'error');
     }
-  }
+  };
 
   const btnOptions: ButtonProps = {
-    color: quantity > 0 ? "success" : "primary",
-    startContent: quantity > 0 && !isIconOnly && <FaArrowRight className="text-lg text-white" />,
-    children: quantity > 0 ? "Go to Cart" : "Add to Cart",
+    color: quantity > 0 ? 'success' : 'primary',
+    startContent: quantity > 0 && !isIconOnly && <FaArrowRight className='text-lg text-white' />,
+    children: quantity > 0 ? 'Go to Cart' : 'Add to Cart',
   };
 
   const buttonContent = isIconOnly ? (
-    <>{quantity > 0 ? <FaArrowRight className="text-lg text-white" /> : <FaShoppingCart className="text-lg" />}</>
+    <>{quantity > 0 ? <FaArrowRight className='text-lg text-white' /> : <FaShoppingCart className='text-lg' />}</>
   ) : (
     btnOptions.children
   );
@@ -69,12 +72,12 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
   return isLogged() ? (
     <Button
       {...btnOptions}
-      variant="solid"
-      size={isIconOnly ? "sm" : "md"}
-      radius="sm"
+      variant='solid'
+      size={isIconOnly ? 'sm' : 'md'}
+      radius='sm'
       onClick={handleAddItem}
       isIconOnly={isIconOnly}
-      className={quantity > 0 ? "text-white" : ""}
+      className={quantity > 0 ? 'text-white' : ''}
     >
       {buttonContent}
     </Button>

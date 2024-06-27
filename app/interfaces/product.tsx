@@ -1,3 +1,4 @@
+// Interface => Products | Product/ID/Slug => Page
 type ProductResponse = {
   id: string;
   type: string;
@@ -10,29 +11,28 @@ type ProductResponse = {
     rating: number;
     stock: number;
     brand: string;
-    thumbnail: ProductThumbnail;
-    images: [ProductImage];
+    thumbnail: ProductResponseThumbnail;
+    images: [ProductResponseImages];
   };
 };
 
-type GetProductResponse = {
-  data: ProductResponse;
-}
-
-// General Interface
-
 // ProductResponse => Thumbnail
-type ProductThumbnail = {
+type ProductResponseThumbnail = {
   url: string;
   full: string;
 };
 // ProductResponse => Images
-type ProductImage = {
+type ProductResponseImages = {
   thumbnail: string;
   full: string;
 };
 
-// Product => Page
+// Action => GetProductResponse
+type GetProductResponse = {
+  data: ProductResponse;
+};
+
+// Product/ID/Slug => Page
 type ProductPageProps = {
   params: {
     id: string;
@@ -44,14 +44,17 @@ type ProductCardProps = {
   product: ProductResponse;
 };
 
+// Composant => ProductImages
 type ProductImagesProps = {
   title: string;
   mainImage: string;
-  images: [ProductImage];
+  images: [ProductResponseImages];
 };
 
 export type {
   ProductResponse,
+  ProductResponseThumbnail,
+  ProductResponseImages,
   GetProductResponse,
   ProductPageProps,
   ProductCardProps,
