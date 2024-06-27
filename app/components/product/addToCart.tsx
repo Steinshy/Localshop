@@ -24,27 +24,25 @@ import { UserContext, CartContext } from '@utils/subProviders';
 import { showToast } from '@utils/helpers';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
-  const router = useRouter(),
-    userStore = useContext(UserContext),
-    cartStore = useContext(CartContext);
+  const router = useRouter(), userStore = useContext(UserContext), cartStore = useContext(CartContext);
   
-  // userStore
+  // User
   const { isLogged } = userStore;
   
-  // cartStore
-  const { attributes } = cartStore.data;
-  const { items } = attributes;
+  // Cart
+  const { data: { attributes: { items } } } = cartStore;
 
   // localProduct
   const { id: product_id } = localProduct;
   const cartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === product_id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
-  const handleAddItem = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+  const handleAddItem = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
     if (quantity > 0) {
       return router.push('/order/cart');
     }
+
     try {
       const apiCall = async () => {
         const { data } = await addItemToCart(product_id);
@@ -64,7 +62,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
   };
 
   const buttonContent = isIconOnly ? (
-    <>{quantity > 0 ? <FaArrowRight className='text-lg text-white' /> : <FaShoppingCart className='text-lg' />}</>
+    quantity > 0 ? <FaArrowRight className='text-lg text-white' /> : <FaShoppingCart className='text-lg' />
   ) : (
     btnOptions.children
   );

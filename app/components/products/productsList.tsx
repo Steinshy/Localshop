@@ -24,25 +24,21 @@ import { ProductsListProp } from '@interfaces/products';
 import { getProducts } from 'actions';
 
 const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
-  const searchParams = useSearchParams();
-  const [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
-    [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
-    [query, setQuery] = useState<string>(searchParams.get('q') || ''),
-    [isFetching, setIsFetching] = useState<boolean>(false);
+  const searchParams = useSearchParams(),
+        [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
+        [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
+        [query, setQuery] = useState<string>(searchParams.get('q') || ''),
+        [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const fetchData = useCallback(
-    async (page: number, query: string) => {
+  const fetchData = useCallback(async (page: number, query: string) => {
       if (page > localPagy.pages || isFetching) return;
       setIsFetching(true);
 
       try {
         const { products, pagy } = await getProducts(page, query);
+        const { data } = products || [];
 
-        if (page > 1) {
-          setLocalProducts((localProducts) => [...(localProducts || []), ...(products.data || [])]);
-        } else {
-          setLocalProducts(products.data || []);
-        }
+        setLocalProducts((localProducts) => page > 1 ? [...localProducts, ...data] : data);
         setLocalPagy(pagy);
         setIsFetching(false);
       } catch (error) {

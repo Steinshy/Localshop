@@ -6,7 +6,7 @@ import { ProductResponse } from '@interfaces/product';
 type getProductsResponse = {
   pagy: PagyProps;
   products: {
-    data?: ProductResponse[];
+    data: ProductResponse[];
   };
 };
 

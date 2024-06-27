@@ -21,6 +21,7 @@ type ProductResponseThumbnail = {
   url: string;
   full: string;
 };
+
 // ProductResponse => Images
 type ProductResponseImages = {
   thumbnail: string;

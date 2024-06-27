@@ -1,19 +1,21 @@
-"use client";
+'use client';
 
 // React
 import { FC, useState } from "react";
 
+// Modules
+import { Formik, Form, Field } from "formik";
+
 // NextUI
 import { Chip, Input } from "@nextui-org/react";
-
-import { Formik, Form, Field } from "formik";
 
 // Icons
 import { FaTags } from "react-icons/fa";
 
 // Interfaces
-import { CartResponse } from "@interfaces/cart";
+import { CartGeneralResponse } from "@interfaces/cart";
 import { CartCouponsProps, CouponFormProps } from "@interfaces/coupon";
+
 // Utils
 import http from "@utils/http";
 
@@ -24,7 +26,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
     const apiFetch = async () => {
       try {
         const response = await http.post("/cart/coupon", { code: values.code });
-        const { data } = response.data as { data: CartResponse };
+        const { data } = response.data as { data: CartGeneralResponse };
         update(data);
       } catch (error) {
         let message = "Invalid";
@@ -42,7 +44,7 @@ const CartCoupons: FC<CartCouponsProps> = ({ discount, coupon, finalPrice, total
   const handleRemoveCoupon = () => {
     const apiFetch = async () => {
       const response = await http.delete("/cart/clear_coupon");
-      const { data } = response.data as { data: CartResponse };
+      const { data } = response.data as { data: CartGeneralResponse };
       update(data);
     };
 

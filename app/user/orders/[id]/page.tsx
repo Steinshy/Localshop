@@ -24,8 +24,6 @@ import { OrderPageProps } from "@interfaces/user";
 
 // Components
 import OrderProductCard from "@components/user/orderProductCard";
-// Data
-import { chipColor } from "@data/orders";
 
 const OrdersPage: FC<OrderPageProps> = ({ params }) => {
   const userStore = useContext(UserContext);

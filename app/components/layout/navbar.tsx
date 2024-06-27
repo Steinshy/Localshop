@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 // React
 import { useContext } from "react";
@@ -9,29 +9,27 @@ import Link from "next/link";
 // NextUI
 import { Link as NextLink, NavbarContent, NavbarItem, Navbar, Button, Badge } from "@nextui-org/react";
 
+// Components
+import UserDropdown from "@components/layout/userDropdown";
+
 // Icons
 import { FaCartArrowDown } from "react-icons/fa";
 
 // Utils
 import { CartContext, UserContext } from "@utils/subProviders";
 
-// Components
-import UserDropdown from "@components/layout/userDropdown";
-
 const Header = () => {
   const navItems = [
     { key: "home", href: "/", label: "Home" },
     { key: "products", href: "/products", label: "Products" },
-    { key: "about", href: "/about", label: "About Us" },
-  ];
+    { key: "about", href: "/about", label: "About Us" }
+  ], cartStore = useContext(CartContext), userStore = useContext(UserContext);
 
   // Cart
-  const cartStore = useContext(CartContext);
-  const data = cartStore.data;
-  const totalItems = data?.attributes?.totalItems || 0;
+  const { data: { attributes: { totalItems } } } = cartStore;
+  const cartTotal = totalItems || 0;
 
   // User
-  const userStore = useContext(UserContext);
   const { data: { attributes: { firstname, lastname} }, isLogged } = userStore;
 
   return (
@@ -54,11 +52,11 @@ const Header = () => {
         {isLogged() ? (
           <NavbarItem>
             <Badge
-              content={totalItems}
+              content={cartTotal}
               color="danger"
               placement="top-right"
               variant="shadow"
-              isInvisible={totalItems === 0}
+              isInvisible={cartTotal <= 0}
             >
               <Button
                 startContent={<FaCartArrowDown className="text-2xl" />}

@@ -8,9 +8,9 @@ import { Button } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 
 // Interfaces
-import { CartResponse, CartButtonDeleteProps } from "@interfaces/cart";
+import { CartButtonDeleteProps, CartGeneralResponse } from "@interfaces/cart";
 
-// Helpers
+// Utils
 import http from "@utils/http";
 
 const CartButtonDelete: FC<CartButtonDeleteProps> = ({ cartStore, productId }) => {
@@ -18,7 +18,7 @@ const CartButtonDelete: FC<CartButtonDeleteProps> = ({ cartStore, productId }) =
     event.preventDefault();
     const apiFetch = async () => {
       const response = await http.delete(`/cart/clear`);
-      const { data } = response?.data as { data: CartResponse };
+      const { data } = response?.data as { data: CartGeneralResponse };
       cartStore.update(data);
     };
     void apiFetch();
@@ -28,7 +28,7 @@ const CartButtonDelete: FC<CartButtonDeleteProps> = ({ cartStore, productId }) =
     event.preventDefault();
     const apiFetch = async () => {
       const response = await http.delete(`/cart/remove_item?product_id=${productId}`);
-      const { data } = response?.data as { data: CartResponse };
+      const { data } = response?.data as { data: CartGeneralResponse };
       cartStore.update(data);
     };
 

@@ -1,16 +1,16 @@
-'use server';
-
 // React
 import { FC } from 'react';
+
 // NextUI
 import { Card, CardBody, CardHeader, Avatar, Divider } from '@nextui-org/react';
-
-// React Icons
-import { FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 
 // Components
 import ReviewsStars from '@components/product/reviewsStars';
 
+// Icons
+import { FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
+
+// Interfaces
 import { ProductReviewsProps } from '@interfaces/reviews';
 
 const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
@@ -19,13 +19,9 @@ const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
   const { body, rating, author } = attributes;
 
   // Author
-  const { data } = author;
-  const { attributes: authorAttributes } = data;
+  const { data: { attributes: authorAttributes } } = author;
   const { firstname, lastname, avatar } = authorAttributes;
   const { small: imgAvatar } = avatar
-
-  const ratingIcon =
-    rating > 3 ? <FaRegThumbsUp className='text-green-500' /> : <FaRegThumbsDown className='text-red-500' />;
 
   return (
     <Card className='max-w-[500px]'>
@@ -35,7 +31,11 @@ const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
           <span className='font-semibold'>{`${firstname} ${lastname}`}</span>
           <ReviewsStars rating={rating} />
         </div>
-        {ratingIcon}
+        {rating > 3 ? 
+          <FaRegThumbsUp className='text-green-500' />
+        : 
+          <FaRegThumbsDown className='text-red-500' />
+        }
       </CardHeader>
       <Divider />
       <CardBody>

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 // React
 import { FC, useState } from "react";
@@ -9,43 +9,35 @@ import { useRouter } from "next/navigation";
 // NextUI
 import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown } from "@nextui-org/react";
 
-// Icon
+// Icons
 import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from "react-icons/fa";
 
 // Utils
 import { showToast } from "@utils/helpers";
 
-// Interface
+// Interfaces
 import { UserMenuProps } from "@interfaces/navbar";
 
 const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname, lastname }) => {
-  const router = useRouter();
+  const menuItems = [
+    { key: "profile", label: "Profile", icon: <FaUserCog /> },
+    { key: "addresses", label: "Addresses", icon: <FaShoppingBag /> },
+    { key: "orders", label: "Orders", icon: <FaShoppingBag /> },
+    { key: "settings", label: "Settings", icon: <FaUserCog /> },
+    { key: "logout", label: "Logout", icon: <FaSignOutAlt /> },
+  ], router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const handleUserMenu = (key: React.Key) => {
     const menuItem = menuItems.find((item) => item.key === key);
-    if (menuItem) {
-      switch (menuItem.key) {
-        case "profile":
-          router.push("/user/profile");
-          break;
-        case "addresses":
-          router.push("/user/addresses");
-          break;
-        case "orders":
-          router.push("/user/orders");
-          break;
-        case "settings":
-          router.push("/user/settings");
-          break;
-        case "logout":
-          void userStore.logout();
-          void cartStore.reset();
-          showToast("You have been logged out!", "success");
-          break;
-        default:
-          break;
-      }
+    if (!menuItem || !menuItem.key) return;
+
+    if (menuItem.key === 'logout') {
+      void userStore.logout();
+      void cartStore.reset();
+      showToast("You have been logged out!", "success");
+    } else {
+      router.push(`/user/${menuItem.key.toString()}`);
     }
   };
 
@@ -58,14 +50,6 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
     void cartStore.refresh();
     showToast("You have been logged in!", "success");
   };
-
-  const menuItems = [
-    { key: "profile", label: "Profile", icon: <FaUserCog /> },
-    { key: "addresses", label: "Addresses", icon: <FaShoppingBag /> },
-    { key: "orders", label: "Orders", icon: <FaShoppingBag /> },
-    { key: "settings", label: "Settings", icon: <FaUserCog /> },
-    { key: "logout", label: "Logout", icon: <FaSignOutAlt /> },
-  ];
 
   return !isLogged() ? (
     <Button variant="solid" radius="sm" color="primary" size="sm" onClick={handleUserLogin}>
