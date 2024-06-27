@@ -14,13 +14,15 @@ import ProductReviews from '@components/product/productReviews';
 
 // Interfaces
 import { ProductPageProps, ProductResponse } from '@interfaces/product';
-import { getReviewResponse, ReviewResponse } from '@interfaces/reviews';
+import { ReviewResponse } from '@interfaces/reviews';
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
-  const product = (await getProduct(params.id)) as ProductResponse;
-  const { attributes } = product;
-  const { id, title, description, price, images, thumbnail } = attributes;
+  const product = (await getProduct(params.id)) as ProductResponse
+  const { attributes } = product
+  const { id, title, description, price, thumbnail, images } = attributes
+  
   const { reviews } = await getProductReviews(params.id);
+  
   const breadCrumbItems = [{ title: 'Products', href: '/products' }, { title: title }];
 
   return product ? (
@@ -34,7 +36,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
           <p className='text-md font-semibold'>{price}€</p>
 
           <div className='flex justify-center sm:justify-start'>
-            <AddToCard product={product} />
+            <AddToCard localProduct={product} />
           </div>
         </div>
       </div>

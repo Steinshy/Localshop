@@ -6,9 +6,9 @@ import { revalidateTag } from 'next/cache';
 // Interface
 import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
-import { getProductResponse } from '@interfaces/product';
+import { GetProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
-import { CartResponse } from '@interfaces/cart';
+import { CartGeneralResponse } from '@interfaces/cart';
 
 // User Address API - Get
 export const getAddresses = async () => {
@@ -75,8 +75,8 @@ export const getProduct = async (productId: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${productId}`, {
       next: { tags: ['product'] },
     });
-    const { data } = await response.json() as getProductResponse;
-    return data;
+    const { data } = await response.json() as GetProductResponse;
+    return data
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
     return { data: {} };
@@ -105,7 +105,7 @@ export const addItemToCart = async (product_id: string) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ product_id }),
     });
-    const data = await response.json() as { data: CartResponse };
+    const data = await response.json() as { data: CartGeneralResponse };
     return data;
   } catch (error) {
     console.error('An error occurred while adding item to cart: ', error);

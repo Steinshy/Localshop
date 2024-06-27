@@ -1,6 +1,5 @@
 // Interface
 import { PagyProps } from '@interfaces/general';
-import { ProductResponse } from '@interfaces/product';
 
 // Products => Page
 type ProductsPageProps = {
@@ -9,20 +8,49 @@ type ProductsPageProps = {
   };
 };
 
+type ProductData = {
+  id: string;
+  type: string;
+  attributes: {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+    discountPercentage: number;
+    rating: number;
+    stock: number;
+    brand: string;
+    thumbnail: ProductThumbnail;
+    images: [ProductImage];
+  };
+};
+
+
+// ProductResponse => Thumbnail
+type ProductThumbnail = {
+  url: string;
+  full: string;
+};
+// ProductResponse => Images
+type ProductImage = {
+  thumbnail: string;
+  full: string;
+};
+
 // Action => getProducts
 type getProductsResponse = {
   products: {
-    data: ProductResponse[];
-  };
+    data?: ProductData[],
+  }
   pagy: PagyProps;
 };
 
 // Products => Composant => ProductList
 type ProductsListProp = {
   products: {
-    data: ProductResponse[];
-  };
+    data?: ProductData[],
+  }
   pagy: PagyProps;
 };
 
-export type { ProductsPageProps, getProductsResponse, ProductsListProp };
+export type { ProductsPageProps, ProductData, getProductsResponse, ProductsListProp };

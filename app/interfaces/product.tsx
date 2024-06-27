@@ -1,6 +1,3 @@
-import { PagyProps } from '@interfaces/general';
-
-// General Interface
 type ProductResponse = {
   id: string;
   type: string;
@@ -18,6 +15,12 @@ type ProductResponse = {
   };
 };
 
+type GetProductResponse = {
+  data: ProductResponse;
+}
+
+// General Interface
+
 // ProductResponse => Thumbnail
 type ProductThumbnail = {
   url: string;
@@ -29,11 +32,6 @@ type ProductImage = {
   full: string;
 };
 
-// Product API - Get
-type getProductResponse = {
-  data: ProductResponse;
-};
-
 // Product => Page
 type ProductPageProps = {
   params: {
@@ -41,17 +39,9 @@ type ProductPageProps = {
   };
 };
 
-type ProductDataProps = {
-  products: {
-    data?: ProductResponse[];
-  };
-  pagy: PagyProps;
-};
-
 // Product => productCard
 type ProductCardProps = {
   product: ProductResponse;
-  isIconOnly?: boolean;
 };
 
 type ProductImagesProps = {
@@ -62,9 +52,8 @@ type ProductImagesProps = {
 
 export type {
   ProductResponse,
-  getProductResponse,
+  GetProductResponse,
   ProductPageProps,
-  ProductDataProps,
   ProductCardProps,
   ProductImagesProps,
 };

@@ -16,14 +16,14 @@ import { FaShoppingCart, FaArrowRight } from "react-icons/fa";
 import { addItemToCart } from "actions";
 
 // Interface
-import { ProductCardProps } from "@interfaces/product";
-import { CartResponse } from "@interfaces/cart";
+import { AddToCartProps } from "@interfaces/cart";
+import { CartGeneralResponse } from "@interfaces/cart";
 
 // Utils
 import { UserContext, CartContext } from "@utils/subProviders";
 import { showToast } from "@utils/helpers";
 
-const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
+const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
   const router = useRouter(),
         userStore = useContext(UserContext),
         cartStore = useContext(CartContext);
@@ -31,7 +31,10 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
   const { isLogged } = userStore;
   const { attributes } = cartStore.data;
   const { items } = attributes;
-  const cartItem = items.find(({ product: { data:cartProduct } }) => cartProduct.id.toString() === product.id);
+
+  const { id: product_id } = localProduct
+
+  const cartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === product_id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const handleAddItem = (event: React.MouseEvent<HTMLElement>) => {
@@ -41,8 +44,8 @@ const AddToCart: FC<ProductCardProps> = ({ product, isIconOnly }) => {
     }
     try {
       const apiCall = async () => {
-        const { data } = await addItemToCart(product.id);
-        cartStore.update(data as CartResponse);
+        const { data } = await addItemToCart(product_id);
+        cartStore.update(data as CartGeneralResponse);
         showToast("Item has been added to your cart !", "success");
       };
       void apiCall();

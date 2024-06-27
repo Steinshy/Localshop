@@ -20,7 +20,8 @@ import ReviewsStars from "@components/product/reviewsStars";
 import { ProductCardProps } from "@interfaces/product";
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const { attributes: { id, title, price, stock, rating, thumbnail } } = product;
+  const { attributes } = product;
+  const { id, title, thumbnail, price, rating, stock } = attributes;
   const { url: image } = thumbnail;
 
   return (
@@ -45,7 +46,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
         <CardFooter className="flex justify-between">
           <h3 className="text-lg">{price} €</h3>
           <h4 className="text-sm text-gray-500">{stock} left</h4>
-          <AddToCart product={product} isIconOnly />
+          <AddToCart localProduct={product} isIconOnly />
         </CardFooter>
       </Card>
     </article>
