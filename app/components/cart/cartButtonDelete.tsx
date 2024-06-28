@@ -8,27 +8,30 @@ import { Button } from "@nextui-org/react";
 import { FaTrash } from "react-icons/fa";
 
 // Interfaces
-import { CartButtonDeleteProps, CartGeneralResponse } from "@interfaces/cart";
+import { CartButtonDeleteProps } from "@interfaces/cart";
 
-// Utils
-import http from "@utils/http";
+// Actions
+import { deleteCart, deleteCartItem } from "actions";
 
 const CartButtonDelete: FC<CartButtonDeleteProps> = ({ productId, cartStore }) => {
-  const handleDeleteCart = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+  const handleDeleteCart = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
     const apiFetch = async () => {
-      const response = await http.delete(`/cart/clear`);
-      const { data } = response?.data as { data: CartGeneralResponse };
+      const response = await deleteCart();
+      const { data } = response;
       cartStore.update(data);
     };
+
     void apiFetch();
   };
 
-  const handleDeleteItem = (productId: string, event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+  const handleDeleteItem = (e: React.MouseEvent<HTMLElement>, productId: string) => {
+    e.preventDefault();
+
     const apiFetch = async () => {
-      const response = await http.delete(`/cart/remove_item?product_id=${productId}`);
-      const { data } = response?.data as { data: CartGeneralResponse };
+      const response = await deleteCartItem(productId);
+      const { data } = response;
       cartStore.update(data);
     };
 
@@ -40,7 +43,7 @@ const CartButtonDelete: FC<CartButtonDeleteProps> = ({ productId, cartStore }) =
       color="default"
       variant="light"
       className="text-foreground/25"
-      onClick={(event) => handleDeleteItem(productId, event)}
+      onClick={(e) => handleDeleteItem(e, productId.toString())}
       startContent={<FaTrash />}
       isIconOnly
       size="sm"

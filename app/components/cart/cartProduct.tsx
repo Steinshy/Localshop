@@ -13,38 +13,36 @@ import { Image, Input } from "@nextui-org/react";
 import CartButtonDelete from "@components/cart/cartButtonDelete";
 
 // Interfaces
-import { CartProductProps, CartGeneralResponse } from "@interfaces/cart";
+import { CartProductProps } from "@interfaces/cart";
 
 // Utils
 import { generateSlug } from "@utils/helpers";
-import http from "@utils/http";
 import { CartContext } from "@utils/subProviders";
+
+// Actions
+import { deleteCartItem, updateQuantity } from "actions";
 
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {  
   const cartStore = useContext(CartContext);
-  const { quantity, price, product} = cartItem;
-  const { id, title, thumbnail } = product;
+  const { quantity, price, product } = cartItem;
+  const { data: { attributes: { id, title, thumbnail } } } = product;
 
   const [currentQuantity, setCurrentQuantity] = useState<string>(quantity.toString());
   const slug = generateSlug(title);
 
-  const handleRemoveItem = (event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    const apiCall = async () => {
-      const response = await http.delete(`/cart/remove_item?product_id=${id}`);
-      const { data } = response?.data as { data: CartGeneralResponse };
-      cartStore.update(data);
-    };
-
-    void apiCall();
-  };
+  const deleteItem = async () => {
+    const response = await deleteCartItem(id.toString());
+    const { data } = response;
+    cartStore.update(data);
+  }
 
   const handleQuantityChange = (quantity: string) => {
-    if (Number(quantity) <= 0) return void handleRemoveItem({} as React.MouseEvent<HTMLElement>);
+    if (Number(quantity) <= 0) return void deleteItem();
+
     const apiCall = async () => {
       setCurrentQuantity(quantity);
-      const response = await http.post("/cart/update_quantity", { product_id: id, quantity: quantity });
-      const { data } = response?.data as { data: CartGeneralResponse };
+      const response = await updateQuantity(quantity, id.toString());
+      const { data } = response;
       cartStore.update(data);
     };
 
@@ -72,7 +70,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
 
         {/* Remove item */}
         <div className="flex justify-end items-start">
-          <CartButtonDelete productId={product.id} cartStore={cartStore} />
+          <CartButtonDelete productId={id} cartStore={cartStore} />
         </div>
       </div>
       {/* Single item information */}

@@ -27,10 +27,7 @@ const Header = () => {
 
   // Cart
   const cartStore = useContext(CartContext);
-
-  const { data } = cartStore;
-  const { attributes } = data;
-  const { totalItems } = attributes;
+  const { data: { attributes: { totalItems } } } = cartStore;
   const cartTotal = totalItems || 0;
 
   // User

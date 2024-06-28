@@ -17,7 +17,7 @@ type UserResponse = {
   };
 };
 
-type GetUserResponse = {
+type getUserResponse = {
   data: UserResponse
 };
 
@@ -29,4 +29,4 @@ type UserContextType = {
   logout: () => void;
 };
 
-export type { UserResponse, GetUserResponse, UserContextType };
+export type { UserResponse, getUserResponse, UserContextType };

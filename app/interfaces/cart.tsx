@@ -13,7 +13,7 @@ type CartResponse = {
     id: number;
     createdAt: string;
     updatedAt: string;
-    items: CartItems[];
+    items: CartItem[];
     totalPrice: number;
     coupon: CouponsResponse;
     finalPrice: number;
@@ -28,7 +28,7 @@ type getCartResponse = {
 };
 
 // CartResponse => CartItems
-type CartItems = {
+type CartItem = {
   id: number;
   quantity: number;
   price: number;
@@ -46,16 +46,16 @@ type CartContextType = {
 };
 
 type CartProductProps = {
-  cartItem: CartItems;
+  cartItem: CartItem;
 };
 
 type CartItemProps = {
-  items: CartItems[];
+  items: CartItem[];
 };
 
 type CartButtonProcessProps = {
   pathname: string;
-  items: CartItems[];
+  items: CartItem[];
 };
 
 type CartButtonDeleteProps = {
@@ -71,7 +71,7 @@ type AddToCartProps = {
 export type {
   CartResponse,
   getCartResponse,
-  CartItems,
+  CartItem,
   CartContextType,
   CartItemProps,
   CartProductProps,
