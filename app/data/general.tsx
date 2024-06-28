@@ -97,7 +97,7 @@ const defaultProducts = {
   },
 };
 
-export { defaultCart, defaultUser, defaultProducts };
+export { defaultCart, defaultUser, defaultProducts, defaultProduct };
 
 // Components/user/addressModal
 const defaultAddress = {

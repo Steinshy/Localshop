@@ -30,7 +30,7 @@ type ProductResponseImages = {
 };
 
 // Action => GetProductResponse
-type GetProductResponse = {
+type getProductResponse = {
   data: ProductResponse;
 };
 
@@ -57,7 +57,7 @@ export type {
   ProductResponse,
   ProductResponseThumbnail,
   ProductResponseImages,
-  GetProductResponse,
+  getProductResponse,
   ProductPageProps,
   ProductCardProps,
   ProductImagesProps,

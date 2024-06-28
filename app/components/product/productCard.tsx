@@ -3,18 +3,18 @@
 // React
 import { FC } from 'react';
 
-// Helpers
-import { generateSlug } from '@utils/helpers';
-
 // NextJS
 import Link from 'next/link';
 
 // NextUI
-import { Card, CardBody, CardHeader, CardFooter, Image } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, CardFooter, Image, Badge } from '@nextui-org/react';
 
 // Components
 import AddToCart from '@components/product/addToCart';
 import ReviewsStars from '@components/product/reviewsStars';
+
+// Helpers
+import { generateSlug } from '@utils/helpers';
 
 // Interfaces
 import { ProductCardProps } from '@interfaces/product';
@@ -27,7 +27,11 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   return (
     <article>
       <Card className='w-full h-[350px]' as={Link} href={`/products/${id}/${generateSlug(title)}`} radius='sm'>
-        <CardHeader className='absolute z-10 top-2 right-2 flex-col items-end'></CardHeader>
+        <CardHeader className='absolute z-10 top-2 right-4 flex-col items-end'>
+          {stock > 50 && (
+            <Badge content='New' color='danger' shape='circle' showOutline={false} />
+          )}
+        </CardHeader>
         <CardBody className='relative'>
           <Image removeWrapper className='z-0 w-full h-48 rounded-md object-cover' alt='Product Image' src={image} />
           <div className='flex-col justify-center text-center p-2'>

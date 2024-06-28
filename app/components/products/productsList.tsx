@@ -42,7 +42,10 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
         setLocalPagy(pagy);
         setIsFetching(false);
       } catch (error) {
-        console.error(`Failed to fetch products on page ${page} with query "${query}". Please try again later. Error: `, error);
+        console.error(
+          `Failed to fetch products on page ${page} with query "${query}". Please try again later. Error: `,
+          error
+        );
         setIsFetching(false);
       }
     },

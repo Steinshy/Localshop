@@ -4,7 +4,7 @@ import { revalidateTag } from 'next/cache';
 // Interface
 import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
-import { GetProductResponse } from '@interfaces/product';
+import { getProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
 import { getUserResponse } from '@interfaces/user';
@@ -76,7 +76,7 @@ export const getProduct = async (productId: string) => {
     const response = await fetch(`http://api.localshop.test:3005/v1/products/${productId}`, {
       next: { tags: ['product'] },
     });
-    const { data } = await response.json() as GetProductResponse;
+    const { data } = await response.json() as getProductResponse;
     return data;
 
   } catch (error) {

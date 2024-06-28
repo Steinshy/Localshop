@@ -16,7 +16,9 @@ import ProductReview from '@components/product/productReview';
 import { ProductResponse, ProductPageProps } from '@interfaces/product';
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
-  const product = (await getProduct(params.id)) as ProductResponse;
+  const response = await getProduct(params.id);
+  const product = response as ProductResponse;
+
   const { attributes } = product;
   const { id, title, description, price, thumbnail, images } = attributes;
   const { reviews } = await getProductReviews(params.id);
@@ -40,11 +42,11 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
       <div className='flex flex-col flex-grow justify-center p-4'>
         <h2 className='text-2xl font-semibold text-center mb-4'>User Reviews</h2>
         <div className='grid grid-cols-4 gap-4'>
-        {reviews.data.length > 0 ? (
-          reviews.data.map((review) => <ProductReview key={review.id} review={review} />)
-        ) : (
-          <p className='text-lg text-center'>No reviews has been added yet</p>
-        )}
+          {reviews.data.length > 0 ? (
+            reviews.data.map((review) => <ProductReview key={review.id} review={review} />)
+          ) : (
+            <p className='text-lg text-center'>No reviews has been added yet</p>
+          )}
         </div>
       </div>
     </>
