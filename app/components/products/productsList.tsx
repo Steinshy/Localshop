@@ -30,8 +30,8 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
     [query, setQuery] = useState<string>(searchParams.get('q') || ''),
     [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const fetchData = useCallback(async (page: number, query: string) => {
-      if (page < 1 || page > localPagy.pages || isFetching) return;
+  const fetchData = useCallback(async (page: number, query: string, urlParams: URLSearchParams) => {
+      if (page < 1 || page > localPagy.pages || isFetching || query === urlParams.get('q')) return;
       setIsFetching(true);
 
       try {
@@ -49,7 +49,7 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
         setIsFetching(false);
       }
     },
-    [isFetching, localPagy.pages]
+    [isFetching, localPagy.pages, query]
   );
 
   const updateQueryURL = (value?: string) => {
@@ -67,13 +67,13 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     void updateQueryURL(query);
-    void fetchData(1, query);
+    void fetchData(1, query, searchParams);
   };
 
   const handleClear = () => {
     setQuery('');
     void updateQueryURL();
-    void fetchData(1, '');
+    void fetchData(1, '', searchParams);
   };
 
   // Infinite scrolling
@@ -82,11 +82,11 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
       const offsetY = 10;
       if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - offsetY)
         return;
-      void fetchData(localPagy.page + 1, query);
+      void fetchData(localPagy.page + 1, query, searchParams);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [localPagy.page, fetchData, query, isFetching]);
+  }, [localPagy.page, fetchData, query, isFetching, searchParams]);
 
   return (
     <>
