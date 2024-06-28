@@ -29,6 +29,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
   // userStore
   const { isLogged } = userStore;
   // Cart
+
   const { data } = cartStore;
   const { attributes } = data;
   const { items } = attributes;

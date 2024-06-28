@@ -25,25 +25,25 @@ import { getProducts } from 'actions';
 
 const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
   const searchParams = useSearchParams(),
-        [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
-        [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
-        [query, setQuery] = useState<string>(searchParams.get('q') || ''),
-        [isFetching, setIsFetching] = useState<boolean>(false);
+    [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
+    [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
+    [query, setQuery] = useState<string>(searchParams.get('q') || ''),
+    [isFetching, setIsFetching] = useState<boolean>(false);
 
   const fetchData = useCallback(async (page: number, query: string) => {
-      if (page > localPagy.pages || isFetching) return;
+      if (page < 1 || page > localPagy.pages || isFetching) return;
       setIsFetching(true);
 
       try {
         const { products, pagy } = await getProducts(page, query);
-        const { data } = products || [];
+        const { data } = products;
 
-        setLocalProducts((localProducts) => page > 1 ? [...localProducts, ...data] : data);
+        setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
         setLocalPagy(pagy);
         setIsFetching(false);
       } catch (error) {
+        console.error(`Failed to fetch products on page ${page} with query "${query}". Please try again later. Error: `, error);
         setIsFetching(false);
-        console.error('An error occurred while fetching products: ', error);
       }
     },
     [isFetching, localPagy.pages]
