@@ -22,7 +22,6 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
   const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-  const handleUserMenu = (key: React.Key) => {
     const handleUserMenu = (key: React.Key) => {
       if (key === 'logout') {
         return handleUserLoginOut();

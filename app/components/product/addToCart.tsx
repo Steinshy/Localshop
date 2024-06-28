@@ -26,7 +26,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
   const router = useRouter(),
     userStore = useContext(UserContext),
     cartStore = useContext(CartContext);
-  // User
+  // userStore
   const { isLogged } = userStore;
   // Cart
   const { data } = cartStore;
@@ -46,7 +46,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
     try {
       const apiCall = async () => {
         const response = await addItemToCart(product_id);
-        const { data } = response?.data as { data: CartResponse };
+        const  data = response?.data as CartResponse
         cartStore.update(data);
         showToast('Item has been added to your cart !', 'success');
       };

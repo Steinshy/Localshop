@@ -11,9 +11,9 @@ import ReviewsStars from '@components/product/reviewsStars';
 import { FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 
 // Interfaces
-import { ProductReviewsProps } from '@interfaces/reviews';
+import { ProductReviewProps } from '@interfaces/reviews';
 
-const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
+const ProductReview: FC<ProductReviewProps> = ({ review }) => {
   // Review
   const { attributes } = review;
   const { body, rating, author } = attributes;
@@ -45,4 +45,4 @@ const ProductReviews: FC<ProductReviewsProps> = ({ review }) => {
   );
 };
 
-export default ProductReviews;
+export default ProductReview;

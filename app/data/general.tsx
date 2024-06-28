@@ -88,8 +88,6 @@ const defaultUser : UserResponse = {
   },
 };
 
-export { defaultCart, defaultUser };
-
 // Products/page
 const defaultProducts = {
   data: [],
@@ -98,6 +96,8 @@ const defaultProducts = {
     pages: 1,
   },
 };
+
+export { defaultCart, defaultUser, defaultProducts };
 
 // Components/user/addressModal
 const defaultAddress = {

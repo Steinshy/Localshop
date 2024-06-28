@@ -7,22 +7,22 @@ import { useContext } from 'react';
 import Link from 'next/link';
 
 // NextUI
-import { Link as NextLink, NavbarContent, NavbarItem, Navbar, Button, Badge } from "@nextui-org/react";
+import { Link as NextLink, NavbarContent, NavbarItem, Navbar, Button, Badge } from '@nextui-org/react';
 
 // Icons
 import { FaCartArrowDown } from 'react-icons/fa';
 
 // Utils
-import { CartContext, UserContext } from "@utils/subProviders";
+import { CartContext, UserContext } from '@utils/subProviders';
 
 // Components
-import UserDropdown from "@components/layout/userDropdown";
+import UserDropdown from '@components/layout/userDropdown';
 
 const Header = () => {
   const navItems = [
-    { key: "home", href: "/", label: "Home" },
-    { key: "products", href: "/products", label: "Products" },
-    { key: "about", href: "/about", label: "About Us" },
+    { key: 'home', href: '/', label: 'Home' },
+    { key: 'products', href: '/products', label: 'Products' },
+    { key: 'about', href: '/about', label: 'About Us' },
   ];
 
   // Cart
@@ -31,15 +31,13 @@ const Header = () => {
   const { data } = cartStore;
   const { attributes } = data;
   const { totalItems } = attributes;
-  
-  const cartTotal = data?.attributes?.totalItems || 0;
+  const cartTotal = totalItems || 0;
 
   // User
   const userStore = useContext(UserContext);
   const { data: user, isLogged } = userStore;
   const { attributes: userAttributes } = user;
   const { firstname, lastname } = userAttributes;
-  console.log(userStore, "userStore")
 
   return (
     <Navbar isBlurred isBordered>
@@ -62,9 +60,9 @@ const Header = () => {
           <NavbarItem>
             <Badge
               content={cartTotal}
-              color="danger"
-              placement="top-right"
-              variant="shadow"
+              color='danger'
+              placement='top-right'
+              variant='shadow'
               isInvisible={cartTotal <= 0}
             >
               <Button

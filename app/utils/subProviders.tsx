@@ -1,24 +1,24 @@
-"use client";
+'use client';
 
 // React
-import { useState, createContext, useCallback } from "react";
+import { useState, createContext, useCallback } from 'react';
 
 // Utils
 import { getCart, getUser } from 'actions';
 
 // Interfaces - Data
-import { getCartResponse, CartResponse, CartContextType } from "@interfaces/cart";
-import { GetUserResponse, UserResponse, UserContextType} from "@interfaces/user";
-import { defaultCart, defaultUser } from "@data/general";
+import { getCartResponse, CartResponse, CartContextType } from '@interfaces/cart';
+import { GetUserResponse, UserResponse, UserContextType } from '@interfaces/user';
+import { defaultCart, defaultUser } from '@data/general';
 
 // CART PROVIDERS //
 const useCart = () => {
   const [cart, setCart] = useState<CartResponse>(defaultCart);
 
   const refresh = useCallback(async () => {
-    const cart = await getCart() as getCartResponse;
-    const { data } = cart;
-    setCart(data);
+    const response = await getCart() as getCartResponse;
+    const cart = response?.data;
+    setCart(cart);
   }, []);
 
   const reset = useCallback(() => {
@@ -43,11 +43,11 @@ const CartContext = createContext<CartContextType>({
 
 // USER PROVIDERS //
 const useUser = () => {
-  const [user, setUser] = useState<UserResponse>(defaultUser)
+  const [user, setUser] = useState<UserResponse>(defaultUser);
 
   const refresh = useCallback(async () => {
-    const user = await getUser() as GetUserResponse;
-    const { data } = user;
+    const response = await getUser() as GetUserResponse;
+    const data = response?.data || {} as { data : UserResponse }
     setUser(data);
   }, []);
 

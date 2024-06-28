@@ -44,7 +44,7 @@ type getReviewResponse = {
 };
 
 // Components => Product => ProductReviews
-type ProductReviewsProps = {
+type ProductReviewProps = {
   review: ReviewResponse;
 };
 
@@ -53,4 +53,4 @@ type ReviewsStarsProps = {
   rating: number;
 };
 
-export type { getReviewResponse, ProductReviewsProps, ReviewsStarsProps };
+export type { getReviewResponse, ProductReviewProps, ReviewsStarsProps };
