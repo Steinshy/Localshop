@@ -53,7 +53,8 @@ type CartItemProps = {
   items: CartItem[];
 };
 
-type CartButtonProcessProps = {
+// Components => Cart => OrderProcessButtonProps
+type OrderProcessButtonProps = {
   pathname: string;
   items: CartItem[];
 };
@@ -68,6 +69,11 @@ type AddToCartProps = {
   isIconOnly?: boolean;
 };
 
+type CartContentViewProps = {
+  items: CartItem[];
+  cartStore: CartContextType;
+}
+
 export type {
   CartResponse,
   getCartResponse,
@@ -75,7 +81,8 @@ export type {
   CartContextType,
   CartItemProps,
   CartProductProps,
-  CartButtonProcessProps,
+  OrderProcessButtonProps,
   CartButtonDeleteProps,
   AddToCartProps,
+  CartContentViewProps
 };

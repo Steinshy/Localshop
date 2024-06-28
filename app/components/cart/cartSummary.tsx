@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 // Components
 import CartCoupons from "@components/cart/cartCoupons";
-import CartButtonProcess from "@components/cart/cartButtonProcess";
+import OrderProcessButton from "@components/cart/orderProcessButton";
 
 // Utils
 import { CartContext } from "@utils/subProviders";
@@ -15,7 +15,7 @@ const CartSummary = () => {
   const pathname: string = usePathname(), cartStore = useContext(CartContext);
   const { update, data } = cartStore;
   const { attributes: { items, finalPrice, totalPrice, coupon } } = data;
-  const { discount } = coupon || {};
+  const { discount } = coupon;
 
   return (
     <div>
@@ -41,7 +41,7 @@ const CartSummary = () => {
 
         {/* Shipping - Payment Button */}
         <div className="grid grid-cols-2 gap-4">
-          <CartButtonProcess pathname={pathname} items={items} />
+          <OrderProcessButton pathname={pathname} items={items} />
         </div>
       </div>
     </div>
