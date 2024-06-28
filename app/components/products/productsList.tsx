@@ -25,13 +25,13 @@ import { getProducts } from 'actions';
 
 const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
   const searchParams = useSearchParams(),
-    [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
-    [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
-    [query, setQuery] = useState<string>(searchParams.get('q') || ''),
-    [isFetching, setIsFetching] = useState<boolean>(false);
+        [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
+        [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
+        [query, setQuery] = useState<string>(searchParams.get('q') || ''),
+        [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const fetchData = useCallback(async (page: number, query: string, urlParams: URLSearchParams) => {
-      if (page < 1 || page > localPagy.pages || isFetching || query === urlParams.get('q')) return;
+  const fetchData = useCallback(async (page: number, query: string) => {
+      if (page < 1 || page > localPagy.pages || isFetching || query === searchParams.get('q')) return;
       setIsFetching(true);
 
       try {
@@ -49,7 +49,7 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
         setIsFetching(false);
       }
     },
-    [isFetching, localPagy.pages, query]
+    [isFetching, localPagy.pages, searchParams]
   );
 
   const updateQueryURL = (value?: string) => {
@@ -67,13 +67,13 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
   const handleSearch = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     void updateQueryURL(query);
-    void fetchData(1, query, searchParams);
+    void fetchData(1, query);
   };
 
   const handleClear = () => {
     setQuery('');
     void updateQueryURL();
-    void fetchData(1, '', searchParams);
+    void fetchData(1, '');
   };
 
   // Infinite scrolling
@@ -82,7 +82,7 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
       const offsetY = 10;
       if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - offsetY)
         return;
-      void fetchData(localPagy.page + 1, query, searchParams);
+      void fetchData(localPagy.page + 1, query);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);

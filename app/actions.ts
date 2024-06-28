@@ -1,3 +1,5 @@
+"use server";
+
 // Next Cache
 import { revalidateTag } from 'next/cache';
 
