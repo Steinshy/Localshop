@@ -13,7 +13,7 @@ import { CartButtonDeleteProps, CartGeneralResponse } from "@interfaces/cart";
 // Utils
 import http from "@utils/http";
 
-const CartButtonDelete: FC<CartButtonDeleteProps> = ({ cartStore, productId }) => {
+const CartButtonDelete: FC<CartButtonDeleteProps> = ({ productId, cartStore }) => {
   const handleDeleteCart = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const apiFetch = async () => {
@@ -24,7 +24,7 @@ const CartButtonDelete: FC<CartButtonDeleteProps> = ({ cartStore, productId }) =
     void apiFetch();
   };
 
-  const handleDeleteItem = (productId: number, event: React.MouseEvent<HTMLElement>) => {
+  const handleDeleteItem = (productId: string, event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     const apiFetch = async () => {
       const response = await http.delete(`/cart/remove_item?product_id=${productId}`);

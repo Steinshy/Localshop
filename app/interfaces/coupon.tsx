@@ -1,7 +1,7 @@
 // Interface
-import { CartResponse } from "@interfaces/cart";
+import { getCartResponse } from "@interfaces/cart";
 
-type CouponsObject = {
+type CouponsResponse = {
   id: string;
   type: string;
   category_id: number;
@@ -12,14 +12,14 @@ type CouponsObject = {
 
 type CartCouponsProps = {
   discount: number;
-  coupon: CouponsObject;
+  coupon: CouponsResponse;
   finalPrice: number;
   totalPrice: number;
-  update: (data: CartResponse) => void;
+  update: (data: getCartResponse) => void;
 };
 
 type CouponFormProps = {
   code?: string;
 };
 
-export type { CartCouponsProps, CouponsObject, CouponFormProps };
+export type { CouponsResponse, CartCouponsProps, CouponFormProps };

@@ -4,11 +4,11 @@
 import { useState, createContext, useCallback } from "react";
 
 // Utils
-import http from "@utils/http";
+import { getCart, getUser } from 'actions';
 
 // Interfaces - Data
-import { UserResponse, UserContextType } from "@interfaces/user";
-import { CartResponse, CartContextType } from "@interfaces/cart";
+import { getCartResponse, CartResponse, CartContextType } from "@interfaces/cart";
+import { GetUserResponse, UserResponse, UserContextType} from "@interfaces/user";
 import { defaultCart, defaultUser } from "@data/general";
 
 // CART PROVIDERS //
@@ -16,8 +16,8 @@ const useCart = () => {
   const [cart, setCart] = useState<CartResponse>(defaultCart);
 
   const refresh = useCallback(async () => {
-    const response = await http.get("/cart");
-    const { data } = response?.data as { data: CartResponse };
+    const cart = await getCart() as getCartResponse;
+    const { data } = cart;
     setCart(data);
   }, []);
 
@@ -31,7 +31,7 @@ const useCart = () => {
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const userCart = useCart();
 
-  return <CartContext.Provider value={userCart as CartContextType}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={userCart}>{children}</CartContext.Provider>;
 };
 
 const CartContext = createContext<CartContextType>({
@@ -43,11 +43,11 @@ const CartContext = createContext<CartContextType>({
 
 // USER PROVIDERS //
 const useUser = () => {
-  const [user, setUser] = useState(defaultUser as UserResponse);
+  const [user, setUser] = useState<UserResponse>(defaultUser)
 
   const refresh = useCallback(async () => {
-    const response = await http.get("/user");
-    const { data } = response?.data as { data: UserResponse };
+    const user = await getUser() as GetUserResponse;
+    const { data } = user;
     setUser(data);
   }, []);
 
@@ -61,7 +61,7 @@ const useUser = () => {
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const userState = useUser();
 
-  return <UserContext.Provider value={userState as UserContextType}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={userState}>{children}</UserContext.Provider>;
 };
 
 const UserContext = createContext<UserContextType>({

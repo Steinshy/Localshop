@@ -17,6 +17,10 @@ type UserResponse = {
   };
 };
 
+type GetUserResponse = {
+  data: UserResponse
+};
+
 type UserContextType = {
   data: UserResponse;
   update: Dispatch<SetStateAction<UserResponse>>;
@@ -25,4 +29,4 @@ type UserContextType = {
   logout: () => void;
 };
 
-export type { UserResponse, UserContextType };
+export type { UserResponse, GetUserResponse, UserContextType };

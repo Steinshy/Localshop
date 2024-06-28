@@ -2,11 +2,11 @@
 import { Dispatch, SetStateAction } from 'react';
 
 // Interface
-import { CouponsObject } from '@interfaces/coupon';
+import { CouponsResponse } from '@interfaces/coupon';
+import { ProductResponse } from '@interfaces/product';
 
-// General Interface
-
-type CartGeneralResponse = {
+// Components => Product => AddToCart | Data => defaultCart | utils => subProviders
+type CartResponse = {
   id: string;
   type: string;
   attributes: {
@@ -15,52 +15,17 @@ type CartGeneralResponse = {
     updatedAt: string;
     items: CartItems[];
     totalPrice: number;
-    coupon: CouponsObject;
+    coupon: CouponsResponse;
     finalPrice: number;
     totalItems: number;
     totalUniqueItems: number;
   };
 };
 
-type ProductResponseData = {
-  id: string;
-  type: string;
-  attributes: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    thumbnail: {
-      url: string;
-      full: string;
-    };
-    images: {
-      thumbnail: string;
-      full: string;
-    }[];
-  };
+// Actions => getCart | subProviders => GetCart
+type getCartResponse = {
+  data: CartResponse;
 };
-
-// type CartResponse = {
-//   id: string;
-//   type: string;
-
-//   attributes: {
-//     id: number;
-//     createdAt: string;
-//     updatedAt: string;
-//     items: CartItems[];
-//     totalPrice: number;
-//     coupon: CouponsObject;
-//     finalPrice: number;
-//     totalItems: number;
-//     totalUniqueItems: number;
-//   };
-// };
 
 // CartResponse => CartItems
 type CartItems = {
@@ -68,13 +33,14 @@ type CartItems = {
   quantity: number;
   price: number;
   product: {
-    data: ProductResponseData;
+    data: ProductResponse;
   };
 };
 
+// subProviders => CartContext
 type CartContextType = {
-  data: CartGeneralResponse;
-  update: Dispatch<SetStateAction<CartGeneralResponse>>;
+  data: CartResponse;
+  update: Dispatch<SetStateAction<CartResponse>>;
   refresh: () => Promise<void>;
   reset: () => void;
 };
@@ -98,12 +64,13 @@ type CartButtonDeleteProps = {
 };
 
 type AddToCartProps = {
-  localProduct: ProductResponseData;
+  localProduct: ProductResponse;
   isIconOnly?: boolean;
 };
 
 export type {
-  CartGeneralResponse,
+  CartResponse,
+  getCartResponse,
   CartItems,
   CartContextType,
   CartItemProps,

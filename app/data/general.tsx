@@ -1,5 +1,60 @@
-// Utils/subProviders
-const defaultCart = {
+import { CartResponse, CartItems } from '@interfaces/cart';
+import { CouponsResponse } from '@interfaces/coupon';
+import { ProductResponse } from '@interfaces/product';
+import { UserResponse } from '@interfaces/user';
+
+// defaultProduct => thumbnail
+const defaultThumbnail = {
+  url: '',
+  full: '',
+};
+
+// defaultProduct => images
+const defaultImages = {
+  thumbnail: '',
+  full: '',
+};
+
+// defaultCart => coupon
+const defaultCoupon: CouponsResponse = {
+  id: '',
+  type: '',
+  category_id: 0,
+  code: '',
+  discount: 0,
+  expiration: '',
+};
+
+// defaultCartItems => product/data
+const defaultProduct: ProductResponse = {
+  id: '',
+  type: '',
+
+  attributes: {
+    id: 0,
+    title: '',
+    description: '',
+    price: 0,
+    discountPercentage: 0,
+    rating: 0,
+    stock: 0,
+    brand: '',
+    thumbnail: defaultThumbnail,
+    images: [defaultImages],
+  },
+};
+
+// defaultCart => items
+const defaultCartItems: CartItems = {
+  id: 0,
+  quantity: 0,
+  price: 0,
+  product: {
+    data: defaultProduct,
+  },
+};
+
+const defaultCart: CartResponse = {
   id: '',
   type: '',
 
@@ -7,28 +62,19 @@ const defaultCart = {
     id: 0,
     createdAt: '',
     updatedAt: '',
+    items: [defaultCartItems],
     totalPrice: 0,
+    coupon: defaultCoupon,
+    finalPrice: 0,
     totalItems: 0,
     totalUniqueItems: 0,
-    finalPrice: 0,
-    items: [],
-    coupon: {
-      id: '',
-      category_id: 0,
-      type: '',
-      code: '',
-      discount: 0,
-      expiration: '',
-    },
   },
 };
 
 // Utils/subProviders
-const defaultUser = {
+const defaultUser : UserResponse = {
   id: 0,
   type: '',
-  addresses: [],
-  orders: [],
 
   attributes: {
     id: 0,
@@ -41,6 +87,8 @@ const defaultUser = {
     },
   },
 };
+
+export { defaultCart, defaultUser };
 
 // Products/page
 const defaultProducts = {
@@ -64,8 +112,6 @@ const defaultAddress = {
   zip: 0,
   default: false,
 };
-
-export { defaultCart, defaultUser, defaultProducts, defaultAddress };
 
 // Unused Data Wip
 const chipColor = (status: string) => {

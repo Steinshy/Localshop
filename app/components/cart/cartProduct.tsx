@@ -20,10 +20,11 @@ import { generateSlug } from "@utils/helpers";
 import http from "@utils/http";
 import { CartContext } from "@utils/subProviders";
 
-const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
+const CartProduct: FC<CartProductProps> = ({ cartItem }) => {  
   const cartStore = useContext(CartContext);
-  const { quantity, price, product } = cartItem;
-  const { data: { attributes: { id, title, thumbnail } } } = product;
+  const { quantity, price, product} = cartItem;
+  const { id, title, thumbnail } = product;
+
   const [currentQuantity, setCurrentQuantity] = useState<string>(quantity.toString());
   const slug = generateSlug(title);
 
@@ -71,7 +72,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
 
         {/* Remove item */}
         <div className="flex justify-end items-start">
-          <CartButtonDelete cartStore={cartStore} productId={id} />
+          <CartButtonDelete productId={product.id} cartStore={cartStore} />
         </div>
       </div>
       {/* Single item information */}

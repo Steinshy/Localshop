@@ -8,7 +8,8 @@ import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
 import { GetProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
-import { CartGeneralResponse } from '@interfaces/cart';
+import { getCartResponse } from '@interfaces/cart';
+import { GetUserResponse } from '@interfaces/user';
 
 // User Address API - Get
 export const getAddresses = async () => {
@@ -28,6 +29,7 @@ export const CreateAddress = async (newAddress: AddressValuesProps) => {
   });
   return getAddresses();
 };
+
 // User Address API - Update
 export const UpdateAddress = async (id: number, newAddress: AddressValuesProps) => {
   revalidateTag('user');
@@ -105,10 +107,38 @@ export const addItemToCart = async (product_id: string) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ product_id }),
     });
-    const data = await response.json() as { data: CartGeneralResponse };
+    const data = await response.json() as getCartResponse
     return data;
   } catch (error) {
     console.error('An error occurred while adding item to cart: ', error);
+    return { data: {} };
+  }
+};
+
+// Cart API - Get
+export const getCart = async () => {
+  try {
+    const response = await fetch(`http://api.localshop.test:3005/v1/cart`, {
+      next: { tags: ['cart'] },
+  });
+    const data = await response.json() as getCartResponse
+    return data;
+  } catch (error) {
+    console.error('An error occurred while fetching cart: ', error);
+    return { data: {} };
+  }
+};
+
+// User - API - Get
+export const getUser = async () => {
+  try {
+    const response = await fetch(`http://api.localshop.test:3005/v1/user`, {
+      next: { tags: ['user'] },
+    });
+    const data = await response.json() as GetUserResponse
+    return data;
+  } catch (error) {
+    console.error('An error occurred while fetching user: ', error);
     return { data: {} };
   }
 };

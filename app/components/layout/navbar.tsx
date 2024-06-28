@@ -1,54 +1,63 @@
 'use client';
 
 // React
-import { useContext } from "react";
+import { useContext } from 'react';
 
 // NextJS
-import Link from "next/link";
+import Link from 'next/link';
 
 // NextUI
 import { Link as NextLink, NavbarContent, NavbarItem, Navbar, Button, Badge } from "@nextui-org/react";
 
-// Components
-import UserDropdown from "@components/layout/userDropdown";
-
 // Icons
-import { FaCartArrowDown } from "react-icons/fa";
+import { FaCartArrowDown } from 'react-icons/fa';
 
 // Utils
 import { CartContext, UserContext } from "@utils/subProviders";
+
+// Components
+import UserDropdown from "@components/layout/userDropdown";
 
 const Header = () => {
   const navItems = [
     { key: "home", href: "/", label: "Home" },
     { key: "products", href: "/products", label: "Products" },
-    { key: "about", href: "/about", label: "About Us" }
-  ], cartStore = useContext(CartContext), userStore = useContext(UserContext);
+    { key: "about", href: "/about", label: "About Us" },
+  ];
 
   // Cart
-  const { data: { attributes: { totalItems } } } = cartStore;
-  const cartTotal = totalItems || 0;
+  const cartStore = useContext(CartContext);
+
+  const { data } = cartStore;
+  const { attributes } = data;
+  const { totalItems } = attributes;
+  
+  const cartTotal = data?.attributes?.totalItems || 0;
 
   // User
-  const { data: { attributes: { firstname, lastname} }, isLogged } = userStore;
+  const userStore = useContext(UserContext);
+  const { data: user, isLogged } = userStore;
+  const { attributes: userAttributes } = user;
+  const { firstname, lastname } = userAttributes;
+  console.log(userStore, "userStore")
 
   return (
     <Navbar isBlurred isBordered>
-      <NavbarContent className="flex" justify="start">
-        <p className="ml-1 font-light">Localshop</p>
+      <NavbarContent className='flex' justify='start'>
+        <p className='ml-1 font-light'>Localshop</p>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex" justify="center">
+      <NavbarContent className='hidden sm:flex' justify='center'>
         {navItems.map((item) => (
           <NavbarItem key={item.key}>
-            <NextLink as={Link} color="foreground" href={item.href}>
+            <NextLink as={Link} color='foreground' href={item.href}>
               {item.label}
             </NextLink>
           </NavbarItem>
         ))}
       </NavbarContent>
 
-      <NavbarContent justify="end">
+      <NavbarContent justify='end'>
         {isLogged() ? (
           <NavbarItem>
             <Badge
@@ -59,12 +68,12 @@ const Header = () => {
               isInvisible={cartTotal <= 0}
             >
               <Button
-                startContent={<FaCartArrowDown className="text-2xl" />}
+                startContent={<FaCartArrowDown className='text-2xl' />}
                 as={Link}
-                href="/order/cart"
-                size="md"
-                variant="ghost"
-                radius="md"
+                href='/order/cart'
+                size='md'
+                variant='ghost'
+                radius='md'
               >
                 Cart
               </Button>

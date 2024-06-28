@@ -2,6 +2,7 @@
 type ProductResponse = {
   id: string;
   type: string;
+
   attributes: {
     id: number;
     title: string;
@@ -45,7 +46,7 @@ type ProductCardProps = {
   product: ProductResponse;
 };
 
-// Composant => ProductImages
+// Components => ProductImages
 type ProductImagesProps = {
   title: string;
   mainImage: string;

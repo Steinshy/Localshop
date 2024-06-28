@@ -9,7 +9,7 @@ import { Divider } from "@nextui-org/react";
 // Components
 import AddressList from "@components/user/addressList";
 
-const Shipping = () => {
+const ShippingPage = () => {
   const [selectedShippingAddressId, setSelectedShippingAddressId] = useState<number | null>(1);
   const [selectedBillingAddressId, setSelectedBillingAddressId] = useState<number | null>(1);
 
@@ -30,4 +30,4 @@ const Shipping = () => {
   );
 };
 
-export default Shipping;
+export default ShippingPage;

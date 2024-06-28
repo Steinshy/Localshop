@@ -17,7 +17,7 @@ type ProductsPageProps = {
   };
 };
 
-// Products => Composant => ProductList
+// Products => Components => ProductList
 type ProductsListProp = {
   pagy: PagyProps;
   products: {

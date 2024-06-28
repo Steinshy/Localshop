@@ -16,22 +16,22 @@ import { FaShoppingCart, FaArrowRight } from 'react-icons/fa';
 import { addItemToCart } from 'actions';
 
 // Interface
-import { AddToCartProps } from '@interfaces/cart';
-import { CartGeneralResponse } from '@interfaces/cart';
+import { CartResponse, AddToCartProps } from '@interfaces/cart';
 
 // Utils
 import { UserContext, CartContext } from '@utils/subProviders';
 import { showToast } from '@utils/helpers';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
-  const router = useRouter(), userStore = useContext(UserContext), cartStore = useContext(CartContext);
-  
+  const router = useRouter(),
+    userStore = useContext(UserContext),
+    cartStore = useContext(CartContext);
   // User
   const { isLogged } = userStore;
-  
   // Cart
-  const { data: { attributes: { items } } } = cartStore;
-
+  const { data } = cartStore;
+  const { attributes } = data;
+  const { items } = attributes;
   // localProduct
   const { id: product_id } = localProduct;
   const cartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === product_id);
@@ -45,8 +45,9 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
 
     try {
       const apiCall = async () => {
-        const { data } = await addItemToCart(product_id);
-        cartStore.update(data as CartGeneralResponse);
+        const response = await addItemToCart(product_id);
+        const { data } = response?.data as { data: CartResponse };
+        cartStore.update(data);
         showToast('Item has been added to your cart !', 'success');
       };
       void apiCall();
@@ -62,7 +63,11 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
   };
 
   const buttonContent = isIconOnly ? (
-    quantity > 0 ? <FaArrowRight className='text-lg text-white' /> : <FaShoppingCart className='text-lg' />
+    quantity > 0 ? (
+      <FaArrowRight className='text-lg text-white' />
+    ) : (
+      <FaShoppingCart className='text-lg' />
+    )
   ) : (
     btnOptions.children
   );

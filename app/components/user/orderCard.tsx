@@ -13,6 +13,8 @@ import { readableDate } from "@utils/helpers";
 // Interfaces
 import { OrderCardProps } from "@interfaces/user";
 
+import { chipColor } from "@data/general";
+
 const OrderCard: FC<OrderCardProps> = ({ order, user }) => {
   const { id, invoice, status, date, total, productsTotal } = order;
   const { firstname, lastname } = user;

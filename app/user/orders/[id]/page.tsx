@@ -20,10 +20,12 @@ import { UserContext } from "@utils/subProviders";
 import { readableDate } from "@utils/helpers";
 
 // Interfaces
-import { OrderPageProps } from "@interfaces/user";
+import { OrderPageProps } from "@interfaces/orders";
 
 // Components
 import OrderProductCard from "@components/user/orderProductCard";
+// Data
+import { chipColor } from "@data/general";
 
 const OrdersPage: FC<OrderPageProps> = ({ params }) => {
   const userStore = useContext(UserContext);
