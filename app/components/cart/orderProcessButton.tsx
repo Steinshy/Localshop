@@ -4,6 +4,8 @@ import { FC } from 'react';
 // NextJS
 import Link from 'next/link';
 
+import { usePathname } from 'next/navigation';
+
 // Icons
 import { FaArrowRight } from 'react-icons/fa';
 
@@ -13,7 +15,8 @@ import { Button } from '@nextui-org/react';
 // Interface
 import { OrderProcessButtonProps } from '@interfaces/cart';
 
-const OrderProcessButton: FC<OrderProcessButtonProps> = ({ pathname, items }) => {
+const OrderProcessButton: FC<OrderProcessButtonProps> = ({ items }) => {
+  const pathname = usePathname();
   const pathMappings: { [key: string]: { text: string; nextPath: string } } = {
     '/order/cart': { text: 'Proceed to Shipping', nextPath: '/order/shipping' },
     '/order/shipping': { text: 'Proceed to Payment', nextPath: '/order/payment' },

@@ -1,7 +1,9 @@
-import { CartResponse, CartItems } from '@interfaces/cart';
-import { CouponsResponse } from '@interfaces/coupon';
-import { ProductResponse } from '@interfaces/product';
+// Interfaces
+
 import { UserResponse } from '@interfaces/user';
+import { CartResponse, CartItem, CartCoupon } from '@interfaces/cart';
+import { DiscountResponse } from '@interfaces/discount';
+import { ProductResponse } from '@interfaces/product';
 
 // defaultProduct => thumbnail
 const defaultThumbnail = {
@@ -15,14 +17,24 @@ const defaultImages = {
   full: '',
 };
 
-// defaultCart => coupon
-const defaultCoupon: CouponsResponse = {
+// defaultCart => Discount
+const defaultCoupon: DiscountResponse = {
   id: '',
   type: '',
-  category_id: 0,
-  code: '',
-  discount: 0,
-  expiration: '',
+
+  attributes: {
+    id: 0,
+    code: '',
+    discount: 0,
+    expiration: '',
+    expired: false,
+    createdAt: '',
+    updatedAt: '',
+  },
+};
+
+const defaultCartCoupon: CartCoupon = {
+  data: defaultCoupon,
 };
 
 // defaultCartItems => product/data
@@ -45,7 +57,7 @@ const defaultProduct: ProductResponse = {
 };
 
 // defaultCart => items
-const defaultCartItems: CartItems = {
+const defaultCartItem: CartItem = {
   id: 0,
   quantity: 0,
   price: 0,
@@ -62,9 +74,9 @@ const defaultCart: CartResponse = {
     id: 0,
     createdAt: '',
     updatedAt: '',
-    items: [defaultCartItems],
+    items: [defaultCartItem],
     totalPrice: 0,
-    coupon: defaultCoupon,
+    coupon: defaultCartCoupon,
     finalPrice: 0,
     totalItems: 0,
     totalUniqueItems: 0,
@@ -72,7 +84,7 @@ const defaultCart: CartResponse = {
 };
 
 // Utils/subProviders
-const defaultUser : UserResponse = {
+const defaultUser: UserResponse = {
   id: 0,
   type: '',
 
@@ -97,53 +109,53 @@ const defaultProducts = {
   },
 };
 
-export { defaultCart, defaultUser, defaultProducts, defaultProduct };
+export { defaultCart, defaultUser, defaultProducts, defaultCartCoupon, defaultProduct };
 
 // Components/user/addressModal
-const defaultAddress = {
-  label: '',
-  firstname: '',
-  lastname: '',
-  phone: 0,
-  address: '',
-  city: '',
-  state: '',
-  country: '',
-  zip: 0,
-  default: false,
-};
+// const defaultAddress = {
+//   label: '',
+//   firstname: '',
+//   lastname: '',
+//   phone: 0,
+//   address: '',
+//   city: '',
+//   state: '',
+//   country: '',
+//   zip: 0,
+//   default: false,
+// };
 
 // Unused Data Wip
-const chipColor = (status: string) => {
-  switch (status) {
-    case 'Delivered':
-      return 'success';
-    case 'Processing':
-      return 'warning';
-    case 'Canceled':
-      return 'danger';
-    default:
-      return 'default';
-  }
-};
+// const chipColor = (status: string) => {
+//   switch (status) {
+//     case 'Delivered':
+//       return 'success';
+//     case 'Processing':
+//       return 'warning';
+//     case 'Canceled':
+//       return 'danger';
+//     default:
+//       return 'default';
+//   }
+// };
 
 // Unused Data Wip
-const paymentmethods = [
-  {
-    id: 1,
-    label: 'Credit Card',
-    default: true,
-  },
-  {
-    id: 2,
-    label: 'Paypal',
-    default: false,
-  },
-  {
-    id: 3,
-    label: 'Bank Transfer',
-    default: false,
-  },
-];
+// const paymentmethods = [
+//   {
+//     id: 1,
+//     label: 'Credit Card',
+//     default: true,
+//   },
+//   {
+//     id: 2,
+//     label: 'Paypal',
+//     default: false,
+//   },
+//   {
+//     id: 3,
+//     label: 'Bank Transfer',
+//     default: false,
+//   },
+// ];
 
-export { chipColor, paymentmethods };
+// export { chipColor, paymentmethods };

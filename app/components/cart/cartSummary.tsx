@@ -1,50 +1,67 @@
 // React
-import { useContext } from "react";
+import { FC } from 'react';
 
-// NextJS
-import { usePathname } from "next/navigation";
+// NextUi
+import { Card } from '@nextui-org/card';
 
 // Components
-import CartCoupons from "@components/cart/cartCoupons";
-import OrderProcessButton from "@components/cart/orderProcessButton";
+import CartDiscount from '@components/cart/cartDiscount';
+import OrderProcessButton from '@components/cart/orderProcessButton';
 
-// Utils
-import { CartContext } from "@utils/subProviders";
+// Interfaces
+import { CartSummaryProps } from '@interfaces/cart';
 
-const CartSummary = () => {
-  const pathname: string = usePathname(), cartStore = useContext(CartContext);
-  const { update, data } = cartStore;
-  const { attributes: { items, finalPrice, totalPrice, coupon } } = data;
-  const { discount } = coupon;
-
+const CartSummary: FC<CartSummaryProps> = ({ items, coupon, finalPrice, totalPrice }) => {
+  const { data } = coupon || {};
+  const { attributes } = data || {};
+  const { code: couponCode, discount: couponDiscount } = attributes || {};
+  
   return (
-    <div>
-      <div className="sticky top-[70px] border-1 p-4 rounded-md bg-background">
-        <h2 className="text-2xl font-semibold mb-4 text-foreground text-center">Order summary</h2>
-        <div className="grid grid-cols-2 gap-4 text-foreground">
-          <p className="text-lg">Shipping:</p>
-          <p className="text-lg">0€</p>
-        </div>
-        <div className="grid grid-cols-2 gap-4 text-foreground">
-          <p className="text-lg">Taxes:</p>
-          <p className="text-lg">0€</p>
-        </div>
-
-        {/* COUPONS */}
-        <CartCoupons
-          discount={discount}
-          coupon={coupon}
-          finalPrice={finalPrice}
-          totalPrice={totalPrice}
-          update={update}
-        />
-
-        {/* Shipping - Payment Button */}
-        <div className="grid grid-cols-2 gap-4">
-          <OrderProcessButton pathname={pathname} items={items} />
-        </div>
+    <Card className='sticky top-[70px] border-1 p-4 rounded-md'>
+      <h2 className='text-2xl font-semibold mb-4 text-foreground text-center'>Order summary</h2>
+      <div className='grid grid-cols-2 gap-4'>
+        <p className='text-lg text-start'>Shipping:</p>
+        <p className='text-lg text-end'>0€</p>
       </div>
-    </div>
+
+      <div className='grid grid-cols-2 gap-4 text-foreground'>
+        <p className='text-lg text-start'>Taxes:</p>
+        <p className='text-lg text-end'>0€</p>
+      </div>
+
+      <hr className='my-4' />
+      <div className='grid grid-cols-2 gap-4 text-foreground'>
+        <p className='text-lg text-start'>Total:</p>
+        <p className='text-lg text-end'>{totalPrice}€</p>
+      </div>
+      {couponDiscount > 0 && (
+        <>
+          <div className='grid grid-cols-1 gap-4'>
+            <p className='text-small text-end mb-4 text-foreground/75 italic'>-{couponDiscount}%</p>
+          </div>
+
+          <hr className='my-4' />
+          <div className='grid grid-cols-2 gap-4 text-foreground'>
+            <p className='text-lg text-start'>Subtotal:</p>
+            <p className='text-lg text-end'>{finalPrice}€</p>
+          </div>
+
+          <div className='grid grid-cols-1 gap-4'>
+            <p className='text-small text-center mb-4 text-foreground/75 italic'>
+              Shipping and taxes will be calculated at checkout
+            </p>
+          </div>
+        </>
+      )}
+
+      {/* COUPONS */}
+      <CartDiscount couponCode={couponCode} couponDiscount={couponDiscount} totalPrice={totalPrice} />
+
+      {/* Shipping - Payment Button */}
+      <div className='grid gap-4'>
+        <OrderProcessButton items={items} />
+      </div>
+    </Card>
   );
 };
 

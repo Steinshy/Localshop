@@ -1,6 +1,3 @@
-// React
-import { Dispatch, SetStateAction } from 'react';
-
 type UserResponse = {
   id: number;
   type: string;
@@ -21,12 +18,4 @@ type getUserResponse = {
   data: UserResponse
 };
 
-type UserContextType = {
-  data: UserResponse;
-  update: Dispatch<SetStateAction<UserResponse>>;
-  refresh: () => Promise<void>;
-  isLogged: () => boolean;
-  logout: () => void;
-};
-
-export type { UserResponse, getUserResponse, UserContextType };
+export type { UserResponse, getUserResponse };

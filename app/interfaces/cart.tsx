@@ -1,9 +1,7 @@
-// React
-import { Dispatch, SetStateAction } from 'react';
-
 // Interface
-import { CouponsResponse } from '@interfaces/coupon';
+import { DiscountResponse } from '@interfaces/discount';
 import { ProductResponse } from '@interfaces/product';
+import { CartContextType } from '@interfaces/subProviders';
 
 // Components => Product => AddToCart | Data => defaultCart | utils => subProviders
 type CartResponse = {
@@ -15,7 +13,7 @@ type CartResponse = {
     updatedAt: string;
     items: CartItem[];
     totalPrice: number;
-    coupon: CouponsResponse;
+    coupon: CartCoupon;
     finalPrice: number;
     totalItems: number;
     totalUniqueItems: number;
@@ -25,6 +23,11 @@ type CartResponse = {
 // Actions => getCart | subProviders => GetCart
 type getCartResponse = {
   data: CartResponse;
+};
+
+// Data => defaultCartCoupon | CartResponse => Coupon
+type CartCoupon = {
+  data: DiscountResponse;
 };
 
 // CartResponse => CartItems
@@ -37,25 +40,20 @@ type CartItem = {
   };
 };
 
-// subProviders => CartContext
-type CartContextType = {
-  data: CartResponse;
-  update: Dispatch<SetStateAction<CartResponse>>;
-  refresh: () => Promise<void>;
-  reset: () => void;
-};
-
+// Components => Cart => CartProduct
 type CartProductProps = {
   cartItem: CartItem;
 };
 
-type CartItemProps = {
+type CartSummaryProps = {
   items: CartItem[];
+  coupon: CartCoupon;
+  finalPrice: number;
+  totalPrice: number;
 };
 
 // Components => Cart => OrderProcessButtonProps
 type OrderProcessButtonProps = {
-  pathname: string;
   items: CartItem[];
 };
 
@@ -72,17 +70,17 @@ type AddToCartProps = {
 type CartContentViewProps = {
   items: CartItem[];
   cartStore: CartContextType;
-}
+};
 
 export type {
   CartResponse,
   getCartResponse,
+  CartCoupon,
   CartItem,
-  CartContextType,
-  CartItemProps,
   CartProductProps,
+  CartSummaryProps,
   OrderProcessButtonProps,
   CartButtonDeleteProps,
   AddToCartProps,
-  CartContentViewProps
+  CartContentViewProps,
 };

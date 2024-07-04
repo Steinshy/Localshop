@@ -1,4 +1,4 @@
-// Interface
+// Interfaces
 import { PagyProps } from '@interfaces/general';
 import { ProductResponse } from '@interfaces/product';
 

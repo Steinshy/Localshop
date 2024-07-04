@@ -1,12 +1,12 @@
 import { PagyProps } from '@interfaces/general';
 
-// ReviewAuthor
+// ReviewAuthor => Avatar
 type AuthorAvatar = {
   small: string;
   large: string;
 };
 
-// ReviewResponse
+// ReviewResponse => Author
 type ReviewAuthor = {
   data: {
     id: number;

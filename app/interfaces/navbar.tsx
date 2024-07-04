@@ -1,13 +1,8 @@
 // Interface
-import { UserContextType } from "@interfaces/user";
-import { CartContextType } from "@interfaces/cart";
+import { UserContextType } from '@interfaces/subProviders';
+import { CartContextType } from '@interfaces/subProviders';
 
-type NavbarProps = {
-  href: string;
-  isActive: boolean;
-  children: React.ReactNode;
-};
-
+// Components => Layout => UserDropdown
 type UserMenuProps = {
   userStore: UserContextType;
   cartStore: CartContextType;
@@ -16,4 +11,4 @@ type UserMenuProps = {
   lastname: string;
 };
 
-export type { NavbarProps, UserMenuProps };
+export type { UserMenuProps };

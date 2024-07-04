@@ -16,25 +16,26 @@ import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from 'react-ico
 import { showToast } from '@utils/helpers';
 
 // Interfaces
-import { UserMenuProps } from "@interfaces/navbar";
+import { UserMenuProps } from '@interfaces/navbar';
 
 const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname, lastname }) => {
   const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
-    const handleUserMenu = (key: React.Key) => {
-      if (key === 'logout') {
-        return handleUserLoginOut();
-      }
-      router.push(`/user/${key}`);
-      setIsUserMenuOpen(false);
-    };
+  const handleUserAction = (key: React.Key) => {
+    if (key === 'logout') {
+      void handleUserLogout();
+      return;
+    }
+    setIsUserMenuOpen(false);
+    router.push(`/user/${key}`);
+  };
 
   const handleUserMenuOpen = (isOpen: boolean) => {
     setIsUserMenuOpen(isOpen);
   };
 
-  const handleUserLoginOut = () => {
+  const handleUserLogout = () => {
     if (userStore.data && isLogged()) {
       return (
         void userStore.logout(),
@@ -83,7 +84,7 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
           {lastname} {firstname}
         </Button>
       </DropdownTrigger>
-      <DropdownMenu onAction={handleUserMenu} aria-label='Profile Actions' variant='flat'>
+      <DropdownMenu onAction={handleUserAction} aria-label='Profile Actions' variant='flat'>
         <DropdownItem key='profile'>
           <div className='flex items-center gap-2'>
             <FaUserCog />

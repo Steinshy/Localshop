@@ -65,7 +65,7 @@ const Header = () => {
               <Button
                 startContent={<FaCartArrowDown className='text-2xl' />}
                 as={Link}
-                href='/order/cart'
+                href='/order'
                 size='md'
                 variant='ghost'
                 radius='md'
