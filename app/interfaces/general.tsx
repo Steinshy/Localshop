@@ -1,7 +1,3 @@
-type LayoutProps = {
-  children: React.ReactNode;
-};
-
 type BreadcrumbProps = {
   items: Array<{ title: string; href?: string | undefined }>;
 };
@@ -16,4 +12,4 @@ type PagyProps = {
   pages: number;
 };
 
-export type { LayoutProps, BreadcrumbProps, StepperProps, PagyProps };
+export type { BreadcrumbProps, StepperProps, PagyProps };
