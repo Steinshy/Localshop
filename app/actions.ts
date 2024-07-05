@@ -10,6 +10,7 @@ import { getProductsResponse } from '@interfaces/products';
 import { getProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
+import { OrderResponse } from '@interfaces/orders';
 
 
 // User => API - Get
@@ -29,6 +30,31 @@ export const getUser = async () => {
     const error = JSON.stringify(e), data = {};
     return { data, error };
   }
+};
+
+// User => Orders - API - Get (collection)
+export const getOrders = async () => {
+  revalidateTag('user');
+  const response = await fetch('http://api.localshop.test:3005/v1/orders', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    next: { tags: ['user'] } 
+  });
+  const data = await response.json() as { data: OrderResponse[] };
+  const { data: orders } = data;
+  return orders;
+};
+
+// User => Orders - API - Get (single)
+export const getOrder = async (id: string) => {
+  revalidateTag('user');
+  const response = await fetch(`http://api.localshop.test:3005/v1/orders/${id}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    next: { tags: ['user'] } 
+  });
+  const { data } = await response.json() as { data: OrderResponse };
+  return data;
 };
 
 // User => Address - API - Get

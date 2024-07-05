@@ -1,15 +1,33 @@
-import { CartItemObj } from "@interfaces/cart";
 import { UserResponse } from "@interfaces/user";
+import { ProductResponse } from "./product";
 
-type OrdersObj = {
+type OrderResponse = {
   id: number;
+  type: string;
 
   attributes: {
-    status: string;
+    id: number;
     total: number;
-    // products: CartItemObj[];
-  };
+    createdAt: string;
+    updatedAt: string;
+    items: OrderItem[];
+    totalItems: number;
+    totalUniqueItems: number;
+    status: string;
+    user: {
+      data: UserResponse;
+    }
+  }
 };
+
+type OrderItem = {
+  id: number;
+  quantity: number;
+  price: number;
+  product: {
+    data: ProductResponse;
+  }
+}
 
 type OrderPageProps = {
   params: {
@@ -18,13 +36,7 @@ type OrderPageProps = {
 };
 
 type OrderCardProps = {
-  order: OrdersObj;
-  user: UserResponse;
-};
+  order: OrderResponse;
+}
 
-type OrderProductCardProps = {
-  key: number;
-  orderProduct: CartItemObj;
-};
-
-export type { OrdersObj, OrderPageProps, OrderCardProps, OrderProductCardProps };
+export type { OrderItem, OrderResponse, OrderPageProps, OrderCardProps };

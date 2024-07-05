@@ -1,8 +1,3 @@
-'use client';
-
-// React
-import { useContext } from "react";
-
 // NextJS
 import Link from "next/link";
 
@@ -13,15 +8,12 @@ import { Button } from "@nextui-org/react";
 import { FaArrowRight } from "react-icons/fa";
 
 // Components
-import OrdersList from "@components/user/ordersList";
+import OrderCard from "@components/user/orderCard";
 import Breadcrumb from "@components/layout/breadCrumb";
+import { getOrders } from "actions";
 
-// Utils
-import { UserContext } from "@utils/subProviders";
-
-const OrdersPage = () => {
-  const userStore = useContext(UserContext);
-  const { orders } = userStore.user;
+const OrdersPage = async () => {
+  const orders = await getOrders();
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Orders" }];
 
   return (
@@ -31,7 +23,9 @@ const OrdersPage = () => {
 
       {orders.length > 0 ? (
         <div className="grid grid-cols-1 gap-3">
-          <OrdersList />
+          {orders.map((order) => (
+            <OrderCard key={order.id} order={order} />
+          ))}
         </div>
       ) : (
         <div className="flex flex-col flex-grow items-center justify-center">

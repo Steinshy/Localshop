@@ -11,24 +11,22 @@ import { Card, CardHeader, CardBody, Chip } from "@nextui-org/react";
 import { readableDate } from "@utils/helpers";
 
 // Interfaces
-import { OrderCardProps } from "@interfaces/user";
+import { OrderCardProps } from "@interfaces/orders";
 
-import { chipColor } from "@data/general";
-
-const OrderCard: FC<OrderCardProps> = ({ order, user }) => {
-  const { id, invoice, status, date, total, productsTotal } = order;
-  const { firstname, lastname } = user;
+const OrderCard: FC<OrderCardProps> = ({ order }) => {
+  const { attributes: { id, total, createdAt, totalItems, status, user } } = order;
+  const { data: { attributes: { firstname, lastname } } } = user;
 
   return (
     <Card className={`border-2 w-full h-full`} isPressable>
       <CardHeader className="flex items-center justify-between bg-gray-100">
-        <p>Date: {readableDate(date)}</p>
+        <p>Date: {readableDate(createdAt)}</p>
         <p>Total: {total}€</p>
         <p>
           Dispatched to:{lastname} {firstname}
         </p>
-        <p>Order ID: {invoice}</p>
-        <Chip size="sm" className="text-white" color={chipColor(status)}>
+        <p>Order ID: {id}</p>
+        <Chip size="sm" className="text-white">
           {status}
         </Chip>
       </CardHeader>
@@ -36,7 +34,7 @@ const OrderCard: FC<OrderCardProps> = ({ order, user }) => {
       {/* Multiple Products Cards */}
       <CardBody className="">
         <div className="flex items-center justify-between">
-          <p className="text-lg">Products: {productsTotal}</p>
+          <p className="text-lg">Products: {totalItems}</p>
           <Chip className="text-white" as={Link} href={`/user/orders/${id}`} size="sm" color="primary">
             Views Details
           </Chip>

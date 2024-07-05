@@ -1,7 +1,5 @@
-"use client";
-
 // React
-import { FC, useContext } from "react";
+import { FC } from "react";
 
 // NextJS
 import Link from "next/link";
@@ -16,7 +14,6 @@ import { FaArrowRight } from "react-icons/fa";
 import Breadcrumb from "@components/layout/breadCrumb";
 
 // Utils
-import { UserContext } from "@utils/subProviders";
 import { readableDate } from "@utils/helpers";
 
 // Interfaces
@@ -24,13 +21,13 @@ import { OrderPageProps } from "@interfaces/orders";
 
 // Components
 import OrderProductCard from "@components/user/orderProductCard";
-// Data
-import { chipColor } from "@data/general";
 
-const OrdersPage: FC<OrderPageProps> = ({ params }) => {
-  const userStore = useContext(UserContext);
-  const { orders } = userStore.user;
-  const order = orders.find((order) => order.id.toString() === params.id);
+// Actions
+import { getOrder } from "actions";
+
+const OrdersPage: FC<OrderPageProps> = async ({ params }) => {
+  const order = await getOrder(params.id);
+  const { attributes: { items, total, createdAt, totalItems, status } } = order;
 
   const breadCrumbItems = [
     { title: "User", href: "/user" },
@@ -48,20 +45,20 @@ const OrdersPage: FC<OrderPageProps> = ({ params }) => {
           <Card className="max-w-[500px]">
             <CardBody>
               <div className="grid grid-cols-1 gap-3">
-              <Chip size="sm" className="text-white" color={chipColor(order.status)}>{order.status}</Chip>
-                <p className="text-md font-semibold">Payment: {order.paymentType}</p>
+              <Chip size="sm" className="text-white">{status}</Chip>
+                <p className="text-md font-semibold">Payment: </p>
               </div>
               <div className="flex items-center justify-between mt-2">
-                <p className="text-md">Total: {order.total}€</p>
-                <p className="text-md">Date: {readableDate(order.date)}</p>
+                <p className="text-md">Total: {total}€</p>
+                <p className="text-md">Date: {readableDate(createdAt)}</p>
               </div>
             </CardBody>
           </Card>
 
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <p className="text-md font-semibold">Products ({order.productsTotal})</p>
+            <p className="text-md font-semibold">Products ({totalItems})</p>
             <ul className="grid grid-cols-1 gap-3 mt-2">
-              {order.products.map((orderProduct) => (
+              {items.map((orderProduct) => (
                 <OrderProductCard key={orderProduct.id} orderProduct={orderProduct} />
               ))}
             </ul>

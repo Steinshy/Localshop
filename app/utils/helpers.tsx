@@ -10,12 +10,8 @@ import toast, { ToastType } from "react-hot-toast";
  * @returns {string} The generated slug.
  */
 const generateSlug = (title: string): string => {
-  return (
-    title
-      .toLowerCase()
-      .replace(/ /g, "-")
-      .replace(/[^\w-]+/g, "") || ""
-  );
+  if (!title) return '';
+  return title.toLowerCase().replace(/ /g, "-").replace(/[^\w-]+/g, "");
 };
 
 /**
