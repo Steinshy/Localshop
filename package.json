@@ -1,5 +1,5 @@
 {
-  "name": "carshop",
+  "name": "localshop",
   "private": true,
   "version": "0.1.0",
   "scripts": {
@@ -12,8 +12,6 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@nextui-org/react": "^2.2.9",
-    "axios": "^1.6.7",
-    "axios-cache-interceptor": "^1",
     "formik": "^2.4.5",
     "formik-stepper": "^2.2.1",
     "framer-motion": "^11.0.6",
