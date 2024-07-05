@@ -8,7 +8,7 @@ type BreadcrumbProps = {
 
 type StepperProps = {
   steps: string[];
-  current: number;
+  currentStep: number;
 };
 
 type PagyProps = {

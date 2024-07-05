@@ -32,9 +32,9 @@ const Header = () => {
 
   // User
   const userStore = useContext(UserContext);
-  const { data: user, isLogged } = userStore;
-  const { attributes: userAttributes } = user;
-  const { firstname, lastname } = userAttributes;
+  const { data: userData, isLogged } = userStore || {};
+  const { attributes: userAttributes } = userData || {};
+  const { firstname, lastname } = userAttributes || {};
 
   return (
     <Navbar isBlurred isBordered>

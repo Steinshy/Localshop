@@ -10,6 +10,7 @@ import { getProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
 import { getUserResponse } from '@interfaces/user';
+import { defaultCart, defaultUser } from '@data/general';
 
 // User Address API - Get
 export const getAddresses = async () => {
@@ -135,8 +136,7 @@ export const getCart = async () => {
     return data;
   } catch (error) {
     console.error('An error occurred while fetching cart: ', error);
-    const data = {} as getCartResponse;
-    return data;
+    return { data: defaultCart } as getCartResponse;
   }
 };
 
@@ -202,8 +202,7 @@ export const getUser = async () => {
     return data;
   } catch (error) {
     console.error('An error occurred while fetching user: ', error);
-    const data = {} as getUserResponse;
-    return data;
+    return {data: defaultUser} as getUserResponse;
   }
 };
 

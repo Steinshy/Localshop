@@ -4,7 +4,6 @@
 import { useContext } from 'react';
 
 // NextJS
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 // NextUI - Icons
@@ -14,12 +13,12 @@ import { FaCartArrowDown, FaArrowRight } from 'react-icons/fa';
 // Components
 import CartSummary from '@components/cart/cartSummary';
 import CartProduct from '@components/cart/cartProduct';
+import Stepper from '@components/cart/stepper';
 
 // Utils
 import { UserContext, CartContext } from '@utils/subProviders';
 
 const OrderPage = () => {
-  const pathname = usePathname();
   const userStore = useContext(UserContext),
     cartStore = useContext(CartContext);
 
@@ -30,22 +29,13 @@ const OrderPage = () => {
 
   // Stepper
   const steps = ['Cart', 'Shipping', 'Payment'];
-  const currentStep = steps.findIndex((step) => step.toLowerCase() === pathname.split('/').pop());
+  const currentStep = 0;
 
   return isLogged() && items.length ? (
     <>
       {/* Stepper */}
       <div className='grid grid-col-1 max-w-screen-2xl mx-auto my-8'>
-        <div className='flex justify-center'>
-          {steps.map((step, index) => (
-            <div key={index} className='flex items-center'>
-              <div className={`w-4 h-4 rounded-full ${currentStep >= index ? 'bg-primary' : 'bg-gray-200'} mr-2`} />
-              <p className={`text-sm ${currentStep >= index ? 'text-primary' : 'text-gray-500'}`}>{step}</p>
-
-              {index < steps.length - 1 && <div className={`h-0.5 w-8 bg-gray-200 mx-2`} />}
-            </div>
-          ))}
-        </div>
+        <Stepper steps={steps} currentStep={currentStep} />
       </div>
       {/* Left side */}
       <div className='grid grid-cols-2 max-sm:grid-cols-1'>
