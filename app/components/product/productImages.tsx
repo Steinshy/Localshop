@@ -28,20 +28,22 @@ const ProductImages: FC<ProductImagesProps> = ({ title, mainImage, images }) => 
         />
       </Card>
 
-      <div className='grid grid-flow-col mt-2 gap-3 max-w-[300px]'>
-        {images.map((image) => (
-          <Card key={image.full} className='w-[40px] h-[40px] object-cover'>
-            <Image
-              className='w-[40px] h-[40px] object-cover'
-              shadow='none'
-              radius='sm'
-              alt={title}
-              src={image.thumbnail}
-              onMouseOver={() => handleImageChange(image.full)}
-            />
-          </Card>
-        ))}
-      </div>
+      {images.length > 1 &&
+        <div className='grid grid-flow-col mt-2 gap-3 max-w-[300px]'>
+          {images.map((image) => (
+            <Card key={image.full} className='w-[40px] h-[40px] object-cover'>
+              <Image
+                className='w-[40px] h-[40px] object-cover'
+                shadow='none'
+                radius='sm'
+                alt={title}
+                src={image.thumbnail}
+                onMouseOver={() => handleImageChange(image.full)}
+              />
+            </Card>
+          ))}
+        </div>
+      }
     </div>
   );
 };

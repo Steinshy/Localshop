@@ -7,7 +7,7 @@ import { revalidateTag } from 'next/cache';
 import { getUserResponse } from '@interfaces/user';
 import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
-import { getProductResponse } from '@interfaces/product';
+import { ProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
 import { OrderResponse } from '@interfaces/orders';
@@ -122,18 +122,20 @@ export const getProducts = async (page?: number, query?: string) => {
 };
 
 // Product - API - Get
-export const getProduct = async (productId: string) => {
+export const getProduct = async (id: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/products/${productId}`, {
+    const response = await fetch(`http://api.localshop.test:3005/v1/products/${id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       next: { tags: ['product'] },
     });
-    const { data } = await response.json() as getProductResponse;
-    return data;
+    const { data } = await response.json() as { data: ProductResponse };
+    return { data };
+
   } catch (error) {
+    const data = {} as ProductResponse;
     console.error('An error occurred while fetching products: ', error);
-    return { data: {} };
+    return { data, error };
   }
 };
 
@@ -162,11 +164,13 @@ export const getProductReviews = async (value: string) => {
       headers: { 'Content-Type': 'application/json' },
       next: { tags: ['reviews'] },
     });
-    const reviews = await response.json() as getReviewResponse;
-    return reviews;
+    const data = await response.json() as getReviewResponse;
+    return { data };
+    
   } catch (error) {
-    console.error('An error occurred while fetching products: ', error);
-    return { reviews: { data: [] } };
+    const data = {} as getReviewResponse;
+    console.error('An error occurred while fetching product reviews: ', error);
+    return { data, error };
   }
 };
 

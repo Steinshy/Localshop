@@ -22,7 +22,7 @@ import { AddToCartProps } from '@interfaces/cart';
 import { UserContext, CartContext } from '@utils/subProviders';
 import { showToast } from '@utils/helpers';
 
-const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly }) => {
+const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => {
   const router = useRouter(),
     userStore = useContext(UserContext),
     cartStore = useContext(CartContext);
