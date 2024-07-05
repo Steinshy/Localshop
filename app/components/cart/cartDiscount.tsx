@@ -27,13 +27,13 @@ const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, t
   const cartStore = useContext(CartContext);
 
   const handleApplyDiscount = (value: DiscountFormProps) => {
-    if (value.code === undefined && value.code === '') return;
     const apiFetch = async () => {
-      if (!value.code) return;
+      if (!value.code || value.code.length < 1) return;
       const response = await applyDiscount(value.code) as CartActions;
       const { data, error } = response;
       !error ? cartStore.update(data) : showToast(error, 'error');
     };
+
     void apiFetch();
   };
 
