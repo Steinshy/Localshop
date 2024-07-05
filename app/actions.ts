@@ -132,11 +132,14 @@ export const getCart = async () => {
       headers: { 'Content-Type': 'application/json' },
       next: { tags: ['cart'] },
     });
-    const data = await response.json() as getCartResponse;
-    return data;
-  } catch (error) {
-    console.error('An error occurred while fetching cart: ', error);
-    return { data: defaultCart } as getCartResponse;
+
+    const { data } = await response.json() as getCartResponse;
+    return { data };
+
+  } catch (e) {
+    console.error('An error occurred while fetching cart: ', e);
+    const error = JSON.stringify(e), data = {};
+    return { data, error };
   }
 };
 
@@ -198,28 +201,31 @@ export const getUser = async () => {
       headers: { 'Content-Type': 'application/json' },
       next: { tags: ['user'] },
     });
-    const data = await response.json() as getUserResponse;
-    return data;
-  } catch (error) {
-    console.error('An error occurred while fetching user: ', error);
-    return {data: defaultUser} as getUserResponse;
+
+    const { data } = await response.json() as getUserResponse;
+    return { data };
+
+  } catch (e) {
+    console.error('An error occurred while fetching user: ', e);
+    const error = JSON.stringify(e), data = {};
+    return { data, error };
   }
 };
 
 // Discount - API - Post
 export const applyDiscount = async (value: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/cart/apply_coupon`, {
+    const response = await fetch(`http://api.localshop.test:3005/v1/cart/coupon`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code: value }),
     });
     const data = await response.json() as getCartResponse;
     return data;
+
   } catch (error) {
     console.error('An error occurred while fetching coupon: ', error);
-    const data = {} as getCartResponse;
-    return data;
+    return error;
   }
 };
 

@@ -36,39 +36,22 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
   };
 
   const handleUserLogout = () => {
-    if (userStore.data && isLogged()) {
-      return (
-        void userStore.logout(),
-        void cartStore.reset(),
-        setIsUserMenuOpen(false),
-        showToast('You have been logged out!', 'success'),
-        router.push('/')
-      );
-    }
-    showToast('Logout failed!', 'error');
+    if (!isLogged()) return;
+
+    void userStore.logout();
+    void cartStore.reset();
+    setIsUserMenuOpen(false);
+    showToast('You have been logged out!', 'success');
+    router.push('/');
   };
 
-  // Peut être simplifier, sans ce check pour handleUserLogin l'application plante sans serveur actif
-  // Show toast affiche login fail si le login est ok et le serveur est actif - A corriger
   const handleUserLogin = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     const ApiCall = async () => {
-      try {
-        const response = await Promise.all([userStore.refresh(), cartStore.refresh()]);
-        const data = response;
-        if (!Array.isArray(data)) {
-          void userStore.refresh();
-          void cartStore.refresh();
-          setIsUserMenuOpen(false);
-          showToast('You have been logged in!', 'success');
-          return;
-        }
-        else {
-          setIsUserMenuOpen(false);
-          showToast('Login failed!', 'error');
-          return
-        }
-      } catch (error) {
+      const [userResponse, cartResponse] = await Promise.all([userStore.refresh(), cartStore.refresh()]);
+      if (Boolean(userResponse) && Boolean(cartResponse)) {
+        showToast('You have been logged in!', 'success');
+      } else {
         showToast('Login failed!', 'error');
       }
     };

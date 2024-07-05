@@ -3,6 +3,11 @@ import { DiscountResponse } from '@interfaces/discount';
 import { ProductResponse } from '@interfaces/product';
 import { CartContextType } from '@interfaces/subProviders';
 
+type CartActions = {
+  data: CartResponse;
+  error?: string;
+}
+
 // Components => Product => AddToCart | Data => defaultCart | utils => subProviders
 type CartResponse = {
   id: string;
@@ -83,4 +88,5 @@ export type {
   CartButtonDeleteProps,
   AddToCartProps,
   CartContentViewProps,
+  CartActions
 };

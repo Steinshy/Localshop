@@ -4,8 +4,8 @@
 import { useState, createContext, useCallback } from 'react';
 
 // Interfaces
-import { CartResponse } from '@interfaces/cart';
-import { UserResponse } from '@interfaces/user';
+import { CartActions, CartResponse } from '@interfaces/cart';
+import { UserActions, UserResponse } from '@interfaces/user';
 import { UserContextType, CartContextType } from '@interfaces/subProviders';
 
 // Data
@@ -19,13 +19,9 @@ const useCart = () => {
   const [cart, setCart] = useState<CartResponse>(defaultCart);
 
   const refresh = useCallback(async () => {
-    try {
-      const response = await getCart();
-      const { data } = response;
-      setCart(data);
-    } catch (error) {
-      setCart(defaultCart);
-    }
+    const { data, error } = await getCart() as CartActions;
+    !error ? setCart(data) : setCart(defaultCart);
+    return !error;
   }, [setCart]);
 
   const reset = useCallback(() => {
@@ -53,13 +49,9 @@ const useUser = () => {
   const [user, setUser] = useState<UserResponse>(defaultUser);
 
   const refresh = useCallback(async () => {
-    try {
-      const response = await getUser();
-      const { data } = response;
-      setUser(data);
-    } catch (error) {
-      setUser(defaultUser);
-    }
+    const { data, error } = await getUser() as UserActions;
+    !error ? setUser(data) : setUser(defaultUser);
+    return !error;
   }, [setUser]);
 
   const logout = useCallback(() => {

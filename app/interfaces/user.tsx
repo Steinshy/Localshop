@@ -18,4 +18,9 @@ type getUserResponse = {
   data: UserResponse
 };
 
-export type { UserResponse, getUserResponse };
+type UserActions = {
+  data: UserResponse;
+  error?: string;
+}
+
+export type { UserResponse, getUserResponse, UserActions };

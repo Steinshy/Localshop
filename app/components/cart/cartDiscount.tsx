@@ -13,10 +13,12 @@ import { Chip, Input } from '@nextui-org/react';
 import { FaTags } from 'react-icons/fa';
 
 // Interfaces
+import { CartActions } from '@interfaces/cart';
 import { CartDiscountProps, DiscountFormProps } from '@interfaces/discount';
 
 // Utils
 import { CartContext } from '@utils/subProviders';
+import { showToast } from '@utils/helpers';
 
 // API
 import { applyDiscount, deleteDiscount } from 'actions';
@@ -27,26 +29,19 @@ const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, t
   const handleApplyDiscount = (value: DiscountFormProps) => {
     if (value.code === undefined && value.code === '') return;
     const apiFetch = async () => {
-      try {
-        const response = await applyDiscount(value.code);
-        const data = response.data;
-        cartStore.update(data);
-      } catch (error) {
-        console.error('An error occurred while fetching applying coupon: ', error);
-      }
+      if (!value.code) return;
+      const response = await applyDiscount(value.code) as CartActions;
+      const { data, error } = response;
+      !error ? cartStore.update(data) : showToast(error, 'error');
     };
     void apiFetch();
   };
 
   const handleDeleteDiscount = () => {
     const apiFetch = async () => {
-      try {
-        const response = await deleteDiscount();
-        const data = response.data;
-        cartStore.update(data);
-      } catch (error) {
-        console.error('An error occurred while fetching applying coupon: ', error);
-      }
+      const response = await deleteDiscount() as CartActions;
+      const { data, error } = response;
+      !error ? cartStore.update(data) : showToast(error, 'error');
     };
     void apiFetch();
   };
