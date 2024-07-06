@@ -63,7 +63,7 @@ type OrderProcessButtonProps = {
 };
 
 type CartButtonDeleteProps = {
-  productId?: number;
+  id?: string;
   cartStore: CartContextType;
 };
 

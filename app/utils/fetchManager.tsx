@@ -68,3 +68,14 @@ export class FetchManager {
     return this.request<T>('DELETE', endpoint, options);
   }
 }
+
+export const handleError = (e:unknown):object => {
+  console.error('An error occurred: ', e);
+  let error = {};
+  if (e instanceof Error) {
+    error = { message: e.message };
+  } else {
+    error = e as string;
+  }
+  return error;
+}

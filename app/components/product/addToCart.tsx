@@ -24,8 +24,8 @@ import { showToast } from '@utils/helpers';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => {
   const router = useRouter(),
-    userStore = useContext(UserContext),
-    cartStore = useContext(CartContext);
+        userStore = useContext(UserContext),
+        cartStore = useContext(CartContext);
 
   // Cart & User
   const { isLogged } = userStore, { data: { attributes: { items } }} = cartStore;
@@ -35,34 +35,25 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
   const cartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === product_id);
   const cartItemsQuantity = cartItem ? cartItem.quantity : 0;
 
-  const handleAddItem = useCallback(
-    async (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-      if (cartItemsQuantity > 0) {
-        return router.push('/order/cart');
-      }
-      try {
-        const response = await addItemToCart(product_id);
-        const { data } = response;
+  const handleAddItem = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (cartItemsQuantity > 0) return router.push('/order/cart');
+
+    const apiFetch = async () => {
+      const { data, error } = await addItemToCart(product_id);
+      if (!error) {
         cartStore.update(data);
         showToast('Item has been added to your cart !', 'success');
-      } catch (error) {
-        showToast('Something went wrong !', 'error');
       }
-    },
-    [cartItemsQuantity, product_id, router, cartStore]
-  );
+    }
+
+    void apiFetch();
+  }, [cartItemsQuantity, product_id, router, cartStore]);
 
   const btnOptions: ButtonProps = {
     color: cartItemsQuantity > 0 ? 'success' : 'primary',
     startContent: cartItemsQuantity > 0 && !isIconOnly && <FaArrowRight className='text-lg text-white' />,
     children: cartItemsQuantity > 0 ? 'Go to Cart' : 'Add to Cart',
-  };
-
-  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-    handleAddItem(e).catch((error) => {
-      console.error('Error adding item to cart:', error);
-    });
   };
 
   const buttonContent = isIconOnly ? (
@@ -81,7 +72,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
       variant='solid'
       size={isIconOnly ? 'sm' : 'md'}
       radius='sm'
-      onClick={handleClick}
+      onClick={(e) => handleAddItem(e)}
       isIconOnly={isIconOnly}
       className={cartItemsQuantity > 0 ? 'text-white' : ''}
     >

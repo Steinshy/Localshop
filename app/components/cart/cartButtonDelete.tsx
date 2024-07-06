@@ -13,14 +13,13 @@ import { CartButtonDeleteProps } from "@interfaces/cart";
 // Actions
 import { deleteCart, deleteCartItem } from "actions";
 
-const CartButtonDelete: FC<CartButtonDeleteProps> = ({ productId, cartStore }) => {
+const CartButtonDelete: FC<CartButtonDeleteProps> = ({ id, cartStore }) => {
   const handleDeleteCart = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     const apiFetch = async () => {
-      const response = await deleteCart();
-      const { data } = response;
-      cartStore.update(data);
+      const { data, error } = await deleteCart();
+      if (!error) cartStore.update(data);
     };
 
     void apiFetch();
@@ -30,20 +29,19 @@ const CartButtonDelete: FC<CartButtonDeleteProps> = ({ productId, cartStore }) =
     e.preventDefault();
 
     const apiFetch = async () => {
-      const response = await deleteCartItem(productId);
-      const { data } = response;
-      cartStore.update(data);
+      const { data, error } = await deleteCartItem(productId);
+      if (!error) cartStore.update(data);
     };
 
     void apiFetch();
   };
 
-  return productId ? (
+  return id ? (
     <Button
       color="default"
       variant="light"
       className="text-foreground/25"
-      onClick={(e) => handleDeleteItem(e, productId.toString())}
+      onClick={(e) => handleDeleteItem(e, id)}
       startContent={<FaTrash />}
       isIconOnly
       size="sm"

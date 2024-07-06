@@ -11,7 +11,9 @@ import { getProductsResponse } from '@interfaces/products';
 import { ProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
-import { FetchManager } from '@utils/fetchManager';
+
+// Utils
+import { FetchManager, handleError } from '@utils/fetchManager';
 
 const base_url = 'http://api.localshop.test:3005/v1';
 const api = new FetchManager(base_url);
@@ -22,8 +24,7 @@ export const getUser = async () => {
     const { data } = await api.get<getUserResponse>('/user', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    console.error('An error occurred while fetching user: ', e);
-    const error = JSON.stringify(e), data = {};
+    const error = handleError(e), data = {};
     return { data, error };
   }
 };
@@ -35,8 +36,7 @@ export const getOrders = async () => {
     const { data } = await api.get<GetOrdersResponse>('/orders', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    console.error('An error occurred while fetching user orders: ', e);
-    const error = JSON.stringify(e), data = [] as OrderResponse[];
+    const error = handleError(e), data = [] as OrderResponse[];
     return { data, error };
   }
 };
@@ -48,8 +48,7 @@ export const getOrder = async (id: string) => {
     const { data } = await api.get<GetOrderResponse>(`/orders/${id}`, { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    console.error('An error occurred while fetching user order: ', e);
-    const error = JSON.stringify(e), data = {} as OrderResponse;
+    const error = handleError(e), data = {} as OrderResponse;
     return { data, error };
   }
 };
@@ -61,8 +60,7 @@ export const getPreviouslyOrdered = async (id: string) => {
     const { data } = await api.get<GetOrdersResponse>(`/orders/previously_ordered?product_id=${id}`, { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    console.error('An error occurred while fetching previous orders: ', e);
-    const error = JSON.stringify(e), data = [] as OrderResponse[];
+    const error = handleError(e), data = [] as OrderResponse[];
     return { data, error };
   }
 };
@@ -74,8 +72,7 @@ export const getAddresses = async () => {
     const { data } = await api.get<{ data: AddressResponse[] }>('/addresses', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    console.error('An error occurred while fetching user addresses: ', e);
-    const error = JSON.stringify(e), data = [] as AddressResponse[];
+    const error = handleError(e), data = [] as AddressResponse[];
     return { data, error };
   }
 };
@@ -87,8 +84,7 @@ export const CreateAddress = async (newAddress: AddressValuesProps) => {
     const { data } = await api.post<{ data: AddressResponse }>('/addresses', JSON.stringify({ address: newAddress }));
     return { data };
   } catch (e) {
-    console.error('An error occurred while creating user address: ', e);
-    const error = JSON.stringify(e), data = {} as AddressResponse;
+    const error = handleError(e), data = {} as AddressResponse;
     return { data, error };
   }
 };
@@ -100,8 +96,7 @@ export const UpdateAddress = async (id: number, newAddress: AddressValuesProps) 
     const { data } = await api.put<{ data: AddressResponse }>(`/addresses/${id}`, JSON.stringify({ address: newAddress }));
     return { data };
   } catch (e) {
-    console.error('An error occurred while updating user address: ', e);
-    const error = JSON.stringify(e), data = {} as AddressResponse;
+    const error = handleError(e), data = {} as AddressResponse;
     return { data, error };
   }
 };
@@ -113,8 +108,7 @@ export const RemoveAddress = async (id: number) => {
     await api.delete<void>(`/addresses/${id}`);
     return {};
   } catch (e) {
-    console.error('An error occurred while deleting user address: ', e);
-    const error = JSON.stringify(e);
+    const error = handleError(e);
     return { error };
   }
 };
@@ -127,9 +121,9 @@ export const getProducts = async (page?: number, query?: string) => {
   try {
     const { products, pagy } = await api.get<getProductsResponse>(`/products?page=${page}&q=${query}`, { next: { tags: ['products'] } });
     return { products, pagy };
-  } catch (error) {
-    console.error('An error occurred while fetching products: ', error);
-    return { products: { data: [] }, pagy: { page: 0, pages: 0 } };
+  } catch (e) {
+    const error = handleError(e), data = {};
+    return { data, error };
   }
 };
 
@@ -138,9 +132,8 @@ export const getProduct = async (id: string) => {
   try {
     const { data } = await api.get<{ data: ProductResponse }>(`/products/${id}`, { next: { tags: ['product'] } });
     return { data };
-  } catch (error) {
-    const data = {} as ProductResponse;
-    console.error('An error occurred while fetching products: ', error);
+  } catch (e) {
+    const error = handleError(e), data = {} as ProductResponse;
     return { data, error };
   }
 };
@@ -148,12 +141,11 @@ export const getProduct = async (id: string) => {
 // Product - API - Post - Add To Cart
 export const addItemToCart = async (productId: string) => {
   try {
-    const data = await api.post<getCartResponse>('/cart/add_item', JSON.stringify({ product_id: productId }));
-    return data;
-  } catch (error) {
-    console.error('An error occurred while adding item to cart: ', error);
-    const data = {} as getCartResponse;
-    return data;
+    const { data } = await api.post<getCartResponse>('/cart/add_item', JSON.stringify({ product_id: productId }));
+    return { data };
+  } catch (e) {
+    const error = handleError(e), data = {} as getCartResponse;
+    return { data, error };
   }
 };
 
@@ -162,9 +154,8 @@ export const getProductReviews = async (value: string) => {
   try {
     const data = await api.get<getReviewResponse>(`/products/${value}/reviews`, { next: { tags: ['reviews'] } });
     return { data };
-  } catch (error) {
-    const data = {} as getReviewResponse;
-    console.error('An error occurred while fetching product reviews: ', error);
+  } catch (e) {
+    const error = handleError(e), data = {} as getReviewResponse;
     return { data, error };
   }
 };
@@ -175,8 +166,7 @@ export const getCart = async () => {
     const { data } = await api.get<getCartResponse>('/cart', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
-    console.error('An error occurred while fetching cart: ', e);
-    const error = JSON.stringify(e), data = {};
+    const error = handleError(e), data = {};
     return { data, error };
   }
 };
@@ -184,40 +174,37 @@ export const getCart = async () => {
 // Cart - API - Delete - All
 export const deleteCart = async () => {
   try {
-    const data = await api.delete<getCartResponse>('/cart/clear_items', { next: { tags: ['cart'] } });
-    return data;
-  } catch (error) {
-    console.error('An error occurred while fetching cart: ', error);
-    const data = {} as getCartResponse;
-    return data;
+    const { data } = await api.delete<getCartResponse>('/cart/clear_items', { next: { tags: ['cart'] } });
+    return { data };
+  } catch (e) {
+    const error = handleError(e), data = {} as getCartResponse;
+    return { data, error };
   }
 };
 
 // Cart - API - Delete - One Item
 export const deleteCartItem = async (productId: string) => {
   try {
-    const data = await api.delete<getCartResponse>(`/cart/remove_item?product_id=${productId}`, { next: { tags: ['cart'] } });
-    return data;
-  } catch (error) {
-    console.error('An error occurred while fetching cart: ', error);
-    const data = {} as getCartResponse;
-    return data;
+    const { data } = await api.delete<getCartResponse>(`/cart/remove_item?product_id=${productId}`, { next: { tags: ['cart'] } });
+    return { data };
+  } catch (e) {
+    const error = handleError(e), data = {} as getCartResponse;
+    return { data, error };
   }
 };
 
 // Cart - API - Post - Update Quantity
-export const updateQuantity = async (quantity: string, productId: string) => {
+export const updateQuantity = async (quantity: number, productId: string) => {
   try {
-    const data = await api.post<getCartResponse>(
+    const { data } = await api.post<getCartResponse>(
       '/cart/update_quantity',
       JSON.stringify({ product_id: productId, quantity: quantity }),
       { next: { tags: ['cart'] } }
     );
-    return data;
-  } catch (error) {
-    console.error('An error occurred while fetching cart: ', error);
-    const data = {} as getCartResponse;
-    return data;
+    return { data };
+  } catch (e) {
+    const error = handleError(e), data = {} as getCartResponse;
+    return { data, error };
   }
 };
 
@@ -229,11 +216,10 @@ export const applyDiscount = async (value: string) => {
       JSON.stringify({ code: value }),
       { next: { tags: ['cart'] } }
     );
-    return data;
-
-  } catch (error) {
-    console.error('An error occurred while fetching coupon: ', error);
-    return error;
+    return { data };
+  } catch (e) {
+    const error = handleError(e), data = {};
+    return { data, error };
   }
 };
 
@@ -241,10 +227,9 @@ export const applyDiscount = async (value: string) => {
 export const deleteDiscount = async () => {
   try {
     const data = await api.delete<getCartResponse>('/cart/clear_coupon', { next: { tags: ['cart'] } });
-    return data;
-  } catch (error) {
-    console.error('An error occurred while removing coupon: ', error);
-    const data = {} as getCartResponse;
-    return data;
+    return { data };
+  } catch (e) {
+    const error = handleError(e), data = {} as getCartResponse;
+    return { data, error };
   }
 };
