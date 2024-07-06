@@ -9,12 +9,9 @@ import Link from "next/link";
 
 // Helpers
 import { generateSlug } from "@utils/helpers";
-import { OrderItem } from "@interfaces/orders";
 
 // Interface
-interface OrderProductCardProps {
-  orderProduct: OrderItem;
-}
+import { OrderProductCardProps } from "@interfaces/userOrder";
 
 const OrderProductCard: FC<OrderProductCardProps> = ({ orderProduct }) => {
   const { quantity, price, product } = orderProduct;

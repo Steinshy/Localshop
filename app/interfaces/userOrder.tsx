@@ -1,5 +1,5 @@
-import { UserResponse } from "@interfaces/user";
-import { ProductResponse } from "./product";
+import { UserResponse } from '@interfaces/user';
+import { ProductResponse } from '@interfaces/product';
 
 type OrderResponse = {
   id: number;
@@ -16,8 +16,16 @@ type OrderResponse = {
     status: string;
     user: {
       data: UserResponse;
-    }
-  }
+    };
+  };
+};
+
+type GetOrdersResponse = {
+  data: OrderResponse[];
+};
+
+type GetOrderResponse = {
+  data: OrderResponse;
 };
 
 type OrderItem = {
@@ -26,8 +34,8 @@ type OrderItem = {
   price: number;
   product: {
     data: ProductResponse;
-  }
-}
+  };
+};
 
 type OrderPageProps = {
   params: {
@@ -37,6 +45,18 @@ type OrderPageProps = {
 
 type OrderCardProps = {
   order: OrderResponse;
-}
+};
 
-export type { OrderItem, OrderResponse, OrderPageProps, OrderCardProps };
+type OrderProductCardProps = {
+  orderProduct: OrderItem;
+};
+
+export type {
+  OrderItem,
+  GetOrdersResponse,
+  GetOrderResponse,
+  OrderResponse,
+  OrderPageProps,
+  OrderCardProps,
+  OrderProductCardProps,
+};

@@ -5,13 +5,12 @@ import { revalidateTag } from 'next/cache';
 
 // Interface
 import { getUserResponse } from '@interfaces/user';
+import { GetOrdersResponse, GetOrderResponse } from '@interfaces/userOrder';
 import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
 import { ProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
-import { OrderResponse } from '@interfaces/orders';
-
 
 // User => API - Get
 export const getUser = async () => {
@@ -40,7 +39,7 @@ export const getOrders = async () => {
     headers: { 'Content-Type': 'application/json' },
     next: { tags: ['user'] } 
   });
-  const data = await response.json() as { data: OrderResponse[] };
+  const data = await response.json() as GetOrdersResponse;
   const { data: orders } = data;
   return orders;
 };
@@ -53,7 +52,7 @@ export const getOrder = async (id: string) => {
     headers: { 'Content-Type': 'application/json' },
     next: { tags: ['user'] } 
   });
-  const { data } = await response.json() as { data: OrderResponse };
+  const { data } = await response.json() as GetOrderResponse;
   return data;
 };
 
