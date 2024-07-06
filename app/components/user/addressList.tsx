@@ -19,31 +19,43 @@ import { showToast } from '@utils/helpers';
 const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
   const [addresses, setAddresses] = useState<AddressResponse[]>(items);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (addresses.length === 0) {
-        const fetchedAddresses = await getAddresses();
-        setAddresses(fetchedAddresses);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     if (addresses.length === 0) {
+  //       const { data, error } = await getAddresses();
+  //       if (!error) setAddresses(data);
+  //     }
+  //   };
 
-    void fetchData();
-  }, [addresses.length]);
+  //   void fetchData();
+  // }, [addresses.length]);
 
-  const handleCreate = async (newAdress: AddressValuesProps) => {
-    const data = await CreateAddress(newAdress);
-    setAddresses(data);
+  const handleCreate = async (newAddress: AddressValuesProps) => {
+    const { error:createError } = await CreateAddress(newAddress);
+    if (createError) return showToast(createError, 'error');
+
+    showToast('Address has been Created!', 'success');
+    const { data, error } = await getAddresses();
+    if (!error) setAddresses(data);
   };
 
   const handleUpdate = async (id: number, newAddress: AddressValuesProps) => {
-    const data = await UpdateAddress(id, newAddress);
-    setAddresses(data);
+    const { error:updateError } = await UpdateAddress(id, newAddress);
+    if (updateError) return showToast(updateError, 'error');
+
+    showToast('Address has been Updated!', 'success');
+    const { data, error } = await getAddresses();
+    if (!error) setAddresses(data);
   };
 
   const handleRemove = async (id: number) => {
-    const data = await RemoveAddress(id);
-    setAddresses(data);
+    const { error:removeError } = await RemoveAddress(id);
+    console.log(removeError);
+    if (removeError) return showToast(removeError, 'error');
+
     showToast('Address has been removed!', 'success');
+    const { data, error } = await getAddresses();
+    if (!error) setAddresses(data);
   };
 
   useEffect(() => {

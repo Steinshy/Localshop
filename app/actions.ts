@@ -5,25 +5,22 @@ import { revalidateTag } from 'next/cache';
 
 // Interface
 import { getUserResponse } from '@interfaces/user';
-import { GetOrdersResponse, GetOrderResponse } from '@interfaces/userOrder';
+import { GetOrdersResponse, GetOrderResponse, OrderResponse } from '@interfaces/userOrder';
 import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
 import { ProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
+import { FetchManager } from '@utils/fetchManager';
+
+const base_url = 'http://api.localshop.test:3005/v1';
+const api = new FetchManager(base_url);
 
 // User => API - Get
 export const getUser = async () => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/user`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      next: { tags: ['user'] },
-    });
-
-    const { data } = await response.json() as getUserResponse;
+    const { data } = await api.get<getUserResponse>('/user', { next: { tags: ['user'] } });
     return { data };
-
   } catch (e) {
     console.error('An error occurred while fetching user: ', e);
     const error = JSON.stringify(e), data = {};
@@ -34,84 +31,92 @@ export const getUser = async () => {
 // User => Orders - API - Get (collection)
 export const getOrders = async () => {
   revalidateTag('user');
-  const response = await fetch('http://api.localshop.test:3005/v1/orders', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    next: { tags: ['user'] } 
-  });
-  const data = await response.json() as GetOrdersResponse;
-  const { data: orders } = data;
-  return orders;
+  try {
+    const { data } = await api.get<GetOrdersResponse>('/orders', { next: { tags: ['user'] } });
+    return { data };
+  } catch (e) {
+    console.error('An error occurred while fetching user orders: ', e);
+    const error = JSON.stringify(e), data = [] as OrderResponse[];
+    return { data, error };
+  }
 };
 
 // User => Orders - API - Get (single)
 export const getOrder = async (id: string) => {
   revalidateTag('user');
-  const response = await fetch(`http://api.localshop.test:3005/v1/orders/${id}`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    next: { tags: ['user'] } 
-  });
-  const { data } = await response.json() as GetOrderResponse;
-  return data;
+  try {
+    const { data } = await api.get<GetOrderResponse>(`/orders/${id}`, { next: { tags: ['user'] } });
+    return { data };
+  } catch (e) {
+    console.error('An error occurred while fetching user order: ', e);
+    const error = JSON.stringify(e), data = {} as OrderResponse;
+    return { data, error };
+  }
 };
 
 // Product => PreviouslyOrdered - API - Get (collection)
 export const getPreviouslyOrdered = async (id: string) => {
   revalidateTag('user');
-  const response = await fetch(`http://api.localshop.test:3005/v1/orders/previously_ordered?product_id=${id}`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    next: { tags: ['user'] } 
-  });
-  const data = await response.json() as { data: OrderResponse[] };
-  const { data: orders } = data;
-  return orders;
+  try {
+    const { data } = await api.get<GetOrdersResponse>(`/orders/previously_ordered?product_id=${id}`, { next: { tags: ['user'] } });
+    return { data };
+  } catch (e) {
+    console.error('An error occurred while fetching previous orders: ', e);
+    const error = JSON.stringify(e), data = [] as OrderResponse[];
+    return { data, error };
+  }
 };
 
 // User => Address - API - Get
 export const getAddresses = async () => {
   revalidateTag('user');
-  const response = await fetch('http://api.localshop.test:3005/v1/addresses', {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    next: { tags: ['user'] } 
-  });
-  const data = await response.json() as { data: AddressResponse[] };
-  const { data: addresses } = data;
-  return addresses;
+  try {
+    const { data } = await api.get<{ data: AddressResponse[] }>('/addresses', { next: { tags: ['user'] } });
+    return { data };
+  } catch (e) {
+    console.error('An error occurred while fetching user addresses: ', e);
+    const error = JSON.stringify(e), data = [] as AddressResponse[];
+    return { data, error };
+  }
 };
 
 // User => Address - API - Post
 export const CreateAddress = async (newAddress: AddressValuesProps) => {
   revalidateTag('user');
-  await fetch('http://api.localshop.test:3005/v1/addresses', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ address: newAddress }),
-  });
-  return getAddresses();
+  try {
+    const { data } = await api.post<{ data: AddressResponse }>('/addresses', JSON.stringify({ address: newAddress }));
+    return { data };
+  } catch (e) {
+    console.error('An error occurred while creating user address: ', e);
+    const error = JSON.stringify(e), data = {} as AddressResponse;
+    return { data, error };
+  }
 };
 
 // User => Address - API - Put
 export const UpdateAddress = async (id: number, newAddress: AddressValuesProps) => {
   revalidateTag('user');
-  await fetch(`http://api.localshop.test:3005/v1/addresses/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ address: newAddress }),
-  });
-  return getAddresses();
+  try {
+    const { data } = await api.put<{ data: AddressResponse }>(`/addresses/${id}`, JSON.stringify({ address: newAddress }));
+    return { data };
+  } catch (e) {
+    console.error('An error occurred while updating user address: ', e);
+    const error = JSON.stringify(e), data = {} as AddressResponse;
+    return { data, error };
+  }
 };
 
 // User => Address - API - Delete
 export const RemoveAddress = async (id: number) => {
   revalidateTag('user');
-  await fetch(`http://api.localshop.test:3005/v1/addresses/${id}`, {
-    method: 'DELETE',
-    body: JSON.stringify({ id }),
-  });
-  return getAddresses();
+  try {
+    await api.delete<void>(`/addresses/${id}`);
+    return {};
+  } catch (e) {
+    console.error('An error occurred while deleting user address: ', e);
+    const error = JSON.stringify(e);
+    return { error };
+  }
 };
 
 // Products - API - Get
@@ -120,12 +125,7 @@ export const getProducts = async (page?: number, query?: string) => {
   (page = page || 1), (query = query || '');
 
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/products?page=${page}&q=${query}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      next: { tags: ['products'] },
-    });
-    const { products, pagy } = await response.json() as getProductsResponse;
+    const { products, pagy } = await api.get<getProductsResponse>(`/products?page=${page}&q=${query}`, { next: { tags: ['products'] } });
     return { products, pagy };
   } catch (error) {
     console.error('An error occurred while fetching products: ', error);
@@ -136,14 +136,8 @@ export const getProducts = async (page?: number, query?: string) => {
 // Product - API - Get
 export const getProduct = async (id: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/products/${id}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      next: { tags: ['product'] },
-    });
-    const { data } = await response.json() as { data: ProductResponse };
+    const { data } = await api.get<{ data: ProductResponse }>(`/products/${id}`, { next: { tags: ['product'] } });
     return { data };
-
   } catch (error) {
     const data = {} as ProductResponse;
     console.error('An error occurred while fetching products: ', error);
@@ -154,12 +148,7 @@ export const getProduct = async (id: string) => {
 // Product - API - Post - Add To Cart
 export const addItemToCart = async (productId: string) => {
   try {
-    const response = await fetch('http://api.localshop.test:3005/v1/cart/add_item', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id: productId }),
-    });
-    const data = await response.json() as getCartResponse;
+    const data = await api.post<getCartResponse>('/cart/add_item', JSON.stringify({ product_id: productId }));
     return data;
   } catch (error) {
     console.error('An error occurred while adding item to cart: ', error);
@@ -171,14 +160,8 @@ export const addItemToCart = async (productId: string) => {
 // Product => Review - API - Get
 export const getProductReviews = async (value: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/products/${value}/reviews`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      next: { tags: ['reviews'] },
-    });
-    const data = await response.json() as getReviewResponse;
+    const data = await api.get<getReviewResponse>(`/products/${value}/reviews`, { next: { tags: ['reviews'] } });
     return { data };
-    
   } catch (error) {
     const data = {} as getReviewResponse;
     console.error('An error occurred while fetching product reviews: ', error);
@@ -189,15 +172,8 @@ export const getProductReviews = async (value: string) => {
 // Cart - API - Get
 export const getCart = async () => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/cart`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      next: { tags: ['cart'] },
-    });
-
-    const { data } = await response.json() as getCartResponse;
+    const { data } = await api.get<getCartResponse>('/cart', { next: { tags: ['cart'] } });
     return { data };
-
   } catch (e) {
     console.error('An error occurred while fetching cart: ', e);
     const error = JSON.stringify(e), data = {};
@@ -208,11 +184,7 @@ export const getCart = async () => {
 // Cart - API - Delete - All
 export const deleteCart = async () => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/cart/clear_items`, {
-      method: 'DELETE',
-      next: { tags: ['cart'] },
-    });
-    const data = await response.json() as getCartResponse;
+    const data = await api.delete<getCartResponse>('/cart/clear_items', { next: { tags: ['cart'] } });
     return data;
   } catch (error) {
     console.error('An error occurred while fetching cart: ', error);
@@ -224,11 +196,7 @@ export const deleteCart = async () => {
 // Cart - API - Delete - One Item
 export const deleteCartItem = async (productId: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/cart/remove_item?product_id=${productId}`, {
-      method: 'DELETE',
-      next: { tags: ['cart'] },
-    });
-    const data = await response.json() as getCartResponse;
+    const data = await api.delete<getCartResponse>(`/cart/remove_item?product_id=${productId}`, { next: { tags: ['cart'] } });
     return data;
   } catch (error) {
     console.error('An error occurred while fetching cart: ', error);
@@ -240,13 +208,11 @@ export const deleteCartItem = async (productId: string) => {
 // Cart - API - Post - Update Quantity
 export const updateQuantity = async (quantity: string, productId: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/cart/update_quantity`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ product_id: productId, quantity: quantity }),
-      next: { tags: ['cart'] },
-    });
-    const data = await response.json() as getCartResponse;
+    const data = await api.post<getCartResponse>(
+      '/cart/update_quantity',
+      JSON.stringify({ product_id: productId, quantity: quantity }),
+      { next: { tags: ['cart'] } }
+    );
     return data;
   } catch (error) {
     console.error('An error occurred while fetching cart: ', error);
@@ -258,12 +224,11 @@ export const updateQuantity = async (quantity: string, productId: string) => {
 // Cart => Discount - API - Post
 export const applyDiscount = async (value: string) => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/cart/apply_coupon`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: value }),
-    });
-    const data = await response.json() as getCartResponse;
+    const data = await api.post<getCartResponse>(
+      '/cart/apply_coupon',
+      JSON.stringify({ code: value }),
+      { next: { tags: ['cart'] } }
+    );
     return data;
 
   } catch (error) {
@@ -275,11 +240,7 @@ export const applyDiscount = async (value: string) => {
 // Cart => Discount - API - Delete
 export const deleteDiscount = async () => {
   try {
-    const response = await fetch(`http://api.localshop.test:3005/v1/cart/clear_coupon`, {
-      method: 'DELETE',
-      next: { tags: ['cart'] },
-    });
-    const data = await response.json() as getCartResponse;
+    const data = await api.delete<getCartResponse>('/cart/clear_coupon', { next: { tags: ['cart'] } });
     return data;
   } catch (error) {
     console.error('An error occurred while removing coupon: ', error);

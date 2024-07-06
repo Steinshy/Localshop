@@ -109,21 +109,21 @@ const defaultProducts = {
   },
 };
 
-export { defaultCart, defaultUser, defaultProducts, defaultCartCoupon, defaultProduct };
-
 // Components/user/addressModal
-// const defaultAddress = {
-//   label: '',
-//   firstname: '',
-//   lastname: '',
-//   phone: 0,
-//   address: '',
-//   city: '',
-//   state: '',
-//   country: '',
-//   zip: 0,
-//   default: false,
-// };
+const defaultAddress = {
+  label: '',
+  firstname: '',
+  lastname: '',
+  phone: 0,
+  address: '',
+  city: '',
+  state: '',
+  country: '',
+  zip: 0,
+  default: false,
+};
+
+export { defaultAddress, defaultCart, defaultUser, defaultProducts, defaultCartCoupon, defaultProduct };
 
 // Unused Data Wip
 // const chipColor = (status: string) => {

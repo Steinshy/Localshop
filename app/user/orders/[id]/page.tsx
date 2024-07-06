@@ -22,7 +22,7 @@ import { OrderPageProps } from '@interfaces/userOrder';
 import { getOrder } from 'actions';
 
 const OrderPage: FC<OrderPageProps> = async ({ params }) => {
-  const order = await getOrder(params.id);
+  const { data:order, error } = await getOrder(params.id);
   const { attributes: { items, total, createdAt, totalItems, status } } = order;
 
   const breadCrumbItems = [

@@ -1,4 +1,4 @@
-// Recat
+// React
 import { FC } from 'react';
 
 // NextUI
@@ -16,39 +16,28 @@ import { AddressModalProp, AddressValuesProps } from '@interfaces/address';
 // Data
 import { defaultAddress } from '@data/general';
 
-// Utils
-import { showToast } from '@utils/helpers';
-
 const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, handleUpdate }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-
-  const findAddress = () => {
-    const address = addresses.find((obj) => Number(obj.id) === id);
-    if (address) {
-      const { attributes } = address;
-      const newAttributes = { ...attributes };
-      return cleanAttributes(newAttributes);
-    }
-    return defaultAddress;
-  };
-  const formAddress = id > 0 ? findAddress() : defaultAddress;
 
   const cleanAttributes = (attributes: AddressValuesProps): AddressValuesProps => {
     const unwantedKeys = new Set(['id', 'createdAt', 'updatedAt']);
     return Object.fromEntries(Object.entries(attributes).filter(([key]) => !unwantedKeys.has(key))) as AddressValuesProps;
   };
 
+  const findAddress = () => {
+    const address = addresses.find((obj) => Number(obj.id) === id);
+    if (!address) return defaultAddress;
+
+    const { attributes } = address;
+    const newAttributes = { ...attributes };
+    return cleanAttributes(newAttributes);
+  };
+  const formAddress = id > 0 ? findAddress() : defaultAddress;
+
   const handleSubmit = (values: AddressValuesProps) => {
     const newAddress = { ...formAddress, ...values };
-    const promise = id > 0 ? handleUpdate(id, newAddress) : handleCreate(newAddress);
-    promise.then(() => {
-      const toastMessage = id > 0 ? 'Address has been Updated!' : 'Address has been Created!';
-      showToast(toastMessage, 'success');
-      onClose();
-    }).catch(() => {
-      showToast('Something went wrong!', 'error');
-      onClose();
-    });
+    void (id > 0 ? handleUpdate(id, newAddress) : handleCreate(newAddress));
+    onClose(); // Gestion d'erreurs a revoir pour le formulaire
   };
 
   return (

@@ -16,8 +16,9 @@ import { UserContext } from '@utils/subProviders';
 import { getPreviouslyOrdered } from 'actions';
 
 // Interfaces
-import { OrderResponse } from '@interfaces/orders';
 import { PreviouslyOrderedProps } from '@interfaces/product';
+import { OrderItem, OrderResponse } from '@interfaces/userOrder';
+import { showToast } from '@utils/helpers';
 
 const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productID }) => {
   const [orders, setOrders] = useState<OrderResponse[]>([]),
@@ -27,9 +28,10 @@ const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productID }) => {
 
   useEffect(() => {
     const apiFetch = async () => {
-      const data = await getPreviouslyOrdered(productID.toString());
-      setOrders(data);
+      const { data, error } = await getPreviouslyOrdered(productID.toString());
       setChecked(true);
+      if (error) return showToast(error, 'error');
+      setOrders(data);
     };
 
     if (isLogged() && !checked) void apiFetch();
@@ -47,7 +49,7 @@ const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productID }) => {
 
   const getLastOrderPrice = ():number|undefined =>  {
     const { attributes: { items } } = orders[0];
-    const orderItem = items.find((item) => item.product.data.id === productID.toString());
+    const orderItem = items.find((item:OrderItem) => item.product.data.id === productID.toString());
     return orderItem?.price;
   }
 
