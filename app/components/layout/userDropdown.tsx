@@ -42,7 +42,6 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
     void cartStore.reset();
     setIsUserMenuOpen(false);
     showToast('You have been logged out!', 'success');
-    router.push('/');
   };
 
   const handleUserLogin = (e: React.MouseEvent<HTMLElement>) => {

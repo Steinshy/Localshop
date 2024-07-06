@@ -16,13 +16,12 @@ import CartProduct from '@components/cart/cartProduct';
 import Stepper from '@components/cart/stepper';
 
 // Utils
-import { UserContext, CartContext } from '@utils/subProviders';
+import { CartContext } from '@utils/subProviders';
 
 const OrderPage = () => {
-  const userStore = useContext(UserContext),
-    cartStore = useContext(CartContext);
+  const cartStore = useContext(CartContext);
 
-  const { isLogged } = userStore;
+  // const { isLogged } = userStore;
   const { data } = cartStore;
   const { attributes } = data;
   const { items, finalPrice, totalPrice, coupon } = attributes;
@@ -31,7 +30,7 @@ const OrderPage = () => {
   const steps = ['Cart', 'Shipping', 'Payment'];
   const currentStep = 0;
 
-  return isLogged() && items.length ? (
+  return items.length ? (
     <>
       {/* Stepper */}
       <div className='grid grid-col-1 max-w-screen-2xl mx-auto my-8'>
