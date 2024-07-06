@@ -80,7 +80,7 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
           }
           endContent={<FaChevronDown className={`transition-transform	${isUserMenuOpen ? 'rotate-180' : 'rotate-0'}`} />}
         >
-          {lastname} {firstname}
+          <span className='hidden sm:inline'>{lastname} {firstname}</span>
         </Button>
       </DropdownTrigger>
       <DropdownMenu onAction={handleUserAction} aria-label='Profile Actions' variant='flat'>

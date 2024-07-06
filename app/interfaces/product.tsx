@@ -53,6 +53,10 @@ type ProductImagesProps = {
   images: [ProductResponseImages];
 };
 
+type PreviouslyOrderedProps = {
+  productID: number;
+}
+
 export type {
   ProductResponse,
   ProductResponseThumbnail,
@@ -61,4 +65,5 @@ export type {
   ProductPageProps,
   ProductCardProps,
   ProductImagesProps,
+  PreviouslyOrderedProps
 };

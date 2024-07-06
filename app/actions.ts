@@ -57,6 +57,19 @@ export const getOrder = async (id: string) => {
   return data;
 };
 
+// Product => PreviouslyOrdered - API - Get (collection)
+export const getPreviouslyOrdered = async (id: string) => {
+  revalidateTag('user');
+  const response = await fetch(`http://api.localshop.test:3005/v1/orders/previously_ordered?product_id=${id}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    next: { tags: ['user'] } 
+  });
+  const data = await response.json() as { data: OrderResponse[] };
+  const { data: orders } = data;
+  return orders;
+};
+
 // User => Address - API - Get
 export const getAddresses = async () => {
   revalidateTag('user');

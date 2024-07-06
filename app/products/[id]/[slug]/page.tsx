@@ -12,6 +12,7 @@ import ProductReview from '@components/product/productReview';
 
 // Interfaces
 import { ProductPageProps } from '@interfaces/product';
+import PreviouslyOrdered from '@components/product/previouslyOrdered';
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const [product, reviews] = await Promise.all([getProduct(params.id), getProductReviews(params.id)]);
@@ -27,6 +28,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4'>
         <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />
         <div className='flex flex-col gap-4'>
+          <PreviouslyOrdered productID={id} />
           <h1 className='text-3xl font-semibold text-center sm:text-start'>{title}</h1>
           <p className='text-md text-foreground/75'>{description}</p>
           <p className='text-md font-semibold'>{price}€</p>
@@ -38,7 +40,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
 
       <div className='flex flex-col flex-grow justify-center p-4'>
         <h2 className='text-2xl font-semibold text-center mb-4'>User Reviews</h2>
-        <div className='grid grid-cols-4 gap-4'>
+        <div className='grid grid-cols-1 sm:grid-cols-4 gap-4'>
           {reviewsItems.length > 0 ? (
             reviewsItems.map((review) => <ProductReview key={review.id} review={review} />)
           ) : (
