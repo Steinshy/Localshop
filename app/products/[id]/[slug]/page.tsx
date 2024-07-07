@@ -28,7 +28,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4'>
         <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />
         <div className='flex flex-col gap-4'>
-          <PreviouslyOrdered productID={id} />
+          <PreviouslyOrdered productId={id} />
           <h1 className='text-3xl font-semibold text-center sm:text-start'>{title}</h1>
           <p className='text-md text-foreground/75'>{description}</p>
           <p className='text-md font-semibold'>{price}€</p>

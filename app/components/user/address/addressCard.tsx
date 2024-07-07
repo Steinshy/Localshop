@@ -9,10 +9,10 @@ import { FaTrash } from 'react-icons/fa';
 import { FaLocationDot } from 'react-icons/fa6';
 
 // Components
-import AddressModal from '@components/user/addressModal';
+import AddressModal from '@components/user/address/addressModal';
 
 // Interfaces
-import { AddressCardProps } from '@interfaces/address';
+import { AddressCardProps } from '@interfaces/userAddress';
 
 const AddressCard: FC<AddressCardProps> = ({
   addresses,
@@ -51,8 +51,8 @@ const AddressCard: FC<AddressCardProps> = ({
       >
         <CardBody>
           <div className='flex items-center gap-2'>
-          <FaLocationDot className='text-primary' />
-           <h2 className='font-semibold' >{label}</h2>
+            <FaLocationDot className='text-primary' />
+            <h2 className='font-semibold'>{label}</h2>
           </div>
           <p>
             {firstname} {lastname}

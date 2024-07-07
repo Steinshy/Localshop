@@ -1,3 +1,20 @@
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+type FetchOptions = {
+  headers?: { [key: string]: string };
+  queryParams?: { [key: string]: string };
+  body?: BodyInit | null;
+  next?: {
+    tags: string[];
+  };
+};
+
+type ErrorObj = {
+  message: string;
+  items?: { [key: string]: string };
+  status?: number;
+};
+
 type LayoutProps = {
   children: React.ReactNode;
 };
@@ -16,4 +33,4 @@ type PagyProps = {
   pages: number;
 };
 
-export type { LayoutProps, BreadcrumbProps, StepperProps, PagyProps };
+export type { HttpMethod, FetchOptions, ErrorObj, LayoutProps, BreadcrumbProps, StepperProps, PagyProps };

@@ -1,6 +1,6 @@
 // Components
 import Breadcrumb from "@components/layout/breadCrumb";
-import AddressList from "@components/user/addressList";
+import AddressList from "@components/user/address/addressList";
 
 // Actions
 import { getAddresses } from "actions";

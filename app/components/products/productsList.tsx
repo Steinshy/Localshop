@@ -35,12 +35,13 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
       setIsFetching(true);
 
       try {
-        const { products, pagy } = await getProducts(page, query);
-        const { data } = products;
-
-        setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
-        setLocalPagy(pagy);
-        setIsFetching(false);
+        const { products, pagy, error } = await getProducts(page, query);
+        const { data } = products as { data: ProductResponse[] };
+        if (!error) {
+          setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
+          setLocalPagy(pagy);
+          setIsFetching(false);
+        }
       } catch (error) {
         console.error(
           `Failed to fetch products on page ${page} with query "${query}". Please try again later. Error: `,

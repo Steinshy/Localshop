@@ -1,19 +1,4 @@
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
-
-interface FetchOptions {
-  headers?: { [key: string]: string };
-  queryParams?: { [key: string]: string };
-  body?: BodyInit | null;
-  next?: {
-    tags: string[]
-  };
-}
-
-export type ErrorObj = {
-  message: string;
-  items?: { [key: string]: string };
-  status?: number;
-}
+import { HttpMethod, FetchOptions } from '@interfaces/general';
 
 export class FetchManager {
   private baseUrl: string;
@@ -25,7 +10,7 @@ export class FetchManager {
   private buildUrl(endpoint: string, queryParams?: { [key: string]: string }): string {
     const url = new URL(this.baseUrl + endpoint);
     if (queryParams) {
-      Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
+      Object.keys(queryParams).forEach((key) => url.searchParams.append(key, queryParams[key]));
     }
     return url.toString();
   }
@@ -36,16 +21,16 @@ export class FetchManager {
       method,
       headers: {
         'Content-Type': 'application/json',
-        ...(options?.headers || {})
+        ...(options?.headers || {}),
       },
-      body: options?.body || null
+      body: options?.body || null,
     };
 
     if (options?.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
       fetchOptions.body = JSON.stringify(options.body);
       fetchOptions.headers = {
         ...fetchOptions.headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       };
     }
 

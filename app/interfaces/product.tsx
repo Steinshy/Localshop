@@ -54,7 +54,7 @@ type ProductImagesProps = {
 };
 
 type PreviouslyOrderedProps = {
-  productID: number;
+  productId: number;
 }
 
 export type {
