@@ -1,3 +1,7 @@
+// NextJS
+import { cookies } from "next/headers";
+
+// Interfaces
 import { HttpMethod, FetchOptions, ErrorObj } from '@interfaces/general';
 
 export class FetchManager {
@@ -21,9 +25,11 @@ export class FetchManager {
       method,
       headers: {
         'Content-Type': 'application/json',
+        Cookie: cookies().toString(),
         ...(options?.headers || {}),
       },
       body: options?.body || null,
+      credentials: 'include'
     };
 
     if (options?.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {

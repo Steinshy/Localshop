@@ -23,4 +23,17 @@ type UserActions = {
   error?: string;
 }
 
-export type { UserResponse, getUserResponse, UserActions };
+type UserProviderProps = {
+  children: React.ReactNode;
+  initialUser: UserResponse;
+}
+
+type InitialUserProps = {
+  initialUser: UserResponse;
+}
+
+type loginResponse = {
+  userID: number;
+}
+
+export type { loginResponse, InitialUserProps, UserProviderProps, UserResponse, getUserResponse, UserActions };

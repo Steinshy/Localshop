@@ -77,7 +77,19 @@ type CartContentViewProps = {
   cartStore: CartContextType;
 };
 
+
+type CartProviderProps = {
+  children: React.ReactNode;
+  initialCart: CartResponse;
+}
+
+type InitialCartProps = {
+  initialCart: CartResponse;
+}
+
 export type {
+  CartProviderProps,
+  InitialCartProps,
   CartResponse,
   getCartResponse,
   CartCoupon,

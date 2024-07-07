@@ -18,6 +18,9 @@ import { showToast } from '@utils/helpers';
 // Interfaces
 import { UserMenuProps } from '@interfaces/navbar';
 
+// Actions
+import { userLogin } from 'actions';
+
 const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname, lastname }) => {
   const router = useRouter();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -46,7 +49,11 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
 
   const handleUserLogin = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+
     const ApiCall = async () => {
+      const { error } = await userLogin();
+      if (error) return;
+
       const [userResponse, cartResponse] = await Promise.all([userStore.refresh(), cartStore.refresh()]);
       if (Boolean(userResponse) && Boolean(cartResponse)) {
         showToast('You have been logged in!', 'success');
@@ -54,6 +61,7 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
         showToast('Login failed!', 'error');
       }
     };
+
     void ApiCall();
   };
 

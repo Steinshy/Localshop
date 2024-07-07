@@ -1,22 +1,22 @@
 'use client';
 
 // React
-import { useState, createContext, useCallback } from 'react';
+import { FC, useState, createContext, useCallback } from 'react';
 
 // Interfaces
-import { CartActions, CartResponse } from '@interfaces/cart';
-import { UserActions, UserResponse } from '@interfaces/user';
+import { CartActions, CartProviderProps, CartResponse } from '@interfaces/cart';
+import { UserActions, UserProviderProps, UserResponse } from '@interfaces/user';
 import { UserContextType, CartContextType } from '@interfaces/subProviders';
 
 // Data
 import { defaultCart, defaultUser } from '@data/general';
 
 // API
-import { getCart, getUser } from 'actions';
+import { getCart, getUser, userLogout } from 'actions';
 
 // CART PROVIDERS //
-const useCart = () => {
-  const [cart, setCart] = useState<CartResponse>(defaultCart);
+const useCart = (initialCart:CartResponse) => {
+  const [cart, setCart] = useState<CartResponse>(initialCart);
 
   const refresh = useCallback(async ():Promise<boolean> => {
     const { data, error } = await getCart() as CartActions;
@@ -31,8 +31,8 @@ const useCart = () => {
   return { data: cart, update: setCart, refresh, reset };
 };
 
-const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const userCart = useCart();
+const CartProvider:FC<CartProviderProps> = ({ children, initialCart }) => {
+  const userCart = useCart(initialCart);
 
   return <CartContext.Provider value={userCart}>{children}</CartContext.Provider>;
 };
@@ -47,8 +47,8 @@ const CartContext = createContext<CartContextType>({
 });
 
 // USER PROVIDERS //
-const useUser = () => {
-  const [user, setUser] = useState<UserResponse>(defaultUser);
+const useUser = (initialUser:UserResponse) => {
+  const [user, setUser] = useState<UserResponse>(initialUser);
 
   const refresh = useCallback(async () => {
     const { data, error } = await getUser() as UserActions;
@@ -57,14 +57,15 @@ const useUser = () => {
   }, [setUser]);
 
   const logout = useCallback(() => {
+    void userLogout();
     setUser(defaultUser);
   }, [setUser]);
 
   return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh };
 };
 
-const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const userState = useUser();
+const UserProvider:FC<UserProviderProps> = ({ children, initialUser }) => {
+  const userState = useUser(initialUser);
 
   return <UserContext.Provider value={userState}>{children}</UserContext.Provider>;
 };

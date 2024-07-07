@@ -1,10 +1,11 @@
 'use server';
 
-// Next Cache
+// NextJS
+import { cookies } from 'next/headers';
 import { revalidateTag } from 'next/cache';
 
 // Interface
-import { getUserResponse } from '@interfaces/user';
+import { getUserResponse, loginResponse } from '@interfaces/user';
 import { GetOrdersResponse, GetOrderResponse, OrderResponse } from '@interfaces/userOrder';
 import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 import { getProductsResponse } from '@interfaces/products';
@@ -13,11 +14,44 @@ import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
 import { ErrorObj } from '@interfaces/general';
 
+// Data
+import { defaultCart, defaultUser } from '@data/general';
+
 // Utils
 import { FetchManager, handleError } from '@utils/fetchManager';
 
 const base_url = 'http://api.localshop.test:3005/v1';
 const api = new FetchManager(base_url);
+
+// User => API - Login
+export const userLogin = async () => {
+  try {
+    const { userID } = await api.get<loginResponse>('/user_login');
+    console.log(userID);
+
+    cookies().set({
+      name: 'user',
+      value: userID.toString(),
+      httpOnly: true,
+      path: '/',
+      sameSite: 'none',
+      domain: '.localshop.test',
+    })
+
+    return {};
+  } catch (e) {
+    const error = handleError(e as Error|ErrorObj|string), data = {};
+    return { data, error };
+  }
+};
+
+// User => API - Logout
+export const userLogout = () => {
+  const allCookies = cookies().getAll();
+  allCookies.forEach((cookie) => {
+    cookies().delete(cookie.name);
+  });
+};
 
 // User => API - Get
 export const getUser = async () => {
@@ -26,7 +60,7 @@ export const getUser = async () => {
       { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e as Error|ErrorObj|string), data = {};
+    const error = handleError(e as Error|ErrorObj|string), data = defaultUser;
     return { data, error };
   }
 };
@@ -182,7 +216,7 @@ export const getCart = async () => {
       { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e as Error|ErrorObj|string), data = {};
+    const error = handleError(e as Error|ErrorObj|string), data = defaultCart;
     return { data, error };
   }
 };

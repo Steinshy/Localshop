@@ -1,3 +1,8 @@
+// Interfaces
+import { ReactNode } from "react";
+import { CartResponse } from "./cart";
+import { UserResponse } from "./user";
+
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 type FetchOptions = {
@@ -33,4 +38,10 @@ type PagyProps = {
   pages: number;
 };
 
-export type { HttpMethod, FetchOptions, ErrorObj, LayoutProps, BreadcrumbProps, StepperProps, PagyProps };
+type ProviderProps = {
+  children: ReactNode;
+  initialUser: UserResponse;
+  initialCart: CartResponse;
+}
+
+export type { ProviderProps, HttpMethod, FetchOptions, ErrorObj, LayoutProps, BreadcrumbProps, StepperProps, PagyProps };
