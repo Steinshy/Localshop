@@ -9,6 +9,12 @@ interface FetchOptions {
   };
 }
 
+interface ErrorObj {
+  message: string;
+  items?: { [key: string]: string };
+  status?: number;
+}
+
 export class FetchManager {
   private baseUrl: string;
 
@@ -45,7 +51,7 @@ export class FetchManager {
 
     const response = await fetch(url, fetchOptions);
     if (!response.ok) {
-      throw new Error(`Error: ${url} - ${response.statusText}`);
+      throw (await response.json()) as ErrorObj;
     }
 
     const data = (await response.json()) as T;
@@ -69,13 +75,17 @@ export class FetchManager {
   }
 }
 
-export const handleError = (e:unknown):object => {
+export const handleError = (e:Error|ErrorObj|string):ErrorObj => {
   console.error('An error occurred: ', e);
-  let error = {};
-  if (e instanceof Error) {
-    error = { message: e.message };
+
+  let error:ErrorObj = { message: 'An error occurred' };
+  if (typeof e === 'object') {
+    const { message, items, status } = e as ErrorObj;
+    error = { message: message };
+    if (status === 422) error = { message: 'Validation Failed.', items: items };
   } else {
-    error = e as string;
+    error = { message: e };
   }
+
   return error;
 }

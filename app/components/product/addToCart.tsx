@@ -41,10 +41,10 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
 
     const apiFetch = async () => {
       const { data, error } = await addItemToCart(product_id);
-      if (!error) {
-        cartStore.update(data);
-        showToast('Item has been added to your cart !', 'success');
-      }
+      if (error) return showToast(error.message, 'error');
+
+      cartStore.update(data);
+      showToast('Item has been added to your cart !', 'success');
     }
 
     void apiFetch();
