@@ -9,7 +9,7 @@ interface FetchOptions {
   };
 }
 
-interface ErrorObj {
+export type ErrorObj = {
   message: string;
   items?: { [key: string]: string };
   status?: number;

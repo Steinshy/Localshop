@@ -13,7 +13,7 @@ import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
 
 // Utils
-import { FetchManager, handleError } from '@utils/fetchManager';
+import { ErrorObj, FetchManager, handleError } from '@utils/fetchManager';
 
 const base_url = 'http://api.localshop.test:3005/v1';
 const api = new FetchManager(base_url);
@@ -24,7 +24,7 @@ export const getUser = async () => {
     const { data } = await api.get<getUserResponse>('/user', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {};
+    const error = handleError(e as Error|ErrorObj|string), data = {};
     return { data, error };
   }
 };
@@ -36,7 +36,7 @@ export const getOrders = async () => {
     const { data } = await api.get<GetOrdersResponse>('/orders', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = [] as OrderResponse[];
+    const error = handleError(e as Error|ErrorObj|string), data = [] as OrderResponse[];
     return { data, error };
   }
 };
@@ -48,7 +48,7 @@ export const getOrder = async (id: string) => {
     const { data } = await api.get<GetOrderResponse>(`/orders/${id}`, { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as OrderResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as OrderResponse;
     return { data, error };
   }
 };
@@ -60,7 +60,7 @@ export const getPreviouslyOrdered = async (id: string) => {
     const { data } = await api.get<GetOrdersResponse>(`/orders/previously_ordered?product_id=${id}`, { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = [] as OrderResponse[];
+    const error = handleError(e as Error|ErrorObj|string), data = [] as OrderResponse[];
     return { data, error };
   }
 };
@@ -72,7 +72,7 @@ export const getAddresses = async () => {
     const { data } = await api.get<{ data: AddressResponse[] }>('/addresses', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = [] as AddressResponse[];
+    const error = handleError(e as Error|ErrorObj|string), data = [] as AddressResponse[];
     return { data, error };
   }
 };
@@ -84,7 +84,7 @@ export const CreateAddress = async (newAddress: AddressValuesProps) => {
     const { data } = await api.post<{ data: AddressResponse }>('/addresses', JSON.stringify({ address: newAddress }));
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as AddressResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as AddressResponse;
     return { data, error };
   }
 };
@@ -96,7 +96,7 @@ export const UpdateAddress = async (id: number, newAddress: AddressValuesProps) 
     const { data } = await api.put<{ data: AddressResponse }>(`/addresses/${id}`, JSON.stringify({ address: newAddress }));
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as AddressResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as AddressResponse;
     return { data, error };
   }
 };
@@ -108,7 +108,7 @@ export const RemoveAddress = async (id: number) => {
     await api.delete<void>(`/addresses/${id}`);
     return {};
   } catch (e) {
-    const error = handleError(e);
+    const error = handleError(e as Error|ErrorObj|string);
     return { error };
   }
 };
@@ -122,7 +122,7 @@ export const getProducts = async (page?: number, query?: string) => {
     const { products, pagy } = await api.get<getProductsResponse>(`/products?page=${page}&q=${query}`, { next: { tags: ['products'] } });
     return { products, pagy };
   } catch (e) {
-    const error = handleError(e), data = {};
+    const error = handleError(e as Error|ErrorObj|string), data = {};
     return { data, error };
   }
 };
@@ -133,7 +133,7 @@ export const getProduct = async (id: string) => {
     const { data } = await api.get<{ data: ProductResponse }>(`/products/${id}`, { next: { tags: ['product'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as ProductResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as ProductResponse;
     return { data, error };
   }
 };
@@ -144,7 +144,7 @@ export const addItemToCart = async (productId: string) => {
     const { data } = await api.post<getCartResponse>('/cart/add_item', JSON.stringify({ product_id: productId }));
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as getCartResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as getCartResponse;
     return { data, error };
   }
 };
@@ -155,7 +155,7 @@ export const getProductReviews = async (value: string) => {
     const data = await api.get<getReviewResponse>(`/products/${value}/reviews`, { next: { tags: ['reviews'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as getReviewResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as getReviewResponse;
     return { data, error };
   }
 };
@@ -166,7 +166,7 @@ export const getCart = async () => {
     const { data } = await api.get<getCartResponse>('/cart', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {};
+    const error = handleError(e as Error|ErrorObj|string), data = {};
     return { data, error };
   }
 };
@@ -177,7 +177,7 @@ export const deleteCart = async () => {
     const { data } = await api.delete<getCartResponse>('/cart/clear_items', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as getCartResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as getCartResponse;
     return { data, error };
   }
 };
@@ -188,7 +188,7 @@ export const deleteCartItem = async (productId: string) => {
     const { data } = await api.delete<getCartResponse>(`/cart/remove_item?product_id=${productId}`, { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as getCartResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as getCartResponse;
     return { data, error };
   }
 };
@@ -203,7 +203,7 @@ export const updateQuantity = async (quantity: number, productId: string) => {
     );
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as getCartResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as getCartResponse;
     return { data, error };
   }
 };
@@ -218,7 +218,7 @@ export const applyDiscount = async (value: string) => {
     );
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {};
+    const error = handleError(e as Error|ErrorObj|string), data = {};
     return { data, error };
   }
 };
@@ -229,7 +229,7 @@ export const deleteDiscount = async () => {
     const data = await api.delete<getCartResponse>('/cart/clear_coupon', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
-    const error = handleError(e), data = {} as getCartResponse;
+    const error = handleError(e as Error|ErrorObj|string), data = {} as getCartResponse;
     return { data, error };
   }
 };
