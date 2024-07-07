@@ -10,19 +10,13 @@ import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosu
 import { FaPlus, FaEdit } from 'react-icons/fa';
 
 // Modules
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 
 // Interfaces
 import { AddressModalProp, AddressValuesProps } from '@interfaces/address';
 
 // Data
 import { defaultAddress } from '@data/general';
-
-const FieldError = ({ name }:{ name:string }) => (
-  <span className='text-tiny text-red-500'>
-    <ErrorMessage name={name} />
-  </span>
-)
 
 const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, handleUpdate }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -60,15 +54,18 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
           <ModalBody>
             <Formik
               initialValues={formAddress}
-              // validate={(values: AddressValuesProps) => {
-              //   const errors: { [key: string]: string } = {};
-              //   Object.keys(values).forEach((key) => {
-              //     if (!values[key as keyof AddressValuesProps]) {
-              //       errors[key] = "Required";
-              //     }
-              //   });
-              //   return errors;
-              // }}
+              validate={(values: AddressValuesProps) => {
+                const errors: { [key: string]: string } = {};
+                let hasError:boolean = false;
+                Object.keys(values).forEach((key) => {
+                  if (!values[key as keyof AddressValuesProps]) {
+                    if (key === 'zip' || key === 'default') return;
+                    hasError = true;
+                    errors[key] = 'Required';
+                  }
+                });
+                if (hasError) return errors;
+              }}
               onSubmit={(values: AddressValuesProps, { setSubmitting, setFieldError }) => {
                 setSubmitting(true);
                 const newAddress = { ...formAddress, ...values };
@@ -97,8 +94,10 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                       type='text'
                       as={Input}
                       radius='sm'
+                      isInvalid={errors.label}
+                      color={errors.label ? 'danger' : 'default'}
+                      errorMessage={errors.label && errors.label}
                     />
-                    {errors.label && <FieldError name='label' />}
                   </div>
 
                   <div className='grid grid-cols-2 gap-4'>
@@ -108,12 +107,14 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         label='First Name'
                         id='firstname'
                         name='firstname'
-                        placeholder='First Name'
+                        placeholder='John'
                         type='text'
                         as={Input}
                         radius='sm'
+                        isInvalid={errors.firstname}
+                        color={errors.firstname ? 'danger' : 'default'}
+                        errorMessage={errors.firstname && errors.firstname}
                       />
-                      {errors.firstname && <FieldError name='firstname' />}
                     </div>
 
                     <div>
@@ -122,12 +123,14 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         className='col-span-1'
                         id='lastname'
                         name='lastname'
-                        placeholder='Last Name'
+                        placeholder='Doe'
                         type='text'
                         as={Input}
                         radius='sm'
+                        isInvalid={errors.lastname}
+                        color={errors.lastname ? 'danger' : 'default'}
+                        errorMessage={errors.lastname && errors.lastname}
                       />
-                      {errors.lastname && <FieldError name='lastname' />}
                     </div>
                   </div>
 
@@ -142,8 +145,10 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         type='text'
                         as={Input}
                         radius='sm'
+                        isInvalid={errors.address}
+                        color={errors.address ? 'danger' : 'default'}
+                        errorMessage={errors.address && errors.address}
                       />
-                      {errors.address && <FieldError name='address' />}
                     </div>
                   </div>
 
@@ -158,8 +163,10 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         type='text'
                         as={Input}
                         radius='sm'
+                        isInvalid={errors.country}
+                        color={errors.country ? 'danger' : 'default'}
+                        errorMessage={errors.country && errors.country}
                       />
-                      {errors.country && <FieldError name='country' />}
                     </div>
 
                     <div>
@@ -172,8 +179,10 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         placeholder='CA'
                         as={Input}
                         radius='sm'
+                        isInvalid={errors.state}
+                        color={errors.state ? 'danger' : 'default'}
+                        errorMessage={errors.state && errors.state}
                       />
-                      {errors.state && <FieldError name='state' />}
                     </div>
                   </div>
 
@@ -188,8 +197,10 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         placeholder='Las Vegas'
                         as={Input}
                         radius='sm'
+                        isInvalid={errors.city}
+                        color={errors.city ? 'danger' : 'default'}
+                        errorMessage={errors.city && errors.city}
                       />
-                      {errors.city && <FieldError name='city' />}
                     </div>
 
                     <div>
@@ -202,8 +213,10 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         placeholder='00000'
                         as={Input}
                         radius='sm'
+                        isInvalid={errors.zip}
+                        color={errors.zip ? 'danger' : 'default'}
+                        errorMessage={errors.zip && errors.zip}
                       />
-                      {errors.zip && <FieldError name='zip' />}
                     </div>
                   </div>
 
