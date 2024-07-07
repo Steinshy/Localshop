@@ -5,8 +5,8 @@ import { FC, useContext, useEffect, useState } from 'react';
 
 // NextUI
 import { Image, Input } from '@nextui-org/react';
-import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
-import { Button, ButtonGroup } from '@nextui-org/button';
+import { Card, CardBody } from '@nextui-org/card';
+import { Button } from '@nextui-org/button';
 
 // Components
 import CartButtonDelete from '@components/cart/cartButtonDelete';
@@ -53,54 +53,64 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
       <div className='flex justify-end'>
         <CartButtonDelete id={id} cartStore={cartStore} />
       </div>
-      <CardHeader className='flex justify-center'>
-        <Image
-          src={thumbnail.url}
-          alt={title}
-          classNames={{
-            img: 'w-[150px] h-[150px] object-cover',
-          }}
-          radius='md'
-          shadow='none'
-          removeWrapper
-        />
-      </CardHeader>
 
       {/* Single item information */}
-      <CardBody className='flex flex-col gap-2'>
-        <div className='flex justify-center'>
+      <CardBody className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
+        <div className='flex flex-col items-center'>
+          <Image
+            src={thumbnail.url}
+            alt={title}
+            classNames={{
+              img: 'w-[150px] h-[150px] object-cover',
+            }}
+            radius='md'
+            shadow='none'
+            removeWrapper
+          />
           <span className='text-lg font-semibold'>{title}</span>
         </div>
-        <div className='flex flex-row justify-center'>
-          <Input className='gap-4' size='sm' label='Quantity' radius='full' color='primary' value={currentQuantity.toString()} />
-          <ButtonGroup size='sm'>
-            <Button
-              onClick={() => handleQuantityChange(currentQuantity - 1)}
-              variant='solid'
-              size='sm'
-              className='ml-2'
-              color='primary'
-              radius='sm'
-            >
-              -
-            </Button>
-            <Button
-              onClick={() => handleQuantityChange(currentQuantity + 1)}
-              variant='solid'
-              size='sm'
-              className='ml-2'
-              color='primary'
-              radius='sm'
-            >
-              +
-            </Button>
-          </ButtonGroup>
+        <div className='flex flex-col justify-center items-center gap-2'>
+          <Input
+            className='gap-4'
+            classNames={{
+              mainWrapper: 'items-center',
+              inputWrapper: 'p-0 w-[150px]',
+              innerWrapper: 'w-[150px]',
+              input: 'text-center'
+            }}
+            size='sm'
+            radius='sm'
+            color='default'
+            value={currentQuantity.toString()}
+            startContent={
+              <Button
+                onClick={() => handleQuantityChange(currentQuantity - 1)}
+                variant='solid'
+                size='sm'
+                color='default'
+                radius='sm'
+                className='w-[40px]'
+                style={{minWidth: 0}}
+              >
+                -
+              </Button>
+            }
+            endContent={
+              <Button
+                onClick={() => handleQuantityChange(currentQuantity + 1)}
+                variant='solid'
+                size='sm'
+                color='default'
+                radius='sm'
+                className='w-[40px]'
+                style={{minWidth: 0}}
+              >
+                +
+              </Button>
+            }
+          />
+          <p className='text-lg text-foreground'>{price * currentQuantity}€</p>
         </div>
-        <CardFooter className='flex justify-center'>
-          <div className='flex flex-grow items-center justify-center'>
-            <p className='text-lg text-foreground'>{price * currentQuantity}€</p>
-          </div>
-        </CardFooter>
       </CardBody>
     </Card>
   );
