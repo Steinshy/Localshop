@@ -1,4 +1,4 @@
-import { HttpMethod, FetchOptions } from '@interfaces/general';
+import { HttpMethod, FetchOptions, ErrorObj } from '@interfaces/general';
 
 export class FetchManager {
   private baseUrl: string;

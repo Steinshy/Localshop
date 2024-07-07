@@ -229,9 +229,11 @@ export const updateQuantity = async (quantity: number, productId: string) => {
 // Cart => Discount - API - Post
 export const applyDiscount = async (value: string) => {
   try {
-    const data = await api.post<getCartResponse>('/cart/apply_coupon', JSON.stringify({ code: value }), {
-      next: { tags: ['cart'] },
-    });
+    const { data } = await api.post<getCartResponse>(
+      '/cart/apply_coupon',
+      JSON.stringify({ code: value }),
+      { next: { tags: ['cart'] } }
+    );
     return { data };
   } catch (e) {
     const error = handleError(e as Error|ErrorObj|string), data = {};
@@ -242,8 +244,7 @@ export const applyDiscount = async (value: string) => {
 // Cart => Discount - API - Delete
 export const deleteDiscount = async () => {
   try {
-    const data = await api.delete<getCartResponse>('/cart/clear_coupon',
-      { next: { tags: ['cart'] } });
+    const { data } = await api.delete<getCartResponse>('/cart/clear_coupon', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
     const error = handleError(e as Error|ErrorObj|string), data = {} as getCartResponse;
