@@ -7,7 +7,7 @@ import { UserResponse } from '@interfaces/user';
 type CartContextType = {
   data: CartResponse;
   update: Dispatch<SetStateAction<CartResponse>>;
-  refresh: () => Promise<void>;
+  refresh: () => Promise<boolean>;
   reset: () => void;
 };
 
@@ -15,7 +15,7 @@ type CartContextType = {
 type UserContextType = {
   data: UserResponse;
   update: Dispatch<SetStateAction<UserResponse>>;
-  refresh: () => Promise<void>;
+  refresh: () => Promise<boolean>;
   isLogged: () => boolean;
   logout: () => void;
 };

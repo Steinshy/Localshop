@@ -18,7 +18,7 @@ import { getCart, getUser } from 'actions';
 const useCart = () => {
   const [cart, setCart] = useState<CartResponse>(defaultCart);
 
-  const refresh = useCallback(async () => {
+  const refresh = useCallback(async ():Promise<boolean> => {
     const { data, error } = await getCart() as CartActions;
     !error ? setCart(data) : setCart(defaultCart);
     return !error;
@@ -40,7 +40,9 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
 const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
   update: () => {},
-  refresh: async () => {},
+  refresh: async () => {
+    return await new Promise<boolean>((resolve) => { resolve(false);});
+  },
   reset: () => {},
 });
 
@@ -70,7 +72,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 const UserContext = createContext<UserContextType>({
   data: {} as UserResponse,
   update: () => {},
-  refresh: async () => {},
+  refresh: async () => {
+    return await new Promise<boolean>((resolve) => { resolve(false);});
+  },
   isLogged: () => true || false,
   logout: () => {},
 });
