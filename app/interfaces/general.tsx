@@ -30,7 +30,7 @@ type BreadcrumbProps = {
 
 type StepperProps = {
   steps: string[];
-  currentStep: number;
+  pathToStepMap: { [key: string]: number; };
 };
 
 type PagyProps = {
