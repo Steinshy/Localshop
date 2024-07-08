@@ -19,7 +19,7 @@ const OrdersPage = async () => {
   const breadCrumbItems = [{ title: 'User', href: '/user' }, { title: 'Orders' }];
 
   return (
-    <div className='max-w-screen-md mx-auto w-full'>
+    <>
       <Breadcrumb items={breadCrumbItems} />
       <h1 className='text-2xl mb-2 text-center'>Orders</h1>
 
@@ -34,7 +34,7 @@ const OrdersPage = async () => {
           {error ? (
             <>
               <p className='text-md'>There was an error retrieving your orders</p>
-              <p>{error}</p>
+              <p>{error.message}</p>
             </>
           ) : (
             <>
@@ -53,7 +53,7 @@ const OrdersPage = async () => {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 

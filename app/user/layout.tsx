@@ -13,10 +13,12 @@ import { UserContext } from '@utils/subProviders';
 
 export default function UserLayout({ children }: LayoutProps) {
   const userStore = useContext(UserContext);
+  const { isLogged } = userStore;
+  if (!isLogged) redirect('/');
 
-  if (userStore.data.attributes.id === 0) {
-    redirect('/');
-  }
-
-  return <div className='max-w-screen-2xl flex flex-col flex-grow my-8'>{children}</div>;
+  return (
+    <div className='max-w-screen-md my-8 mx-auto w-full'>
+      {children}
+    </div>
+  );
 }

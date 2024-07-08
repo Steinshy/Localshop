@@ -45,6 +45,7 @@ type OrderPageProps = {
 
 type OrderCardProps = {
   order: OrderResponse;
+  detailed?: boolean;
 };
 
 type OrderProductCardProps = {

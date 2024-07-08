@@ -19,7 +19,7 @@ const OrderProductCard: FC<OrderProductCardProps> = ({ orderProduct }) => {
   const slug = generateSlug(title);
 
   return (
-    <li className="p-2 bg-background border-1 rounded-md">
+    <div className="p-2 bg-background border-1 rounded-md">
       <div className="grid grid-cols-2">
         <div className="flex justify-start items-center">
           <Link href={`/products/${productID}/${slug}`}>
@@ -51,7 +51,7 @@ const OrderProductCard: FC<OrderProductCardProps> = ({ orderProduct }) => {
         <p className="text-lg text-foreground">{quantity}</p>
         <p className="text-lg text-foreground">{price * quantity}€</p>
       </div>
-    </li>
+    </div>
   );
 };
 export default OrderProductCard;
