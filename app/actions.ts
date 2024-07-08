@@ -34,7 +34,7 @@ export const userLogin = async () => {
       value: userID.toString(),
       httpOnly: true,
       path: '/',
-      sameSite: 'none',
+      sameSite: 'lax',
       domain: '.localshop.test',
     })
 
