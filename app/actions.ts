@@ -166,10 +166,11 @@ export const getProducts = async (page?: number, query?: string) => {
     const { products, pagy } = await api.get<getProductsResponse>(`/products?page=${page}&q=${query}`, {
       next: { tags: ['products'] },
     });
-    return { products, pagy };
+    const { data } = products;
+    return { data, pagy };
   } catch (e) {
-    const error = handleError(e as Error|ErrorObj|string), data = {};
-    return { data, error };
+    const error = handleError(e as Error|ErrorObj|string), data = [] as ProductResponse[], pagy = { page: 1, pages: 1 };
+    return { data, pagy, error };
   }
 };
 

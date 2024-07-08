@@ -20,9 +20,7 @@ type ProductsPageProps = {
 // Products => Components => ProductList
 type ProductsListProp = {
   pagy: PagyProps;
-  products: {
-    data?: ProductResponse[];
-  };
+  data: ProductResponse[];
 };
 
 export type { getProductsResponse, ProductsPageProps, ProductsListProp };

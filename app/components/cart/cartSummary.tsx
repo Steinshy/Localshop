@@ -1,5 +1,7 @@
+'use client';
+
 // React
-import { FC } from 'react';
+import { useContext } from 'react';
 
 // NextUi
 import { Card } from '@nextui-org/card';
@@ -8,13 +10,13 @@ import { Card } from '@nextui-org/card';
 import CartDiscount from '@components/cart/cartDiscount';
 import OrderProcessButton from '@components/cart/orderProcessButton';
 
-// Interfaces
-import { CartSummaryProps } from '@interfaces/cart';
+// Utils
+import { CartContext } from '@utils/subProviders';
 
-const CartSummary: FC<CartSummaryProps> = ({ items, coupon, finalPrice, totalPrice }) => {
-  const { data } = coupon || {};
-  const { attributes } = data || {};
-  const { code: couponCode, discount: couponDiscount } = attributes || {};
+const CartSummary = () => {
+  const cartStore = useContext(CartContext);
+  const { data: { attributes: { coupon, totalPrice, finalPrice, items } } } = cartStore;
+  const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: {} } };
   
   return (
     <Card className='sticky top-[70px] border-1 p-4 rounded-md'>
@@ -29,38 +31,29 @@ const CartSummary: FC<CartSummaryProps> = ({ items, coupon, finalPrice, totalPri
         <p className='text-lg text-end'>0€</p>
       </div>
 
+      <p className='text-small text-foreground/75 italic'>
+        Shipping and taxes will be calculated at checkout
+      </p>
+
       <hr className='my-4' />
       <div className='grid grid-cols-2 gap-4 text-foreground'>
         <p className='text-lg text-start'>Total:</p>
-        <p className='text-lg text-end'>{totalPrice}€</p>
+        <p className={`text-end ${discount ? 'text-foreground/50 text-md' : 'text-lg'}`}>{totalPrice}€</p>
       </div>
-      {couponDiscount > 0 && (
+      {discount && (
         <>
-          <div className='grid grid-cols-1 gap-4'>
-            <p className='text-small text-end mb-4 text-foreground/75 italic'>-{couponDiscount}%</p>
-          </div>
-
-          <hr className='my-4' />
-          <div className='grid grid-cols-2 gap-4 text-foreground'>
-            <p className='text-lg text-start'>Subtotal:</p>
-            <p className='text-lg text-end'>{finalPrice}€</p>
-          </div>
-
-          <div className='grid grid-cols-1 gap-4'>
-            <p className='text-small text-center mb-4 text-foreground/75 italic'>
-              Shipping and taxes will be calculated at checkout
-            </p>
-          </div>
+          <p className='text-small text-end text-foreground/75 italic'>-{discount}%</p>
+          <p className='text-end text-lg'>{finalPrice}€</p>
         </>
       )}
 
+      <hr className='my-4' />
+
       {/* COUPONS */}
-      <CartDiscount couponCode={couponCode} couponDiscount={couponDiscount} totalPrice={totalPrice} />
+      <CartDiscount couponCode={code} couponDiscount={discount} totalPrice={totalPrice} />
 
       {/* Shipping - Payment Button */}
-      <div className='grid gap-4'>
-        <OrderProcessButton items={items} />
-      </div>
+      <OrderProcessButton items={items} />
     </Card>
   );
 };

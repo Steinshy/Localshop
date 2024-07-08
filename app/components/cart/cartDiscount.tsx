@@ -4,7 +4,7 @@
 import { FC, useContext } from 'react';
 
 // Modules
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 
 // NextUI
 import { Chip, Input } from '@nextui-org/react';
@@ -21,12 +21,6 @@ import { showToast } from '@utils/helpers';
 
 // API
 import { applyDiscount, deleteDiscount } from 'actions';
-
-const FieldError = ({ name }:{ name:string }) => (
-  <span className='text-tiny text-red-500'>
-    <ErrorMessage name={name} />
-  </span>
-)
 
 const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, totalPrice = 0 }) => {
   const cartStore = useContext(CartContext);
@@ -47,17 +41,17 @@ const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, t
         <Formik
           initialValues={{ code: '' }}
           onSubmit={(values: DiscountFormProps, { setSubmitting, setFieldError }) => {
-            setSubmitting(false);
+            setSubmitting(true);
 
             const apiFetch = async () => {
               if (!values.code || values.code.length < 1) return;
               const { data, error } = await applyDiscount(values.code);
-              if (!error) {
-                values.code = '';
-                cartStore.update(data);
-              } else {
-                setFieldError('code', 'Invalid code');
-              }
+
+              setSubmitting(false);
+              if (error) return setFieldError('code', error.message);
+              
+              values.code = '';
+              cartStore.update(data);
             };
         
             void apiFetch();
@@ -66,8 +60,6 @@ const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, t
           {({ errors }) => (
             <Form className='grid col-auto gap-4 my-4'>
               <Field
-                className='col-span-2'
-                isRequired
                 as={Input}
                 id='code'
                 name='code'
@@ -76,8 +68,10 @@ const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, t
                 placeholder='Coupon code'
                 startContent={<FaTags className='text-foreground' />}
                 isDisabled={totalPrice <= 0}
+                isInvalid={errors.code}
+                color={errors.code ? 'danger' : 'default'}
+                errorMessage={errors.code && errors.code}
               />
-              {errors.code && <FieldError name='code' />}
             </Form>
           )}
         </Formik>

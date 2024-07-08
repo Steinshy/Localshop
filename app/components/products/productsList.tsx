@@ -23,10 +23,10 @@ import { ProductsListProp } from '@interfaces/products';
 // Actions
 import { getProducts } from 'actions';
 
-const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
+const ProductsList: FC<ProductsListProp> = ({ data, pagy }) => {
   const searchParams = useSearchParams(),
         [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
-        [localProducts, setLocalProducts] = useState<ProductResponse[]>(products.data || []),
+        [localProducts, setLocalProducts] = useState<ProductResponse[]>(data || []),
         [query, setQuery] = useState<string>(searchParams.get('q') || ''),
         [isFetching, setIsFetching] = useState<boolean>(false);
 
@@ -34,21 +34,14 @@ const ProductsList: FC<ProductsListProp> = ({ products, pagy }) => {
       if (page < 1 || page > localPagy.pages || isFetching || query === searchParams.get('q')) return;
       setIsFetching(true);
 
-      try {
-        const { products, pagy, error } = await getProducts(page, query);
-        const { data } = products as { data: ProductResponse[] };
-        if (!error) {
-          setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
-          setLocalPagy(pagy);
-          setIsFetching(false);
-        }
-      } catch (error) {
-        console.error(
-          `Failed to fetch products on page ${page} with query "${query}". Please try again later. Error: `,
-          error
-        );
-        setIsFetching(false);
+      const { data, pagy, error } = await getProducts(page, query);
+
+      if (!error) {
+        setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
+        setLocalPagy(pagy);
       }
+    
+      setIsFetching(false);
     },
     [isFetching, localPagy.pages, searchParams]
   );

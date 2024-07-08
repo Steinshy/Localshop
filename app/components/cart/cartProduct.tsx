@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 
 // NextUI
 import { Image, Input } from '@nextui-org/react';
@@ -21,15 +21,11 @@ import { CartContext } from '@utils/subProviders';
 import { deleteCartItem, updateQuantity } from 'actions';
 
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
-  const [currentQuantity, setCurrentQuantity] = useState<number>(0),
-        cartStore = useContext(CartContext);
-
+  const cartStore = useContext(CartContext);
   const { quantity, price, product } = cartItem;
   const { data: { id, attributes: { title, thumbnail } } } = product;
 
-  useEffect(() => {
-    setCurrentQuantity(quantity);
-  }, [quantity])
+  const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
 
   const deleteItem = async () => {
     const { data, error } = await deleteCartItem(id);

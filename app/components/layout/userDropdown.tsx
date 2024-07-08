@@ -38,6 +38,7 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
     setIsUserMenuOpen(isOpen);
   };
 
+  // A corrigé : le logout ne fonctionne pas, le cookie n'est pas supprimé
   const handleUserLogout = () => {
     if (!isLogged()) return;
 

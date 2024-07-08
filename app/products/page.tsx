@@ -16,15 +16,9 @@ import { offer1, offer2, offer3, offer4, BG } from '../assets/index';
 // Interfaces
 import { ProductsPageProps } from '@interfaces/products';
 
-// Data
-import { defaultProducts } from '@data/general';
-
 const ProductsPage: FC<ProductsPageProps> = async ({ searchParams }) => {
-  const urlParams = searchParams || {};
-  const response = await getProducts(1, urlParams['q']?.toString() || '');
-  const { products, pagy } = response || defaultProducts;
-
-  const offersArray = [offer1, offer2, offer3, offer4];
+  const urlParams = searchParams || {}, offersArray = [offer1, offer2, offer3, offer4];
+  const { data, pagy } = await getProducts(1, urlParams['q']?.toString() || '');
 
   return (
     <>
@@ -51,7 +45,7 @@ const ProductsPage: FC<ProductsPageProps> = async ({ searchParams }) => {
         </div>
       </section>
       <div className='gap-2 px-2 pb-4 my-4'>
-        <ProductsList products={products} pagy={pagy} />
+        <ProductsList data={data} pagy={pagy} />
       </div>
     </>
   );

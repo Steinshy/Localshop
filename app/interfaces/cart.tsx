@@ -50,13 +50,6 @@ type CartProductProps = {
   cartItem: CartItem;
 };
 
-type CartSummaryProps = {
-  items: CartItem[];
-  coupon: CartCoupon;
-  finalPrice: number;
-  totalPrice: number;
-};
-
 // Components => Cart => OrderProcessButtonProps
 type OrderProcessButtonProps = {
   items: CartItem[];
@@ -95,7 +88,6 @@ export type {
   CartCoupon,
   CartItem,
   CartProductProps,
-  CartSummaryProps,
   OrderProcessButtonProps,
   CartButtonDeleteProps,
   AddToCartProps,

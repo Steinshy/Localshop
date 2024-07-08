@@ -17,7 +17,7 @@ import { OrderProcessButtonProps } from '@interfaces/cart';
 const OrderProcessButton: FC<OrderProcessButtonProps> = ({ items }) => {
   const pathname = usePathname();
   const pathMappings: { [key: string]: { text: string; nextPath: string } } = {
-    '/order/cart': { text: 'Proceed to Shipping', nextPath: '/order/shipping' },
+    '/order': { text: 'Proceed to Shipping', nextPath: '/order/shipping' },
     '/order/shipping': { text: 'Proceed to Payment', nextPath: '/order/payment' },
     '/order/payment': { text: 'Return to Cart', nextPath: '/order/cart' },
   };
