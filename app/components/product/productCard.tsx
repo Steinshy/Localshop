@@ -7,7 +7,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 
 // NextUI
-import { Card, CardBody, CardHeader, CardFooter, Image, Badge } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, CardFooter, Image, Chip } from '@nextui-org/react';
 
 // Components
 import AddToCart from '@components/product/addToCart';
@@ -29,7 +29,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <Card className='w-full h-[350px]' as={Link} href={`/products/${id}/${generateSlug(title)}`} radius='sm'>
         <CardHeader className='absolute z-10 top-2 right-4 flex-col items-end'>
           {stock > 50 && (
-            <Badge content='New' color='danger' shape='circle' showOutline={false} />
+            <Chip color='danger' size='sm'>New</Chip>
           )}
         </CardHeader>
         <CardBody className='relative'>

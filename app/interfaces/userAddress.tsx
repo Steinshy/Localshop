@@ -52,8 +52,8 @@ type AddressCardProps = {
   setSelected?: (id: number) => void;
   address: AddressResponse;
   selectable?: boolean;
-  handleCreate: (newAddress: AddressValuesProps) => Promise<void>;
-  handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<void>;
+  handleCreate: (newAddress: AddressValuesProps) => Promise<{ [key: string]: string; } | undefined>;
+  handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<{ [key: string]: string; } | undefined>;
   handleRemove: (id: number) => Promise<void>;
 };
 
