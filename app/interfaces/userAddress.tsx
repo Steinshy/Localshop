@@ -3,18 +3,19 @@ type AddressResponse = {
   type: string;
 
   attributes: {
-  id: number;
-  label: string;
-  firstname: string;
-  lastname: string;
-  address: string;
-  city: string;
-  state: string;
-  country: string;
-  zip: number;
-  default: boolean;
-  createdAt: string;
-  updatedAt: string;
+    id: number;
+    label: string;
+    firstname: string;
+    lastname: string;
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    zip: number;
+    phone: number;
+    default: boolean;
+    createdAt: string;
+    updatedAt: string;
   }
 };
 
@@ -34,6 +35,7 @@ type AddressValuesProps = {
   state: string;
   city: string;
   zip: number;
+  phone: number;
   default: boolean;
 };
 

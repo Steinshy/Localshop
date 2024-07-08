@@ -64,6 +64,8 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                     errors[key] = 'Required';
                   }
                 });
+                console.log(hasError);
+                console.log(errors);
                 if (hasError) return errors;
               }}
               onSubmit={(values: AddressValuesProps, { setSubmitting, setFieldError }) => {
@@ -218,6 +220,22 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                         errorMessage={errors.zip && errors.zip}
                       />
                     </div>
+                  </div>
+
+                  <div className='grid grid-cols-1 gap-4'>
+                    <Field
+                      label='Phone'
+                      className='col-span-1'
+                      id='phone'
+                      name='phone'
+                      type='phone'
+                      placeholder={0}
+                      as={Input}
+                      radius='sm'
+                      isInvalid={errors.phone}
+                      color={errors.phone ? 'danger' : 'default'}
+                      errorMessage={errors.phone && errors.phone}
+                    />
                   </div>
 
                   <div className='grid grid-cols-2 gap-4'>
