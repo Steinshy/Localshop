@@ -36,21 +36,31 @@ export const userLogin = async () => {
       path: '/',
       sameSite: 'lax',
       domain: '.localshop.test',
+      maxAge: 7 * 24 * 60 * 60 // 7 days
     })
 
     return {};
   } catch (e) {
-    const error = handleError(e as Error|ErrorObj|string), data = {};
-    return { data, error };
+    const error = handleError(e as Error|ErrorObj|string);
+    return { error };
   }
 };
 
 // User => API - Logout
 export const userLogout = () => {
-  const allCookies = cookies().getAll();
-  allCookies.forEach((cookie) => {
-    cookies().delete(cookie.name);
+  if (!cookies().has('user')) return;
+
+  cookies().set({
+    name: 'user',
+    value: '',
+    httpOnly: true,
+    path: '/',
+    sameSite: 'lax',
+    domain: '.localshop.test',
+    maxAge: -1
   });
+
+  return;
 };
 
 // User => API - Get

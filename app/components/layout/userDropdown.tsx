@@ -38,7 +38,6 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
     setIsUserMenuOpen(isOpen);
   };
 
-  // A corrigé : le logout ne fonctionne pas, le cookie n'est pas supprimé
   const handleUserLogout = () => {
     if (!isLogged()) return;
 
@@ -53,7 +52,7 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
 
     const ApiCall = async () => {
       const { error } = await userLogin();
-      if (error) return;
+      if (error) return showToast('Login failed!', 'error');
 
       const [userResponse, cartResponse] = await Promise.all([userStore.refresh(), cartStore.refresh()]);
       if (Boolean(userResponse) && Boolean(cartResponse)) {
