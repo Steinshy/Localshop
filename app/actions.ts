@@ -27,7 +27,6 @@ const api = new FetchManager(base_url);
 export const userLogin = async () => {
   try {
     const { userID } = await api.get<loginResponse>('/user_login');
-    console.log(userID);
 
     cookies().set({
       name: 'user',

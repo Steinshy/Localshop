@@ -19,4 +19,14 @@ const capitalize = (str: string): string => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export { capitalize, readableDate, showToast };
+const privateUrls = ['/user', '/order'];
+
+const isPrivateUrl = (requestUrl:string|null):boolean => {
+  const result = privateUrls.some(url => {
+    const regex = new RegExp(`^${url}`);
+    return requestUrl ? regex.test(requestUrl) : false;
+  });
+  return result;
+}
+
+export { isPrivateUrl, capitalize, readableDate, showToast };

@@ -55,7 +55,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
 
       <div className='flex flex-col flex-grow justify-center p-4'>
         <h2 className='text-2xl font-semibold text-center mb-4'>User Reviews</h2>
-        <div className='grid grid-cols-1 sm:grid-cols-4 gap-4'>
+        <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
           {reviewsItems.length > 0 ? (
             reviewsItems.map((review) => <ProductReview key={review.id} review={review} />)
           ) : (

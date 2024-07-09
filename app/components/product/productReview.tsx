@@ -15,21 +15,20 @@ import { ProductReviewProps } from '@interfaces/reviews';
 
 const ProductReview: FC<ProductReviewProps> = ({ review }) => {
   // Review
-  const { attributes } = review;
-  const { body, rating, author } = attributes;
+  const { attributes: { body, rating, author } } = review;
 
   // Author
-  const { data: { attributes: authorAttributes } } = author;
-  const { firstname, lastname, avatar } = authorAttributes;
-  const { small: imgAvatar } = avatar
+  const { data: { attributes: { firstname, lastname, avatar: { small } } } } = author;
 
   return (
     <Card className='max-w-[500px]'>
       <CardHeader className='flex justify-between items-center gap-3'>
-        <Avatar isBordered color='primary' size='sm' src={imgAvatar} />
-        <div className='flex flex-col'>
-          <span className='font-semibold'>{`${firstname} ${lastname}`}</span>
-          <ReviewsStars rating={rating} />
+        <div className='flex items-center gap-3'>
+          <Avatar isBordered color='primary' size='sm' src={small} />
+          <div className='flex flex-col'>
+            {firstname} {lastname}
+            <ReviewsStars rating={rating} />
+          </div>
         </div>
         {rating > 3 ? 
           <FaRegThumbsUp className='text-green-500' />

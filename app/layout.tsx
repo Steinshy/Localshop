@@ -23,6 +23,9 @@ import { LayoutProps } from "@interfaces/general";
 // Actions
 import { getCart, getUser } from "actions";
 
+// Utils
+import { isPrivateUrl } from "@utils/helpers";
+
 // CSS
 import "./styles/App.css";
 
@@ -35,13 +38,11 @@ export const metadata: Metadata = {
 
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data:userData, error:userError } = await getUser(),
-        { data:cartData } = await getCart();
+        { data:cartData } = await getCart(),
+        requestUrl = headers().get('x-url');
 
-  const requestUrl = headers().get('x-url')
   if (userError && requestUrl !== '/') {
-    console.log('userError');
-    console.log(userError);
-    return redirect('/');
+    if (isPrivateUrl(requestUrl)) return redirect('/');
   }
 
   return (

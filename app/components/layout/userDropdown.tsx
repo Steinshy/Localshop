@@ -4,7 +4,7 @@
 import { useState, useContext } from 'react';
 
 // NextJS
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 // NextUI
 import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown } from '@nextui-org/react';
@@ -13,24 +13,25 @@ import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown }
 import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from 'react-icons/fa';
 
 // Utils
-import { showToast } from '@utils/helpers';
+import { isPrivateUrl, showToast } from '@utils/helpers';
 
 // Actions
 import { userLogin } from 'actions';
 import { CartContext, UserContext } from '@utils/subProviders';
 
 const UserDropdown = () => {
-  const router = useRouter(), userStore = useContext(UserContext), cartStore = useContext(CartContext);
+  const router = useRouter(), pathname = usePathname(), userStore = useContext(UserContext), cartStore = useContext(CartContext);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   const { isLogged, data: { attributes: { firstname, lastname, avatar: { small } } } } = userStore;
 
   const handleUserAction = (key: React.Key) => {
+    setIsUserMenuOpen(false);
     if (key === 'logout') {
       void handleUserLogout();
-      return router.push('/');
+      if (isPrivateUrl(pathname)) router.push('/');
+      return;
     }
-    setIsUserMenuOpen(false);
     router.push(`/user/${key}`);
   };
 
