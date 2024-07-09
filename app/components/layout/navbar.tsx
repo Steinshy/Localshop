@@ -1,13 +1,16 @@
 'use client';
 
 // React
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 // NextJS
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 // NextUI
-import { Link as NextLink, NavbarContent, NavbarItem, Navbar, Button, Badge } from '@nextui-org/react';
+import { Link as NextLink, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarContent, NavbarItem,
+         Navbar, Button, Badge, 
+         LinkIcon} from '@nextui-org/react';
 
 // Icons
 import { FaCartArrowDown } from 'react-icons/fa';
@@ -23,7 +26,13 @@ const Header = () => {
     { key: 'home', href: '/', label: 'Home' },
     { key: 'products', href: '/products', label: 'Products' },
     { key: 'about', href: '/about', label: 'About Us' },
-  ], cartStore = useContext(CartContext), userStore = useContext(UserContext);
+  ],
+  pathname = usePathname(),
+  cartStore = useContext(CartContext),
+  userStore = useContext(UserContext);
+
+  // Mobile Menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Cart
   const { data: { attributes: { totalItems } } } = cartStore;
@@ -32,15 +41,37 @@ const Header = () => {
   // User
   const { isLogged } = userStore;
 
+  const active = (item:{ [key:string]:string }) => {
+    return item.href !== '/' ? pathname.includes(item.href) : pathname === item.href;
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  }
+
   return (
-    <Navbar isBlurred isBordered>
-      <NavbarContent className='flex' justify='start'>
+    <Navbar isBlurred isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <NavbarContent className='hidden sm:flex' justify='start'>
         <p className='ml-1 font-light'>Localshop</p>
       </NavbarContent>
 
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+      </NavbarContent>
+
+      <NavbarMenu>
+        {navItems.map((item) => (
+          <NavbarMenuItem key={item.key} isActive={active(item)}>
+            <NextLink as={Link} className='w-full' color='foreground' href={item.href} onPress={closeMenu}>
+              {item.label}
+            </NextLink>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
+
       <NavbarContent className='hidden sm:flex' justify='center'>
         {navItems.map((item) => (
-          <NavbarItem key={item.key}>
+          <NavbarItem key={item.key} isActive={active(item)}>
             <NextLink as={Link} color='foreground' href={item.href}>
               {item.label}
             </NextLink>
@@ -49,7 +80,7 @@ const Header = () => {
       </NavbarContent>
 
       <NavbarContent justify='end'>
-        {isLogged() ? (
+        {isLogged() && (
           <NavbarItem>
             <Badge
               content={cartTotal}
@@ -70,7 +101,7 @@ const Header = () => {
               </Button>
             </Badge>
           </NavbarItem>
-        ) : null}
+        )}
 
         <NavbarItem>
           <UserDropdown />
