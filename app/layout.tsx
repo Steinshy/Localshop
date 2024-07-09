@@ -3,6 +3,8 @@ import { FC } from "react";
 
 // NextJS
 import { Metadata } from 'next';
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation';
 
 // Modules
 import { Toaster } from "react-hot-toast";
@@ -21,7 +23,7 @@ import { LayoutProps } from "@interfaces/general";
 // Actions
 import { getCart, getUser } from "actions";
 
-// APP CSS
+// CSS
 import "./styles/App.css";
 
 export const metadata: Metadata = {
@@ -32,8 +34,15 @@ export const metadata: Metadata = {
 };
 
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
-  const { data:userData } = await getUser(),
+  const { data:userData, error:userError } = await getUser(),
         { data:cartData } = await getCart();
+
+  const requestUrl = headers().get('x-url')
+  if (userError && requestUrl !== '/') {
+    console.log('userError');
+    console.log(userError);
+    return redirect('/');
+  }
 
   return (
     <html lang="en" title="LocalShop">

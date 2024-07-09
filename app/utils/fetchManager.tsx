@@ -69,14 +69,19 @@ export class FetchManager {
   }
 }
 
-export const handleError = (e:Error|ErrorObj|string):ErrorObj => {
+export const handleError = (e: Error|ErrorObj|string):ErrorObj => {
   console.error('An error occurred: ', e);
 
-  let error:ErrorObj = { message: 'An error occurred' };
+  let error: ErrorObj = { message: 'An error occurred' };
   if (typeof e === 'object') {
-    const { message, items, status } = e as ErrorObj;
-    error = { message: message };
-    if (status === 422) error = { message: 'Validation Failed.', items: items };
+    if (e.message) {
+      const { message, items, status } = e as ErrorObj;
+      error = { message: message };
+      if (status === 422) error = { message: 'Validation Failed.', items: items };
+    }
+
+    const { error:fetchError } = e as unknown as { error:string };
+    if (fetchError) error = { message: fetchError };
   } else {
     error = { message: e };
   }

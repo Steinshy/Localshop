@@ -28,7 +28,7 @@ const UserDropdown = () => {
   const handleUserAction = (key: React.Key) => {
     if (key === 'logout') {
       void handleUserLogout();
-      return;
+      return router.push('/');
     }
     setIsUserMenuOpen(false);
     router.push(`/user/${key}`);
