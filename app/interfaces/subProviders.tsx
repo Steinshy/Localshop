@@ -9,6 +9,8 @@ type CartContextType = {
   update: Dispatch<SetStateAction<CartResponse>>;
   refresh: () => Promise<boolean>;
   reset: () => void;
+  setAddressID: Dispatch<SetStateAction<{ [x: string]: string|null; }>>;
+  addressID: { [x: string]: string|null; };
 };
 
 // subProviders => UserContext

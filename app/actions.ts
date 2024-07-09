@@ -7,7 +7,7 @@ import { revalidateTag } from 'next/cache';
 // Interface
 import { PasswordValuesProps, ProfileValuesProps, getUserResponse, loginResponse } from '@interfaces/user';
 import { GetOrdersResponse, GetOrderResponse, OrderResponse } from '@interfaces/userOrder';
-import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
+import { AddressResponse, AddressValuesProps } from '@interfaces/address';
 import { getProductsResponse } from '@interfaces/products';
 import { ProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
@@ -177,7 +177,7 @@ export const CreateAddress = async (newAddress: AddressValuesProps) => {
 };
 
 // User => Address - API - Put
-export const UpdateAddress = async (id: number, newAddress: AddressValuesProps) => {
+export const UpdateAddress = async (id: string, newAddress: AddressValuesProps) => {
   revalidateTag('user');
   try {
     const { data } = await api.put<{ data: AddressResponse }>(`/addresses/${id}`,
@@ -191,7 +191,7 @@ export const UpdateAddress = async (id: number, newAddress: AddressValuesProps) 
 };
 
 // User => Address - API - Delete
-export const RemoveAddress = async (id: number) => {
+export const RemoveAddress = async (id: string) => {
   revalidateTag('user');
   try {
     await api.delete<void>(`/addresses/${id}`);

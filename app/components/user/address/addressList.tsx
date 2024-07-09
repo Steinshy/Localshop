@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 
 // Components
 import AddressCard from '@components/user/address/addressCard';
@@ -16,7 +16,7 @@ import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from 'actio
 // Utils
 import { showToast } from '@utils/helpers';
 
-const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable = false, items = [] }) => {
+const AddressList: FC<AddressListProps> = ({ selectable = false, type, items = [] }) => {
   const [addresses, setAddresses] = useState<AddressResponse[]>(items);
 
   const refresh = async() => {
@@ -34,7 +34,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
     return;
   };
 
-  const handleUpdate = async (id: number, newAddress: AddressValuesProps) => {
+  const handleUpdate = async (id: string, newAddress: AddressValuesProps) => {
     const { error:updateError } = await UpdateAddress(id, newAddress);
     if (updateError?.items) return updateError.items;
 
@@ -44,19 +44,13 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
     return;
   };
 
-  const handleRemove = async (id: number) => {
+  const handleRemove = async (id: string) => {
     const { error:removeError } = await RemoveAddress(id);
     if (removeError) return showToast(removeError.message, 'error');
 
     showToast('Address has been removed!', 'success');
     void refresh();
   };
-
-  useEffect(() => {
-    if (setSelected) {
-      setSelected(addresses.find((address) => address.attributes.default === true)?.id ?? addresses[0]?.id ?? null);
-    }
-  }, [addresses, setSelected]);
 
   return (
     <>
@@ -67,8 +61,7 @@ const AddressList: FC<AddressListProps> = ({ selected, setSelected, selectable =
           addresses={addresses}
           address={address}
           selectable={selectable}
-          selected={selected}
-          setSelected={setSelected}
+          type={type}
           handleCreate={handleCreate}
           handleUpdate={handleUpdate}
           handleRemove={handleRemove}

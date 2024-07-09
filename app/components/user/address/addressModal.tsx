@@ -18,7 +18,7 @@ import { AddressModalProp, AddressValuesProps } from '@interfaces/address';
 // Data
 import { defaultAddress } from '@data/general';
 
-const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, handleUpdate }) => {
+const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpdate, id }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const cleanAttributes = (attributes: AddressValuesProps): AddressValuesProps => {
@@ -27,7 +27,8 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
   };
 
   const findAddress = () => {
-    const address = addresses.find((obj) => Number(obj.id) === id);
+    if (!id) return defaultAddress;
+    const address = addresses.find((item) => item.id === id);
     if (!address) return defaultAddress;
 
     const { attributes } = address;
@@ -35,11 +36,11 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
     return cleanAttributes(newAttributes);
   };
 
-  const formAddress = id > 0 ? findAddress() : defaultAddress;
+  const formAddress = id ? findAddress() : defaultAddress;
 
   return (
     <>
-      {id > 0 ? (
+      {id ? (
         <Button isIconOnly size='sm' onPress={onOpen} variant='flat' color='primary'>
           <FaEdit className='text-lg' />
         </Button>
@@ -50,7 +51,7 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
       )}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
         <ModalContent>
-          <ModalHeader className='flex flex-col gap-1'>{id > 0 ? 'Edit Address' : 'Create a new Address'}</ModalHeader>
+          <ModalHeader className='flex flex-col gap-1'>{id ? 'Edit Address' : 'Create a new Address'}</ModalHeader>
           <ModalBody>
             <Formik
               initialValues={formAddress}
@@ -71,7 +72,7 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                 const newAddress = { ...formAddress, ...values };
 
                 const process = async () => {
-                  const response = await (id > 0 ? handleUpdate(id, newAddress) : handleCreate(newAddress));
+                  const response = await (id ? handleUpdate(id, newAddress) : handleCreate(newAddress));
                   if (!response) return onClose();
 
                   for (const [key, value] of Object.entries(response as { [s: string]: never; })) {
@@ -252,7 +253,7 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
 
                   <div className='flex justify-center'>
                     <Button type='submit' color='primary' variant='solid' className='text-white' size='md' radius='sm'>
-                      {id > 0 ? 'Confirm Edit' : 'Create Address'}
+                      {id ? 'Confirm Edit' : 'Create Address'}
                     </Button>
                   </div>
                 </Form>

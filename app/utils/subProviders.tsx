@@ -17,6 +17,7 @@ import { getCart, getUser, userLogout } from 'actions';
 // CART PROVIDERS //
 const useCart = (initialCart:CartResponse) => {
   const [cart, setCart] = useState<CartResponse>(initialCart);
+  const [addressID, setAddressID] = useState<{ [x: string]: string|null; }>({});
 
   const refresh = useCallback(async ():Promise<boolean> => {
     const { data, error } = await getCart() as CartActions;
@@ -28,7 +29,7 @@ const useCart = (initialCart:CartResponse) => {
     setCart(defaultCart);
   }, [setCart]);
 
-  return { data: cart, update: setCart, refresh, reset };
+  return { data: cart, update: setCart, refresh, reset, setAddressID, addressID };
 };
 
 const CartProvider:FC<CartProviderProps> = ({ children, initialCart }) => {
@@ -44,6 +45,8 @@ const CartContext = createContext<CartContextType>({
     return await new Promise<boolean>((resolve) => { resolve(false);});
   },
   reset: () => {},
+  setAddressID: () => {},
+  addressID: {}
 });
 
 // USER PROVIDERS //
