@@ -18,9 +18,11 @@ const CableComponent = () => {
         cartStore = useContext(CartContext),
         cable:Cable = createConsumer('ws://api.localshop.test:3005/cable');
 
-  const { refresh:userRefresh } = userStore, { refresh:cartRefresh } = cartStore;
+  const { isLogged, refresh:userRefresh } = userStore, { refresh:cartRefresh } = cartStore;
 
   useEffect(() => {
+    if (!isLogged()) return;
+
     const channel:Channel = cable.subscriptions.create('UsersChannel',
       {
         disconnected: () => console.log('ws: unsubscribed.'),
@@ -37,7 +39,7 @@ const CableComponent = () => {
 
     return () => { channel.unsubscribe(); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLogged]);
 
   return <></>;
 }

@@ -18,7 +18,7 @@
     "formik-stepper": "^2.2.1",
     "framer-motion": "^11.0.6",
     "next": "~14.2.0",
-    "next-themes": "^0.2.1",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",

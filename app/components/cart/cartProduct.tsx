@@ -24,12 +24,15 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);
   const { quantity, price, product } = cartItem;
   const { data: { id, attributes: { title, thumbnail } } } = product;
-
   const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
 
+  // Context - CartItem - Used to refresh after sync
+  const { data: { attributes: { items } } } = cartStore;
+  const ContextCartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === id);
+
   useEffect(() => {
-    if (quantity !== currentQuantity) setCurrentQuantity(quantity);
-  }, [quantity, currentQuantity]);
+    if(ContextCartItem?.quantity) setCurrentQuantity(ContextCartItem?.quantity);
+  }, [ContextCartItem?.quantity]);
 
   const deleteItem = async () => {
     const { data, error } = await deleteCartItem(id);

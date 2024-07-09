@@ -30,7 +30,7 @@ const Stepper: FC<StepperProps> = ({ steps, pathToStepMap }) => {
               <div className='w-3 h-3 rounded-full animate-ping bg-primary' />
             }
           </div>
-          <p className={`text-sm ${currentStep >= index ? 'text-primary' : 'text-gray-500'}`}>
+          <p className={`text-sm ${currentStep >= index ? 'text-primary' : 'text-foreground/75'}`}>
             {step}
           </p>
           {index < steps.length - 1 && <div className={`h-0.5 w-8 bg-gray-200 mx-2`} />}

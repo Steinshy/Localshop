@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
 // React
 import { useEffect, useState } from "react";
 
-// NextUiTheme
+// NextUITheme
 import { useTheme } from "next-themes";
 
 // NextUI
@@ -13,30 +13,32 @@ import { Switch } from "@nextui-org/switch";
 import { MoonIcon, SunIcon } from "@utils/themeSwitcherIcons";
 
 const ThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState<boolean>(false),
+        { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
   const setIsSelected = (isSelected: boolean) => {
-    setTheme(isSelected ? "light" : "dark");
+    setTheme(isSelected ? 'dark' : 'light');
   };
 
-  const renderIcon = ({ isSelected }: { isSelected: boolean }) => (isSelected ? <SunIcon /> : <MoonIcon />);
-
-  return mounted ? (
-    <Switch
-      isSelected={theme === "light"}
-      onValueChange={setIsSelected}
-      size="lg"
-      color="danger"
-      thumbIcon={renderIcon}
-    />
-  ) : (
-    <Switch isSelected={true} size="lg" color="danger" thumbIcon={<SunIcon />} />
-  );
+  return (
+    <div className='text-black'>
+      {mounted ? (
+        <Switch
+          isSelected={theme === 'dark'}
+          onValueChange={setIsSelected}
+          size='lg'
+          color='danger'
+          thumbIcon={theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+        />
+      ) : (
+        <Switch isSelected={false} size='lg' color='danger' thumbIcon={<SunIcon />} />
+      )}
+    </div>
+  )
 };
 
 export default ThemeSwitcher;
