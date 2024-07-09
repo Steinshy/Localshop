@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 // Components
 import Navbar from "@components/layout/navbar";
 import Footer from "@components/layout/footer";
+import CableComponent from "@components/cable";
 
 // Providers
 import Providers from "./providers";
@@ -31,6 +32,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
           <Providers initialUser={userData} initialCart={cartData}>
             <Navbar />
             {children}
+            <CableComponent />
           </Providers>
           <Footer />
         </main>

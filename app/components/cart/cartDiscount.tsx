@@ -22,14 +22,17 @@ import { showToast } from '@utils/helpers';
 // API
 import { applyDiscount, deleteDiscount } from 'actions';
 
-const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, totalPrice = 0 }) => {
+const CartDiscount: FC<CartDiscountProps> = () => {
   const cartStore = useContext(CartContext);
+
+  const { update, data: { attributes: { totalPrice, coupon } } } = cartStore;
+  const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: { code: undefined, discount: undefined } } };
 
   const handleDeleteDiscount = () => {
     const apiFetch = async () => {
       const response = await deleteDiscount();
       const { data, error } = response;
-      !error ? cartStore.update(data) : showToast(error.message, 'error');
+      !error ? update(data) : showToast(error.message, 'error');
     };
     void apiFetch();
   };
@@ -77,10 +80,10 @@ const CartDiscount: FC<CartDiscountProps> = ({ couponCode, couponDiscount = 0, t
         </Formik>
       </div>
 
-      {couponCode && (
+      {code && (
         <div className='flex justify-center mb-4'>
           <Chip className='text-white' size='sm' color='secondary' variant='solid' onClose={handleDeleteDiscount}>
-            Coupon {couponCode} with value of {couponDiscount > 0 ? couponDiscount : 0}% applied
+            Coupon {code} with value of {discount > 0 ? discount : 0}% applied
           </Chip>
         </div>
       )}
