@@ -2,6 +2,7 @@
 import { FC } from 'react';
 
 // NextJS
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 // NextUI
@@ -19,6 +20,16 @@ import { OrderPageProps } from '@interfaces/userOrder';
 
 // Actions
 import { getOrder } from 'actions';
+
+type MetaProps = {
+  params: { id: string }
+}
+ 
+export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
+  const { data } = await getOrder(params.id);
+  const { id } = data;
+  return { title: `Order #${id}` }
+}
 
 const OrderPage: FC<OrderPageProps> = async ({ params }) => {
   const { data: order } = await getOrder(params.id);

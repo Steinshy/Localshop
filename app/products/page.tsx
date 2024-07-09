@@ -1,6 +1,9 @@
 // React
 import { FC } from 'react';
 
+// NextJS
+import { Metadata } from 'next';
+
 // Actions
 import { getProducts } from 'actions';
 
@@ -15,6 +18,10 @@ import { offer1, offer2, offer3, offer4, BG } from '../assets/index';
 
 // Interfaces
 import { ProductsPageProps } from '@interfaces/products';
+
+export const metadata: Metadata = {
+  title: 'Products'
+};
 
 const ProductsPage: FC<ProductsPageProps> = async ({ searchParams }) => {
   const urlParams = searchParams || {}, offersArray = [offer1, offer2, offer3, offer4];

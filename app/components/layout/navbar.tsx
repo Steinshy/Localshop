@@ -9,8 +9,7 @@ import Link from 'next/link';
 
 // NextUI
 import { Link as NextLink, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarContent, NavbarItem,
-         Navbar, Button, Badge, 
-         LinkIcon} from '@nextui-org/react';
+         Navbar, Button, Badge } from '@nextui-org/react';
 
 // Icons
 import { FaCartArrowDown } from 'react-icons/fa';

@@ -1,12 +1,19 @@
 // React
 import { FC } from 'react';
 
+// NextJS
+import { Metadata } from 'next';
+
 // Components
 import Stepper from '@components/cart/stepper';
 import CartSummary from '@components/cart/cartSummary';
 
 // Interfaces
 import { LayoutProps } from '@interfaces/general';
+
+export const metadata: Metadata = {
+  title: 'Order'
+};
 
 const OrderLayout:FC<LayoutProps> = ({ children }) => {
   const steps: string[] = ['Cart', 'Shipping', 'Payment'],

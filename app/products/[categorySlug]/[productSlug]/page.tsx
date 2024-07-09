@@ -1,6 +1,9 @@
 // React
 import { FC } from 'react';
 
+// NextJS
+import { Metadata } from 'next';
+
 // Actions
 import { getProduct, getProductReviews } from 'actions';
 
@@ -13,6 +16,17 @@ import ProductReview from '@components/product/productReview';
 // Interfaces
 import { ProductPageProps } from '@interfaces/product';
 import PreviouslyOrdered from '@components/product/previouslyOrdered';
+
+type MetaProps = {
+  params: { productSlug: string }
+}
+ 
+export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
+  const { productSlug } = params;
+  const { data } = await getProduct(productSlug);
+  const { attributes: { title } } = data;
+  return { title: title }
+}
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const { productSlug } = params;

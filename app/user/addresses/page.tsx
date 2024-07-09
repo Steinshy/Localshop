@@ -1,3 +1,6 @@
+// NextJS
+import { Metadata } from 'next';
+
 // Components
 import Breadcrumb from "@components/layout/breadCrumb";
 import AddressList from "@components/user/address/addressList";
@@ -5,8 +8,12 @@ import AddressList from "@components/user/address/addressList";
 // Actions
 import { getAddresses } from "actions";
 
+export const metadata: Metadata = {
+  title: 'Addresses'
+};
+
 const AddressesPage = async () => {
-  const { data:addresses, error } = await getAddresses();
+  const { data:addresses } = await getAddresses();
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
 
   return (

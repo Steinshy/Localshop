@@ -1,3 +1,10 @@
+// NextJS
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Home | Localshop'
+};
+
 const HomePage = () => (
   <div className="flex flex-col flex-grow justify-center items-center text-center">
     <h1 className="text-5xl">Welcome to Localshop!</h1>

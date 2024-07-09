@@ -1,3 +1,6 @@
+// NextJS
+import { Metadata } from 'next';
+
 // Components
 import Breadcrumb from "@components/layout/breadCrumb";
 import AvatarForm from "@components/user/profile/avatarForm";
@@ -5,6 +8,10 @@ import AvatarForm from "@components/user/profile/avatarForm";
 // Utils
 import GeneralForm from "@components/user/profile/generalForm";
 import PasswordForm from "@components/user/profile/passwordForm";
+
+export const metadata: Metadata = {
+  title: 'Profile'
+};
 
 const ProfilePage = () => {
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Profile" }];

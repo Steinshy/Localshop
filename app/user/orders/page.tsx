@@ -1,6 +1,5 @@
-'use server';
-
 // NextJS
+import { Metadata } from 'next';
 import Link from 'next/link';
 
 // NextUI
@@ -12,7 +11,13 @@ import { FaArrowRight } from 'react-icons/fa';
 // Components
 import OrderCard from '@components/user/order/orderCard';
 import Breadcrumb from '@components/layout/breadCrumb';
+
+// Actions
 import { getOrders } from 'actions';
+
+export const metadata: Metadata = {
+  title: 'Orders'
+};
 
 const OrdersPage = async () => {
   const { data: orders, error } = await getOrders();

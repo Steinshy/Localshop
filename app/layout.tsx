@@ -1,6 +1,9 @@
 // React
 import { FC } from "react";
 
+// NextJS
+import { Metadata } from 'next';
+
 // Modules
 import { Toaster } from "react-hot-toast";
 
@@ -20,6 +23,13 @@ import { getCart, getUser } from "actions";
 
 // APP CSS
 import "./styles/App.css";
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | Localshop',
+    default: 'Localshop'
+  }
+};
 
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data:userData } = await getUser(),
@@ -41,6 +51,5 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
     </html>
   );
 }
-
 
 export default RootLayout;
