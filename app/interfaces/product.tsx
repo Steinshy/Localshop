@@ -5,6 +5,7 @@ type ProductResponse = {
 
   attributes: {
     id: number;
+    slug: string;
     title: string;
     description: string;
     price: number;
@@ -14,8 +15,21 @@ type ProductResponse = {
     brand: string;
     thumbnail: ProductResponseThumbnail;
     images: [ProductResponseImages];
+    category: ProductCategory;
   };
 };
+
+type ProductCategory = {
+  data: {
+    id: string;
+    type: string;
+    attributes: {
+      id: number;
+      title: string;
+      slug: string;
+    }
+  }
+}
 
 // ProductResponse => Thumbnail
 type ProductResponseThumbnail = {
@@ -37,7 +51,7 @@ type getProductResponse = {
 // Product/ID/Slug => Page
 type ProductPageProps = {
   params: {
-    id: string;
+    productSlug: string;
   };
 };
 

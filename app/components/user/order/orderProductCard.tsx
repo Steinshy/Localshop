@@ -7,22 +7,19 @@ import { Image } from "@nextui-org/react";
 // NextJS
 import Link from "next/link";
 
-// Helpers
-import { generateSlug } from "@utils/helpers";
-
 // Interface
 import { OrderProductCardProps } from "@interfaces/userOrder";
 
 const OrderProductCard: FC<OrderProductCardProps> = ({ orderProduct }) => {
   const { quantity, price, product } = orderProduct;
-  const { data: { attributes: { id:productID, title, thumbnail } } } = product;
-  const slug = generateSlug(title);
+  const { data: { attributes: { category, slug, title, thumbnail } } } = product;
+  const { data: { attributes: { slug:categorySlug } } } = category;
 
   return (
     <div className="p-2 bg-background border-1 rounded-md">
       <div className="grid grid-cols-2">
         <div className="flex justify-start items-center">
-          <Link href={`/products/${productID}/${slug}`}>
+          <Link href={`/products/${categorySlug}/${slug}`}>
             <Image
               src={thumbnail.url}
               alt={title}

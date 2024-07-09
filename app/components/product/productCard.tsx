@@ -13,20 +13,18 @@ import { Card, CardBody, CardHeader, CardFooter, Image, Chip } from '@nextui-org
 import AddToCart from '@components/product/addToCart';
 import ReviewsStars from '@components/product/reviewsStars';
 
-// Helpers
-import { generateSlug } from '@utils/helpers';
-
 // Interfaces
 import { ProductCardProps } from '@interfaces/product';
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { attributes } = product;
-  const { id, title, thumbnail, price, rating, stock } = attributes;
+  const { slug, title, thumbnail, price, rating, stock, category } = attributes;
   const { url: image } = thumbnail;
+  const { data: { attributes: { slug:categorySlug } } } = category;
 
   return (
     <article>
-      <Card className='w-full h-[350px]' as={Link} href={`/products/${id}/${generateSlug(title)}`} radius='sm'>
+      <Card className='w-full h-[350px]' as={Link} href={`/products/${categorySlug}/${slug}`} radius='sm'>
         <CardHeader className='absolute z-10 top-2 right-4 flex-col items-end'>
           {stock > 50 && (
             <Chip color='danger' size='sm'>New</Chip>

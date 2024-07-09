@@ -1,8 +1,3 @@
-'use client';
-
-// React
-import { useContext } from 'react';
-
 // NextJS
 import Link from 'next/link';
 
@@ -13,12 +8,12 @@ import { FaCartArrowDown, FaArrowRight } from 'react-icons/fa';
 // Components
 import CartProduct from '@components/cart/cartProduct';
 
-// Utils
-import { CartContext } from '@utils/subProviders';
+// Actions
+import { getCart } from 'actions';
 
-const OrderPage = () => {
-  const cartStore = useContext(CartContext);
-  const { data: { attributes: { items } } } = cartStore;
+const OrderPage = async () => {
+  const { data } = await getCart();
+  const { attributes: { items } } = data;
 
   return items.length ? (
     <ul className='flex flex-col sm:col-span-7 gap-2'>

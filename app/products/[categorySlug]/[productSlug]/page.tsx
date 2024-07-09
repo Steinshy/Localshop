@@ -15,7 +15,8 @@ import { ProductPageProps } from '@interfaces/product';
 import PreviouslyOrdered from '@components/product/previouslyOrdered';
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
-  const [product, reviews] = await Promise.all([getProduct(params.id), getProductReviews(params.id)]);
+  const { productSlug } = params;
+  const [product, reviews] = await Promise.all([getProduct(productSlug), getProductReviews(productSlug)]);
 
   const { data:localProduct } = product;
   const { attributes: { id, title, description, price, thumbnail, images } } = localProduct;
