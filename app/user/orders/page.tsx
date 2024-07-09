@@ -21,7 +21,7 @@ const OrdersPage = async () => {
   return (
     <>
       <Breadcrumb items={breadCrumbItems} />
-      <h1 className='text-2xl mb-2 text-center'>Orders</h1>
+      <h1 className='text-2xl mb-2'>Orders</h1>
 
       {orders.length > 0 && !error ? (
         <div className='grid grid-cols-1 gap-3'>

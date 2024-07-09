@@ -1,4 +1,4 @@
-type UserResponse = {
+export type UserResponse = {
   id: number;
   type: string;
 
@@ -14,26 +14,35 @@ type UserResponse = {
   };
 };
 
-type getUserResponse = {
+export type getUserResponse = {
   data: UserResponse
 };
 
-type UserActions = {
+export type UserActions = {
   data: UserResponse;
   error?: string;
 }
 
-type UserProviderProps = {
+export type UserProviderProps = {
   children: React.ReactNode;
   initialUser: UserResponse;
 }
 
-type InitialUserProps = {
+export type InitialUserProps = {
   initialUser: UserResponse;
 }
 
-type loginResponse = {
+export type loginResponse = {
   userID: number;
 }
 
-export type { loginResponse, InitialUserProps, UserProviderProps, UserResponse, getUserResponse, UserActions };
+export type ProfileValuesProps = {
+  firstname: string;
+  lastname: string;
+  email: string;
+}
+
+export type PasswordValuesProps = {
+  password: string;
+  password_confirmation: string;
+}

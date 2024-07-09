@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import { revalidateTag } from 'next/cache';
 
 // Interface
-import { getUserResponse, loginResponse } from '@interfaces/user';
+import { PasswordValuesProps, ProfileValuesProps, getUserResponse, loginResponse } from '@interfaces/user';
 import { GetOrdersResponse, GetOrderResponse, OrderResponse } from '@interfaces/userOrder';
 import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 import { getProductsResponse } from '@interfaces/products';
@@ -68,6 +68,42 @@ export const getUser = async () => {
   try {
     const { data } = await api.get<getUserResponse>('/user',
       { next: { tags: ['user'] } });
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error|ErrorObj|string), data = defaultUser;
+    return { data, error };
+  }
+};
+
+// User => API - UpdateAvatar
+export const updateAvatar = async (formData: FormData) => {
+  try {
+    const { data } = await api.post<getUserResponse>('/user/update_picture', formData,
+      { next: { tags: ['user'] } });
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error|ErrorObj|string), data = defaultUser;
+    return { data, error };
+  }
+};
+
+// User => API - UpdateProfile
+export const updateProfile = async (profileData:ProfileValuesProps) => {
+  try {
+    const { data } = await api.patch<getUserResponse>('/user/update_profile',
+      JSON.stringify({ 'user': profileData }), { next: { tags: ['user'] } });
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error|ErrorObj|string), data = defaultUser;
+    return { data, error };
+  }
+};
+
+// User => API - UpdatePassword
+export const updatePassword = async (passwordData:PasswordValuesProps) => {
+  try {
+    const { data } = await api.patch<getUserResponse>('/user/update_password',
+      JSON.stringify({ 'user': passwordData }), { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
     const error = handleError(e as Error|ErrorObj|string), data = defaultUser;

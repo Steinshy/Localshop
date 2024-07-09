@@ -21,24 +21,23 @@ export class FetchManager {
 
   private async request<T>(method: HttpMethod, endpoint: string, options?: FetchOptions): Promise<T> {
     const url = this.buildUrl(endpoint, options?.queryParams);
+    
+    if (options?.body && !(options.body instanceof FormData)) {
+      options.headers = {
+        ...options.headers,
+        'Content-Type': 'application/json'
+      };
+    }
+
     const fetchOptions: RequestInit = {
       method,
       headers: {
-        'Content-Type': 'application/json',
         Cookie: cookies().toString(),
         ...(options?.headers || {}),
       },
       body: options?.body || null,
       credentials: 'include'
     };
-
-    if (options?.body && typeof options.body === 'object' && !(options.body instanceof FormData)) {
-      fetchOptions.body = JSON.stringify(options.body);
-      fetchOptions.headers = {
-        ...fetchOptions.headers,
-        'Content-Type': 'application/json',
-      };
-    }
 
     const response = await fetch(url, fetchOptions);
     if (!response.ok) {
@@ -55,6 +54,10 @@ export class FetchManager {
 
   public post<T>(endpoint: string, body: BodyInit | null, options?: FetchOptions): Promise<T> {
     return this.request<T>('POST', endpoint, { ...options, body });
+  }
+
+  public patch<T>(endpoint: string, body: BodyInit | null, options?: FetchOptions): Promise<T> {
+    return this.request<T>('PATCH', endpoint, { ...options, body });
   }
 
   public put<T>(endpoint: string, body: BodyInit | null, options?: FetchOptions): Promise<T> {

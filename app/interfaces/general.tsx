@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { CartResponse } from "./cart";
 import { UserResponse } from "./user";
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 type FetchOptions = {
   headers?: { [key: string]: string };

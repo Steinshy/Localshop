@@ -37,7 +37,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
 
   const handleAddItem = useCallback((e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    if (cartItemsQuantity > 0) return router.push('/order/cart');
+    if (cartItemsQuantity > 0) return router.push('/order');
 
     const apiFetch = async () => {
       const { data, error } = await addItemToCart(product_id);

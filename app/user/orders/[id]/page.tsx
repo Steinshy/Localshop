@@ -32,7 +32,7 @@ const OrderPage: FC<OrderPageProps> = async ({ params }) => {
   return (
     <>
       <Breadcrumb items={breadCrumbItems} />
-      <h1 className='text-2xl mb-2 text-center'>Order {params.id}</h1>
+      <h1 className='text-2xl mb-2'>Order #{order.id}</h1>
 
       {/*  Order Details */}
       {order ? (

@@ -19,7 +19,7 @@ const OrderProcessButton: FC<OrderProcessButtonProps> = ({ items }) => {
   const pathMappings: { [key: string]: { text: string; nextPath: string } } = {
     '/order': { text: 'Proceed to Shipping', nextPath: '/order/shipping' },
     '/order/shipping': { text: 'Proceed to Payment', nextPath: '/order/payment' },
-    '/order/payment': { text: 'Return to Cart', nextPath: '/order/cart' },
+    '/order/payment': { text: 'Return to Cart', nextPath: '/order' },
   };
 
   const { text, nextPath } = pathMappings[pathname] || { text: 'Proceed to Payment', nextPath: '/order/payment' };

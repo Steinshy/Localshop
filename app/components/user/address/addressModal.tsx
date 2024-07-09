@@ -64,8 +64,6 @@ const AddressModal: FC<AddressModalProp> = ({ id = 0, addresses, handleCreate, h
                     errors[key] = 'Required';
                   }
                 });
-                console.log(hasError);
-                console.log(errors);
                 if (hasError) return errors;
               }}
               onSubmit={(values: AddressValuesProps, { setSubmitting, setFieldError }) => {

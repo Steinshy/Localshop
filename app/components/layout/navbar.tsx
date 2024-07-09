@@ -23,18 +23,14 @@ const Header = () => {
     { key: 'home', href: '/', label: 'Home' },
     { key: 'products', href: '/products', label: 'Products' },
     { key: 'about', href: '/about', label: 'About Us' },
-  ];
+  ], cartStore = useContext(CartContext), userStore = useContext(UserContext);
 
   // Cart
-  const cartStore = useContext(CartContext);
   const { data: { attributes: { totalItems } } } = cartStore;
   const cartTotal = totalItems || 0;
 
   // User
-  const userStore = useContext(UserContext);
-  const { data: userData, isLogged } = userStore || {};
-  const { attributes: userAttributes } = userData || {};
-  const { firstname, lastname } = userAttributes || {};
+  const { isLogged } = userStore;
 
   return (
     <Navbar isBlurred isBordered>
@@ -77,13 +73,7 @@ const Header = () => {
         ) : null}
 
         <NavbarItem>
-          <UserDropdown
-            userStore={userStore}
-            cartStore={cartStore}
-            isLogged={isLogged}
-            firstname={firstname}
-            lastname={lastname}
-          />
+          <UserDropdown />
         </NavbarItem>
       </NavbarContent>
     </Navbar>

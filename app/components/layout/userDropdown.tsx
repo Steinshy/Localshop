@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useState } from 'react';
+import { useState, useContext } from 'react';
 
 // NextJS
 import { useRouter } from 'next/navigation';
@@ -15,15 +15,15 @@ import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from 'react-ico
 // Utils
 import { showToast } from '@utils/helpers';
 
-// Interfaces
-import { UserMenuProps } from '@interfaces/navbar';
-
 // Actions
 import { userLogin } from 'actions';
+import { CartContext, UserContext } from '@utils/subProviders';
 
-const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, firstname, lastname }) => {
-  const router = useRouter();
+const UserDropdown = () => {
+  const router = useRouter(), userStore = useContext(UserContext), cartStore = useContext(CartContext);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  const { isLogged, data: { attributes: { firstname, lastname, avatar: { small } } } } = userStore;
 
   const handleUserAction = (key: React.Key) => {
     if (key === 'logout') {
@@ -82,7 +82,7 @@ const UserDropdown: FC<UserMenuProps> = ({ userStore, cartStore, isLogged, first
               className='transition-transform'
               color='primary'
               size='sm'
-              src='https:i.pravatar.cc/150?u=a042581f4e29026704d'
+              src={small}
             />
           }
           endContent={<FaChevronDown className={`transition-transform	${isUserMenuOpen ? 'rotate-180' : 'rotate-0'}`} />}

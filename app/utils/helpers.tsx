@@ -46,4 +46,9 @@ const showToast = (text: string, status: ToastType) => {
   status === 'error' ? toast.error(text) : toast.success(text);
 };
 
-export { generateSlug, generateClamp, generateRandomBool, readableDate, showToast };
+const capitalize = (str: string): string => {
+  if (str.length === 0) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export { capitalize, generateSlug, generateClamp, generateRandomBool, readableDate, showToast };
