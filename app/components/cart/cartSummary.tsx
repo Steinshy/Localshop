@@ -8,16 +8,24 @@ import { Card } from '@nextui-org/card';
 
 // Components
 import CartDiscount from '@components/cart/cartDiscount';
-import OrderProcessButton from '@components/cart/orderProcessButton';
+import CheckoutButton from '@components/cart/checkoutButton';
 
 // Utils
 import { CartContext } from '@utils/subProviders';
 
 const CartSummary = () => {
   const cartStore = useContext(CartContext);
-  const { data: { attributes: { coupon, totalPrice, finalPrice, items } } } = cartStore;
-  const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: {} } };
-  
+  const {
+    data: {
+      attributes: { coupon, totalPrice, finalPrice, items },
+    },
+  } = cartStore;
+  const {
+    data: {
+      attributes: { code, discount },
+    },
+  } = coupon || { data: { attributes: {} } };
+
   return (
     <Card className='sticky top-[70px] border-1 p-4 rounded-md'>
       <h2 className='text-2xl font-semibold mb-4 text-foreground text-center'>Order summary</h2>
@@ -31,9 +39,7 @@ const CartSummary = () => {
         <p className='text-lg text-end'>0€</p>
       </div>
 
-      <p className='text-small text-foreground/75 italic'>
-        Shipping and taxes will be calculated at checkout
-      </p>
+      <p className='text-small text-foreground/75 italic'>Shipping and taxes will be calculated at checkout</p>
 
       <hr className='my-4' />
       <div className='grid grid-cols-2 gap-4 text-foreground'>
@@ -53,9 +59,9 @@ const CartSummary = () => {
       <CartDiscount couponCode={code} couponDiscount={discount} totalPrice={totalPrice} />
 
       {/* Shipping - Payment Button */}
-      <OrderProcessButton items={items} />
+      <CheckoutButton items={items} />
     </Card>
-  );
+  )
 };
 
 export default CartSummary;

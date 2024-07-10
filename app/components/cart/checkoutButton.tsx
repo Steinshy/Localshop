@@ -12,9 +12,9 @@ import { FaArrowRight } from 'react-icons/fa';
 import { Button } from '@nextui-org/react';
 
 // Interface
-import { OrderProcessButtonProps } from '@interfaces/cart';
+import { CheckoutButtonProps } from '@interfaces/cart';
 
-const OrderProcessButton: FC<OrderProcessButtonProps> = ({ items }) => {
+const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
   const pathname = usePathname();
   const pathMappings: { [key: string]: { text: string; nextPath: string } } = {
     '/order': { text: 'Proceed to Shipping', nextPath: '/order/shipping' },
@@ -41,4 +41,4 @@ const OrderProcessButton: FC<OrderProcessButtonProps> = ({ items }) => {
   );
 };
 
-export default OrderProcessButton;
+export default CheckoutButton;
