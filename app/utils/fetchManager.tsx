@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 
 // Interfaces
-import { HttpMethod, FetchOptions, ErrorObj } from '@interfaces/general';
+import { HttpMethod, FetchOptions, ErrorObj } from '@interfaces/httpUtils';
 
 export class FetchManager {
   private baseUrl: string;

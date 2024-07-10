@@ -1,25 +1,3 @@
-// Interfaces
-import { ReactNode } from "react";
-import { CartResponse } from "./cart";
-import { UserResponse } from "./user";
-
-type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
-
-type FetchOptions = {
-  headers?: { [key: string]: string };
-  queryParams?: { [key: string]: string };
-  body?: BodyInit | null;
-  next?: {
-    tags: string[];
-  };
-};
-
-type ErrorObj = {
-  message: string;
-  items?: { [key: string]: string };
-  status?: number;
-};
-
 type LayoutProps = {
   children: React.ReactNode;
 };
@@ -30,7 +8,7 @@ type BreadcrumbProps = {
 
 type StepperProps = {
   steps: string[];
-  pathToStepMap: { [key: string]: number; };
+  pathToStepMap: { [key: string]: number };
 };
 
 type PagyProps = {
@@ -38,10 +16,4 @@ type PagyProps = {
   pages: number;
 };
 
-type ProviderProps = {
-  children: ReactNode;
-  initialUser: UserResponse;
-  initialCart: CartResponse;
-}
-
-export type { ProviderProps, HttpMethod, FetchOptions, ErrorObj, LayoutProps, BreadcrumbProps, StepperProps, PagyProps };
+export type { LayoutProps, BreadcrumbProps, StepperProps, PagyProps };

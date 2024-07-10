@@ -1,5 +1,6 @@
 // React - Interfaces
 import { Dispatch, SetStateAction } from 'react';
+import { ReactNode } from "react";
 import { CartResponse } from '@interfaces/cart';
 import { UserResponse } from '@interfaces/user';
 
@@ -22,4 +23,10 @@ type UserContextType = {
   logout: () => void;
 };
 
-export type { CartContextType, UserContextType };
+type ProviderProps = {
+  children: ReactNode;
+  initialUser: UserResponse;
+  initialCart: CartResponse;
+}
+
+export type { CartContextType, UserContextType, ProviderProps };

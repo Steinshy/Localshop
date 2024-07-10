@@ -13,7 +13,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { UserProvider, CartProvider } from "@utils/subProviders";
 
 // Interfaces
-import { ProviderProps } from "@interfaces/general";
+import { ProviderProps } from "@interfaces/subProviders";
 
 const Providers: FC<ProviderProps> = ({ children, initialUser, initialCart }) => (
   <NextUIProvider className="flex flex-col flex-grow">

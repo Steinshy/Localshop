@@ -7,12 +7,12 @@ import { revalidateTag } from 'next/cache';
 // Interface
 import { PasswordValuesProps, ProfileValuesProps, getUserResponse, loginResponse } from '@interfaces/user';
 import { GetOrdersResponse, GetOrderResponse, OrderResponse } from '@interfaces/userOrder';
-import { AddressResponse, AddressValuesProps } from '@interfaces/address';
+import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 import { getProductsResponse } from '@interfaces/products';
 import { ProductResponse } from '@interfaces/product';
 import { getReviewResponse } from '@interfaces/reviews';
 import { getCartResponse } from '@interfaces/cart';
-import { ErrorObj } from '@interfaces/general';
+import { ErrorObj } from '@interfaces/httpUtils';
 
 // Data
 import { defaultCart, defaultUser } from '@data/general';
