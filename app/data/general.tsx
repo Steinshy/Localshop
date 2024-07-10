@@ -1,7 +1,7 @@
 // Interfaces
 
 import { UserResponse } from '@interfaces/user';
-import { CartResponse, CartItem, CartCoupon } from '@interfaces/cart';
+import { CartResponse, CartItemProps, CartCoupon } from '@interfaces/cart';
 import { DiscountResponse } from '@interfaces/discount';
 import { ProductResponse } from '@interfaces/product';
 
@@ -57,7 +57,7 @@ const defaultProduct: ProductResponse = {
 };
 
 // defaultCart => items
-const defaultCartItem: CartItem = {
+const defaultCartItem: CartItemProps = {
   id: 0,
   quantity: 0,
   price: 0,
