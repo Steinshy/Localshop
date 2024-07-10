@@ -9,7 +9,7 @@ import { Card, CardBody } from '@nextui-org/card';
 import { Button } from '@nextui-org/button';
 
 // Components
-import CartButtonDelete from '@components/cart/cartButtonDelete';
+import CartClearBtn from '@components/cart/cartClearBtn';
 
 // Interfaces
 import { CartProductProps } from '@interfaces/cart';
@@ -54,7 +54,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   return (
     <Card className='flex flex-col gap-2 w-full'>
       <div className='flex justify-end'>
-        <CartButtonDelete id={id} cartStore={cartStore} />
+        <CartClearBtn id={id} cartStore={cartStore} />
       </div>
 
       {/* Single item information */}
@@ -79,7 +79,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
               mainWrapper: 'items-center',
               inputWrapper: 'p-0 w-[150px]',
               innerWrapper: 'w-[150px]',
-              input: 'text-center'
+              input: 'text-center',
             }}
             size='sm'
             radius='sm'
@@ -93,7 +93,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
                 color='default'
                 radius='sm'
                 className='w-[40px]'
-                style={{minWidth: 0}}
+                style={{ minWidth: 0 }}
               >
                 -
               </Button>
@@ -106,7 +106,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
                 color='default'
                 radius='sm'
                 className='w-[40px]'
-                style={{minWidth: 0}}
+                style={{ minWidth: 0 }}
               >
                 +
               </Button>

@@ -1,19 +1,19 @@
 // React
-import { FC } from "react";
+import { FC } from 'react';
 
 // NextUI
-import { Button } from "@nextui-org/react";
+import { Button } from '@nextui-org/react';
 
 // Icons
-import { FaTrash } from "react-icons/fa";
+import { FaTrash } from 'react-icons/fa';
 
 // Interfaces
-import { CartButtonDeleteProps } from "@interfaces/cart";
+import { CartClearBtnProps } from '@interfaces/cart';
 
 // Actions
-import { deleteCart, deleteCartItem } from "actions";
+import { deleteCart, deleteCartItem } from 'actions';
 
-const CartButtonDelete: FC<CartButtonDeleteProps> = ({ id, cartStore }) => {
+const CartClearBtn: FC<CartClearBtnProps> = ({ id, cartStore }) => {
   const handleDeleteCart = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
@@ -38,25 +38,25 @@ const CartButtonDelete: FC<CartButtonDeleteProps> = ({ id, cartStore }) => {
 
   return id ? (
     <Button
-      color="default"
-      variant="light"
-      className="text-foreground/25"
+      color='default'
+      variant='light'
+      className='text-foreground/25'
       onClick={(e) => handleDeleteItem(e, id)}
       startContent={<FaTrash />}
       isIconOnly
-      size="sm"
+      size='sm'
     ></Button>
   ) : (
     <Button
-      color="default"
-      variant="light"
+      color='default'
+      variant='light'
       onClick={handleDeleteCart}
-      startContent={<FaTrash className="text-foreground/50" />}
-      className="text-foreground/50"
+      startContent={<FaTrash className='text-foreground/50' />}
+      className='text-foreground/50'
     >
       Delete Cart
     </Button>
   );
 };
 
-export default CartButtonDelete;
+export default CartClearBtn;

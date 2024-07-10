@@ -3,10 +3,20 @@ import { DiscountResponse } from '@interfaces/discount';
 import { ProductResponse } from '@interfaces/product';
 import { CartContextType } from '@interfaces/subProviders';
 
+type InitialCartProps = {
+  initialCart: CartResponse;
+};
+
+// Utils => subProviders
 type CartActions = {
   data: CartResponse;
   error?: string;
-}
+};
+
+type CartProviderProps = {
+  children: React.ReactNode;
+  initialCart: CartResponse;
+};
 
 // Components => Product => AddToCart | Data => defaultCart | utils => subProviders
 type CartResponse = {
@@ -16,7 +26,7 @@ type CartResponse = {
     id: number;
     createdAt: string;
     updatedAt: string;
-    items: CartItem[];
+    items: CartItemProps[];
     totalPrice: number;
     coupon: CartCoupon;
     finalPrice: number;
@@ -30,13 +40,7 @@ type getCartResponse = {
   data: CartResponse;
 };
 
-// Data => defaultCartCoupon | CartResponse => Coupon
-type CartCoupon = {
-  data: DiscountResponse;
-};
-
-// CartResponse => CartItems
-type CartItem = {
+type CartItemProps = {
   id: number;
   quantity: number;
   price: number;
@@ -45,19 +49,9 @@ type CartItem = {
   };
 };
 
-// Components => Cart => CartProduct
-type CartProductProps = {
-  cartItem: CartItem;
-};
-
-// Components => Cart => OrderProcessButtonProps
-type OrderProcessButtonProps = {
-  items: CartItem[];
-};
-
-type CartButtonDeleteProps = {
-  id?: string;
-  cartStore: CartContextType;
+// Data => defaultCartCoupon | CartResponse => Coupon
+type CartCoupon = {
+  data: DiscountResponse;
 };
 
 type AddToCartProps = {
@@ -65,32 +59,31 @@ type AddToCartProps = {
   isIconOnly?: boolean;
 };
 
-type CartContentViewProps = {
-  items: CartItem[];
+// Components => Cart => CartProduct
+type CartProductProps = {
+  cartItem: CartItemProps;
+};
+
+type CartClearBtnProps = {
+  id?: string;
   cartStore: CartContextType;
 };
 
-
-type CartProviderProps = {
-  children: React.ReactNode;
-  initialCart: CartResponse;
-}
-
-type InitialCartProps = {
-  initialCart: CartResponse;
-}
+// Components => Cart => CheckoutButtonProps
+type CheckoutButtonProps = {
+  items: CartItemProps[];
+};
 
 export type {
-  CartProviderProps,
   InitialCartProps,
+  CartActions,
+  CartProviderProps,
   CartResponse,
   getCartResponse,
+  CartItemProps,
   CartCoupon,
-  CartItem,
-  CartProductProps,
-  OrderProcessButtonProps,
-  CartButtonDeleteProps,
   AddToCartProps,
-  CartContentViewProps,
-  CartActions
+  CartProductProps,
+  CartClearBtnProps,
+  CheckoutButtonProps,
 };
