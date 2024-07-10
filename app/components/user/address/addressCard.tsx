@@ -17,7 +17,7 @@ import AddressModal from '@components/user/address/addressModal';
 import { CartContext } from '@utils/subProviders';
 
 // Interfaces
-import { AddressCardProps } from '@interfaces/address';
+import { AddressCardProps } from '@interfaces/userAddress';
 
 const AddressCard: FC<AddressCardProps> = ({addresses, address, handleCreate, handleUpdate, handleRemove,
   selectable = false, type }) => {

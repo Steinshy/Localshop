@@ -8,7 +8,7 @@ import AddressCard from '@components/user/address/addressCard';
 import AddressModal from '@components/user/address/addressModal';
 
 // Interfaces
-import { AddressListProps, AddressResponse, AddressValuesProps } from '@interfaces/address';
+import { AddressListProps, AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 
 // Actions
 import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from 'actions';

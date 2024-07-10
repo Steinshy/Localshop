@@ -13,7 +13,7 @@ import { FaPlus, FaEdit } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 
 // Interfaces
-import { AddressModalProp, AddressValuesProps } from '@interfaces/address';
+import { AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
 
 // Data
 import { defaultAddress } from '@data/general';
@@ -138,7 +138,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                   <div className='grid grid-cols-1 gap-4'>
                     <div>
                       <Field
-                        label='Adress'
+                        label='address'
                         className='col-span-2'
                         id='address'
                         name='address'

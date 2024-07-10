@@ -16,14 +16,7 @@ type AddressResponse = {
     default: boolean;
     createdAt: string;
     updatedAt: string;
-  }
-};
-
-type AddressModalProp = {
-  addresses: AddressResponse[];
-  id?: string;
-  handleCreate: (newAddress: AddressValuesProps) => Promise<{ [key: string]: string; } | undefined>;
-  handleUpdate: (id: string, newAddress: AddressValuesProps) => Promise<{ [key: string]: string; } | undefined>;
+  };
 };
 
 type AddressValuesProps = {
@@ -39,10 +32,18 @@ type AddressValuesProps = {
   default: boolean;
 };
 
+type AddressModalProp = {
+  addresses: AddressResponse[];
+  id?: number;
+  handleCreate: (newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
+  handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
+};
+
 type AddressListProps = {
   items?: AddressResponse[];
   selectable?: boolean;
   type?: string;
+  selected?: number | null;
 };
 
 type AddressCardProps = {
@@ -50,9 +51,9 @@ type AddressCardProps = {
   address: AddressResponse;
   selectable?: boolean;
   type?: string;
-  handleCreate: (newAddress: AddressValuesProps) => Promise<{ [key: string]: string; } | undefined>;
-  handleUpdate: (id: string, newAddress: AddressValuesProps) => Promise<{ [key: string]: string; } | undefined>;
+  handleCreate: (newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
+  handleUpdate: (id: string, newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
   handleRemove: (id: string) => Promise<void>;
 };
 
-export type { AddressResponse, AddressModalProp, AddressValuesProps, AddressListProps, AddressCardProps };
+export type { AddressResponse, AddressValuesProps, AddressModalProp, AddressListProps, AddressCardProps };
