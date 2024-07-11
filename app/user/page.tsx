@@ -1,6 +1,8 @@
-'use client';
+// NextJS
+import { redirect } from 'next/navigation';
+
 const UserPage = () => {
-  return <div>User Page</div>;
+  return redirect('/user/profile');
 };
 
 export default UserPage;
