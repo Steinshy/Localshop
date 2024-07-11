@@ -21,7 +21,7 @@ import { userLogin } from '@actions/actionsUser';
 
 const UserDropdown = () => {
   const router = useRouter(), pathname = usePathname(), userStore = useContext(UserContext), cartStore = useContext(CartContext);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
   const { isLogged, data: { attributes: { firstname, lastname, avatar: { small } } } } = userStore;
 

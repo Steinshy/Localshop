@@ -13,6 +13,22 @@ import { handleError } from '@utils/fetchManager';
 
 // Index
 import { api } from '@actions/index';
+import { getProductCategoriesProps } from '@interfaces/categories';
+
+// Products - API - Get Categories
+export const getProductCategories = async () => {
+  revalidateTag('categories');
+
+  try {
+    const { categories } = await api.get<getProductCategoriesProps>(`/categories`, { next: { tags: ['categories'] } });
+    console.log(categories);
+    const { data } = categories;
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
+    return { data: [] as ProductResponse[], pagy: { page: 1, pages: 1 } as PagyProps, error };
+  }
+};
 
 // Products - API - Get
 export const getProducts = async (page?: number, query?: string) => {

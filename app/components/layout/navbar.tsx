@@ -1,18 +1,18 @@
 'use client';
 
 // React
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 // NextJS
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 // NextUI
 import { Link as NextLink, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarContent, NavbarItem,
-         Navbar, Button, Badge } from '@nextui-org/react';
+         Navbar, Button, Badge, Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from '@nextui-org/react';
 
 // Icons
-import { FaCartArrowDown } from 'react-icons/fa';
+import { FaCartArrowDown, FaChevronDown } from 'react-icons/fa';
 
 // Utils
 import { CartContext, UserContext } from '@utils/subProviders';
@@ -20,15 +20,41 @@ import { CartContext, UserContext } from '@utils/subProviders';
 // Components
 import UserDropdown from '@components/layout/userDropdown';
 
+// Actions
+import { getProductCategories } from '@actions/actionsProducts';
+
+// Interfaces
+import { CategoryProps } from '@interfaces/categories';
+
 const Header = () => {
   const navItems = [
     { key: 'home', href: '/', label: 'Home' },
     { key: 'products', href: '/products', label: 'Products' },
     { key: 'about', href: '/about', label: 'About Us' },
   ],
+  router = useRouter(),
   pathname = usePathname(),
   cartStore = useContext(CartContext),
   userStore = useContext(UserContext);
+
+  // Categories
+  const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState<boolean>(false),
+        [categories, setCategories] = useState<CategoryProps[]>([]);
+  const handleCategoryAction = (key: React.Key) => {
+    setIsCategoriesMenuOpen(false);
+    void router.push(`/products/${key}`);
+  };
+  const handleCategoriesMenuOpen = (isOpen: boolean) => {
+    setIsCategoriesMenuOpen(isOpen);
+  };
+  useEffect(() => {
+    const apiFetch = async () => {
+      const { data, error } = await getProductCategories();
+      if (!error) setCategories(data);
+    }
+
+    void apiFetch();
+  }, []);
 
   // Mobile Menu
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,11 +94,37 @@ const Header = () => {
 
       <NavbarContent className='hidden sm:flex' justify='center'>
         {navItems.map((item) => (
-          <NavbarItem key={item.key} isActive={active(item)}>
-            <NextLink as={Link} color='foreground' href={item.href}>
-              {item.label}
-            </NextLink>
-          </NavbarItem>
+          item.key === 'products' ? (
+            <Dropdown key={item.key} onOpenChange={handleCategoriesMenuOpen}>
+              <NavbarItem key={item.key} isActive={active(item)}>
+                <DropdownTrigger>
+                  <NextLink as={Link} color='foreground' href='#'>
+                    {item.label}
+                    <FaChevronDown className={`ml-1 transition-transform	${isCategoriesMenuOpen ? 'rotate-180' : 'rotate-0'}`} />
+                  </NextLink>
+                </DropdownTrigger>
+              </NavbarItem>
+              <DropdownMenu
+                onAction={handleCategoryAction}
+                classNames={{
+                  list: 'grid grid-cols-3'
+                }}
+                itemClasses={{ base: "gap-4" }}
+              >
+                {categories.map((category) => (
+                  <DropdownItem key={category.attributes.slug} description='Description'>
+                    {category.attributes.title}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+          ) : (
+            <NavbarItem key={item.key} isActive={active(item)}>
+              <NextLink as={Link} color='foreground' href={item.href}>
+                {item.label}
+              </NextLink>
+            </NavbarItem>
+          )
         ))}
       </NavbarContent>
 
