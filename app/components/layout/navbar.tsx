@@ -107,7 +107,7 @@ const Header = () => {
               <DropdownMenu
                 onAction={handleCategoryAction}
                 classNames={{
-                  list: 'grid grid-cols-3'
+                  list: 'grid grid-cols-4'
                 }}
                 itemClasses={{ base: "gap-4" }}
               >

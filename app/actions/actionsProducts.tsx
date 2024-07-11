@@ -21,7 +21,6 @@ export const getProductCategories = async () => {
 
   try {
     const { categories } = await api.get<getProductCategoriesProps>(`/categories`, { next: { tags: ['categories'] } });
-    console.log(categories);
     const { data } = categories;
     return { data };
   } catch (e) {
