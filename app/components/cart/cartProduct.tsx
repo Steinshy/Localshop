@@ -17,8 +17,8 @@ import { CartProductProps } from '@interfaces/cart';
 // Utils
 import { CartContext } from '@utils/subProviders';
 
-// API
-import { deleteCartItem, updateQuantity } from 'actions';
+// Actions
+import { deleteCartItem, updateQuantity } from '@actions/actionsCart';
 
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);

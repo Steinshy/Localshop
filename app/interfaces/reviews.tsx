@@ -1,5 +1,3 @@
-import { PagyProps } from '@interfaces/general';
-
 // ReviewAuthor => Avatar
 type AuthorAvatar = {
   small: string;
@@ -21,7 +19,7 @@ type ReviewAuthor = {
   };
 };
 
-// getReviewResponse | ProductReviewsProps
+// ProductReviewsProps
 type ReviewResponse = {
   id: string;
   type: string;
@@ -35,14 +33,6 @@ type ReviewResponse = {
   };
 };
 
-// Actions => getReviewResponse
-type getReviewResponse = {
-  pagy: PagyProps;
-  reviews: {
-    data: ReviewResponse[];
-  };
-};
-
 // Components => Product => ProductReviews
 type ProductReviewProps = {
   review: ReviewResponse;
@@ -53,4 +43,4 @@ type ReviewsStarsProps = {
   rating: number;
 };
 
-export type { getReviewResponse, ProductReviewProps, ReviewsStarsProps };
+export type { ReviewResponse, ProductReviewProps, ReviewsStarsProps };

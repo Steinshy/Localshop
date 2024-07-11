@@ -10,7 +10,7 @@ import { Card, CardBody, Input, Button, CardHeader } from "@nextui-org/react";
 import { Formik, Form, Field } from 'formik';
 
 // Actions
-import { updateProfile } from "actions";
+import { updateProfile } from '@actions/actionsUser';
 
 // Utils
 import { UserContext } from "@utils/subProviders";

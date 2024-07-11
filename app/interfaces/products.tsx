@@ -2,14 +2,6 @@
 import { PagyProps } from '@interfaces/general';
 import { ProductResponse } from '@interfaces/product';
 
-// Action => getProducts
-type getProductsResponse = {
-  pagy: PagyProps;
-  products: {
-    data: ProductResponse[];
-  };
-};
-
 // Products => Page
 type ProductsPageProps = {
   searchParams?: {
@@ -23,4 +15,4 @@ type ProductsListProp = {
   data: ProductResponse[];
 };
 
-export type { getProductsResponse, ProductsPageProps, ProductsListProp };
+export type { ProductsPageProps, ProductsListProp };

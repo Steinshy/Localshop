@@ -14,35 +14,27 @@ export type UserResponse = {
   };
 };
 
-export type getUserResponse = {
-  data: UserResponse
-};
-
 export type UserActions = {
   data: UserResponse;
   error?: string;
-}
+};
 
 export type UserProviderProps = {
   children: React.ReactNode;
   initialUser: UserResponse;
-}
+};
 
 export type InitialUserProps = {
   initialUser: UserResponse;
-}
-
-export type loginResponse = {
-  userID: number;
-}
+};
 
 export type ProfileValuesProps = {
   firstname: string;
   lastname: string;
   email: string;
-}
+};
 
 export type PasswordValuesProps = {
   password: string;
   password_confirmation: string;
-}
+};

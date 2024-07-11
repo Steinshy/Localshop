@@ -19,8 +19,8 @@ import { CartDiscountProps, DiscountFormProps } from '@interfaces/discount';
 import { CartContext } from '@utils/subProviders';
 import { showToast } from '@utils/helpers';
 
-// API
-import { applyDiscount, deleteDiscount } from 'actions';
+// Actions
+import { applyDiscount, deleteDiscount } from '@actions/actionsCart';
 
 const CartDiscount: FC<CartDiscountProps> = () => {
   const cartStore = useContext(CartContext);

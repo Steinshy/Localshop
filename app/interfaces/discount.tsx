@@ -1,7 +1,8 @@
-// Data => DefaultCoupon | Interface => Cart => CartCoupon
+// Data => DefaultCoupon
 type DiscountResponse = {
   id: string;
   type: string;
+  
   attributes: {
     id: number;
     code: string;

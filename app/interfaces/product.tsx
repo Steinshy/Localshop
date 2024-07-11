@@ -43,11 +43,6 @@ type ProductResponseImages = {
   full: string;
 };
 
-// Action => GetProductResponse
-type getProductResponse = {
-  data: ProductResponse;
-};
-
 // Product/ID/Slug => Page
 type ProductPageProps = {
   params: {
@@ -73,9 +68,9 @@ type PreviouslyOrderedProps = {
 
 export type {
   ProductResponse,
+  ProductCategory,
   ProductResponseThumbnail,
   ProductResponseImages,
-  getProductResponse,
   ProductPageProps,
   ProductCardProps,
   ProductImagesProps,

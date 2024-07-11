@@ -14,7 +14,7 @@ import { UserContext } from '@utils/subProviders';
 import { showToast } from '@utils/helpers';
 
 // Actions
-import { getPreviouslyOrdered } from 'actions';
+import { getPreviouslyOrdered } from '@actions/actionsUserOrders';
 
 // Interfaces
 import { PreviouslyOrderedProps } from '@interfaces/product';

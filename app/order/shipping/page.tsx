@@ -3,7 +3,7 @@ import { Divider } from "@nextui-org/react";
 
 // Components
 import AddressList from "@components/user/address/addressList";
-import { getAddresses } from "actions";
+import { getAddresses } from '@actions/actionsUserAddress';
 
 const ShippingPage = async () => {
   const { data } = await getAddresses();

@@ -13,11 +13,11 @@ import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown }
 import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from 'react-icons/fa';
 
 // Utils
+import { CartContext, UserContext } from '@utils/subProviders';
 import { isPrivateUrl, showToast } from '@utils/helpers';
 
 // Actions
-import { userLogin } from 'actions';
-import { CartContext, UserContext } from '@utils/subProviders';
+import { userLogin } from '@actions/actionsUser';
 
 const UserDropdown = () => {
   const router = useRouter(), pathname = usePathname(), userStore = useContext(UserContext), cartStore = useContext(CartContext);

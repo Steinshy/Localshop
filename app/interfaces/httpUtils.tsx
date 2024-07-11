@@ -16,4 +16,8 @@ type ErrorObj = {
   status?: number;
 };
 
-export type { HttpMethod, FetchOptions, ErrorObj }
+type ReceivedData = {
+  type: 'user' | 'cart';
+};
+
+export type { HttpMethod, FetchOptions, ErrorObj, ReceivedData };

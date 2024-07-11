@@ -11,7 +11,7 @@ import AddressModal from '@components/user/address/addressModal';
 import { AddressListProps, AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 
 // Actions
-import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from 'actions';
+import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from '@actions/actionsUserAddress';
 
 // Utils
 import { showToast } from '@utils/helpers';

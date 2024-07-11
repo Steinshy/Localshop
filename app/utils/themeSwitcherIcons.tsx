@@ -1,7 +1,8 @@
 // React
-import { FC, SVGProps } from "react";
+import { FC } from "react";
 
-interface SvgIconProps extends SVGProps<SVGSVGElement> {}
+// Interfaces
+import { SvgIconProps } from "@interfaces/general";
 
 const MoonIcon: FC<SvgIconProps> = (props: SvgIconProps) => (
   <svg aria-hidden="true" focusable="false" height="1em" role="presentation" viewBox="0 0 24 24" width="1em" {...props}>

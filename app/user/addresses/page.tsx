@@ -6,7 +6,7 @@ import Breadcrumb from '@components/layout/breadCrumb';
 import AddressList from '@components/user/address/addressList';
 
 // Actions
-import { getAddresses } from 'actions';
+import { getAddresses } from '@actions/actionsUserAddress';
 
 export const metadata: Metadata = { title: 'Addresses'};
 

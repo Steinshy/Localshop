@@ -11,7 +11,7 @@ import { FaTrash } from 'react-icons/fa';
 import { CartClearBtnProps } from '@interfaces/cart';
 
 // Actions
-import { deleteCart, deleteCartItem } from 'actions';
+import { deleteCart, deleteCartItem } from '@actions/actionsCart';
 
 const CartClearBtn: FC<CartClearBtnProps> = ({ id, cartStore }) => {
   const handleDeleteCart = (e: React.MouseEvent<HTMLElement>) => {

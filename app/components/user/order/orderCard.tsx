@@ -12,7 +12,8 @@ import { readableDate } from '@utils/helpers';
 
 // Interfaces
 import { OrderCardProps } from '@interfaces/userOrder';
-import OrderProductCard from './orderProductCard';
+
+import OrderProductCard from '@components/user/order/orderProductCard';
 
 interface chipColorsProps {
   [key:string]:"primary" | "default" | "secondary" | "success" | "warning" | "danger" | undefined

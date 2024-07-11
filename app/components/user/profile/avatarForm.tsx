@@ -7,7 +7,7 @@ import { useContext, createRef, useState, ChangeEvent } from "react";
 import { Card, CardBody, Spinner, Button, CardHeader, Avatar } from "@nextui-org/react";
 
 // Actions
-import { updateAvatar } from "actions";
+import { updateAvatar } from '@actions/actionsUser';
 
 // Utils
 import { UserContext } from "@utils/subProviders";

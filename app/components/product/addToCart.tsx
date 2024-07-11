@@ -13,7 +13,7 @@ import { Button, ButtonProps } from '@nextui-org/react';
 import { FaShoppingCart, FaArrowRight } from 'react-icons/fa';
 
 // Actions
-import { addItemToCart } from 'actions';
+import { addItemToCart } from '@actions/actionsCart';
 
 // Interface
 import { AddToCartProps } from '@interfaces/cart';

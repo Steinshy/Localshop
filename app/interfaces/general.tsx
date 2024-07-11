@@ -1,5 +1,11 @@
+import { SVGProps } from 'react';
+
 type LayoutProps = {
   children: React.ReactNode;
+};
+
+type SvgIconProps = SVGProps<SVGSVGElement> & {
+  color?: string;
 };
 
 type BreadcrumbProps = {
@@ -16,4 +22,4 @@ type PagyProps = {
   pages: number;
 };
 
-export type { LayoutProps, BreadcrumbProps, StepperProps, PagyProps };
+export type { LayoutProps, SvgIconProps, BreadcrumbProps, StepperProps, PagyProps };

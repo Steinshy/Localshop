@@ -2,11 +2,8 @@
 import { Metadata } from 'next';
 
 // Components
-import OrdersList from '@components/user/order/ordersList';
 import Breadcrumb from '@components/layout/breadCrumb';
-
-// Actions
-
+import OrdersList from '@components/user/order/ordersList';
 export const metadata: Metadata = { title: 'Orders' };
 
 const OrdersPage = () => {

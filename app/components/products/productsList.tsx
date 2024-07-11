@@ -21,7 +21,7 @@ import { ProductResponse } from '@interfaces/product';
 import { ProductsListProp } from '@interfaces/products';
 
 // Actions
-import { getProducts } from 'actions';
+import { getProducts } from '@actions/actionsProducts';
 
 const ProductsList: FC<ProductsListProp> = ({ data, pagy }) => {
   const searchParams = useSearchParams(),

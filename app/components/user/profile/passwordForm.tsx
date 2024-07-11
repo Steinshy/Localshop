@@ -10,7 +10,7 @@ import { Card, CardBody, Input, Button, CardHeader } from "@nextui-org/react";
 import { Formik, Form, Field } from 'formik';
 
 // Actions
-import { updatePassword } from "actions";
+import { updatePassword } from '@actions/actionsUser';
 
 // Utils
 import { showToast } from "@utils/helpers";

@@ -3,6 +3,10 @@
 // React
 import { FC, useState, createContext, useCallback } from 'react';
 
+// Actions
+import { getCart } from '@actions/actionsCart';
+import { getUser, userLogout } from '@actions/actionsUser';
+
 // Interfaces
 import { CartActions, CartProviderProps, CartResponse } from '@interfaces/cart';
 import { UserActions, UserProviderProps, UserResponse } from '@interfaces/user';
@@ -10,9 +14,6 @@ import { UserContextType, CartContextType } from '@interfaces/subProviders';
 
 // Data
 import { defaultCart, defaultUser } from '@data/general';
-
-// API
-import { getCart, getUser, userLogout } from 'actions';
 
 // CART PROVIDERS //
 const useCart = (initialCart:CartResponse) => {

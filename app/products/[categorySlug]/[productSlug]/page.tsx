@@ -5,7 +5,8 @@ import { FC } from 'react';
 import { Metadata } from 'next';
 
 // Actions
-import { getProduct, getProductReviews } from 'actions';
+import { getProduct } from '@actions/actionsProducts';
+import { getProductReviews } from '@actions/actionsReviews';
 
 // Components
 import ProductImages from '@components/product/productImages';

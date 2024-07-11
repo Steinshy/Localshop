@@ -28,16 +28,13 @@ type CartResponse = {
     updatedAt: string;
     items: CartItemProps[];
     totalPrice: number;
-    coupon: CartCoupon;
+    coupon: {
+      data: DiscountResponse;
+    },
     finalPrice: number;
     totalItems: number;
     totalUniqueItems: number;
   };
-};
-
-// Actions => getCart | subProviders => GetCart
-type getCartResponse = {
-  data: CartResponse;
 };
 
 type CartItemProps = {
@@ -47,11 +44,6 @@ type CartItemProps = {
   product: {
     data: ProductResponse;
   };
-};
-
-// Data => defaultCartCoupon | CartResponse => Coupon
-type CartCoupon = {
-  data: DiscountResponse;
 };
 
 type AddToCartProps = {
@@ -79,9 +71,7 @@ export type {
   CartActions,
   CartProviderProps,
   CartResponse,
-  getCartResponse,
   CartItemProps,
-  CartCoupon,
   AddToCartProps,
   CartProductProps,
   CartClearBtnProps,

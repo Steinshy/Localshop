@@ -9,10 +9,8 @@ import { Cable, Channel, createConsumer } from '@rails/actioncable';
 // Utils
 import { UserContext, CartContext } from "@utils/subProviders";
 
-interface ReceivedData {
-  type: 'user' | 'cart';
-}
-
+// Interfaces
+import { ReceivedData } from "@interfaces/httpUtils";
 const CableComponent = () => {
   const userStore = useContext(UserContext),
         cartStore = useContext(CartContext),

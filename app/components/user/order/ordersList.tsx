@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getOrders } from 'actions';
+import { getOrders } from '@actions/actionsUserOrders'
 import { OrderResponse } from '@interfaces/userOrder';
 import OrdersCard from '@components/user/order/orderCard';
 import { Button } from '@nextui-org/react';

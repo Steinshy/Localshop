@@ -19,7 +19,7 @@ import Breadcrumb from '@components/layout/breadCrumb';
 import { OrderPageProps } from '@interfaces/userOrder';
 
 // Actions
-import { getOrder } from 'actions';
+import { getOrder } from '@actions/actionsUserOrders';
 
 type MetaProps = {
   params: { id: string }

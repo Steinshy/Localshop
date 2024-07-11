@@ -20,14 +20,6 @@ type OrderResponse = {
   };
 };
 
-type GetOrdersResponse = {
-  data: OrderResponse[];
-};
-
-type GetOrderResponse = {
-  data: OrderResponse;
-};
-
 type OrderItem = {
   id: number;
   quantity: number;
@@ -52,12 +44,4 @@ type OrderProductCardProps = {
   orderProduct: OrderItem;
 };
 
-export type {
-  OrderItem,
-  GetOrdersResponse,
-  GetOrderResponse,
-  OrderResponse,
-  OrderPageProps,
-  OrderCardProps,
-  OrderProductCardProps,
-};
+export type { OrderResponse, OrderItem, OrderPageProps, OrderCardProps, OrderProductCardProps };
