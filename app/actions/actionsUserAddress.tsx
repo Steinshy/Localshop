@@ -7,7 +7,11 @@ import { revalidateTag } from 'next/cache';
 import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 
 // Index
-import { api, error } from '@actions/index';
+import { api } from '@actions/index';
+
+import { ErrorObj } from '@interfaces/httpUtils';
+
+import { handleError } from '@utils/fetchManager';
 
 // User => Address - API - Get
 export const getAddresses = async () => {
@@ -16,6 +20,7 @@ export const getAddresses = async () => {
     const { data } = await api.get<{ data: AddressResponse[] }>('/addresses', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: [] as AddressResponse[], error };
   }
 };
@@ -41,6 +46,7 @@ export const UpdateAddress = async (id: string, newAddress: AddressValuesProps) 
     );
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: [] as AddressResponse[], error };
   }
 };
@@ -52,6 +58,7 @@ export const RemoveAddress = async (id: string) => {
     await api.delete<void>(`/addresses/${id}`);
     return {};
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { error };
   }
 };

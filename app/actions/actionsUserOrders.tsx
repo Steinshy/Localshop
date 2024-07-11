@@ -6,8 +6,12 @@ import { revalidateTag } from 'next/cache';
 // Interface
 import { OrderResponse } from '@interfaces/userOrder';
 
+import { ErrorObj } from '@interfaces/httpUtils';
+
+import { handleError } from '@utils/fetchManager';
+
 // Index
-import { api, error } from '@actions/index';
+import { api } from '@actions/index';
 
 // User => Orders - API - Get (collection)
 export const getOrders = async () => {
@@ -16,6 +20,7 @@ export const getOrders = async () => {
     const { data } = await api.get<{ data: OrderResponse[] }>('/orders', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: [] as OrderResponse[], error };
   }
 };
@@ -27,6 +32,7 @@ export const getOrder = async (id: string) => {
     const { data } = await api.get<{ data: OrderResponse }>(`/orders/${id}`, { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as OrderResponse, error };
   }
 };
@@ -40,6 +46,7 @@ export const getPreviouslyOrdered = async (id: string) => {
     });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as OrderResponse, error };
   }
 };

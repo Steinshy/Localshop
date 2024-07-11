@@ -9,8 +9,12 @@ import { PasswordValuesProps, ProfileValuesProps, UserResponse } from '@interfac
 // Data
 import { defaultUser } from '@data/general';
 
+import { ErrorObj } from '@interfaces/httpUtils';
+
+import { handleError } from '@utils/fetchManager';
+
 // Index
-import { api, error } from '@actions/index';
+import { api } from '@actions/index';
 
 // User => API - Get
 export const getUser = async () => {
@@ -18,6 +22,7 @@ export const getUser = async () => {
     const { data } = await api.get<{ data: UserResponse }>('/user', { next: { tags: ['user'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: defaultUser, error };
   }
 };
@@ -39,6 +44,7 @@ export const userLogin = async () => {
 
     return {};
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { error };
   }
 };
@@ -68,6 +74,7 @@ export const updateAvatar = async (formData: FormData) => {
     });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: defaultUser, error };
   }
 };
@@ -84,6 +91,7 @@ export const updateProfile = async (profileData: ProfileValuesProps) => {
     );
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: defaultUser, error };
   }
 };
@@ -100,6 +108,7 @@ export const updatePassword = async (passwordData: PasswordValuesProps) => {
     );
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: defaultUser, error };
   }
 };

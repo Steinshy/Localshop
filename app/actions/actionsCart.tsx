@@ -6,8 +6,12 @@ import { CartResponse } from '@interfaces/cart';
 // Data
 import { defaultCart } from '@data/general';
 
+import { ErrorObj } from '@interfaces/httpUtils';
+
+import { handleError } from '@utils/fetchManager';
+
 // Index
-import { api, error } from '@actions/index';
+import { api } from '@actions/index';
 
 // Cart - API - Get
 export const getCart = async () => {
@@ -15,6 +19,7 @@ export const getCart = async () => {
     const { data } = await api.get<{ data: CartResponse }>('/cart', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: defaultCart, error };
   }
 };
@@ -25,6 +30,7 @@ export const deleteCart = async () => {
     const { data } = await api.delete<{ data: CartResponse }>('/cart/clear_items', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as { data: CartResponse }, error };
   }
 };
@@ -37,6 +43,7 @@ export const deleteCartItem = async (productId: string) => {
     });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as { data: CartResponse }, error };
   }
 };
@@ -51,6 +58,7 @@ export const updateQuantity = async (quantity: number, productId: string) => {
     );
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as { data: CartResponse }, error };
   }
 };
@@ -63,6 +71,7 @@ export const applyDiscount = async (value: string) => {
     });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {}, error };
   }
 };
@@ -73,6 +82,7 @@ export const deleteDiscount = async () => {
     const { data } = await api.delete<{ data: CartResponse }>('/cart/clear_coupon', { next: { tags: ['cart'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as { data: CartResponse }, error };
   }
 };
@@ -86,6 +96,7 @@ export const addItemToCart = async (productId: string) => {
     );
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as { data: CartResponse }, error };
   }
 };

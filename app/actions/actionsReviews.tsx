@@ -4,6 +4,10 @@
 import { ReviewResponse } from '@interfaces/reviews';
 import { PagyProps } from '@interfaces/general';
 
+import { ErrorObj } from '@interfaces/httpUtils';
+
+import { handleError } from '@utils/fetchManager';
+
 // Index
 import { api } from '@actions/index';
 
@@ -15,6 +19,7 @@ export const getProductReviews = async (value: string) => {
     });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as { data: ReviewResponse }, error };
   }
 };

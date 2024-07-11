@@ -7,8 +7,12 @@ import { revalidateTag } from 'next/cache';
 import { PagyProps } from '@interfaces/general';
 import { ProductResponse } from '@interfaces/product';
 
+import { ErrorObj } from '@interfaces/httpUtils';
+
+import { handleError } from '@utils/fetchManager';
+
 // Index
-import { api, error } from '@actions/index';
+import { api } from '@actions/index';
 
 // Products - API - Get
 export const getProducts = async (page?: number, query?: string) => {
@@ -23,6 +27,7 @@ export const getProducts = async (page?: number, query?: string) => {
     const { data } = products;
     return { data, pagy };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: [] as ProductResponse[], pagy: { page: 1, pages: 1 } as PagyProps, error };
   }
 };
@@ -33,6 +38,7 @@ export const getProduct = async (id: string) => {
     const { data } = await api.get<{ data: ProductResponse }>(`/products/${id}`, { next: { tags: ['product'] } });
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as ProductResponse, error };
   }
 };
