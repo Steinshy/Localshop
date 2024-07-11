@@ -44,9 +44,6 @@ const Header = () => {
     setIsCategoriesMenuOpen(false);
     void router.push(`/products/${key}`);
   };
-  const handleCategoriesMenuOpen = (isOpen: boolean) => {
-    setIsCategoriesMenuOpen(isOpen);
-  };
   useEffect(() => {
     const apiFetch = async () => {
       const { data, error } = await getProductCategories();
@@ -95,12 +92,15 @@ const Header = () => {
       <NavbarContent className='hidden sm:flex' justify='center'>
         {navItems.map((item) => (
           item.key === 'products' ? (
-            <Dropdown key={item.key} onOpenChange={handleCategoriesMenuOpen}>
-              <NavbarItem key={item.key} isActive={active(item)}>
+            <Dropdown key={item.key} isOpen={isCategoriesMenuOpen} onMouseLeave={() => setIsCategoriesMenuOpen(false)}>
+              <NavbarItem
+                key={item.key}
+                isActive={active(item)}
+                onMouseEnter={() => setIsCategoriesMenuOpen(true)}
+              >
                 <DropdownTrigger>
-                  <NextLink as={Link} color='foreground' href='#'>
+                  <NextLink as={Link} color='foreground' href={item.href} onPress={() => setIsCategoriesMenuOpen(false)}>
                     {item.label}
-                    <FaChevronDown className={`ml-1 transition-transform	${isCategoriesMenuOpen ? 'rotate-180' : 'rotate-0'}`} />
                   </NextLink>
                 </DropdownTrigger>
               </NavbarItem>
