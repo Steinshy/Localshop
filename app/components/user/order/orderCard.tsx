@@ -16,19 +16,25 @@ import { OrderCardProps } from '@interfaces/userOrder';
 import OrderProductCard from '@components/user/order/orderProductCard';
 
 interface chipColorsProps {
-  [key:string]:"primary" | "default" | "secondary" | "success" | "warning" | "danger" | undefined
+  [key: string]: 'primary' | 'default' | 'secondary' | 'success' | 'warning' | 'danger' | undefined;
 }
 
 const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
-  const { attributes: { id, total, createdAt, totalItems, status, user, items } } = order;
-  const { data: { attributes: { firstname, lastname } } } = user;
+  const {
+    attributes: { id, total, createdAt, totalItems, status, user, items },
+  } = order;
+  const {
+    data: {
+      attributes: { firstname, lastname },
+    },
+  } = user;
 
-  const chipColors:chipColorsProps = {
-    'Cancelled': 'danger',
-    'Pending': 'warning',
-    'Shipped': 'primary',
-    'Delivered': 'success'
-  }
+  const chipColors: chipColorsProps = {
+    Cancelled: 'danger',
+    Pending: 'warning',
+    Shipped: 'primary',
+    Delivered: 'success',
+  };
 
   return (
     <Card className='border-2 w-full h-full'>
@@ -40,7 +46,7 @@ const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
           <p>-</p>
           <p>{total}€</p>
         </div>
-        
+
         <Chip size='sm' className='text-white' color={chipColors[status]}>
           {status}
         </Chip>
@@ -50,7 +56,9 @@ const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
       <CardBody>
         <div className='flex items-center justify-between'>
           <div>
-            <p>Dispatched to: {lastname} {firstname}</p>
+            <p>
+              Dispatched to: {lastname} {firstname}
+            </p>
             <p className='text-md'>Products: {totalItems}</p>
           </div>
           {!detailed && (
@@ -62,20 +70,36 @@ const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
         <div className={detailed ? 'grid grid-cols-1 gap-2 mt-2' : 'flex gap-2 mt-2 p-1'}>
           {items.map((item) => {
             const { quantity, product } = item;
-            const { data: { id, attributes: { category, slug, title, thumbnail: { url } } } } = product;
-            const { data: { attributes: { slug:categorySlug } } } = category;
-            return (
-              !detailed ? (
-                <Badge key={`product_${id}`} content={quantity} color="primary" size='sm'>
-                  <Tooltip content={title}>
-                    <Link href={`/products/${categorySlug}/${slug}`}>
-                      <Avatar radius="md" size="sm" src={url} />
-                    </Link>
-                  </Tooltip>
-                </Badge>
-              ) : (
-                <OrderProductCard key={`product_${id}`} orderProduct={item} />
-              )
+            const {
+              data: {
+                id,
+                attributes: {
+                  category,
+                  slug,
+                  title,
+                  thumbnail: { url },
+                },
+              },
+            } = product;
+            const {
+              data: {
+                attributes: { slug: categorySlug },
+              },
+            } = category;
+            return !detailed ? (
+              <ul>
+                <li>
+                  <Badge key={`product_${id}`} content={quantity} color='primary' size='sm'>
+                    <Tooltip content={title}>
+                      <Link href={`/products/${categorySlug}/${slug}`}>
+                        <Avatar radius='md' size='sm' src={url} />
+                      </Link>
+                    </Tooltip>
+                  </Badge>
+                </li>
+              </ul>
+            ) : (
+              <OrderProductCard key={`product_${id}`} orderProduct={item} />
             );
           })}
         </div>

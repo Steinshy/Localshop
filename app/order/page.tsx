@@ -18,14 +18,20 @@ import { CartContext } from '@utils/subProviders';
 
 const OrderPage = () => {
   const cartStore = useContext(CartContext);
-  const { data: { attributes: { items } } } = cartStore;
+  const {
+    data: {
+      attributes: { items },
+    },
+  } = cartStore;
 
   return items.length ? (
     <ul className='flex flex-col sm:col-span-7 gap-2'>
       {items.map((cartItem) => (
-        <li key={cartItem.id}>
-          <CartProduct cartItem={cartItem} />
-        </li>
+        <ul key={cartItem.id}>
+          <li>
+            <CartProduct cartItem={cartItem} />
+          </li>
+        </ul>
       ))}
     </ul>
   ) : (
