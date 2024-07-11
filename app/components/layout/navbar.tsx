@@ -36,8 +36,6 @@ const Header = () => {
   // Cart
   const { data: { attributes: { totalItems } } } = cartStore;
   const cartTotal = totalItems || 0;
-
-  // User
   const { isLogged } = userStore;
 
   const active = (item:{ [key:string]:string }) => {

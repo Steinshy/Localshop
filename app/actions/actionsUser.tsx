@@ -5,16 +5,14 @@ import { cookies } from 'next/headers';
 
 // Interface
 import { PasswordValuesProps, ProfileValuesProps, UserResponse } from '@interfaces/user';
+import { ErrorObj } from '@interfaces/httpUtils';
 
 // Data
 import { defaultUser } from '@data/general';
-
-import { ErrorObj } from '@interfaces/httpUtils';
-
 import { handleError } from '@utils/fetchManager';
 
 // Index
-import { api } from '@actions/index';
+import { api, setCookieLogin, cookiesLogout } from '@actions/index';
 
 // User => API - Get
 export const getUser = async () => {
@@ -31,17 +29,7 @@ export const getUser = async () => {
 export const userLogin = async () => {
   try {
     const { userID } = await api.get<{ userID: number }>('/user_login');
-
-    cookies().set({
-      name: 'user',
-      value: userID.toString(),
-      httpOnly: true,
-      path: '/',
-      sameSite: 'lax',
-      domain: '.localshop.test',
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-    });
-
+    setCookieLogin(userID);
     return {};
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
@@ -52,17 +40,7 @@ export const userLogin = async () => {
 // User => API - Logout
 export const userLogout = () => {
   if (!cookies().has('user')) return;
-
-  cookies().set({
-    name: 'user',
-    value: '',
-    httpOnly: true,
-    path: '/',
-    sameSite: 'lax',
-    domain: '.localshop.test',
-    maxAge: -1,
-  });
-
+  cookiesLogout();
   return;
 };
 

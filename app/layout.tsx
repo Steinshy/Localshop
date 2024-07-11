@@ -39,7 +39,7 @@ export const metadata: Metadata = {
 
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data: userData, error: userError } = await getUser(),
-    { data: cartData } = await getCart(),
+        { data: cartData } = await getCart(),
     requestUrl = headers().get('x-url');
 
   if (userError && requestUrl !== '/') {
