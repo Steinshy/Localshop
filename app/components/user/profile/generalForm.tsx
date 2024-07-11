@@ -77,10 +77,10 @@ const GeneralForm = () => {
             });
             if (hasError) return errors;
           }}
-          onSubmit={(values:ProfileValuesProps, { setSubmitting, setFieldError }) => {
-            setSubmitting(true);
+          onSubmit={(values: ProfileValuesProps, { setSubmitting, setFieldError }) => {
             const apiFetch = async() => {
               const { data, error } = await updateProfile(values);
+              setSubmitting(false);
               if(!error) {
                 update(data);
                 showToast('Profile Updated!', 'success');
@@ -91,8 +91,9 @@ const GeneralForm = () => {
                 }
               }
             }
+
+            setSubmitting(true);
             void apiFetch();
-            setSubmitting(false);
           }}
         >
           {({ errors, isSubmitting }) => (

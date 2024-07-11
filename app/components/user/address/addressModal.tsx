@@ -68,11 +68,10 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                 if (hasError) return errors;
               }}
               onSubmit={(values: AddressValuesProps, { setSubmitting, setFieldError }) => {
-                setSubmitting(true);
                 const newAddress = { ...formAddress, ...values };
-
                 const process = async () => {
                   const response = await (id ? handleUpdate(id, newAddress) : handleCreate(newAddress));
+                  setSubmitting(false);
                   if (!response) return onClose();
 
                   for (const [key, value] of Object.entries(response as { [s: string]: never; })) {
@@ -80,11 +79,11 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                   }
                 }
 
+                setSubmitting(true);
                 void process();
-                setSubmitting(false);
               }}
             >
-              {({ errors }) => (
+              {({ errors, isSubmitting }) => (
                 <Form className='grid gap-4 my-4'>
                   <div>
                     <Field
@@ -95,6 +94,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                       type='text'
                       as={Input}
                       radius='sm'
+                      isDisabled={isSubmitting}
                       isInvalid={errors.label}
                       color={errors.label ? 'danger' : 'default'}
                       errorMessage={errors.label && errors.label}
@@ -112,6 +112,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         type='text'
                         as={Input}
                         radius='sm'
+                        isDisabled={isSubmitting}
                         isInvalid={errors.firstname}
                         color={errors.firstname ? 'danger' : 'default'}
                         errorMessage={errors.firstname && errors.firstname}
@@ -128,6 +129,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         type='text'
                         as={Input}
                         radius='sm'
+                        isDisabled={isSubmitting}
                         isInvalid={errors.lastname}
                         color={errors.lastname ? 'danger' : 'default'}
                         errorMessage={errors.lastname && errors.lastname}
@@ -146,6 +148,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         type='text'
                         as={Input}
                         radius='sm'
+                        isDisabled={isSubmitting}
                         isInvalid={errors.address}
                         color={errors.address ? 'danger' : 'default'}
                         errorMessage={errors.address && errors.address}
@@ -164,6 +167,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         type='text'
                         as={Input}
                         radius='sm'
+                        isDisabled={isSubmitting}
                         isInvalid={errors.country}
                         color={errors.country ? 'danger' : 'default'}
                         errorMessage={errors.country && errors.country}
@@ -180,6 +184,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         placeholder='CA'
                         as={Input}
                         radius='sm'
+                        isDisabled={isSubmitting}
                         isInvalid={errors.state}
                         color={errors.state ? 'danger' : 'default'}
                         errorMessage={errors.state && errors.state}
@@ -198,6 +203,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         placeholder='Las Vegas'
                         as={Input}
                         radius='sm'
+                        isDisabled={isSubmitting}
                         isInvalid={errors.city}
                         color={errors.city ? 'danger' : 'default'}
                         errorMessage={errors.city && errors.city}
@@ -214,6 +220,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         placeholder='00000'
                         as={Input}
                         radius='sm'
+                        isDisabled={isSubmitting}
                         isInvalid={errors.zip}
                         color={errors.zip ? 'danger' : 'default'}
                         errorMessage={errors.zip && errors.zip}
@@ -231,6 +238,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                       placeholder={0}
                       as={Input}
                       radius='sm'
+                      isDisabled={isSubmitting}
                       isInvalid={errors.phone}
                       color={errors.phone ? 'danger' : 'default'}
                       errorMessage={errors.phone && errors.phone}
@@ -246,13 +254,14 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                       className='col-span-1'
                       defaultSelected={formAddress.default || false}
                       as={Checkbox}
+                      isDisabled={isSubmitting}
                     >
                       Set as default
                     </Field>
                   </div>
 
                   <div className='flex justify-center'>
-                    <Button type='submit' color='primary' variant='solid' className='text-white' size='md' radius='sm'>
+                    <Button isLoading={isSubmitting} type='submit' color='primary' variant='solid' className='text-white' size='md' radius='sm'>
                       {id ? 'Confirm Edit' : 'Create Address'}
                     </Button>
                   </div>

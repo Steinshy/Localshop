@@ -44,23 +44,22 @@ const CartDiscount: FC<CartDiscountProps> = () => {
         <Formik
           initialValues={{ code: '' }}
           onSubmit={(values: DiscountFormProps, { setSubmitting, setFieldError }) => {
-            setSubmitting(true);
-
             const apiFetch = async () => {
               if (!values.code || values.code.length < 1) return;
               const { data, error } = await applyDiscount(values.code);
-
               setSubmitting(false);
+
               if (error) return setFieldError('code', error.message);
               
               values.code = '';
               cartStore.update(data);
             };
         
+            setSubmitting(true);
             void apiFetch();
           }}
         >
-          {({ errors }) => (
+          {({ errors, isSubmitting }) => (
             <Form className='grid col-auto gap-4 my-4'>
               <Field
                 as={Input}
@@ -70,7 +69,7 @@ const CartDiscount: FC<CartDiscountProps> = () => {
                 radius='sm'
                 placeholder='Coupon code'
                 startContent={<FaTags className='text-foreground' />}
-                isDisabled={totalPrice <= 0}
+                isDisabled={totalPrice <= 0 || isSubmitting}
                 isInvalid={errors.code}
                 color={errors.code ? 'danger' : 'default'}
                 errorMessage={errors.code && errors.code}

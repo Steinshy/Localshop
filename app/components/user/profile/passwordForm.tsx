@@ -46,9 +46,9 @@ const PasswordForm = () => {
             if (hasError) return errors;
           }}
           onSubmit={(values:PasswordValuesProps, { setSubmitting, setFieldError }) => {
-            setSubmitting(true);
             const apiFetch = async() => {
               const { data, error } = await updatePassword(values);
+              setSubmitting(false);
               if(!error) {
                 Object.keys(values).forEach((key) => { values[key as keyof PasswordValuesProps] = ''; });
                 update(data);
@@ -60,8 +60,9 @@ const PasswordForm = () => {
                 }
               }
             }
+
+            setSubmitting(true);
             void apiFetch();
-            setSubmitting(false);
           }}
         >
           {({ errors, isSubmitting }) => (
