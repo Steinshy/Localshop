@@ -9,8 +9,6 @@ import { OrderResponse } from '@interfaces/userOrder';
 // Index
 import { api, error } from '@actions/index';
 
-
-
 // User => Orders - API - Get (collection)
 export const getOrders = async () => {
   revalidateTag('user');
