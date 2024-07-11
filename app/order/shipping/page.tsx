@@ -3,6 +3,8 @@ import { Divider } from "@nextui-org/react";
 
 // Components
 import AddressList from "@components/user/address/addressList";
+
+// Actions
 import { getAddresses } from '@actions/actionsUserAddress';
 
 const ShippingPage = async () => {

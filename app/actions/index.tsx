@@ -1,5 +1,7 @@
+// Utils
 import { FetchManager } from '@utils/fetchManager';
 
+// NextJS
 import { cookies } from 'next/headers';
 
 export const base_url = 'http://api.localshop.test:3005/v1',

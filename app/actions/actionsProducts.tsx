@@ -6,9 +6,9 @@ import { revalidateTag } from 'next/cache';
 // Interface
 import { PagyProps } from '@interfaces/general';
 import { ProductResponse } from '@interfaces/product';
-
 import { ErrorObj } from '@interfaces/httpUtils';
 
+// Utils
 import { handleError } from '@utils/fetchManager';
 
 // Index

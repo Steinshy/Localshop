@@ -5,13 +5,13 @@ import { revalidateTag } from 'next/cache';
 
 // Interface
 import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
+import { ErrorObj } from '@interfaces/httpUtils';
+
+// Utils
+import { handleError } from '@utils/fetchManager';
 
 // Index
 import { api } from '@actions/index';
-
-import { ErrorObj } from '@interfaces/httpUtils';
-
-import { handleError } from '@utils/fetchManager';
 
 // User => Address - API - Get
 export const getAddresses = async () => {

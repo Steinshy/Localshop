@@ -5,9 +5,9 @@ import { revalidateTag } from 'next/cache';
 
 // Interface
 import { OrderResponse } from '@interfaces/userOrder';
-
 import { ErrorObj } from '@interfaces/httpUtils';
 
+// Utils
 import { handleError } from '@utils/fetchManager';
 
 // Index

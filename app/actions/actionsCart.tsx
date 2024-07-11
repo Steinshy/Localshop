@@ -2,12 +2,12 @@
 
 // Interface
 import { CartResponse } from '@interfaces/cart';
+import { ErrorObj } from '@interfaces/httpUtils';
 
 // Data
 import { defaultCart } from '@data/general';
 
-import { ErrorObj } from '@interfaces/httpUtils';
-
+// Utils
 import { handleError } from '@utils/fetchManager';
 
 // Index

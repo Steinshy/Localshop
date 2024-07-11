@@ -30,7 +30,7 @@ const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productId }) => {
     const apiFetch = async () => {
       const { data, error } = await getPreviouslyOrdered(productId.toString());
       setChecked(true);
-      if (error) return showToast(error, 'error');
+      if (error) return showToast('Fetch failed!', 'error');
       setOrders(data);
     };
 

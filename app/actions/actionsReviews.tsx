@@ -3,9 +3,9 @@
 // Interface
 import { ReviewResponse } from '@interfaces/reviews';
 import { PagyProps } from '@interfaces/general';
-
 import { ErrorObj } from '@interfaces/httpUtils';
 
+// Utils
 import { handleError } from '@utils/fetchManager';
 
 // Index
