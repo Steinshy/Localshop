@@ -1,3 +1,6 @@
+// NextJS
+import { redirect } from 'next/navigation';
+
 // NextUI
 import { Divider } from "@nextui-org/react";
 
@@ -6,8 +9,14 @@ import AddressList from "@components/user/address/addressList";
 
 // Actions
 import { getAddresses } from '@actions/actionsUserAddress';
+import { getCart } from '@actions/actionsCart';
 
 const ShippingPage = async () => {
+  const { data:cartData } = await getCart();
+  const { attributes: { items } } = cartData;
+
+  if (items.length <= 0) return redirect('/order');
+
   const { data } = await getAddresses();
 
   return (

@@ -12,7 +12,7 @@ import { Link as NextLink, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarC
          Navbar, Button, Badge, Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from '@nextui-org/react';
 
 // Icons
-import { FaCartArrowDown, FaChevronDown } from 'react-icons/fa';
+import { FaCartArrowDown } from 'react-icons/fa';
 
 // Utils
 import { CartContext, UserContext } from '@utils/subProviders';
