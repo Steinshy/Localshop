@@ -34,9 +34,9 @@ type AddressValuesProps = {
 
 type AddressModalProp = {
   addresses: AddressResponse[];
-  id?: number;
+  id?: string;
   handleCreate: (newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
-  handleUpdate: (id: number, newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
+  handleUpdate: (id: string, newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
 };
 
 type AddressListProps = {

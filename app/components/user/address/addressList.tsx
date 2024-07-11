@@ -25,8 +25,8 @@ const AddressList: FC<AddressListProps> = ({ selectable = false, type, items = [
   }
 
   const handleCreate = async (newAddress: AddressValuesProps) => {
-    const { error:createError } = await CreateAddress(newAddress);
-    if (createError?.items) return createError.items;
+    const { error } = await CreateAddress(newAddress);
+    if (error?.items) return error.items;
 
     showToast('Address has been Created!', 'success');
     void refresh();
@@ -35,8 +35,8 @@ const AddressList: FC<AddressListProps> = ({ selectable = false, type, items = [
   };
 
   const handleUpdate = async (id: string, newAddress: AddressValuesProps) => {
-    const { error:updateError } = await UpdateAddress(id, newAddress);
-    if (updateError?.items) return updateError.items;
+    const { error } = await UpdateAddress(id, newAddress);
+    if (error?.items) return error.items;
 
     showToast('Address has been Updated!', 'success');
     void refresh();
@@ -45,8 +45,8 @@ const AddressList: FC<AddressListProps> = ({ selectable = false, type, items = [
   };
 
   const handleRemove = async (id: string) => {
-    const { error:removeError } = await RemoveAddress(id);
-    if (removeError) return showToast(removeError.message, 'error');
+    const { error } = await RemoveAddress(id);
+    if (error) return showToast(error.message, 'error');
 
     showToast('Address has been removed!', 'success');
     void refresh();

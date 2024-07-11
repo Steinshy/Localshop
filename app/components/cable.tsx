@@ -25,7 +25,7 @@ const CableComponent = () => {
       {
         disconnected: () => console.log('ws: unsubscribed.'),
         connected: () => console.log('ws: subscribed.'),
-        received: (received_data:ReceivedData) => {
+        received: (received_data: ReceivedData) => {
           // console.log("ws: received data.", received_data);
           const { type } = received_data;
 

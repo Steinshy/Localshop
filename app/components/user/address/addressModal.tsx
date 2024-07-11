@@ -36,7 +36,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
     return cleanAttributes(newAttributes);
   };
 
-  const formAddress = id ? findAddress() : defaultAddress;
+  const formAddress = (id ? findAddress() : defaultAddress) as AddressValuesProps;
 
   return (
     <>

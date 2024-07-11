@@ -32,6 +32,7 @@ export const CreateAddress = async (newAddress: AddressValuesProps) => {
     const { data } = await api.post<{ data: AddressResponse }>('/addresses', JSON.stringify({ address: newAddress }));
     return { data };
   } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
     return { data: [] as AddressResponse[], error };
   }
 };

@@ -1,5 +1,7 @@
+'use client';
+
 // React
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
 // NextJS
 import Link from 'next/link';
@@ -13,9 +15,10 @@ import { Button } from '@nextui-org/react';
 
 // Interface
 import { CheckoutButtonProps } from '@interfaces/cart';
+import { CartContext } from '@utils/subProviders';
 
 const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
-  const pathname = usePathname();
+  const pathname = usePathname(), cartStore = useContext(CartContext);
   const pathMappings: { [key: string]: { text: string; nextPath: string } } = {
     '/order': { text: 'Proceed to Shipping', nextPath: '/order/shipping' },
     '/order/shipping': { text: 'Proceed to Payment', nextPath: '/order/payment' },
@@ -23,6 +26,12 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
   };
 
   const { text, nextPath } = pathMappings[pathname] || { text: 'Proceed to Payment', nextPath: '/order/payment' };
+  const { addressID } = cartStore;
+
+  const isDisabled = (): boolean => {
+    if (nextPath !== '/order/payment') return false;
+    return (!addressID['shipping'] || !addressID['billing']);
+  }
 
   return (
     <Button
@@ -34,7 +43,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
       className='text-white col-span-2'
       size='lg'
       radius='sm'
-      isDisabled={items.length < 1}
+      isDisabled={items.length < 1 || isDisabled()}
     >
       {text}
     </Button>
