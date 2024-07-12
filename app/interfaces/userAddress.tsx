@@ -30,7 +30,7 @@ export type AddressValuesProps = {
   state: string;
   city: string;
   zip: string;
-  phone: number;
+  phone?: number;
   default: boolean;
 };
 

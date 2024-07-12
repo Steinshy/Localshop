@@ -57,7 +57,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
       )}
       <Modal isDismissable={false} isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
         <ModalContent>
-          <ModalHeader className='flex flex-col gap-1'>{id ? 'Edit Address' : 'Create a new Address'}</ModalHeader>
+          <ModalHeader>{id ? 'Edit Address' : 'Add a new Address'}</ModalHeader>
           <ModalBody>
             <Formik
               initialValues={formAddress}
@@ -90,201 +90,205 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
               }}
             >
               {({ errors, isSubmitting, setFieldValue }) => (
-                <Form className='grid gap-4 my-4'>
-                  <div>
-                    <Field
-                      label='Label'
-                      id='label'
-                      name='label'
-                      placeholder='Home'
-                      type='text'
-                      as={Input}
-                      radius='sm'
-                      isDisabled={isSubmitting}
-                      isInvalid={errors.label}
-                      color={errors.label ? 'danger' : 'default'}
-                      errorMessage={errors.label && errors.label}
+                <>
+                  <div className='group flex flex-col w-full col-span-2 is-filled'>
+                    <Autocomplete
+                      apiKey='AIzaSyB9z4FuD22qYqfKRDvXodNIxm8Y9PaRwYI'
+                      onPlaceSelected={(place: GooglePlaceAddress) => {
+                        const address = ParseGoogleAddress(place);
+                        void setFieldValue('address', `${address.street_number} ${address.route}`);
+                        void setFieldValue('city', address.locality);
+                        void setFieldValue('state', address.administrative_area_level_2);
+                        void setFieldValue('country', address.country);
+                        void setFieldValue('zip', address.postal_code);
+                      }}
+                      options={{ types: [] }}
+                      placeholder='Enter a location'
+                      className='bg-default-100 rounded-lg w-full p-2 m-0'
                     />
                   </div>
-
-                  <div className='grid grid-cols-2 gap-4'>
+                  <Form className='grid gap-4 my-4'>
                     <div>
                       <Field
-                        className='col-span-1'
-                        label='First Name'
-                        id='firstname'
-                        name='firstname'
-                        placeholder='John'
+                        id='label'
+                        name='label'
+                        placeholder='Label (ex: Home)'
                         type='text'
                         as={Input}
                         radius='sm'
+                        size='sm'
                         isDisabled={isSubmitting}
-                        isInvalid={errors.firstname}
-                        color={errors.firstname ? 'danger' : 'default'}
-                        errorMessage={errors.firstname && errors.firstname}
+                        isInvalid={errors.label}
+                        color={errors.label ? 'danger' : 'default'}
+                        errorMessage={errors.label && errors.label}
                       />
                     </div>
 
-                    <div>
+                    <div className='grid grid-cols-2 gap-4'>
+                      <div>
+                        <Field
+                          className='col-span-1'
+                          id='firstname'
+                          name='firstname'
+                          placeholder='John'
+                          type='text'
+                          as={Input}
+                          radius='sm'
+                          size='sm'
+                          isDisabled={isSubmitting}
+                          isInvalid={errors.firstname}
+                          color={errors.firstname ? 'danger' : 'default'}
+                          errorMessage={errors.firstname && errors.firstname}
+                        />
+                      </div>
+
+                      <div>
+                        <Field
+                          className='col-span-1'
+                          id='lastname'
+                          name='lastname'
+                          placeholder='Doe'
+                          type='text'
+                          as={Input}
+                          radius='sm'
+                          size='sm'
+                          isDisabled={isSubmitting}
+                          isInvalid={errors.lastname}
+                          color={errors.lastname ? 'danger' : 'default'}
+                          errorMessage={errors.lastname && errors.lastname}
+                        />
+                      </div>
+                    </div>
+
+                    <div className='grid grid-cols-1 gap-4'>
                       <Field
-                        label='Last Name'
-                        className='col-span-1'
-                        id='lastname'
-                        name='lastname'
-                        placeholder='Doe'
+                        className='col-span-2'
+                        id='address'
+                        name='address'
+                        placeholder='122 Example Street'
                         type='text'
                         as={Input}
                         radius='sm'
+                        size='sm'
                         isDisabled={isSubmitting}
-                        isInvalid={errors.lastname}
-                        color={errors.lastname ? 'danger' : 'default'}
-                        errorMessage={errors.lastname && errors.lastname}
+                        isInvalid={errors.address}
+                        color={errors.address ? 'danger' : 'default'}
+                        errorMessage={errors.address && errors.address}
                       />
                     </div>
-                  </div>
 
-                  <div className='grid grid-cols-1 gap-4'>
-                    <div className='group flex flex-col w-full col-span-2 is-filled'>
-                      <Autocomplete
-                        apiKey='AIzaSyB9z4FuD22qYqfKRDvXodNIxm8Y9PaRwYI'
-                        onPlaceSelected={(place: GooglePlaceAddress) => {
-                          const address = ParseGoogleAddress(place);
-                          void setFieldValue('address', `${address.street_number} ${address.route}`);
-                          void setFieldValue('city', address.locality);
-                          void setFieldValue('state', address.administrative_area_level_2);
-                          void setFieldValue('country', address.country);
-                          void setFieldValue('zip', address.postal_code);
-                        }}
-                        options={{ types: [] }}
-                        className='bg-default-100 rounded-lg w-full p-2 m-0'
-                      />
+                    <div className='grid grid-cols-2 gap-4'>
+                      <div>
+                        <Field
+                          className='col-span-1'
+                          id='country'
+                          name='country'
+                          placeholder='USA'
+                          type='text'
+                          as={Input}
+                          radius='sm'
+                          size='sm'
+                          isDisabled={isSubmitting}
+                          isInvalid={errors.country}
+                          color={errors.country ? 'danger' : 'default'}
+                          errorMessage={errors.country && errors.country}
+                        />
+                      </div>
+
+                      <div>
+                        <Field
+                          className='col-span-1'
+                          id='state'
+                          name='state'
+                          type='text'
+                          placeholder='CA'
+                          as={Input}
+                          radius='sm'
+                          size='sm'
+                          isDisabled={isSubmitting}
+                          isInvalid={errors.state}
+                          color={errors.state ? 'danger' : 'default'}
+                          errorMessage={errors.state && errors.state}
+                        />
+                      </div>
                     </div>
-                    <Field
-                      label='address'
-                      className='col-span-2'
-                      id='address'
-                      name='address'
-                      placeholder='122 Example St'
-                      type='text'
-                      as={Input}
-                      radius='sm'
-                      isDisabled={isSubmitting}
-                      isInvalid={errors.address}
-                      color={errors.address ? 'danger' : 'default'}
-                      errorMessage={errors.address && errors.address}
-                    />
-                  </div>
 
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div>
+                    <div className='grid grid-cols-2 gap-4'>
+                      <div>
+                        <Field
+                          className='col-span-1'
+                          id='city'
+                          name='city'
+                          type='text'
+                          placeholder='Las Vegas'
+                          as={Input}
+                          radius='sm'
+                          size='sm'
+                          isDisabled={isSubmitting}
+                          isInvalid={errors.city}
+                          color={errors.city ? 'danger' : 'default'}
+                          errorMessage={errors.city && errors.city}
+                        />
+                      </div>
+
+                      <div>
+                        <Field
+                          className='col-span-1'
+                          id='zip'
+                          name='zip'
+                          type='text'
+                          placeholder='Zip Code'
+                          as={Input}
+                          radius='sm'
+                          size='sm'
+                          isDisabled={isSubmitting}
+                          isInvalid={errors.zip}
+                          color={errors.zip ? 'danger' : 'default'}
+                          errorMessage={errors.zip && errors.zip}
+                        />
+                      </div>
+                    </div>
+
+                    <div className='grid grid-cols-1 gap-4'>
                       <Field
-                        label='Country'
                         className='col-span-1'
-                        id='country'
-                        name='country'
-                        placeholder='USA'
-                        type='text'
+                        id='phone'
+                        name='phone'
+                        type='phone'
+                        placeholder='Phone number (ex: 0102030405)'
                         as={Input}
                         radius='sm'
+                        size='sm'
                         isDisabled={isSubmitting}
-                        isInvalid={errors.country}
-                        color={errors.country ? 'danger' : 'default'}
-                        errorMessage={errors.country && errors.country}
+                        isInvalid={errors.phone}
+                        color={errors.phone ? 'danger' : 'default'}
+                        errorMessage={errors.phone && errors.phone}
                       />
                     </div>
 
-                    <div>
+                    <div className='grid grid-cols-2 gap-4'>
                       <Field
-                        label='State'
+                        type='checkbox'
+                        id='default'
+                        name='default'
+                        label='Set as default'
                         className='col-span-1'
-                        id='state'
-                        name='state'
-                        type='text'
-                        placeholder='CA'
-                        as={Input}
-                        radius='sm'
+                        defaultSelected={formAddress.default || false}
+                        as={Checkbox}
                         isDisabled={isSubmitting}
-                        isInvalid={errors.state}
-                        color={errors.state ? 'danger' : 'default'}
-                        errorMessage={errors.state && errors.state}
-                      />
-                    </div>
-                  </div>
-
-                  <div className='grid grid-cols-2 gap-4'>
-                    <div>
-                      <Field
-                        label='City'
-                        className='col-span-1'
-                        id='city'
-                        name='city'
-                        type='text'
-                        placeholder='Las Vegas'
-                        as={Input}
-                        radius='sm'
-                        isDisabled={isSubmitting}
-                        isInvalid={errors.city}
-                        color={errors.city ? 'danger' : 'default'}
-                        errorMessage={errors.city && errors.city}
-                      />
+                        size='sm'
+                      >
+                        <span className='text-sm text-foreground/75'>Set as default</span>
+                      </Field>
                     </div>
 
-                    <div>
-                      <Field
-                        label='Zip'
-                        className='col-span-1'
-                        id='zip'
-                        name='zip'
-                        type='text'
-                        placeholder='00000'
-                        as={Input}
-                        radius='sm'
-                        isDisabled={isSubmitting}
-                        isInvalid={errors.zip}
-                        color={errors.zip ? 'danger' : 'default'}
-                        errorMessage={errors.zip && errors.zip}
-                      />
+                    <div className='flex justify-center'>
+                      <Button isLoading={isSubmitting} type='submit' color='primary' variant='solid' className='text-white' size='sm' radius='sm'>
+                        {id ? 'Update' : 'Add'}
+                      </Button>
                     </div>
-                  </div>
-
-                  <div className='grid grid-cols-1 gap-4'>
-                    <Field
-                      label='Phone'
-                      className='col-span-1'
-                      id='phone'
-                      name='phone'
-                      type='phone'
-                      placeholder='0102030405'
-                      as={Input}
-                      radius='sm'
-                      isDisabled={isSubmitting}
-                      isInvalid={errors.phone}
-                      color={errors.phone ? 'danger' : 'default'}
-                      errorMessage={errors.phone && errors.phone}
-                    />
-                  </div>
-
-                  <div className='grid grid-cols-2 gap-4'>
-                    <Field
-                      type='checkbox'
-                      id='default'
-                      name='default'
-                      label='Set as default'
-                      className='col-span-1'
-                      defaultSelected={formAddress.default || false}
-                      as={Checkbox}
-                      isDisabled={isSubmitting}
-                    >
-                      Set as default
-                    </Field>
-                  </div>
-
-                  <div className='flex justify-center'>
-                    <Button isLoading={isSubmitting} type='submit' color='primary' variant='solid' className='text-white' size='md' radius='sm'>
-                      {id ? 'Confirm Edit' : 'Create Address'}
-                    </Button>
-                  </div>
-                </Form>
+                  </Form>
+                </>
               )}
             </Formik>
           </ModalBody>
