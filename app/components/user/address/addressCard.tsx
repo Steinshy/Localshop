@@ -28,7 +28,7 @@ const AddressCard: FC<AddressCardProps> = ({ addresses, address, handleCreate, h
   const cartStore = useContext(CartContext);
   const { update, selectedAddresses, setSelectedAddresses } = cartStore;
   const { id, attributes } = address;
-  const { label, firstname, lastname, address: addressLine, city, country, state, zip,
+  const { label, firstname, lastname, address:line, city, country, state, zip, phone,
           default: addressDefault } = attributes;
   const [selected, setSelected] = useState<boolean>(false),
         [isFetching, setIsFetching] = useState<boolean>(false);
@@ -83,13 +83,10 @@ const AddressCard: FC<AddressCardProps> = ({ addresses, address, handleCreate, h
             <FaLocationDot className='text-primary' />
             <h2 className='font-semibold'>{label}</h2>
           </div>
-          <p>
-            {firstname} {lastname}
-          </p>
-          <p>{addressLine}</p>
-          <p>
-            {city} {country} {state} {zip}
-          </p>
+          <p>{lastname} {firstname}</p>
+          <p>{line}</p>
+          <p>{zip} {city} {state} {country}</p>
+          <p>{phone}</p>
         </CardBody>
       </Card>
       <div className='absolute top-2 right-2 flex gap-1'>

@@ -27,4 +27,8 @@ export type HeaderProps = {
   categories: CategoryProps[];
 }
 
+export type GooglePlaceAddress = {
+  address_components: { short_name: string; long_name: string }[];
+}
+
 export type { LayoutProps, SvgIconProps, BreadcrumbProps, StepperProps, PagyProps };

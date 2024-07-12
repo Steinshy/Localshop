@@ -49,7 +49,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
   }
 
   return (
-    <html lang='en' title='LocalShop'>
+    <html lang='en'>
       <body className='flex flex-col min-h-svh'>
         <main className='flex flex-col flex-grow'>
           <Providers initialUser={userData} initialCart={cartData}>

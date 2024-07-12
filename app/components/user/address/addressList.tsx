@@ -4,7 +4,7 @@
 import { FC, useState, useContext } from 'react';
 
 // NextUI
-import { Input } from '@nextui-org/react';
+import { Button, Input } from '@nextui-org/react';
 
 // Components
 import AddressCard from '@components/user/address/addressCard';
@@ -22,19 +22,23 @@ import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from '@acti
 // Utils
 import { showToast } from '@utils/helpers';
 import { CartContext } from '@utils/subProviders';
+import { PagyProps } from '@interfaces/general';
 
-const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], title = 'Addresses' }) => {
+const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], pageInfos, title = 'Addresses' }) => {
   const cartStore = useContext(CartContext);
   const { selectedAddresses, setSelectedAddresses } = cartStore;
   const [addresses, setAddresses] = useState<AddressResponse[]>(items),
         [isFetching, setIsFetching] = useState<boolean>(false),
-        [query, setQuery] = useState<string>('');
+        [query, setQuery] = useState<string>(''),
+        [pagy, setPagy] = useState<PagyProps>(pageInfos || { page: 1, pages: 1 });
 
   const fetch = (page?: number, query?: string) => {
     const apiFetch = async () => {
-      const { data, error } = await getAddresses(page, query);
+      const { data, pagy, error } = await getAddresses(page, query);
       setIsFetching(false);
-      if (!error) setAddresses(data);
+      if (error) return showToast(error.message, 'error');
+      setAddresses(data);
+      setPagy(pagy);
     }
 
     setIsFetching(true);
@@ -86,6 +90,14 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
     void fetch(1);
   };
 
+  const handlePreviousPage = () => {
+    void fetch(pagy.page - 1, query);
+  }
+
+  const handleNextPage = () => {
+    void fetch(pagy.page + 1, query);
+  }
+
   return (
     <>
       <div className='flex justify-between items-center'>
@@ -121,6 +133,13 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
           handleRemove={handleRemove}
         />
       ))}
+
+      {/* Pagination */}
+      <div className='flex justify-between items-center'>
+        <Button size='sm' isDisabled={pagy.page <= 1 || isFetching} onPress={handlePreviousPage}>Previous</Button>
+        <p className='text-sm text-foreground/50'>Displaying page {pagy.page} of {pagy.pages}</p>
+        <Button size='sm' isDisabled={pagy.page === pagy.pages || isFetching} onPress={handleNextPage}>Next</Button>
+      </div>
     </>
   );
 };

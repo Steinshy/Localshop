@@ -33,18 +33,10 @@ const CartSummary = () => {
 
     return (
       <>
-        <p>
-          {lastname} {firstname}
-        </p>
-        <p>
-          {line}
-        </p>
-        <p>
-          {zip} {city} {state} {country}
-        </p>
-        <p>
-          {phone}
-        </p>
+        <p>{lastname} {firstname}</p>
+        <p>{line}</p>
+        <p>{zip} {city} {state} {country}</p>
+        <p>{phone}</p>
       </>
     )
   };

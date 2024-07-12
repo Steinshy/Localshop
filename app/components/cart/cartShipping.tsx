@@ -17,8 +17,9 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 // Interfaces
 import { AddressResponse } from "@interfaces/userAddress";
+import { PagyProps } from "@interfaces/general";
 
-const CartShipping = ({ items }:{ items: AddressResponse[]; }) => {
+const CartShipping = ({ items, pageInfos }:{ items?: AddressResponse[]; pageInfos?: PagyProps }) => {
   const [step, setStep] = useState<number>(1);
   const cartStore = useContext(CartContext);
   const { data: { attributes: { addresses } } } = cartStore;
@@ -35,7 +36,7 @@ const CartShipping = ({ items }:{ items: AddressResponse[]; }) => {
     <>
       {step === 1 ? (
         <>
-          <AddressList title='Shipping' items={items} selectable type='shipping' />
+          <AddressList title='Shipping' items={items} pageInfos={pageInfos} selectable type='shipping' />
           <div className='flex justify-end'>
             <Button
               onPress={() => GoToStep(2)}
@@ -49,7 +50,7 @@ const CartShipping = ({ items }:{ items: AddressResponse[]; }) => {
         </>
       ) : (
         <>
-          <AddressList title='Billing' items={items} selectable type='billing' />
+          <AddressList title='Billing' items={items} pageInfos={pageInfos} selectable type='billing' />
           <div className='flex justify-start'>
             <Button
               onPress={() => GoToStep(1)}

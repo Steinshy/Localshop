@@ -11,7 +11,7 @@ import { getAddresses } from '@actions/actionsUserAddress';
 export const metadata: Metadata = { title: 'Addresses'};
 
 const AddressesPage = async () => {
-  const { data:addresses, error } = await getAddresses();
+  const { data:addresses, pagy, error } = await getAddresses();
   const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
 
   return (
@@ -20,7 +20,7 @@ const AddressesPage = async () => {
       
       {addresses.length > 0 && !error ? (
         <div className='grid grid-cols-1 gap-3'>
-          <AddressList items={addresses} />
+          <AddressList items={addresses} pageInfos={pagy} />
         </div>
       ) : (
         <>

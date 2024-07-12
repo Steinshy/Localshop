@@ -1,3 +1,5 @@
+import { PagyProps } from "./general";
+
 type AddressResponse = {
   id: string;
   type: string;
@@ -11,7 +13,7 @@ type AddressResponse = {
     city: string;
     state: string;
     country: string;
-    zip: number;
+    zip: string;
     phone: number;
     default: boolean;
     createdAt: string;
@@ -27,7 +29,7 @@ type AddressValuesProps = {
   country: string;
   state: string;
   city: string;
-  zip: number;
+  zip: string;
   phone: number;
   default: boolean;
 };
@@ -45,6 +47,7 @@ type AddressListProps = {
   type?: string;
   selected?: number | null;
   title?: string;
+  pageInfos?: PagyProps;
 };
 
 type AddressCardProps = {

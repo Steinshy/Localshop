@@ -3,6 +3,9 @@
 // React
 import { FC } from 'react';
 
+// Modules
+import Autocomplete from "react-google-autocomplete";
+
 // NextUI
 import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox } from '@nextui-org/react';
 
@@ -13,11 +16,13 @@ import { FaPlus, FaEdit } from 'react-icons/fa';
 import { Formik, Form, Field } from 'formik';
 
 // Interfaces
+import { GooglePlaceAddress } from '@interfaces/general';
 import { AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
 
 // Data
 import { defaultAddress } from '@data/general';
 
+// Google Places API KEY : AIzaSyB9z4FuD22qYqfKRDvXodNIxm8Y9PaRwYI
 const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpdate, id }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
@@ -49,7 +54,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
           <FaPlus className='mr-1' /> New
         </Button>
       )}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
+      <Modal isDismissable={false} isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
         <ModalContent>
           <ModalHeader className='flex flex-col gap-1'>{id ? 'Edit Address' : 'Create a new Address'}</ModalHeader>
           <ModalBody>
@@ -60,7 +65,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                 let hasError:boolean = false;
                 Object.keys(values).forEach((key) => {
                   if (!values[key as keyof AddressValuesProps]) {
-                    if (key === 'zip' || key === 'default') return;
+                    if (key === 'default') return;
                     hasError = true;
                     errors[key] = 'Required';
                   }
@@ -83,7 +88,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                 void process();
               }}
             >
-              {({ errors, isSubmitting }) => (
+              {({ errors, isSubmitting, setFieldValue }) => (
                 <Form className='grid gap-4 my-4'>
                   <div>
                     <Field
@@ -138,22 +143,35 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                   </div>
 
                   <div className='grid grid-cols-1 gap-4'>
-                    <div>
-                      <Field
-                        label='address'
-                        className='col-span-2'
-                        id='address'
-                        name='address'
-                        placeholder='122 Example St'
-                        type='text'
-                        as={Input}
-                        radius='sm'
-                        isDisabled={isSubmitting}
-                        isInvalid={errors.address}
-                        color={errors.address ? 'danger' : 'default'}
-                        errorMessage={errors.address && errors.address}
+                    <div className='group flex flex-col w-full col-span-2 is-filled'>
+                      <Autocomplete
+                        apiKey='AIzaSyB9z4FuD22qYqfKRDvXodNIxm8Y9PaRwYI'
+                        onPlaceSelected={(place) => {
+                          const { address_components:address } = place as GooglePlaceAddress;
+                          void setFieldValue('address', `${address[0].long_name} ${address[1].long_name}`);
+                          void setFieldValue('city', address[2].long_name);
+                          void setFieldValue('state', address[3].short_name);
+                          void setFieldValue('country', address[5].long_name);
+                          void setFieldValue('zip', address[6].short_name);
+                        }}
+                        options={{ types: [] }}
+                        className='bg-default-100 rounded-lg w-full p-2 m-0'
                       />
                     </div>
+                    <Field
+                      label='address'
+                      className='col-span-2'
+                      id='address'
+                      name='address'
+                      placeholder='122 Example St'
+                      type='text'
+                      as={Input}
+                      radius='sm'
+                      isDisabled={isSubmitting}
+                      isInvalid={errors.address}
+                      color={errors.address ? 'danger' : 'default'}
+                      errorMessage={errors.address && errors.address}
+                    />
                   </div>
 
                   <div className='grid grid-cols-2 gap-4'>
@@ -216,7 +234,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         className='col-span-1'
                         id='zip'
                         name='zip'
-                        type='number'
+                        type='text'
                         placeholder='00000'
                         as={Input}
                         radius='sm'
@@ -235,7 +253,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                       id='phone'
                       name='phone'
                       type='phone'
-                      placeholder={0}
+                      placeholder='0102030405'
                       as={Input}
                       radius='sm'
                       isDisabled={isSubmitting}

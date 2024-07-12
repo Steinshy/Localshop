@@ -133,7 +133,7 @@ const defaultAddress: AddressValuesProps = {
   city: '',
   state: '',
   country: '',
-  zip: 0,
+  zip: '',
   phone: 0,
   default: false
 };

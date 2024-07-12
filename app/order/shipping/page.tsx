@@ -14,11 +14,11 @@ const ShippingPage = async () => {
 
   if (items.length <= 0) return redirect('/order');
 
-  const { data } = await getAddresses(1);
+  const { data, pagy } = await getAddresses(1);
 
   return (
     <div className="flex flex-col sm:col-span-7 gap-2">
-      <CartShipping items={data} />
+      <CartShipping items={data} pageInfos={pagy} />
     </div>
   );
 };
