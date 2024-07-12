@@ -4,7 +4,7 @@ import { UserResponse } from '@interfaces/user';
 import { CartResponse, CartItemProps } from '@interfaces/cart';
 import { DiscountResponse } from '@interfaces/discount';
 import { ProductResponse, ProductCategory } from '@interfaces/product';
-import { AddressResponse } from '@interfaces/userAddress';
+import { AddressValuesProps } from '@interfaces/userAddress';
 import { OrderResponse, OrderItem } from '@interfaces/userOrder';
 
 // defaultProduct => thumbnail
@@ -91,6 +91,7 @@ const defaultCart: CartResponse = {
     coupon: {
       data: defaultCoupon,
     },
+    addresses: [],
     finalPrice: 0,
     totalItems: 0,
     totalUniqueItems: 0,
@@ -124,25 +125,17 @@ const defaultProducts = {
 };
 
 // Components/user/addressModal
-const defaultAddress: AddressResponse = {
-  id: '',
-  type: '',
-
-  attributes: {
-    id: 0,
-    label: '',
-    firstname: '',
-    lastname: '',
-    address: '',
-    city: '',
-    state: '',
-    country: '',
-    zip: 0,
-    phone: 0,
-    default: false,
-    createdAt: '',
-    updatedAt: '',
-  },
+const defaultAddress: AddressValuesProps = {
+  label: '',
+  firstname: '',
+  lastname: '',
+  address: '',
+  city: '',
+  state: '',
+  country: '',
+  zip: 0,
+  phone: 0,
+  default: false
 };
 
 const orderItem: OrderItem = {

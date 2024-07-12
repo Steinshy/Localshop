@@ -2,6 +2,7 @@
 import { DiscountResponse } from '@interfaces/discount';
 import { ProductResponse } from '@interfaces/product';
 import { CartContextType } from '@interfaces/subProviders';
+import { AddressResponse } from './userAddress';
 
 type InitialCartProps = {
   initialCart: CartResponse;
@@ -31,11 +32,20 @@ type CartResponse = {
     coupon: {
       data: DiscountResponse;
     },
+    addresses: CartAddresses[],
     finalPrice: number;
     totalItems: number;
     totalUniqueItems: number;
   };
 };
+
+export type CartAddresses = {
+  id: number;
+  type: string;
+  address: {
+    data: AddressResponse;
+  }
+}
 
 type CartItemProps = {
   id: number;

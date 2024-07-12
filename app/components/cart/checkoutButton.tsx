@@ -26,11 +26,17 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
   };
 
   const { text, nextPath } = pathMappings[pathname] || { text: 'Proceed to Payment', nextPath: '/order/payment' };
-  const { addressID } = cartStore;
+  const { data: { attributes: { addresses } } } = cartStore;
 
   const isDisabled = (): boolean => {
     if (nextPath !== '/order/payment') return false;
-    return (!addressID['shipping'] || !addressID['billing']);
+    if (addresses.length <= 0) return true;
+    
+    const shipping = addresses.find((address) => address.type === 'shipping'),
+          billing = addresses.find((address) => address.type === 'billing');
+    if (!shipping || !billing) return true;
+
+    return false;
   }
 
   return (

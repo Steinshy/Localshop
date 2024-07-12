@@ -4,6 +4,7 @@
 import { revalidateTag } from 'next/cache';
 
 // Interface
+import { PagyProps } from '@interfaces/general';
 import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 import { ErrorObj } from '@interfaces/httpUtils';
 
@@ -14,11 +15,14 @@ import { handleError } from '@utils/fetchManager';
 import { api } from '@actions/index';
 
 // User => Address - API - Get
-export const getAddresses = async () => {
+export const getAddresses = async (page?: number, query?: string) => {
   revalidateTag('user');
+  (page = page || 1), (query = query || '');
+
   try {
-    const { data } = await api.get<{ data: AddressResponse[] }>('/addresses', { next: { tags: ['user'] } });
-    return { data };
+    const { addresses, pagy } = await api.get<{ addresses: { data: AddressResponse[] }; pagy: PagyProps }>(`/addresses?page=${page}&q=${query}`, { next: { tags: ['user'] } });
+    const { data } = addresses;
+    return { data, pagy };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
     return { data: [] as AddressResponse[], error };

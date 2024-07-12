@@ -100,3 +100,29 @@ export const addItemToCart = async (productId: string) => {
     return { data: {} as { data: CartResponse }, error };
   }
 };
+
+// Cart => Addresses - API - Post
+export const addAddresses = async (addressID: string, purpose: number) => {
+  try {
+    const { data } = await api.post<{ data: CartResponse }>('/cart/add_addresses', JSON.stringify({ address_id: addressID, address_purpose: purpose }), {
+      next: { tags: ['cart'] },
+    });
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
+    return { data: {}, error };
+  }
+};
+
+// Cart => Addresses - API - Post
+export const removeAddresses = async (addressID: string, purpose: number) => {
+  try {
+    const { data } = await api.post<{ data: CartResponse }>('/cart/remove_addresses', JSON.stringify({ address_id: addressID, address_purpose: purpose }), {
+      next: { tags: ['cart'] },
+    });
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
+    return { data: {}, error };
+  }
+};

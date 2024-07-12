@@ -1,14 +1,14 @@
 'use client';
 
 // React
-import { FC, useState, createContext, useCallback } from 'react';
+import { FC, useState, createContext, useCallback, useEffect } from 'react';
 
 // Actions
 import { getCart } from '@actions/actionsCart';
 import { getUser, userLogout } from '@actions/actionsUser';
 
 // Interfaces
-import { CartActions, CartProviderProps, CartResponse } from '@interfaces/cart';
+import { CartActions, CartAddresses, CartProviderProps, CartResponse } from '@interfaces/cart';
 import { UserActions, UserProviderProps, UserResponse } from '@interfaces/user';
 import { UserContextType, CartContextType } from '@interfaces/subProviders';
 
@@ -16,11 +16,15 @@ import { UserContextType, CartContextType } from '@interfaces/subProviders';
 import { defaultCart, defaultUser } from '@data/general';
 
 // CART PROVIDERS //
-const useCart = (initialCart:CartResponse) => {
+const useCart = (initialCart: CartResponse) => {
   const [cart, setCart] = useState<CartResponse>(initialCart);
-  const [addressID, setAddressID] = useState<{ [x: string]: string|null; }>({});
+  const [selectedAddresses, setSelectedAddresses] = useState<CartAddresses[]>(initialCart.attributes.addresses);
 
-  const refresh = useCallback(async ():Promise<boolean> => {
+  useEffect(() => {
+    setSelectedAddresses(cart.attributes.addresses);
+  }, [cart]);
+
+  const refresh = useCallback(async (): Promise<boolean> => {
     const { data, error } = await getCart() as CartActions;
     !error ? setCart(data) : setCart(defaultCart);
     return !error;
@@ -30,7 +34,7 @@ const useCart = (initialCart:CartResponse) => {
     setCart(defaultCart);
   }, [setCart]);
 
-  return { data: cart, update: setCart, refresh, reset, setAddressID, addressID };
+  return { data: cart, update: setCart, refresh, reset, setSelectedAddresses, selectedAddresses };
 };
 
 const CartProvider:FC<CartProviderProps> = ({ children, initialCart }) => {
@@ -46,8 +50,8 @@ const CartContext = createContext<CartContextType>({
     return await new Promise<boolean>((resolve) => { resolve(false);});
   },
   reset: () => {},
-  setAddressID: () => {},
-  addressID: {}
+  setSelectedAddresses: () => {},
+  selectedAddresses: []
 });
 
 // USER PROVIDERS //

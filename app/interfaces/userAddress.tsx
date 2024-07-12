@@ -44,6 +44,7 @@ type AddressListProps = {
   selectable?: boolean;
   type?: string;
   selected?: number | null;
+  title?: string;
 };
 
 type AddressCardProps = {
