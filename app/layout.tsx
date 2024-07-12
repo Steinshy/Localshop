@@ -11,7 +11,7 @@ import { Toaster } from 'react-hot-toast';
 
 // Components
 import CableComponent from '@components/cable';
-import Navbar from '@components/layout/navbar';
+import Header from '@components/layout/header';
 import Footer from '@components/layout/footer';
 
 // Providers
@@ -23,6 +23,7 @@ import { LayoutProps } from '@interfaces/general';
 // Actions
 import { getUser } from '@actions/actionsUser';
 import { getCart } from '@actions/actionsCart';
+import { getProductCategories } from '@actions/actionsProducts';
 
 // Utils
 import { isPrivateUrl } from '@utils/helpers';
@@ -40,6 +41,7 @@ export const metadata: Metadata = {
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data: userData, error: userError } = await getUser(),
         { data: cartData } = await getCart(),
+        { data: categoriesData } = await getProductCategories(),
     requestUrl = headers().get('x-url');
 
   if (userError && requestUrl !== '/') {
@@ -51,7 +53,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
       <body className='flex flex-col min-h-svh'>
         <main className='flex flex-col flex-grow'>
           <Providers initialUser={userData} initialCart={cartData}>
-            <Navbar />
+            <Header categories={categoriesData} />
             {children}
             <CableComponent />
           </Providers>

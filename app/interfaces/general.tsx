@@ -1,4 +1,5 @@
 import { SVGProps } from 'react';
+import { CategoryProps } from './categories';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -21,5 +22,9 @@ type PagyProps = {
   page: number;
   pages: number;
 };
+
+export type HeaderProps = {
+  categories: CategoryProps[];
+}
 
 export type { LayoutProps, SvgIconProps, BreadcrumbProps, StepperProps, PagyProps };
