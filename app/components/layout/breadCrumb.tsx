@@ -17,16 +17,25 @@ import { FaHome } from 'react-icons/fa';
 import { BreadcrumbProps, BreadcrumbItems } from '@interfaces/general';
 
 // Utils
-import { capitalize } from '@utils/helpers';
+import { capitalize, unslug } from '@utils/helpers';
 
 const Separator = () => <span className='text-small text-foreground/50'>/</span>;
 
-// A FAIRE :
-// Liste d'exclusion (ex: products/$categorySlug)
-// "Unslug" les titres (ex: Home-decoration)
+// Urls where we don't want to see the breadcrumb -> String | Regex
+const excludedUrls = ["\\/products\\/(\\w+)-(\\w+)", "\\/products\\/(\\w+)"];
+
 const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
   const pathName = usePathname(),
-        [url, setUrl] = useState<string|undefined>(requestUrl);
+        [url, setUrl] = useState<string>(requestUrl || '');
+
+  const buildHref = (urls: string[], currentIndex: number): string => {
+    let str = '';
+    for (let i = 0; i < currentIndex + 1; i++) {
+      if (!urls[i].length) continue; // Skip the first empty item -> ''
+      str = str + `/${urls[i]}`;
+    }
+    return str;
+  }
 
   const buildItems = useCallback((): BreadcrumbItems => {
     // Split the url on every '/', '/user/addresses' -> ['', 'user', 'addresses']
@@ -39,7 +48,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
     for (let i = 0; i < urls.length; i++) {
       if (!urls[i].length) continue; // Skip the first empty item -> ''
       // Turns 'user' into -> { title: 'User', href: '/user' }
-      const title = capitalize(urls[i]), url = `/${urls[i]}`, isLast = i === urls.length - 1;
+      const title = capitalize(unslug(urls[i])), url = buildHref(urls, i), isLast = i === urls.length - 1;
       breadCrumbItems.push({ title: title, href: isLast ? '' : url });
     }
 
@@ -58,8 +67,16 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
     setItems(buildItems());
   }, [url, buildItems]);
 
+  const testExcludedUrls = (): boolean => {
+    for (let i = 0; i < excludedUrls.length; i++) {
+      const e = excludedUrls[i], regex = new RegExp(`^${e}$`);
+      if (regex.test(url)) return true;
+    }
+    return false;
+  }
+
   return (
-    items.length > 1 && (
+    (items.length > 1 && !testExcludedUrls()) && (
       <nav className='flex items-center gap-1 p-2'>
         <NextLink as={Link} href='/' className='text-small font-bold text-foreground/75'>
           <FaHome />

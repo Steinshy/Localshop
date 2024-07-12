@@ -1,32 +1,31 @@
 // Modules
 import toast, { ToastType } from 'react-hot-toast';
 
-/**
- * Converts a date to a readable format.
- * @param {string} date The date to convert.
- * @returns {string} The converted date.
- */
-const readableDate = (date: string): string => {
+export const readableDate = (date: string): string => {
   return new Intl.DateTimeFormat('en-US').format(new Date(date));
 };
 
-const showToast = (text: string, status: ToastType) => {
+export const showToast = (text: string, status: ToastType) => {
   status === 'error' ? toast.error(text) : toast.success(text);
 };
 
-const capitalize = (str: string): string => {
+export const unslug = (str: string): string => {
   if (str.length === 0) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str.replace(/-/g, ' ');
 }
 
-const privateUrls = ['/user', '/order'];
+export const capitalize = (str: string): string => {
+  if (str.length === 0) return str;
+  return str.split(' ').map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+  }).join(' ');
+}
 
-const isPrivateUrl = (requestUrl: string|undefined): boolean => {
+export const isPrivateUrl = (requestUrl: string|undefined): boolean => {
+  const privateUrls = ['/user', '/order'];
   const result = privateUrls.some(url => {
     const regex = new RegExp(`^${url}`);
     return requestUrl ? regex.test(requestUrl) : false;
   });
   return result;
 }
-
-export { isPrivateUrl, capitalize, readableDate, showToast };
