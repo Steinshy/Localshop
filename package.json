@@ -29,6 +29,7 @@
     "yarn": "^1.22.21"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.5",
     "@types/actioncable": "^5.2.11",
     "@types/node": "20.11.24",
     "@types/react": "^18.2.15",

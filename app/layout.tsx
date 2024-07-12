@@ -38,6 +38,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const dynamic = 'force-dynamic'
+
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data: userData, error: userError } = await getUser(),
         { data: cartData } = await getCart(),
