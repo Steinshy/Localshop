@@ -1,8 +1,8 @@
 // Data => DefaultCoupon
-type DiscountResponse = {
+export type DiscountResponse = {
   id: string;
   type: string;
-  
+
   attributes: {
     id: number;
     code: string;
@@ -11,19 +11,17 @@ type DiscountResponse = {
     expired: boolean;
     createdAt: string;
     updatedAt: string;
-  }
+  };
 };
 
 // Components => Cart => CartDiscount
-type CartDiscountProps = {
+export type CartDiscountProps = {
   couponCode?: string;
   couponDiscount?: number;
   totalPrice?: number;
 };
 
 // Components => Cart => CartDiscount
-type DiscountFormProps = {
+export type DiscountFormProps = {
   code?: string;
 };
-
-export type { DiscountResponse, CartDiscountProps, DiscountFormProps };

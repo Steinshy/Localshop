@@ -1,6 +1,6 @@
-import { PagyProps } from "./general";
+import { PagyProps } from './general';
 
-type AddressResponse = {
+export type AddressResponse = {
   id: string;
   type: string;
 
@@ -21,7 +21,7 @@ type AddressResponse = {
   };
 };
 
-type AddressValuesProps = {
+export type AddressValuesProps = {
   label: string;
   firstname: string;
   lastname: string;
@@ -34,14 +34,14 @@ type AddressValuesProps = {
   default: boolean;
 };
 
-type AddressModalProp = {
+export type AddressModalProp = {
   addresses: AddressResponse[];
   id?: string;
   handleCreate: (newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
   handleUpdate: (id: string, newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
 };
 
-type AddressListProps = {
+export type AddressListProps = {
   items?: AddressResponse[];
   selectable?: boolean;
   type?: string;
@@ -50,7 +50,7 @@ type AddressListProps = {
   pageInfos?: PagyProps;
 };
 
-type AddressCardProps = {
+export type AddressCardProps = {
   addresses: AddressResponse[];
   address: AddressResponse;
   selectable?: boolean;
@@ -59,5 +59,3 @@ type AddressCardProps = {
   handleUpdate: (id: string, newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
   handleRemove: (id: string) => Promise<void>;
 };
-
-export type { AddressResponse, AddressValuesProps, AddressModalProp, AddressListProps, AddressCardProps };

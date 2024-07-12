@@ -1,5 +1,5 @@
 // Interface => Products | Product/ID/Slug => Page
-type ProductResponse = {
+export type ProductResponse = {
   id: string;
   type: string;
 
@@ -19,7 +19,7 @@ type ProductResponse = {
   };
 };
 
-type ProductCategory = {
+export type ProductCategory = {
   data: {
     id: string;
     type: string;
@@ -27,52 +27,41 @@ type ProductCategory = {
       id: number;
       title: string;
       slug: string;
-    }
-  }
-}
+    };
+  };
+};
 
 // ProductResponse => Thumbnail
-type ProductResponseThumbnail = {
+export type ProductResponseThumbnail = {
   url: string;
   full: string;
 };
 
 // ProductResponse => Images
-type ProductResponseImages = {
+export type ProductResponseImages = {
   thumbnail: string;
   full: string;
 };
 
 // Product/ID/Slug => Page
-type ProductPageProps = {
+export type ProductPageProps = {
   params: {
     productSlug: string;
   };
 };
 
 // Product => productCard
-type ProductCardProps = {
+export type ProductCardProps = {
   product: ProductResponse;
 };
 
 // Components => ProductImages
-type ProductImagesProps = {
+export type ProductImagesProps = {
   title: string;
   mainImage: string;
   images: [ProductResponseImages];
 };
 
-type PreviouslyOrderedProps = {
+export type PreviouslyOrderedProps = {
   productId: number;
-}
-
-export type {
-  ProductResponse,
-  ProductCategory,
-  ProductResponseThumbnail,
-  ProductResponseImages,
-  ProductPageProps,
-  ProductCardProps,
-  ProductImagesProps,
-  PreviouslyOrderedProps
 };

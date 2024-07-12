@@ -20,7 +20,7 @@ type ReviewAuthor = {
 };
 
 // ProductReviewsProps
-type ReviewResponse = {
+export type ReviewResponse = {
   id: string;
   type: string;
   attributes: {
@@ -34,13 +34,11 @@ type ReviewResponse = {
 };
 
 // Components => Product => ProductReviews
-type ProductReviewProps = {
+export type ProductReviewProps = {
   review: ReviewResponse;
 };
 
 // Components => Product => ReviewsStars
-type ReviewsStarsProps = {
+export type ReviewsStarsProps = {
   rating: number;
 };
-
-export type { ReviewResponse, ProductReviewProps, ReviewsStarsProps };

@@ -18,9 +18,9 @@ import ProductReview from '@components/product/productReview';
 import { ProductPageProps } from '@interfaces/product';
 import PreviouslyOrdered from '@components/product/previouslyOrdered';
 
-type MetaProps = {
-  params: { productSlug: string }
-}
+import { breadCrumbItems } from '@components/layout/breadCrumbItems';
+
+type MetaProps = { params: { productSlug: string } }
  
 export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
   const { productSlug } = params;
@@ -36,11 +36,10 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const { data:localProduct } = product;
   const { attributes: { id, title, description, price, thumbnail, images } } = localProduct;
   const { data: { reviews: { data:reviewsItems } } } = reviews;
-  const breadCrumbItems = [{ title: 'Products', href: '/products' }, { title: title }];
-
+  
   return product ? (
     <>
-      <Breadcrumb items={breadCrumbItems} />
+      <Breadcrumb items={breadCrumbItems.product(title)} />
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4'>
         <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />
         <div className='flex flex-col gap-4'>

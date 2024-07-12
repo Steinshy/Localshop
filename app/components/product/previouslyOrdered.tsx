@@ -61,17 +61,13 @@ const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productId }) => {
   };
 
   const getLastOrderPrice = (): number | undefined => {
-    const {
-      attributes: { items },
-    } = orders[0];
+    const { attributes: { items } } = orders[0];
     const orderItem = items.find((item: OrderItem) => item.product.data.id === productId.toString());
     return orderItem?.price;
   };
 
   const getLastOrderDate = (): string => {
-    const {
-      attributes: { createdAt },
-    } = orders[0];
+    const { attributes: { createdAt } } = orders[0];
     return formatDate(createdAt);
   };
 

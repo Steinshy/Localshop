@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useContext } from 'react';
+import { FC, useContext, useCallback } from 'react';
 
 // Modules
 import { Formik, Form, Field } from 'formik';
@@ -28,14 +28,14 @@ const CartDiscount: FC<CartDiscountProps> = () => {
   const { update, data: { attributes: { totalPrice, coupon } } } = cartStore;
   const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: { code: undefined, discount: undefined } } };
 
-  const handleDeleteDiscount = () => {
+  const handleDeleteDiscount = useCallback(() => {
     const apiFetch = async () => {
       const response = await deleteDiscount();
       const { data, error } = response;
       !error ? update(data) : showToast(error.message, 'error');
     };
     void apiFetch();
-  };
+  }, [update]);
 
   return (
     <>

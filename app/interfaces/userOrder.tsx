@@ -1,7 +1,7 @@
 import { UserResponse } from '@interfaces/user';
 import { ProductResponse } from '@interfaces/product';
 
-type OrderResponse = {
+export type OrderResponse = {
   id: number;
   type: string;
 
@@ -20,7 +20,7 @@ type OrderResponse = {
   };
 };
 
-type OrderItem = {
+export type OrderItem = {
   id: number;
   quantity: number;
   price: number;
@@ -29,19 +29,17 @@ type OrderItem = {
   };
 };
 
-type OrderPageProps = {
+export type OrderPageProps = {
   params: {
     id: string;
   };
 };
 
-type OrderCardProps = {
+export type OrderCardProps = {
   order: OrderResponse;
   detailed?: boolean;
 };
 
-type OrderProductCardProps = {
+export type OrderProductCardProps = {
   orderProduct: OrderItem;
 };
-
-export type { OrderResponse, OrderItem, OrderPageProps, OrderCardProps, OrderProductCardProps };

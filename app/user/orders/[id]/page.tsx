@@ -14,6 +14,7 @@ import { FaArrowRight } from 'react-icons/fa';
 // Components
 import OrderCard from '@components/user/order/orderCard';
 import Breadcrumb from '@components/layout/breadCrumb';
+import { breadCrumbItems } from '@components/layout/breadCrumbItems';
 
 // Interfaces
 import { OrderPageProps } from '@interfaces/userOrder';
@@ -21,9 +22,7 @@ import { OrderPageProps } from '@interfaces/userOrder';
 // Actions
 import { getOrder } from '@actions/actionsUserOrders';
 
-type MetaProps = {
-  params: { id: string }
-}
+type MetaProps = { params: { id: string } }
  
 export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
   const { data } = await getOrder(params.id);
@@ -34,15 +33,9 @@ export async function generateMetadata({ params }: MetaProps): Promise<Metadata>
 const OrderPage: FC<OrderPageProps> = async ({ params }) => {
   const { data: order } = await getOrder(params.id);
 
-  const breadCrumbItems = [
-    { title: 'User', href: '/user' },
-    { title: 'Orders', href: '/user/orders' },
-    { title: `Order ${params.id}` },
-  ];
-
   return (
     <>
-      <Breadcrumb items={breadCrumbItems} />
+      <Breadcrumb items={breadCrumbItems.orders(params.id)} />
       <h1 className='text-2xl mb-2'>Order #{order.id}</h1>
 
       {/*  Order Details */}

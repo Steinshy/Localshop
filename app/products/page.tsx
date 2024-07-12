@@ -19,13 +19,13 @@ import { offer1, offer2, offer3, offer4, BG } from '../assets/index';
 // Interfaces
 import { ProductsPageProps } from '@interfaces/products';
 
-export const metadata: Metadata = {
-  title: 'Products'
-};
+export const metadata: Metadata = { title: 'Products' };
 
 const ProductsPage: FC<ProductsPageProps> = async ({ searchParams }) => {
-  const urlParams = searchParams || {}, offersArray = [offer1, offer2, offer3, offer4];
-  const { data, pagy } = await getProducts(1, urlParams['q']?.toString() || '');
+  const urlParams = searchParams || {},
+    offersArray = [offer1, offer2, offer3, offer4];
+  const query = urlParams['q']?.toString() || '';
+  const { data, pagy } = await getProducts(1, query);
 
   return (
     <>

@@ -1,8 +1,8 @@
 export type getProductCategoriesProps = {
   categories: {
     data: CategoryProps[];
-  }
-}
+  };
+};
 
 export type CategoryProps = {
   id: string;
@@ -11,5 +11,5 @@ export type CategoryProps = {
     id: number;
     slug: string;
     title: string;
-  }
-}
+  };
+};

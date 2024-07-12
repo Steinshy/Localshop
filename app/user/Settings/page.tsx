@@ -4,18 +4,18 @@ import { Metadata } from 'next';
 // Components
 import ThemeSwitcher from "@utils/themeSwitcher";
 import Breadcrumb from "@components/layout/breadCrumb";
+import { breadCrumbItems } from '@components/layout/breadCrumbItems';
+
+// NextUi
 import { Card, CardBody, CardHeader } from '@nextui-org/react';
 
-export const metadata: Metadata = {
-  title: 'Settings'
-};
+export const metadata: Metadata = { title: 'Settings' };
 
 const SettingsPage = () => {
-  const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Settings" }];
 
   return (
     <>
-      <Breadcrumb items={breadCrumbItems} />
+      <Breadcrumb items={breadCrumbItems.user('Settings')} />
       <Card>
         <CardHeader>
           Theme

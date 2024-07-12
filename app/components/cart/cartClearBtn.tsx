@@ -1,5 +1,5 @@
 // React
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 
 // NextUI
 import { Button } from '@nextui-org/react';
@@ -14,27 +14,27 @@ import { CartClearBtnProps } from '@interfaces/cart';
 import { deleteCart, deleteCartItem } from '@actions/actionsCart';
 
 const CartClearBtn: FC<CartClearBtnProps> = ({ id, cartStore }) => {
-  const handleDeleteCart = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
+  const handleDeleteCart = useCallback((e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      const apiFetch = async () => {
+        const { data, error } = await deleteCart();
+        if (!error) cartStore.update(data);
+      };
 
-    const apiFetch = async () => {
-      const { data, error } = await deleteCart();
-      if (!error) cartStore.update(data);
-    };
+      void apiFetch();
+    },
+    [cartStore]
+  );
 
-    void apiFetch();
-  };
+  const handleDeleteItem = useCallback((e: React.MouseEvent<HTMLElement>, productId: string) => {
+      e.preventDefault();
+      const apiFetch = async () => {
+        const { data, error } = await deleteCartItem(productId);
+        if (!error) cartStore.update(data);
+      };
 
-  const handleDeleteItem = (e: React.MouseEvent<HTMLElement>, productId: string) => {
-    e.preventDefault();
-
-    const apiFetch = async () => {
-      const { data, error } = await deleteCartItem(productId);
-      if (!error) cartStore.update(data);
-    };
-
-    void apiFetch();
-  };
+      void apiFetch();
+    }, [cartStore]);
 
   return id ? (
     <Button

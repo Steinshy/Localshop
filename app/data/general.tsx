@@ -7,12 +7,6 @@ import { ProductResponse, ProductCategory } from '@interfaces/product';
 import { AddressValuesProps } from '@interfaces/userAddress';
 import { OrderResponse, OrderItem } from '@interfaces/userOrder';
 
-// defaultProduct => thumbnail
-const defaultThumbnail = {
-  url: '',
-  full: '',
-};
-
 // defaultProduct => images
 const defaultImages = {
   thumbnail: '',
@@ -62,7 +56,10 @@ const defaultProduct: ProductResponse = {
     rating: 0,
     stock: 0,
     brand: '',
-    thumbnail: defaultThumbnail,
+    thumbnail: {
+      url: '',
+      full: '',
+    },
     images: [defaultImages],
     category: defaultProductCategory,
   },

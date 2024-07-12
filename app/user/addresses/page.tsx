@@ -4,6 +4,7 @@ import { Metadata } from 'next';
 // Components
 import Breadcrumb from '@components/layout/breadCrumb';
 import AddressList from '@components/user/address/addressList';
+import { breadCrumbItems } from '@components/layout/breadCrumbItems';
 
 // Actions
 import { getAddresses } from '@actions/actionsUserAddress';
@@ -12,11 +13,10 @@ export const metadata: Metadata = { title: 'Addresses'};
 
 const AddressesPage = async () => {
   const { data:addresses, pagy, error } = await getAddresses();
-  const breadCrumbItems = [{ title: "User", href: "/user" }, { title: "Addresses" }];
 
   return (
     <div className='max-w-screen-md mx-auto w-full'>
-      <Breadcrumb items={breadCrumbItems} />
+      <Breadcrumb items={breadCrumbItems.user('Addresses')} />
       
       {addresses.length > 0 && !error ? (
         <div className='grid grid-cols-1 gap-3'>

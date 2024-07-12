@@ -37,7 +37,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState<boolean>(false);
 
   // Mobile Menu
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   // Cart
   const { data: { attributes: { totalItems } } } = cartStore;
