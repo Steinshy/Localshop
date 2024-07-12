@@ -10,15 +10,12 @@ import { getProductReviews } from '@actions/actionsReviews';
 
 // Components
 import ProductImages from '@components/product/productImages';
-import Breadcrumb from '@components/layout/breadCrumb';
 import AddToCard from '@components/product/addToCart';
 import ProductReview from '@components/product/productReview';
 
 // Interfaces
 import { ProductPageProps } from '@interfaces/product';
 import PreviouslyOrdered from '@components/product/previouslyOrdered';
-
-import { breadCrumbItems } from '@components/layout/breadCrumbItems';
 
 type MetaProps = { params: { productSlug: string } }
  
@@ -39,7 +36,6 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   
   return product ? (
     <>
-      <Breadcrumb items={breadCrumbItems.product(title)} />
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4'>
         <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />
         <div className='flex flex-col gap-4'>

@@ -10,8 +10,10 @@ export type SvgIconProps = SVGProps<SVGSVGElement> & {
 };
 
 export type BreadcrumbProps = {
-  items: Array<{ title: string; href?: string | undefined }>;
+  requestUrl?: string;
 };
+
+export type BreadcrumbItems = Array<{ title: string; href?: string | undefined }>
 
 export type StepperProps = {
   steps: string[];

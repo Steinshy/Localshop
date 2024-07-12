@@ -13,6 +13,7 @@ import { Toaster } from 'react-hot-toast';
 import CableComponent from '@components/cable';
 import Header from '@components/layout/header';
 import Footer from '@components/layout/footer';
+import Breadcrumb from '@components/layout/breadCrumb';
 
 // Providers
 import Providers from './providers';
@@ -44,7 +45,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data: userData, error: userError } = await getUser(),
         { data: cartData } = await getCart(),
         { data: categoriesData } = await getProductCategories(),
-    requestUrl = headers().get('x-url');
+    requestUrl = headers().get('x-url') as string|undefined;
 
   if (userError && requestUrl !== '/') {
     if (isPrivateUrl(requestUrl)) return redirect('/');
@@ -56,6 +57,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
         <main className='flex flex-col flex-grow'>
           <Providers initialUser={userData} initialCart={cartData}>
             <Header categories={categoriesData} />
+            <Breadcrumb requestUrl={requestUrl} />
             {children}
             <CableComponent />
           </Providers>

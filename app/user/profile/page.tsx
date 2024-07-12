@@ -2,9 +2,7 @@
 import { Metadata } from 'next';
 
 // Components
-import Breadcrumb from "@components/layout/breadCrumb";
 import AvatarForm from "@components/user/profile/avatarForm";
-import { breadCrumbItems } from "@components/layout/breadCrumbItems";
 
 // Utils
 import GeneralForm from "@components/user/profile/generalForm";
@@ -16,7 +14,6 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Breadcrumb items={breadCrumbItems.user('Profile')} />
       <h1 className="text-2xl mb-2">Profile</h1>
 
       <div className='flex flex-col gap-2'>

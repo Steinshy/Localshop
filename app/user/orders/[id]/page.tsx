@@ -13,8 +13,6 @@ import { FaArrowRight } from 'react-icons/fa';
 
 // Components
 import OrderCard from '@components/user/order/orderCard';
-import Breadcrumb from '@components/layout/breadCrumb';
-import { breadCrumbItems } from '@components/layout/breadCrumbItems';
 
 // Interfaces
 import { OrderPageProps } from '@interfaces/userOrder';
@@ -35,7 +33,6 @@ const OrderPage: FC<OrderPageProps> = async ({ params }) => {
 
   return (
     <>
-      <Breadcrumb items={breadCrumbItems.orders(params.id)} />
       <h1 className='text-2xl mb-2'>Order #{order.id}</h1>
 
       {/*  Order Details */}

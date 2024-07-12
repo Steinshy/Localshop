@@ -2,9 +2,7 @@
 import { Metadata } from 'next';
 
 // Components
-import Breadcrumb from '@components/layout/breadCrumb';
 import AddressList from '@components/user/address/addressList';
-import { breadCrumbItems } from '@components/layout/breadCrumbItems';
 
 // Actions
 import { getAddresses } from '@actions/actionsUserAddress';
@@ -16,8 +14,6 @@ const AddressesPage = async () => {
 
   return (
     <div className='max-w-screen-md mx-auto w-full'>
-      <Breadcrumb items={breadCrumbItems.user('Addresses')} />
-      
       {addresses.length > 0 && !error ? (
         <div className='grid grid-cols-1 gap-3'>
           <AddressList items={addresses} pageInfos={pagy} />
