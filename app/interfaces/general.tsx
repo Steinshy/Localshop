@@ -30,5 +30,14 @@ export type HeaderProps = {
 };
 
 export type GooglePlaceAddress = {
-  address_components: { short_name: string; long_name: string }[];
+  address_components: { short_name: string; long_name: string, types: string[] }[];
 };
+
+export type GoogleAddressObj = {
+  street_number: string;
+  route: string;
+  country: string;
+  administrative_area_level_2: string;
+  locality: string;
+  postal_code: string;
+}

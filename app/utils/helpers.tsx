@@ -1,4 +1,5 @@
 // Modules
+import { GoogleAddressObj, GooglePlaceAddress } from '@interfaces/general';
 import toast, { ToastType } from 'react-hot-toast';
 
 export const readableDate = (date: string): string => {
@@ -28,4 +29,28 @@ export const isPrivateUrl = (requestUrl: string|undefined): boolean => {
     return requestUrl ? regex.test(requestUrl) : false;
   });
   return result;
+}
+
+export const ParseGoogleAddress = (place: GooglePlaceAddress) => {
+  const { address_components } = place;
+  const addressObj: GoogleAddressObj = {
+    street_number: '', // line 1
+    route: '', // line 2
+    country: '', // country
+    administrative_area_level_2: '', // state
+    locality: '', // city
+    postal_code: '' // zip
+  };
+
+  for (let i = 0; i < address_components.length; i++) {
+    const { long_name, types } = address_components[i];
+  
+    for (let typeI = 0; typeI < types.length; typeI++) {
+      if (Object.keys(addressObj).includes(types[typeI])) {
+        addressObj[types[typeI] as keyof GoogleAddressObj] = long_name;
+      }
+    }
+  }
+
+  return addressObj;
 }

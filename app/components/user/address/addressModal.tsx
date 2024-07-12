@@ -5,6 +5,7 @@ import { FC } from 'react';
 
 // Modules
 import Autocomplete from "react-google-autocomplete";
+import { Formik, Form, Field } from 'formik';
 
 // NextUI
 import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosure, Checkbox } from '@nextui-org/react';
@@ -12,8 +13,8 @@ import { Input, Button, Modal, ModalContent, ModalHeader, ModalBody, useDisclosu
 // Icons
 import { FaPlus, FaEdit } from 'react-icons/fa';
 
-// Modules
-import { Formik, Form, Field } from 'formik';
+// Utils
+import { ParseGoogleAddress } from '@utils/helpers';
 
 // Interfaces
 import { GooglePlaceAddress } from '@interfaces/general';
@@ -146,13 +147,13 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                     <div className='group flex flex-col w-full col-span-2 is-filled'>
                       <Autocomplete
                         apiKey='AIzaSyB9z4FuD22qYqfKRDvXodNIxm8Y9PaRwYI'
-                        onPlaceSelected={(place) => {
-                          const { address_components:address } = place as GooglePlaceAddress;
-                          void setFieldValue('address', `${address[0].long_name} ${address[1].long_name}`);
-                          void setFieldValue('city', address[2].long_name);
-                          void setFieldValue('state', address[3].short_name);
-                          void setFieldValue('country', address[5].long_name);
-                          void setFieldValue('zip', address[6].short_name);
+                        onPlaceSelected={(place: GooglePlaceAddress) => {
+                          const address = ParseGoogleAddress(place);
+                          void setFieldValue('address', `${address.street_number} ${address.route}`);
+                          void setFieldValue('city', address.locality);
+                          void setFieldValue('state', address.administrative_area_level_2);
+                          void setFieldValue('country', address.country);
+                          void setFieldValue('zip', address.postal_code);
                         }}
                         options={{ types: [] }}
                         className='bg-default-100 rounded-lg w-full p-2 m-0'

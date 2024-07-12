@@ -50,9 +50,9 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
 
       // We'll use "home-decoration" as title example here
       // Unslug turns "home-decoration" into -> "home decoration"
-      // Capitalize turns "home decoration" into "Home Decoration"
+      // Capitalize turns "home decoration" into -> "Home Decoration"
       // BuildHref constructs a URL path string by concatenating elements from the urls array up to the specified currentIndex
-      // isLast checkes if the current index is the last of the loop
+      // isLast checks if the current index is the last of the loop
       const title = capitalize(unslug(urls[i])), url = buildHref(urls, i), isLast = i === urls.length - 1;
       
       // Build the object with the corresponding variables and push it into the breadcrumbItems array
