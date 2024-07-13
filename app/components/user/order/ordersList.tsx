@@ -4,10 +4,10 @@
 import { FC, useState } from 'react';
 
 // NextUI
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input, Spinner } from '@nextui-org/react';
 
 // Components
-import OrdersCard from '@components/user/order/orderCard';
+import OrderCard from '@components/user/order/orderCard';
 
 // Icons
 import { FaSearch } from 'react-icons/fa';
@@ -81,24 +81,32 @@ const OrdersList: FC<OrderListProps> = ({ items = [], pageInfos = { page: 1, pag
             onClear={handleClear}
             startContent={<FaSearch />}
             size='md'
-            isDisabled={isFetching || orders.length <= 0 || error !== undefined}
+            isDisabled={isFetching}
             isClearable
           />
         </form>
       </div>
       
       <div className='flex flex-col flex-grow'>
-        {orders.length > 0 && !error ? (
+        {orders.length > 0 && !error && !isFetching ? (
           <div className='grid grid-cols-1 gap-3'>
             {orders.map((order) => (
-              <OrdersCard key={`order_${order.id}`} order={order} />
+              <OrderCard key={`order_${order.id}`} order={order} />
             ))}
           </div>
         ) : (
           <div className='flex flex-col flex-grow items-center justify-center'>
-            <p className='text-md'>
-              {error ? 'There was an error retrieving your orders' : 'No orders has been made yet'}
-            </p>
+            {isFetching ?
+              <Spinner color='primary' size='lg' />
+            :
+              <p className='text-md break-all'>
+                {error ?
+                  'There was an error retrieving your orders'
+                :
+                  query.length > 0 ? `No results for ${query}` : 'No orders has been made yet'
+                }
+              </p>
+            }
           </div>
         )}
       </div>

@@ -4,7 +4,7 @@
 import { FC, useState, useContext } from 'react';
 
 // NextUI
-import { Button, Input } from '@nextui-org/react';
+import { Button, Input, Spinner } from '@nextui-org/react';
 
 // Components
 import AddressCard from '@components/user/address/addressCard';
@@ -129,7 +129,7 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
       </div>
       
       <div className='flex flex-col flex-grow'>
-        {addresses.length > 0 && !error ? (
+        {addresses.length > 0 && !error && !isFetching ? (
           <div className='grid grid-cols-1 gap-3'>
             {addresses.map((address) => (
               <AddressCard
@@ -146,9 +146,17 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
           </div>
         ) : (
           <div className='flex flex-col flex-grow items-center justify-center'>
-            <p className='text-md'>
-              {error ? 'There was an error retrieving your addresses' : 'No addresses has been added yet'}
-            </p>
+            {isFetching ?
+              <Spinner color='primary' size='lg' />
+            :
+              <p className='text-md break-all'>
+                {error ?
+                  'There was an error retrieving your addresses'
+                :
+                  query.length > 0 ? `No results for ${query}` : 'No addresses has been added yet'
+                }
+              </p>
+            }
           </div>
         )}
       </div>

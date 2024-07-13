@@ -87,17 +87,13 @@ const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
               },
             } = category;
             return !detailed ? (
-              <ul>
-                <li>
-                  <Badge key={`product_${id}`} content={quantity} color='primary' size='sm'>
-                    <Tooltip content={title}>
-                      <Link href={`/products/${categorySlug}/${slug}`}>
-                        <Avatar radius='md' size='sm' src={url} />
-                      </Link>
-                    </Tooltip>
-                  </Badge>
-                </li>
-              </ul>
+              <Badge key={`product_${id}`} content={quantity} color='primary' size='sm'>
+                <Tooltip content={title}>
+                  <Link href={`/products/${categorySlug}/${slug}`}>
+                    <Avatar radius='md' size='sm' src={url} />
+                  </Link>
+                </Tooltip>
+              </Badge>
             ) : (
               <OrderProductCard key={`product_${id}`} orderProduct={item} />
             );
