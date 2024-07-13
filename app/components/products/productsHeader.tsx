@@ -11,9 +11,7 @@ import { Image } from '@nextui-org/react';
 import { offer1, offer2, offer3, offer4, BG } from '@assets/index';
 
 // Interfaces
-export type ProductsHeaderProps = {
-  title?: string;
-}
+import { ProductsHeaderProps } from '@interfaces/products';
 
 const ProductsHeader: FC<ProductsHeaderProps> = ({ title }) => {
   const offersArray = [offer1, offer2, offer3, offer4] as StaticImageData[],

@@ -25,3 +25,8 @@ export type ProductsListProp = {
   data: ProductResponse[];
   categorySlug?: string;
 };
+
+// Products => Components => ProductsHeader
+export type ProductsHeaderProps = {
+  title?: string;
+}
