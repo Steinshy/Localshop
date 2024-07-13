@@ -1,5 +1,7 @@
 import { UserResponse } from '@interfaces/user';
 import { ProductResponse } from '@interfaces/product';
+import { PagyProps } from './general';
+import { ErrorObj } from './httpUtils';
 
 export type OrderResponse = {
   id: number;
@@ -43,3 +45,9 @@ export type OrderCardProps = {
 export type OrderProductCardProps = {
   orderProduct: OrderItem;
 };
+
+export type OrderListProps = {
+  items: OrderResponse[];
+  pageInfos?: PagyProps;
+  pageError?: Error | ErrorObj | string;
+}

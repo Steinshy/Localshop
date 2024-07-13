@@ -1,4 +1,5 @@
 import { PagyProps } from './general';
+import { ErrorObj } from './httpUtils';
 
 export type AddressResponse = {
   id: string;
@@ -48,6 +49,7 @@ export type AddressListProps = {
   selected?: number | null;
   title?: string;
   pageInfos?: PagyProps;
+  pageError?: Error | ErrorObj | string;
 };
 
 export type AddressCardProps = {

@@ -4,16 +4,14 @@ import { Metadata } from 'next';
 // Components
 import OrdersList from '@components/user/order/ordersList';
 
-export const metadata: Metadata = { title: 'Orders' };
+// Actions
+import { getOrders } from '@actions/actionsUserOrders';
 
-const OrdersPage = () => {
+export const metadata: Metadata = { title: 'Orders'};
 
-  return (
-    <>
-      <h1 className='text-2xl mb-2'>Orders</h1>
-      <OrdersList />
-    </>
-  );
+const OrdersPage = async () => {
+  const { data:orders, pagy, error } = await getOrders();
+  return <OrdersList items={orders} pageInfos={pagy} pageError={error} />;
 };
 
 export default OrdersPage;

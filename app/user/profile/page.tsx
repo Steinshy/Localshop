@@ -13,15 +13,15 @@ export const metadata: Metadata = { title: 'Profile' };
 const ProfilePage = () => {
 
   return (
-    <>
-      <h1 className="text-2xl mb-2">Profile</h1>
+    <div className='flex flex-col flex-grow'>
+      <h1 className='text-2xl mb-2'>Profile</h1>
 
       <div className='flex flex-col gap-2'>
         <AvatarForm />
         <GeneralForm />
         <PasswordForm />
       </div>
-    </>
+    </div>
   );
 }
 

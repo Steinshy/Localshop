@@ -15,6 +15,8 @@ import { FaSearch } from 'react-icons/fa';
 
 // Interfaces
 import { AddressListProps, AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
+import { PagyProps } from '@interfaces/general';
+import { ErrorObj } from '@interfaces/httpUtils';
 
 // Actions
 import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from '@actions/actionsUserAddress';
@@ -22,21 +24,26 @@ import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from '@acti
 // Utils
 import { showToast } from '@utils/helpers';
 import { CartContext } from '@utils/subProviders';
-import { PagyProps } from '@interfaces/general';
 
-const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], pageInfos, title = 'Addresses' }) => {
+const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], pageInfos, pageError, title = 'Addresses' }) => {
   const cartStore = useContext(CartContext);
   const { selectedAddresses, setSelectedAddresses } = cartStore;
   const [addresses, setAddresses] = useState<AddressResponse[]>(items),
         [isFetching, setIsFetching] = useState<boolean>(false),
         [query, setQuery] = useState<string>(''),
-        [pagy, setPagy] = useState<PagyProps>(pageInfos || { page: 1, pages: 1 });
+        [pagy, setPagy] = useState<PagyProps>(pageInfos || { page: 1, pages: 1 }),
+        [error, setError] = useState<Error | ErrorObj | string | undefined>(pageError);
 
   const fetch = (page?: number, query?: string) => {
     const apiFetch = async () => {
       const { data, pagy, error } = await getAddresses(page, query);
       setIsFetching(false);
-      if (error) return showToast(error.message, 'error');
+
+      if (error) {
+        setError(error);
+        return showToast(error.message, 'error');
+      }
+
       setAddresses(data);
       setPagy(pagy);
     }
@@ -121,19 +128,31 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
         <AddressModal addresses={addresses} handleCreate={handleCreate} handleUpdate={handleUpdate} />
       </div>
       
-      {addresses.map((address) => (
-        <AddressCard
-          key={address.id}
-          addresses={addresses}
-          address={address}
-          selectable={selectable}
-          type={type}
-          handleCreate={handleCreate}
-          handleUpdate={handleUpdate}
-          handleRemove={handleRemove}
-        />
-      ))}
-
+      <div className='flex flex-col flex-grow'>
+        {addresses.length > 0 && !error ? (
+          <div className='grid grid-cols-1 gap-3'>
+            {addresses.map((address) => (
+              <AddressCard
+                key={`address_${address.id}`}
+                addresses={addresses}
+                address={address}
+                selectable={selectable}
+                type={type}
+                handleCreate={handleCreate}
+                handleUpdate={handleUpdate}
+                handleRemove={handleRemove}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className='flex flex-col flex-grow items-center justify-center'>
+            <p className='text-md'>
+              {error ? 'There was an error retrieving your addresses' : 'No addresses has been added yet'}
+            </p>
+          </div>
+        )}
+      </div>
+      
       {/* Pagination */}
       <div className='flex justify-between items-center'>
         <Button size='sm' isDisabled={pagy.page <= 1 || isFetching} onPress={handlePreviousPage}>Previous</Button>

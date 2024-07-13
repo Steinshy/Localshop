@@ -12,7 +12,8 @@ export const metadata: Metadata = { title: 'Settings' };
 const SettingsPage = () => {
 
   return (
-    <>
+    <div className='flex flex-col flex-grow'>
+      <h1 className='text-2xl mb-2'>Settings</h1>
       <Card>
         <CardHeader>
           Theme
@@ -24,7 +25,7 @@ const SettingsPage = () => {
           </div>
         </CardBody>
       </Card>
-    </>
+    </div>
   );
 }
 

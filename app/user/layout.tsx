@@ -17,8 +17,10 @@ export default function UserLayout({ children }: LayoutProps) {
   if (!isLogged) redirect('/');
 
   return (
-    <div className='max-w-screen-md my-8 mx-auto w-full'>
-      {children}
+    <div className='max-w-screen-md my-8 mx-auto w-full flex flex-grow'>
+      <div className='flex flex-col flex-grow gap-5'>
+        {children}
+      </div>
     </div>
   );
 }

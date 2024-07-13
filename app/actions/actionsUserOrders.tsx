@@ -12,13 +12,17 @@ import { handleError } from '@utils/fetchManager';
 
 // Index
 import { api } from '@actions/index';
+import { PagyProps } from '@interfaces/general';
 
 // User => Orders - API - Get (collection)
-export const getOrders = async () => {
+export const getOrders = async (page?: number, query?: string) => {
   revalidateTag('user');
+  (page = page || 1), (query = query || '');
+
   try {
-    const { data } = await api.get<{ data: OrderResponse[] }>('/orders', { next: { tags: ['user'] } });
-    return { data };
+    const { orders, pagy } = await api.get<{ orders: { data: OrderResponse[] }; pagy: PagyProps }>(`/orders?page=${page}&q=${query}`, { next: { tags: ['user'] } });
+    const { data } = orders;
+    return { data, pagy };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
     return { data: [] as OrderResponse[], error };
