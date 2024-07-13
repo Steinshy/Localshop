@@ -9,8 +9,19 @@ export type ProductsPageProps = {
   };
 };
 
+// Products => Page
+export type ProductsCategoryPageProps = {
+  params: {
+    categorySlug: string;
+  }
+  searchParams?: {
+    [key: string]: string | string[] | undefined;
+  };
+};
+
 // Products => Components => ProductList
 export type ProductsListProp = {
   pagy: PagyProps;
   data: ProductResponse[];
+  categorySlug?: string;
 };

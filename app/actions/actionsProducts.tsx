@@ -30,13 +30,13 @@ export const getProductCategories = async () => {
 };
 
 // Products - API - Get
-export const getProducts = async (page?: number, query?: string) => {
+export const getProducts = async (page?: number, query?: string, category?: string) => {
   revalidateTag('products');
-  (page = page || 1), (query = query || '');
+  (page = page || 1), (query = query || ''), (category = category || '');
 
   try {
     const { products, pagy } = await api.get<{ products: { data: ProductResponse[] }; pagy: PagyProps }>(
-      `/products?page=${page}&q=${query}`,
+      `/products?page=${page}&q=${query}&category=${category}`,
       { next: { tags: ['products'] } }
     );
     const { data } = products;

@@ -23,7 +23,7 @@ import { ProductsListProp } from '@interfaces/products';
 // Actions
 import { getProducts } from '@actions/actionsProducts';
 
-const ProductsList: FC<ProductsListProp> = ({ data, pagy }) => {
+const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
   const searchParams = useSearchParams(),
         [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
         [localProducts, setLocalProducts] = useState<ProductResponse[]>(data || []),
@@ -34,7 +34,7 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy }) => {
       if (page < 1 || page > localPagy.pages || isFetching || query === searchParams.get('q')) return;
       setIsFetching(true);
 
-      const { data, pagy, error } = await getProducts(page, query);
+      const { data, pagy, error } = await getProducts(page, query, categorySlug);
 
       if (!error) {
         setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
@@ -43,7 +43,7 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy }) => {
     
       setIsFetching(false);
     },
-    [isFetching, localPagy.pages, searchParams]
+    [isFetching, localPagy.pages, searchParams, categorySlug]
   );
 
   const updateQueryURL = (value?: string) => {

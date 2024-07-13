@@ -63,15 +63,13 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
               initialValues={formAddress}
               validate={(values: AddressValuesProps) => {
                 const errors: { [key: string]: string } = {};
-                let hasError:boolean = false;
                 Object.keys(values).forEach((key) => {
+                  if (key === 'default') return;
                   if (!values[key as keyof AddressValuesProps]) {
-                    if (key === 'default') return;
-                    hasError = true;
                     errors[key] = 'Required';
                   }
                 });
-                if (hasError) return errors;
+                if (Object.keys(errors).length) return errors;
               }}
               onSubmit={(values: AddressValuesProps, { setSubmitting, setFieldError }) => {
                 const newAddress = { ...formAddress, ...values };
