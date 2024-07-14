@@ -18,9 +18,9 @@ const ProductsHeader: FC<ProductsHeaderProps> = ({ title }) => {
         BGImage = BG as StaticImageData;
 
   return (
-    <section className='relative bg-cover bg-center min-h-[400px] h-[400px]' style={{ backgroundImage: `url(${BGImage.src})` }}>
+    <section className='relative bg-cover bg-center min-h-[400px] flex flex-col items-center p-2' style={{ backgroundImage: `url(${BGImage.src})` }}>
       <div className='absolute inset-0 bg-black/50 backdrop-blur-sm' />
-      <div className='relative px-2 max-w-screen-lg mx-auto h-full flex flex-col items-center justify-center gap-4'>
+      <div className='relative px-2 max-w-screen-lg mx-auto h-full flex flex-col flex-grow items-center justify-center gap-4'>
         <h1 className='text-white text-3xl font-bold tracking-tight text-heading lg:text-4xl xl:text-5xl'>
           {title || 'Products'}
         </h1>
@@ -31,7 +31,7 @@ const ProductsHeader: FC<ProductsHeaderProps> = ({ title }) => {
           experience and make every task seamless. From cutting-edge technology to timeless classics, we offer a wide
           range of options to choose from.
         </p>
-        <div className='grid gap-2 grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
+        <div className='grid gap-2 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
           {offersArray.map((offer, i) => (
             <Image
               key={`header_img_${i}`}
