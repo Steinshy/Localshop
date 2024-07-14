@@ -16,8 +16,12 @@ import AddressModal from '@components/user/address/addressModal';
 // Utils
 import { CartContext } from '@utils/subProviders';
 
+// Actions
+import { addAddress, removeAddress } from '@actions/actionsCart';
+
 // Interfaces
 import { AddressCardProps } from '@interfaces/userAddress';
+import { showToast } from '@utils/helpers';
 
 const AddressCard: FC<AddressCardProps> = ({ addresses, address, handleCreate, handleUpdate, handleRemove,
   selectable = false, type }) => {
@@ -50,24 +54,38 @@ const AddressCard: FC<AddressCardProps> = ({ addresses, address, handleCreate, h
     setSelected(getSelected());
   }, [shipping, billing, id, type])
 
-  const addToContext = () => {
-    if (type === 'shipping') setShipping(address);
-    if (type === 'billing') setBilling(address);
+  const add = () => {
+    const apiFetch = async () => {
+      if (!type) return;
+      const { error } = await addAddress(id, type);
+      if (error) return showToast(error.message, 'error');
+
+      if (type === 'shipping') setShipping(address);
+      if (type === 'billing') setBilling(address);
+    }
+    void apiFetch();
   }
 
-  const removeFromContext = () => {
-    if (type === 'shipping') setShipping(undefined);
-    if (type === 'billing') setBilling(undefined);
+  const remove = () => {
+    const apiFetch = async () => {
+      if (!type) return;
+      const { error } = await removeAddress(type);
+      if (error) return showToast(error.message, 'error');
+
+      if (type === 'shipping') setShipping(undefined);
+      if (type === 'billing') setBilling(undefined);
+    }
+    void apiFetch();
   }
 
   const handleSelect = () => {
     if (type === 'shipping') {
-      if (!shipping || shipping.id !== id) return addToContext();
-      if (shipping && shipping.id === id) return removeFromContext();
+      if (!shipping || shipping.id !== id) return add();
+      if (shipping && shipping.id === id) return remove();
     }
     if (type === 'billing') {
-      if (!billing || billing.id !== id) return addToContext();
-      if (billing && billing.id === id) return removeFromContext();
+      if (!billing || billing.id !== id) return add();
+      if (billing && billing.id === id) return remove();
     }
   };
 

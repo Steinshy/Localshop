@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { PagyProps } from './general';
 import { ErrorObj } from './httpUtils';
 
@@ -50,6 +51,7 @@ export type AddressListProps = {
   title?: string;
   pageInfos?: PagyProps;
   pageError?: Error | ErrorObj | string;
+  endContent: ReactNode;
 };
 
 export type AddressCardProps = {

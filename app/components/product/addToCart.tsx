@@ -44,11 +44,11 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
       if (error) return showToast(error.message, 'error');
 
       cartStore.update(data);
-      showToast('Item has been added to your cart !', 'success');
+      showToast(`${localProduct.attributes.title} has been added to your cart!`, 'success');
     }
 
     void apiFetch();
-  }, [cartItemsQuantity, product_id, router, cartStore]);
+  }, [localProduct, cartItemsQuantity, product_id, router, cartStore]);
 
   const btnOptions: ButtonProps = {
     color: cartItemsQuantity > 0 ? 'success' : 'primary',

@@ -120,12 +120,12 @@ export const addItemToCart = async (productId: string) => {
 };
 
 // Cart => Addresses - API - Post
-export const addAddresses = async (addressID: string, purpose: number) => {
+export const addAddress = async (id: string, type: string) => {
   revalidateTag('cart');
   try {
-    const { data } = await api.post<{ data: CartResponse }>(
-      '/cart/add_addresses',
-      JSON.stringify({ address_id: addressID, address_purpose: purpose }),
+    const { data } = await api.put<{ data: CartResponse }>(
+      '/cart/add_address',
+      JSON.stringify({ address_id: id, type: type }),
       { next: { tags: ['cart'] } }
     );
     return { data };
@@ -136,12 +136,12 @@ export const addAddresses = async (addressID: string, purpose: number) => {
 };
 
 // Cart => Addresses - API - Post
-export const removeAddresses = async (addressID: string, purpose: number) => {
+export const removeAddress = async (type: string) => {
   revalidateTag('cart');
   try {
-    const { data } = await api.post<{ data: CartResponse }>(
-      '/cart/remove_addresses',
-      JSON.stringify({ address_id: addressID, address_purpose: purpose }),
+    const { data } = await api.put<{ data: CartResponse }>(
+      '/cart/remove_address',
+      JSON.stringify({ type: type }),
       { next: { tags: ['cart'] } }
     );
     return { data };

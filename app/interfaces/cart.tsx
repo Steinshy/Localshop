@@ -32,10 +32,17 @@ export type CartResponse = {
     coupon: {
       data: DiscountResponse;
     },
-    addresses: CartAddresses[],
+    shipping?: {
+      data: AddressResponse;
+    }
+    billing?: {
+      data: AddressResponse;
+    }
     finalPrice: number;
     totalItems: number;
     totalUniqueItems: number;
+    shipping_price: number;
+    taxes_price: number;
   };
 };
 

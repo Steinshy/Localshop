@@ -16,12 +16,11 @@ export const metadata: Metadata = {
 };
 
 const OrderLayout:FC<LayoutProps> = ({ children }) => {
-  const steps: string[] = ['Cart', 'Shipping', 'Payment', 'Complete'],
+  const steps: string[] = ['Cart', 'Shipping', 'Payment'],
         pathToStepMap: { [key: string]: number } = {
           '/order/': 0,
           '/order/shipping': 1,
-          '/order/payment': 2,
-          '/order/complete': 3
+          '/order/payment': 2
         };
 
   return (

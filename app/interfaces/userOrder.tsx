@@ -2,6 +2,7 @@ import { UserResponse } from '@interfaces/user';
 import { ProductResponse } from '@interfaces/product';
 import { PagyProps } from './general';
 import { ErrorObj } from './httpUtils';
+import { AddressResponse } from './userAddress';
 
 export type OrderResponse = {
   id: number;
@@ -19,6 +20,12 @@ export type OrderResponse = {
     user: {
       data: UserResponse;
     };
+    shipping: {
+      data: AddressResponse;
+    }
+    billing: {
+      data: AddressResponse;
+    }
   };
 };
 

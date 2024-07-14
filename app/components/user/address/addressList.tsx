@@ -25,9 +25,9 @@ import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from '@acti
 import { showToast } from '@utils/helpers';
 import { CartContext } from '@utils/subProviders';
 
-const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], pageInfos, pageError, title = 'Addresses' }) => {
+const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], pageInfos, pageError, endContent, title = 'Addresses' }) => {
   const cartStore = useContext(CartContext);
-  const { selectedAddresses, setSelectedAddresses } = cartStore;
+  const { shipping, billing, setShipping, setBilling } = cartStore;
   const [addresses, setAddresses] = useState<AddressResponse[]>(items),
         [isFetching, setIsFetching] = useState<boolean>(false),
         [query, setQuery] = useState<string>(''),
@@ -79,12 +79,8 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
     showToast('Address has been removed!', 'success');
     void fetch();
 
-    const index = selectedAddresses.findIndex(item => item.id.toString() === id);
-    if (index !== -1) {
-      const newSelectedAddresses = [...selectedAddresses];
-      delete newSelectedAddresses[index];
-      setSelectedAddresses(newSelectedAddresses);
-    }
+    if (shipping && shipping.id === id) setShipping(undefined);
+    if (billing && billing.id === id) setBilling(undefined);
   };
 
   const handleSearch = (e: { preventDefault: () => void }) => {
@@ -107,10 +103,10 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
 
   return (
     <>
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-center gap-2'>
         <h2 className='text-2xl'>{title}</h2>
         {/* Search form */}
-        <form onSubmit={handleSearch} className='flex flex-grow justify-center items-center px-2'>
+        <form onSubmit={handleSearch} className='flex flex-grow justify-center items-center'>
           <Input
             aria-label='Search'
             placeholder='Type...'
@@ -126,6 +122,7 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
           />
         </form>
         <AddressModal addresses={addresses} handleCreate={handleCreate} handleUpdate={handleUpdate} />
+        {endContent}
       </div>
       
       <div className='flex flex-col flex-grow'>

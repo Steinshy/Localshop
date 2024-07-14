@@ -7,7 +7,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 
 // NextUI
-import { Card, CardBody, CardHeader, CardFooter, Image, Chip } from '@nextui-org/react';
+import { Image, Chip } from '@nextui-org/react';
 
 // Components
 import AddToCart from '@components/product/addToCart';
@@ -23,28 +23,43 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { data: { attributes: { slug:categorySlug } } } = category;
 
   return (
-    <article>
-      <Card className='w-full h-[350px]' as={Link} href={`/products/${categorySlug}/${slug}`} radius='sm'>
-        <CardHeader className='absolute z-10 top-2 right-4 flex-col items-end'>
-          {stock > 50 && (
-            <Chip color='danger' size='sm'>New</Chip>
+    <article className='border-1 rounded-md shadow-md relative w-full flex flex-col'>
+      {/* Chip */}
+      <div className='absolute top-4 right-4 z-[11]'>
+        <Link href={`/products/${categorySlug}/${slug}`}>
+          {stock > 50 ? (
+            <Chip color='danger' size='md'>New</Chip>
+          ) : stock < 10 && stock > 1 ? (
+            <Chip color='danger' size='md'>Low stock</Chip>
+          ) : stock < 2 && (
+            <Chip color='danger' size='md'>Last piece!</Chip>
           )}
-        </CardHeader>
-        <CardBody className='relative'>
-          <Image removeWrapper className='z-0 w-full h-48 rounded-md object-cover' alt='Product Image' src={image} />
-          <div className='flex-col justify-center text-center p-2'>
-            <h2 className='text-md'>{title}</h2>
-            <div className='flex justify-center p-2'>
-              <ReviewsStars rating={rating} />
-            </div>
-          </div>
-        </CardBody>
-        <CardFooter className='flex justify-between'>
-          <h3 className='text-lg'>{price} €</h3>
-          <h4 className='text-sm text-gray-500'>{stock} left</h4>
+        </Link>
+      </div>
+      {/* Image */}
+      <div className='flex flex-col'>
+        <Link href={`/products/${categorySlug}/${slug}`}>
+          <Image
+            removeWrapper
+            radius='none'
+            shadow='none'
+            className='bg-default/20 w-full h-[250px] object-cover'
+            alt={title}
+            src={image}
+          />
+        </Link>
+      </div>
+      {/* Infos */}
+      <div className='flex flex-col flex-grow justify-between p-2'>
+        <h2 className='text-md text-center'>{title}</h2>
+        <div className='flex justify-center my-3'>
+          <ReviewsStars rating={rating} />
+        </div>
+        <div className='flex justify-between'>
+          <p className='text-lg'>{price} €</p>
           <AddToCart localProduct={product} isIconOnly />
-        </CardFooter>
-      </Card>
+        </div>
+      </div>
     </article>
   );
 };

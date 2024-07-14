@@ -21,7 +21,7 @@ import { AddressResponse } from '@interfaces/userAddress';
 
 const CartSummary = () => {
   const cartStore = useContext(CartContext), pathname = usePathname();
-  const { shipping, billing, data: { attributes: { coupon, totalPrice, finalPrice, items } } } = cartStore;
+  const { shipping, billing, data: { attributes: { coupon, totalPrice, finalPrice, items, shipping_price, taxes_price } } } = cartStore;
   const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: {} } };
 
   const Address = ({ address }:{ address: AddressResponse }) => {
@@ -65,7 +65,7 @@ const CartSummary = () => {
           <hr className='my-4' />
         </>
       }
-      {((shipping || billing) && pathname === '/order/payment') &&
+      {((shipping || billing) && pathname !== '/order') &&
         <>
           <div className='text-sm flex flex-col gap-2'>
             {shipping &&
@@ -86,12 +86,12 @@ const CartSummary = () => {
       }
       <div className='grid grid-cols-2 gap-4'>
         <p className='text-lg text-start'>Shipping:</p>
-        <p className='text-lg text-end'>0€</p>
+        <p className='text-lg text-end'>{shipping_price}€</p>
       </div>
 
       <div className='grid grid-cols-2 gap-4 text-foreground'>
         <p className='text-lg text-start'>Taxes:</p>
-        <p className='text-lg text-end'>0€</p>
+        <p className='text-lg text-end'>{taxes_price}€</p>
       </div>
 
       <p className='text-small text-foreground/75 italic'>Shipping and taxes will be calculated at checkout</p>

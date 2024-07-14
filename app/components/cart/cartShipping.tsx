@@ -31,37 +31,24 @@ const CartShipping = ({ items = [], pageInfos }:{ items?: AddressResponse[]; pag
   // Toggle Step button
   const isDisabled = shipping ? false : true;
 
+  const StepButton = () => (
+    <Button
+      onPress={() => GoToStep(step === 1 ? 2 : 1)}
+      isDisabled={step === 1 ? isDisabled : false}
+      color={step === 1 ? 'primary' : 'default'}
+      startContent={step === 1 ? null : <FaArrowLeft />}
+      endContent={step === 1 ? <FaArrowRight /> : null}
+    >
+      {step === 1 ? 'Select Billing Address' : 'Edit Shipping Address'}
+    </Button>
+  );
+
   return (
-    <>
-      {step === 1 ? (
-        <>
-          <AddressList title='Shipping' items={items} pageInfos={pageInfos} selectable type='shipping' />
-          <div className='flex justify-end'>
-            <Button
-              onPress={() => GoToStep(2)}
-              isDisabled={isDisabled}
-              color='primary'
-              endContent={<FaArrowRight />}
-            >
-              Select Billing Address
-            </Button>
-          </div>
-        </>
-      ) : (
-        <>
-          <AddressList title='Billing' items={items} pageInfos={pageInfos} selectable type='billing' />
-          <div className='flex justify-start'>
-            <Button
-              onPress={() => GoToStep(1)}
-              color='default'
-              startContent={<FaArrowLeft />}
-            >
-              Select Shipping Address
-            </Button>
-          </div>
-        </>
-      )}
-    </>
+    step === 1 ? (
+      <AddressList title='Shipping' items={items} pageInfos={pageInfos} selectable type='shipping' endContent={<StepButton />} />
+    ) : (
+      <AddressList title='Billing' items={items} pageInfos={pageInfos} selectable type='billing' endContent={<StepButton />} />
+    )
   );
 };
 

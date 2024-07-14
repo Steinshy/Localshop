@@ -19,8 +19,8 @@ import { AddressResponse } from '@interfaces/userAddress';
 // CART PROVIDERS //
 const useCart = (initialCart: CartResponse) => {
   const [cart, setCart] = useState<CartResponse>(initialCart),
-        [shipping, setShipping] = useState<AddressResponse>(),
-        [billing, setBilling] = useState<AddressResponse>();
+        [shipping, setShipping] = useState<AddressResponse | undefined>(initialCart.attributes.shipping?.data),
+        [billing, setBilling] = useState<AddressResponse | undefined>(initialCart.attributes.billing?.data);
 
   const refresh = useCallback(async (): Promise<boolean> => {
     const { data, error } = await getCart() as CartActions;
