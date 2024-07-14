@@ -16,6 +16,7 @@ import { Button } from '@nextui-org/react';
 // Interface
 import { CheckoutButtonProps } from '@interfaces/cart';
 import { CartContext } from '@utils/subProviders';
+// import { placeOrder } from '@actions/actionsCart';
 
 const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
   const pathname = usePathname(), cartStore = useContext(CartContext);
@@ -26,18 +27,22 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
   };
 
   const { text, nextPath } = pathMappings[pathname] || { text: 'Proceed to Payment', nextPath: '/order/payment' };
-  const { data: { attributes: { addresses } } } = cartStore;
+  const { shipping, billing } = cartStore;
 
   const isDisabled = (): boolean => {
     if (nextPath !== '/order/payment') return false;
-    if (addresses.length <= 0) return true;
-    
-    const shipping = addresses.find((address) => address.type === 'shipping'),
-          billing = addresses.find((address) => address.type === 'billing');
     if (!shipping || !billing) return true;
 
     return false;
   }
+
+  // const handleOrder = () => {
+  //   const apiFetch = async () => {
+  //     const response = await placeOrder();
+  //     console.log(response);
+  //   }
+  //   void apiFetch();
+  // }
 
   return (
     <Button
@@ -45,6 +50,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
       variant='solid'
       href={nextPath}
       as={Link}
+      // onPress={() => handleOrder()}
       endContent={<FaArrowRight />}
       className='text-white col-span-2'
       size='lg'

@@ -21,14 +21,11 @@ import { AddressResponse } from '@interfaces/userAddress';
 
 const CartSummary = () => {
   const cartStore = useContext(CartContext), pathname = usePathname();
-  const { data: { attributes: { addresses, coupon, totalPrice, finalPrice, items } } } = cartStore;
+  const { shipping, billing, data: { attributes: { coupon, totalPrice, finalPrice, items } } } = cartStore;
   const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: {} } };
 
-  const shippingAddress = addresses.find(item => item.type === 'shipping'),
-        billingAddress = addresses.find(item => item.type === 'billing');
-
-  const Address = ({ address }:{ address: { data: AddressResponse } }) => {
-    const { data: { attributes } } = address;
+  const Address = ({ address }:{ address: AddressResponse }) => {
+    const { attributes } = address;
     const { lastname, firstname, address:line, zip, city, state, country, phone } = attributes;
 
     return (
@@ -68,19 +65,19 @@ const CartSummary = () => {
           <hr className='my-4' />
         </>
       }
-      {(addresses.length > 0 && pathname === '/order/payment') &&
+      {((shipping || billing) && pathname === '/order/payment') &&
         <>
           <div className='text-sm flex flex-col gap-2'>
-            {shippingAddress &&
+            {shipping &&
               <div>
                 <p className='text-md font-semibold'>Shipped to</p>
-                <Address address={shippingAddress.address} />
+                <Address address={shipping} />
               </div>
             }
-            {billingAddress &&
+            {billing &&
               <div>
                 <p className='text-md font-semibold'>Billed to</p>
-                <Address address={billingAddress.address} />
+                <Address address={billing} />
               </div>
             }
           </div>

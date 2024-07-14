@@ -19,17 +19,16 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { AddressResponse } from "@interfaces/userAddress";
 import { PagyProps } from "@interfaces/general";
 
-const CartShipping = ({ items, pageInfos }:{ items?: AddressResponse[]; pageInfos?: PagyProps }) => {
+const CartShipping = ({ items = [], pageInfos }:{ items?: AddressResponse[]; pageInfos?: PagyProps }) => {
   const [step, setStep] = useState<number>(1);
   const cartStore = useContext(CartContext);
-  const { data: { attributes: { addresses } } } = cartStore;
+  const { shipping } = cartStore;
 
   const GoToStep = (nextStep: number) => {
     setStep(nextStep);
   }
 
   // Toggle Step button
-  const shipping = addresses.find((address) => address.type === 'shipping');
   const isDisabled = shipping ? false : true;
 
   return (

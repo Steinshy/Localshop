@@ -52,7 +52,7 @@ export class FetchManager {
     return this.request<T>('GET', endpoint, options);
   }
 
-  public post<T>(endpoint: string, body: BodyInit | null, options?: FetchOptions): Promise<T> {
+  public post<T>(endpoint: string, body?: BodyInit | null, options?: FetchOptions): Promise<T> {
     return this.request<T>('POST', endpoint, { ...options, body });
   }
 

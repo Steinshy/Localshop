@@ -1,28 +1,26 @@
 'use client';
 
 // React
-import { FC, useState, createContext, useCallback, useEffect } from 'react';
+import { FC, useState, createContext, useCallback } from 'react';
 
 // Actions
 import { getCart } from '@actions/actionsCart';
 import { getUser, userLogout } from '@actions/actionsUser';
 
 // Interfaces
-import { CartActions, CartAddresses, CartProviderProps, CartResponse } from '@interfaces/cart';
+import { CartActions, CartProviderProps, CartResponse } from '@interfaces/cart';
 import { UserActions, UserProviderProps, UserResponse } from '@interfaces/user';
 import { UserContextType, CartContextType } from '@interfaces/subProviders';
 
 // Data
 import { defaultCart, defaultUser } from '@data/general';
+import { AddressResponse } from '@interfaces/userAddress';
 
 // CART PROVIDERS //
 const useCart = (initialCart: CartResponse) => {
-  const [cart, setCart] = useState<CartResponse>(initialCart);
-  const [selectedAddresses, setSelectedAddresses] = useState<CartAddresses[]>(initialCart.attributes.addresses);
-
-  useEffect(() => {
-    setSelectedAddresses(cart.attributes.addresses);
-  }, [cart]);
+  const [cart, setCart] = useState<CartResponse>(initialCart),
+        [shipping, setShipping] = useState<AddressResponse>(),
+        [billing, setBilling] = useState<AddressResponse>();
 
   const refresh = useCallback(async (): Promise<boolean> => {
     const { data, error } = await getCart() as CartActions;
@@ -34,7 +32,7 @@ const useCart = (initialCart: CartResponse) => {
     setCart(defaultCart);
   }, [setCart]);
 
-  return { data: cart, update: setCart, refresh, reset, setSelectedAddresses, selectedAddresses };
+  return { data: cart, update: setCart, refresh, reset, shipping, setShipping, billing, setBilling };
 };
 
 const CartProvider:FC<CartProviderProps> = ({ children, initialCart }) => {
@@ -50,8 +48,10 @@ const CartContext = createContext<CartContextType>({
     return await new Promise<boolean>((resolve) => { resolve(false);});
   },
   reset: () => {},
-  setSelectedAddresses: () => {},
-  selectedAddresses: []
+  shipping: {} as AddressResponse,
+  setShipping: () => {},
+  billing: {} as AddressResponse,
+  setBilling: () => {}
 });
 
 // USER PROVIDERS //

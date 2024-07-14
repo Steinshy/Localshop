@@ -1,8 +1,9 @@
 // React - Interfaces
 import { Dispatch, SetStateAction } from 'react';
 import { ReactNode } from 'react';
-import { CartAddresses, CartResponse } from '@interfaces/cart';
+import { CartResponse } from '@interfaces/cart';
 import { UserResponse } from '@interfaces/user';
+import { AddressResponse } from './userAddress';
 
 // subProviders => CartContext
 export type CartContextType = {
@@ -10,8 +11,10 @@ export type CartContextType = {
   update: Dispatch<SetStateAction<CartResponse>>;
   refresh: () => Promise<boolean>;
   reset: () => void;
-  setSelectedAddresses: Dispatch<SetStateAction<CartAddresses[]>>;
-  selectedAddresses: CartAddresses[];
+  shipping?: AddressResponse;
+  setShipping: Dispatch<SetStateAction<AddressResponse | undefined>>;
+  billing?: AddressResponse;
+  setBilling: Dispatch<SetStateAction<AddressResponse | undefined>>;
 };
 
 // subProviders => UserContext
