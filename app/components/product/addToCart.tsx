@@ -74,6 +74,8 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
       radius='sm'
       onClick={(e) => handleAddItem(e)}
       isIconOnly={isIconOnly}
+      startContent={cartItemsQuantity > 0 ? null : isIconOnly ? null : <FaShoppingCart className='text-lg' />}
+      endContent={cartItemsQuantity > 0 ? isIconOnly ? null : <FaArrowRight className='text-lg text-white' /> : null}
       className={cartItemsQuantity > 0 ? 'text-white' : ''}
     >
       {buttonContent}

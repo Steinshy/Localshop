@@ -61,7 +61,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
             {children}
             <CableComponent />
           </Providers>
-          <Footer />
+          <Footer categories={categoriesData} />
         </main>
         <Toaster position='top-center' toastOptions={{ duration: 2000 }} />
       </body>

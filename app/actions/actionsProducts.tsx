@@ -15,6 +15,54 @@ import { handleError } from '@utils/fetchManager';
 import { api } from '@actions/index';
 import { getProductCategoriesProps } from '@interfaces/categories';
 
+// Products - API - BestSellers
+export const getBestSellers = async () => {
+  revalidateTag('products');
+
+  try {
+    const { data } = await api.get<{ data: ProductResponse[] }>(
+      '/products/bestsellers',
+      { next: { tags: ['products'] } }
+    );
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
+    return { data: [] as ProductResponse[], error };
+  }
+};
+
+// Products - API - Newest
+export const getNewest = async () => {
+  revalidateTag('products');
+
+  try {
+    const { data } = await api.get<{ data: ProductResponse[] }>(
+      '/products/newest',
+      { next: { tags: ['products'] } }
+    );
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
+    return { data: [] as ProductResponse[], error };
+  }
+};
+
+// Products - API - LastPieces
+export const getLastPieces = async () => {
+  revalidateTag('products');
+
+  try {
+    const { data } = await api.get<{ data: ProductResponse[] }>(
+      '/products/last_pieces',
+      { next: { tags: ['products'] } }
+    );
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
+    return { data: [] as ProductResponse[], error };
+  }
+};
+
 // Products - API - Get Categories
 export const getProductCategories = async () => {
   revalidateTag('categories');
