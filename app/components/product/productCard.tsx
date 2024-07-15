@@ -23,7 +23,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { data: { attributes: { slug:categorySlug } } } = category;
 
   return (
-    <article className='border-1 rounded-md shadow-md relative w-full flex flex-col'>
+    <article className='border-1 rounded-md shadow-md relative w-full h-full flex flex-col'>
       {/* Chip */}
       <div className='absolute top-4 right-4 z-[11]'>
         <Link href={`/products/${categorySlug}/${slug}`}>

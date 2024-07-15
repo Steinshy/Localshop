@@ -22,6 +22,7 @@ import UserDropdown from '@components/layout/userDropdown';
 
 // Interfaces
 import { HeaderProps } from '@interfaces/general';
+import { FaAppleWhole } from 'react-icons/fa6';
 
 const Header: FC<HeaderProps> = ({ categories }) => {
   const navItems = [
@@ -54,9 +55,14 @@ const Header: FC<HeaderProps> = ({ categories }) => {
 
   return (
     <div className='relative'>
-      <Navbar isBlurred isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <Navbar isBlurred={false} isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
         <NavbarContent className='hidden sm:flex' justify='start'>
-          <p className='ml-1 font-light'>Localshop</p>
+          <div className='text-lg flex justify-center items-center my-8'>
+            <div className='bg-white rounded-s-lg text-black p-1 relative flex items-center'>
+              L<FaAppleWhole className='text-md inline'/>CAL
+            </div>
+            <div className='bg-black text-white p-1 rounded-e-lg'>SHOP</div>
+          </div>
         </NavbarContent>
 
         <NavbarContent className="sm:hidden" justify="start">
