@@ -1,9 +1,3 @@
-export type getProductCategoriesProps = {
-  categories: {
-    data: CategoryProps[];
-  };
-};
-
 export type CategoryProps = {
   id: string;
   type: string;

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { PagyProps } from './general';
-import { ErrorObj } from './httpUtils';
+import { PagyProps } from '@interfaces/general';
+import { ErrorObj } from '@interfaces/httpUtils';
 
 export type AddressResponse = {
   id: string;

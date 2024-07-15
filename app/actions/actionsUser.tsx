@@ -8,7 +8,7 @@ import { PasswordValuesProps, ProfileValuesProps, UserResponse } from '@interfac
 import { ErrorObj } from '@interfaces/httpUtils';
 
 // Data
-import { defaultUser } from '@data/general';
+import { defaultUser } from '@data/dataUser';
 import { handleError } from '@utils/fetchManager';
 
 // Index

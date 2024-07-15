@@ -1,8 +1,9 @@
+// Interfaces
 import { UserResponse } from '@interfaces/user';
 import { ProductResponse } from '@interfaces/product';
-import { PagyProps } from './general';
-import { ErrorObj } from './httpUtils';
-import { AddressResponse } from './userAddress';
+import { PagyProps } from '@interfaces/general';
+import { ErrorObj } from '@interfaces//httpUtils';
+import { AddressResponse } from '@interfaces/userAddress';
 
 export type OrderResponse = {
   id: number;
@@ -22,10 +23,10 @@ export type OrderResponse = {
     };
     shipping: {
       data: AddressResponse;
-    }
+    };
     billing: {
       data: AddressResponse;
-    }
+    };
   };
 };
 
@@ -57,4 +58,4 @@ export type OrderListProps = {
   items: OrderResponse[];
   pageInfos?: PagyProps;
   pageError?: Error | ErrorObj | string;
-}
+};

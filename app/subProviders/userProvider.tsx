@@ -11,8 +11,7 @@ import { UserActions, UserProviderProps, UserResponse } from '@interfaces/user';
 import { UserContextType } from '@interfaces/subProviders';
 
 // Data
-import { defaultUser } from '@data/general';
-
+import { defaultUser } from '@data/dataUser';
 
 // USER PROVIDERS //
 const useUser = (initialUser:UserResponse) => {

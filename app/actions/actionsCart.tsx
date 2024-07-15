@@ -9,7 +9,7 @@ import { ErrorObj } from '@interfaces/httpUtils';
 import { OrderResponse } from '@interfaces/userOrder';
 
 // Data
-import { defaultCart } from '@data/general';
+import { defaultCart } from '@data/dataCart';
 
 // Utils
 import { handleError } from '@utils/fetchManager';

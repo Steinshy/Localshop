@@ -38,3 +38,14 @@ export type PasswordValuesProps = {
   password: string;
   password_confirmation: string;
 };
+
+export type FieldsBuilderProps = {
+  fields: { [key:string]:FieldProps };
+  busy: boolean;
+  errors: { [key:string]:string };
+}
+
+export type FieldProps = {
+  placeholder?: string;
+  type?: string;
+}

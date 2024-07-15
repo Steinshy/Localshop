@@ -11,7 +11,7 @@ import { CartActions, CartProviderProps, CartResponse } from '@interfaces/cart';
 import { CartContextType } from '@interfaces/subProviders';
 
 // Data
-import { defaultCart } from '@data/general';
+import { defaultCart } from '@data/dataCart';
 import { AddressResponse } from '@interfaces/userAddress';
 
 const useCart = (initialCart: CartResponse) => {

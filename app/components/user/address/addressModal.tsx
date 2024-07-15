@@ -21,7 +21,7 @@ import { GooglePlaceAddress } from '@interfaces/general';
 import { AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
 
 // Data
-import { defaultAddress } from '@data/general';
+import { defaultAddress } from '@data/dataAddress';
 
 const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpdate, id }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();

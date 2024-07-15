@@ -1,5 +1,5 @@
 import { SVGProps } from 'react';
-import { CategoryProps } from './categories';
+import { CategoryProps } from '@interfaces/categories';
 
 export type LayoutProps = {
   children: React.ReactNode;
