@@ -7,7 +7,8 @@ import { FC, useState, createContext, useCallback } from 'react';
 import { getCart } from '@actions/actionsCart';
 
 // Interfaces
-import { CartActions, CartProviderProps, CartResponse } from '@interfaces/cart';
+import { CartActions, CartResponse } from '@interfaces/cart';
+import { CartProviderProps } from '@interfaces/subProviders';
 import { CartContextType } from '@interfaces/subProviders';
 
 // Data

@@ -5,6 +5,7 @@ import { PagyProps } from '@interfaces/general';
 import { ErrorObj } from '@interfaces//httpUtils';
 import { AddressResponse } from '@interfaces/userAddress';
 
+// actionsCart | actionsUserOrder | previouslyOrdered | dataOrders | interfaces => userOrders
 export type OrderResponse = {
   id: number;
   type: string;
@@ -30,6 +31,7 @@ export type OrderResponse = {
   };
 };
 
+// previouslyOrdered | dataOrders | interfaces => userOrders
 export type OrderItem = {
   id: number;
   quantity: number;
@@ -39,21 +41,25 @@ export type OrderItem = {
   };
 };
 
+// orderPage
 export type OrderPageProps = {
   params: {
     id: string;
   };
 };
 
+// orderPage
 export type OrderCardProps = {
   order: OrderResponse;
   detailed?: boolean;
 };
 
+// orderProduct
 export type OrderProductCardProps = {
   orderProduct: OrderItem;
 };
 
+// orderList
 export type OrderListProps = {
   items: OrderResponse[];
   pageInfos?: PagyProps;

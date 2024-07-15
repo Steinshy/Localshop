@@ -4,22 +4,13 @@ import { ProductResponse } from '@interfaces/product';
 import { CartContextType } from '@interfaces/subProviders';
 import { AddressResponse } from '@interfaces/userAddress';
 
-export type InitialCartProps = {
-  initialCart: CartResponse;
-};
-
-// Utils => subProviders
+// cartProvider
 export type CartActions = {
   data: CartResponse;
   error?: string;
 };
 
-export type CartProviderProps = {
-  children: React.ReactNode;
-  initialCart: CartResponse;
-};
-
-// Components => Product => AddToCart | Data => defaultCart | utils => subProviders
+// actionsCart | dataCart | Interfaces => cart | cartProvider | subProviders
 export type CartResponse = {
   id: string;
   type: string;
@@ -46,14 +37,7 @@ export type CartResponse = {
   };
 };
 
-export type CartAddresses = {
-  id: number;
-  type: string;
-  address: {
-    data: AddressResponse;
-  }
-}
-
+//  dataCart | Interfaces => cart
 export type CartItemProps = {
   id: number;
   quantity: number;
@@ -63,22 +47,24 @@ export type CartItemProps = {
   };
 };
 
+// addToCart
 export type AddToCartProps = {
   localProduct: ProductResponse;
   isIconOnly?: boolean;
 };
 
-// Components => Cart => CartProduct
+// cartProduct
 export type CartProductProps = {
   cartItem: CartItemProps;
 };
 
+// cartClearBtn
 export type CartClearBtnProps = {
   id?: string;
   cartStore: CartContextType;
 };
 
-// Components => Cart => CheckoutButtonProps
+// checkoutButton
 export type CheckoutButtonProps = {
   items: CartItemProps[];
 };

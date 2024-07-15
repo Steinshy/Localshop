@@ -2,14 +2,14 @@
 import { PagyProps } from '@interfaces/general';
 import { ProductResponse } from '@interfaces/product';
 
-// Products => Page
+// productsPage
 export type ProductsPageProps = {
   searchParams?: {
     [key: string]: string | string[] | undefined;
   };
 };
 
-// Products => Page
+// productsPage
 export type ProductsCategoryPageProps = {
   params: {
     categorySlug: string;
@@ -19,14 +19,14 @@ export type ProductsCategoryPageProps = {
   };
 };
 
-// Products => Components => ProductList
+// productsList
 export type ProductsListProp = {
   pagy: PagyProps;
   data: ProductResponse[];
   categorySlug?: string;
 };
 
-// Products => Components => ProductsHeader
+// productsHeader
 export type ProductsHeaderProps = {
   title?: string;
 }

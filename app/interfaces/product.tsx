@@ -1,4 +1,4 @@
-// Interface => Products | Product/ID/Slug => Page
+// actionsProduct | productList | dataProduct | Interfaces => cart | product | products | userOrders
 export type ProductResponse = {
   id: string;
   type: string;
@@ -13,12 +13,16 @@ export type ProductResponse = {
     rating: number;
     stock: number;
     brand: string;
-    thumbnail: ProductResponseThumbnail;
-    images: [ProductResponseImages];
+    thumbnail: {
+      url: string;
+      full: string;
+    }
+    images: [ProductImages];
     category: ProductCategory;
   };
 };
 
+// dataProductCategory | Interfaces => product
 export type ProductCategory = {
   data: {
     id: string;
@@ -31,37 +35,32 @@ export type ProductCategory = {
   };
 };
 
-// ProductResponse => Thumbnail
-export type ProductResponseThumbnail = {
-  url: string;
-  full: string;
-};
-
-// ProductResponse => Images
-export type ProductResponseImages = {
+// ProductResponse
+export type ProductImages = {
   thumbnail: string;
   full: string;
 };
 
-// Product/ID/Slug => Page
+// productPage
 export type ProductPageProps = {
   params: {
     productSlug: string;
   };
 };
 
-// Product => productCard
+// productCard
 export type ProductCardProps = {
   product: ProductResponse;
 };
 
-// Components => ProductImages
+// productImages
 export type ProductImagesProps = {
   title: string;
   mainImage: string;
-  images: [ProductResponseImages];
+  images: [ProductImages];
 };
 
+// previouslyOrdered
 export type PreviouslyOrderedProps = {
   productId: number;
 };

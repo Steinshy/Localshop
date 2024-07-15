@@ -1,4 +1,7 @@
+// React
 import { SVGProps } from 'react';
+
+// Interfaces
 import { CategoryProps } from '@interfaces/categories';
 
 export type LayoutProps = {

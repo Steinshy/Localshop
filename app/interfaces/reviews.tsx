@@ -1,10 +1,4 @@
-// ReviewAuthor => Avatar
-type AuthorAvatar = {
-  small: string;
-  large: string;
-};
-
-// ReviewResponse => Author
+// ReviewResponse
 type ReviewAuthor = {
   data: {
     id: number;
@@ -14,12 +8,15 @@ type ReviewAuthor = {
       firstname: string;
       lastname: string;
       email: string;
-      avatar: AuthorAvatar;
+      avatar: {
+        small: string;
+        large: string;
+      };
     };
   };
 };
 
-// ProductReviewsProps
+// actionsReviews | Interfaces => reviews
 export type ReviewResponse = {
   id: string;
   type: string;
@@ -33,12 +30,12 @@ export type ReviewResponse = {
   };
 };
 
-// Components => Product => ProductReviews
+// productReview
 export type ProductReviewProps = {
   review: ReviewResponse;
 };
 
-// Components => Product => ReviewsStars
+// ReviewsStars
 export type ReviewsStarsProps = {
   rating: number;
 };

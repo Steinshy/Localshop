@@ -1,4 +1,4 @@
-// Data => DefaultCoupon
+// dataDiscount | Interfaces => cart
 export type DiscountResponse = {
   id: string;
   type: string;
@@ -14,14 +14,14 @@ export type DiscountResponse = {
   };
 };
 
-// Components => Cart => CartDiscount
+// cartDiscount
 export type CartDiscountProps = {
   couponCode?: string;
   couponDiscount?: number;
   totalPrice?: number;
 };
 
-// Components => Cart => CartDiscount
+// cartDiscount
 export type DiscountFormProps = {
   code?: string;
 };

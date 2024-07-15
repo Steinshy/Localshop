@@ -1,3 +1,4 @@
+// actionsUser | dataUser | Interfaces => subProviders | user | userOrder | userProvider
 export type UserResponse = {
   id: number;
   type: string;
@@ -14,38 +15,34 @@ export type UserResponse = {
   };
 };
 
-export type UserActions = {
+// userProvider
+export type actionsUser = {
   data: UserResponse;
   error?: string;
 };
 
-export type UserProviderProps = {
-  children: React.ReactNode;
-  initialUser: UserResponse;
-};
-
-export type InitialUserProps = {
-  initialUser: UserResponse;
-};
-
+// actionsUser | generalForm
 export type ProfileValuesProps = {
   firstname: string;
   lastname: string;
   email: string;
 };
 
+// actionsUser | passwordForm
 export type PasswordValuesProps = {
   password: string;
   password_confirmation: string;
 };
 
+// generalForm
 export type FieldsBuilderProps = {
-  fields: { [key:string]:FieldProps };
+  fields: { [key: string]: FieldProps };
   busy: boolean;
-  errors: { [key:string]:string };
-}
+  errors: { [key: string]: string };
+};
 
+// generalForm | Interfaces => user
 export type FieldProps = {
   placeholder?: string;
   type?: string;
-}
+};

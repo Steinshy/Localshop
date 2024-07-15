@@ -1,7 +1,12 @@
+// React
 import { ReactNode } from 'react';
+
+// Interfaces
 import { PagyProps } from '@interfaces/general';
 import { ErrorObj } from '@interfaces/httpUtils';
 
+// actionsUserAddress | cartShipping | cartSummary | addressList | orderCard | dataAddress
+// Interfaces => cart | subProviders | userAddress | userOrder | cartProvider
 export type AddressResponse = {
   id: string;
   type: string;
@@ -23,6 +28,7 @@ export type AddressResponse = {
   };
 };
 
+// actionsUserAddress | addressList | addressModal | interfaces => userAddress
 export type AddressValuesProps = {
   label: string;
   firstname: string;
@@ -36,6 +42,7 @@ export type AddressValuesProps = {
   default: boolean;
 };
 
+// addressModal
 export type AddressModalProp = {
   addresses: AddressResponse[];
   id?: string;
@@ -43,6 +50,7 @@ export type AddressModalProp = {
   handleUpdate: (id: string, newAddress: AddressValuesProps) => Promise<{ [key: string]: string } | undefined>;
 };
 
+// addressList
 export type AddressListProps = {
   items?: AddressResponse[];
   selectable?: boolean;
@@ -54,6 +62,7 @@ export type AddressListProps = {
   endContent: ReactNode;
 };
 
+// addressCard
 export type AddressCardProps = {
   addresses: AddressResponse[];
   address: AddressResponse;

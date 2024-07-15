@@ -1,10 +1,12 @@
-// React - Interfaces
-import { Dispatch, SetStateAction , ReactNode} from 'react';
+// React
+import { Dispatch, SetStateAction, ReactNode } from 'react';
+
+// Interfaces
 import { CartResponse } from '@interfaces/cart';
 import { UserResponse } from '@interfaces/user';
 import { AddressResponse } from './userAddress';
 
-// subProviders => CartContext
+// cartProvider | Interfaces => cart
 export type CartContextType = {
   data: CartResponse;
   update: Dispatch<SetStateAction<CartResponse>>;
@@ -16,7 +18,7 @@ export type CartContextType = {
   setBilling: Dispatch<SetStateAction<AddressResponse | undefined>>;
 };
 
-// subProviders => UserContext
+// userProvider | Interfaces => user
 export type UserContextType = {
   data: UserResponse;
   update: Dispatch<SetStateAction<UserResponse>>;
@@ -25,6 +27,19 @@ export type UserContextType = {
   logout: () => void;
 };
 
+// CartProvider
+export type CartProviderProps = {
+  children: React.ReactNode;
+  initialCart: CartResponse;
+};
+
+// userProvider
+export type UserProviderProps = {
+  children: React.ReactNode;
+  initialUser: UserResponse;
+};
+
+// providers
 export type ProviderProps = {
   children: ReactNode;
   initialUser: UserResponse;

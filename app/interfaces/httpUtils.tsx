@@ -1,6 +1,7 @@
-// Interfaces
+// fetchManager
 export type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
+// fetchManager
 export type FetchOptions = {
   headers?: { [key: string]: string };
   queryParams?: { [key: string]: string };
@@ -10,12 +11,14 @@ export type FetchOptions = {
   };
 };
 
+// fetchManager | General Actions Usage
 export type ErrorObj = {
   message: string;
   items?: { [key: string]: string };
   status?: number;
 };
 
+// cable
 export type ReceivedData = {
   type: 'user' | 'cart';
 };

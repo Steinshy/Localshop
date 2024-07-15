@@ -1,3 +1,4 @@
+// actionsProducts | interfaces => general
 export type CategoryProps = {
   id: string;
   type: string;
