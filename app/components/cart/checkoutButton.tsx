@@ -14,7 +14,7 @@ import { FaArrowRight } from 'react-icons/fa';
 import { Button } from '@nextui-org/react';
 
 // Utils
-import { CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
 import { showToast } from '@utils/helpers';
 
 // Actions

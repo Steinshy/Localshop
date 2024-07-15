@@ -7,7 +7,8 @@ import { useEffect, useContext } from "react";
 import { Cable, Channel, createConsumer } from '@rails/actioncable';
 
 // Utils
-import { UserContext, CartContext } from "@utils/subProviders";
+import { CartContext } from '@subProviders/cartProvider';
+import { UserContext } from '@subProviders/userProvider';
 
 // Interfaces
 import { ReceivedData } from "@interfaces/httpUtils";

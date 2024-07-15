@@ -15,7 +15,8 @@ import { Link as NextLink, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarC
 import { FaCartArrowDown } from 'react-icons/fa';
 
 // Utils
-import { CartContext, UserContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
+import { UserContext } from '@subProviders/userProvider';
 
 // Components
 import UserDropdown from '@components/layout/userDropdown';

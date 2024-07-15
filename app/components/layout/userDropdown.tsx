@@ -13,7 +13,8 @@ import { Button, Avatar, DropdownTrigger, DropdownMenu, DropdownItem, Dropdown }
 import { FaChevronDown, FaUserCog, FaShoppingBag, FaSignOutAlt } from 'react-icons/fa';
 
 // Utils
-import { CartContext, UserContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
+import { UserContext } from '@subProviders/userProvider';
 import { isPrivateUrl, showToast } from '@utils/helpers';
 
 // Actions

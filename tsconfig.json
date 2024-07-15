@@ -24,6 +24,7 @@
       "@utils/*": ["utils/*"],
       "@data/*": ["data/*"],
       "@actions/*": ["actions/*"],
+      "@subProviders/*": ["subProviders/*"],
       "@assets/*": ["assets/*"],
     }
   },

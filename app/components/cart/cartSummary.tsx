@@ -14,7 +14,7 @@ import CartDiscount from '@components/cart/cartDiscount';
 import CheckoutButton from '@components/cart/checkoutButton';
 
 // Utils
-import { CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
 import { Avatar, Badge, Tooltip } from '@nextui-org/react';
 import Link from 'next/link';
 import { AddressResponse } from '@interfaces/userAddress';

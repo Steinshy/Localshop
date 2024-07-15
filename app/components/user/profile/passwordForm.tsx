@@ -14,7 +14,7 @@ import { updatePassword } from '@actions/actionsUser';
 
 // Utils
 import { showToast } from "@utils/helpers";
-import { UserContext } from "@utils/subProviders";
+import { UserContext } from '@subProviders/userProvider';
 
 // Interfaces
 import { PasswordValuesProps } from "@interfaces/user";

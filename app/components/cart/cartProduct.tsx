@@ -15,7 +15,7 @@ import CartClearBtn from '@components/cart/cartClearBtn';
 import { CartProductProps } from '@interfaces/cart';
 
 // Utils
-import { CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider'
 
 // Actions
 import { deleteCartItem, updateQuantity } from '@actions/actionsCart';

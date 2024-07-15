@@ -14,7 +14,7 @@ import { FaCartArrowDown, FaArrowRight } from 'react-icons/fa';
 import CartProduct from '@components/cart/cartProduct';
 
 // Utils
-import { CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
 
 const OrderPage = () => {
   const cartStore = useContext(CartContext);

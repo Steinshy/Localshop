@@ -8,8 +8,7 @@ import { redirect } from 'next/navigation';
 
 // Interfaces
 import { LayoutProps } from '@interfaces/general';
-
-import { UserContext } from '@utils/subProviders';
+import { UserContext } from '@subProviders/userProvider';
 
 export default function UserLayout({ children }: LayoutProps) {
   const userStore = useContext(UserContext);
@@ -18,9 +17,7 @@ export default function UserLayout({ children }: LayoutProps) {
 
   return (
     <div className='max-w-screen-md my-8 mx-auto w-full flex flex-grow'>
-      <div className='flex flex-col flex-grow gap-5'>
-        {children}
-      </div>
+      <div className='flex flex-col flex-grow gap-5'>{children}</div>
     </div>
   );
 }

@@ -19,7 +19,8 @@ import { addItemToCart } from '@actions/actionsCart';
 import { AddToCartProps } from '@interfaces/cart';
 
 // Utils
-import { UserContext, CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
+import { UserContext } from '@subProviders/userProvider';
 import { showToast } from '@utils/helpers';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => {

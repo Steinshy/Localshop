@@ -13,22 +13,11 @@ import { Formik, Form, Field } from 'formik';
 import { updateProfile } from '@actions/actionsUser';
 
 // Utils
-import { UserContext } from "@utils/subProviders";
+import { UserContext } from '@subProviders/userProvider';
 import { capitalize, showToast } from "@utils/helpers";
 
 // Interfaces
-import { ProfileValuesProps } from "@interfaces/user";
-
-interface FieldsBuilderProps {
-  fields: { [key:string]:FieldProps };
-  busy: boolean;
-  errors: { [key:string]:string };
-}
-
-interface FieldProps {
-  placeholder?: string;
-  type?: string;
-}
+import { ProfileValuesProps, FieldsBuilderProps, FieldProps } from "@interfaces/user";
 
 const FieldsBuilder:FC<FieldsBuilderProps> = ({ fields, busy, errors }) => (
   Object.keys(fields).map((key, index) => (

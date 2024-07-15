@@ -10,7 +10,7 @@ import { Card, CardBody, Spinner, Button, CardHeader, Avatar } from "@nextui-org
 import { updateAvatar } from '@actions/actionsUser';
 
 // Utils
-import { UserContext } from "@utils/subProviders";
+import { UserContext } from '@subProviders/userProvider';
 import { showToast } from "@utils/helpers";
 
 const AvatarForm = () => {

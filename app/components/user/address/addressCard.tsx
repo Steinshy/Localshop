@@ -14,7 +14,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 import AddressModal from '@components/user/address/addressModal';
 
 // Utils
-import { CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
 
 // Actions
 import { addAddress, removeAddress } from '@actions/actionsCart';

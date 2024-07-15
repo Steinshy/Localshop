@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { Button, Card, CardBody } from '@nextui-org/react';
 
 // Utils
-import { UserContext } from '@utils/subProviders';
+import { UserContext } from '@subProviders/userProvider';
 import { showToast } from '@utils/helpers';
 
 // Actions

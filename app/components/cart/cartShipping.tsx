@@ -10,7 +10,7 @@ import { Button } from "@nextui-org/react";
 import AddressList from "@components/user/address/addressList";
 
 // Utils
-import { CartContext } from "@utils/subProviders";
+import { CartContext } from '@subProviders/cartProvider';
 
 // Icons
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";

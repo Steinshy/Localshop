@@ -23,7 +23,7 @@ import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from '@acti
 
 // Utils
 import { showToast } from '@utils/helpers';
-import { CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
 
 const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], pageInfos, pageError, endContent, title = 'Addresses' }) => {
   const cartStore = useContext(CartContext);

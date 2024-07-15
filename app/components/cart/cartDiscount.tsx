@@ -16,7 +16,7 @@ import { FaTags } from 'react-icons/fa';
 import { CartDiscountProps, DiscountFormProps } from '@interfaces/discount';
 
 // Utils
-import { CartContext } from '@utils/subProviders';
+import { CartContext } from '@subProviders/cartProvider';
 import { showToast } from '@utils/helpers';
 
 // Actions

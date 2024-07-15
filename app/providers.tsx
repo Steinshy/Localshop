@@ -10,7 +10,8 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { NextUIProvider } from "@nextui-org/react";
 
 // Providers
-import { UserProvider, CartProvider } from "@utils/subProviders";
+import { CartProvider } from '@subProviders/cartProvider';
+import { UserProvider } from '@subProviders/userProvider';
 
 // Interfaces
 import { ProviderProps } from "@interfaces/subProviders";
