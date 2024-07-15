@@ -23,9 +23,9 @@ import { AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
 // Data
 import { defaultAddress } from '@data/general';
 
-// Google Places API KEY : AIzaSyB9z4FuD22qYqfKRDvXodNIxm8Y9PaRwYI
 const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpdate, id }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
 
   const cleanAttributes = (attributes: AddressValuesProps): AddressValuesProps => {
     const unwantedKeys = new Set(['id', 'createdAt', 'updatedAt']);
@@ -90,8 +90,8 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
               {({ errors, isSubmitting, setFieldValue }) => (
                 <>
                   <div className='group flex flex-col w-full col-span-2 is-filled'>
-                    <Autocomplete
-                      apiKey='AIzaSyB9z4FuD22qYqfKRDvXodNIxm8Y9PaRwYI'
+                    <Autocomplete 
+                      apiKey={API_KEY}
                       onPlaceSelected={(place: GooglePlaceAddress) => {
                         const address = ParseGoogleAddress(place);
                         void setFieldValue('address', `${address.street_number} ${address.route}`);
