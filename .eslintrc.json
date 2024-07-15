@@ -26,6 +26,8 @@
     "@next/eslint-plugin-next" // https://github.com/vercel/next.js/blob/canary/packages/eslint-plugin-next/lib/index.js
   ],
 
+" excludes": ["**/node_modules/**", "**/dist/**, next.config.mjs"],
+
   // all configs (eslint-config-xxx) go here:
   "extends": [
     "eslint:recommended",

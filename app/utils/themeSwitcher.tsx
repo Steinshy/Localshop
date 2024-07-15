@@ -1,20 +1,20 @@
 'use client';
 
 // React
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 // NextUITheme
-import { useTheme } from "next-themes";
+import { useTheme } from 'next-themes';
 
 // NextUI
-import { Switch } from "@nextui-org/switch";
+import { Switch } from '@nextui-org/switch';
 
 // Icons
-import { MoonIcon, SunIcon } from "@utils/themeSwitcherIcons";
+import { MoonIcon, SunIcon } from '@utils/themeSwitcherIcons';
 
 const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState<boolean>(false),
-        { theme, setTheme } = useTheme();
+    { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
@@ -38,7 +38,7 @@ const ThemeSwitcher = () => {
         <Switch isSelected={false} size='lg' color='danger' thumbIcon={<SunIcon />} />
       )}
     </div>
-  )
+  );
 };
 
 export default ThemeSwitcher;

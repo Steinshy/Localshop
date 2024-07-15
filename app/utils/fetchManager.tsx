@@ -1,5 +1,5 @@
 // NextJS
-import { cookies } from "next/headers";
+import { cookies } from 'next/headers';
 
 // Interfaces
 import { HttpMethod, FetchOptions, ErrorObj } from '@interfaces/httpUtils';
@@ -21,11 +21,11 @@ export class FetchManager {
 
   private async request<T>(method: HttpMethod, endpoint: string, options?: FetchOptions): Promise<T> {
     const url = this.buildUrl(endpoint, options?.queryParams);
-    
+
     if (options?.body && !(options.body instanceof FormData)) {
       options.headers = {
         ...options.headers,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       };
     }
 
@@ -36,7 +36,7 @@ export class FetchManager {
         ...(options?.headers || {}),
       },
       body: options?.body || null,
-      credentials: 'include'
+      credentials: 'include',
     };
 
     const response = await fetch(url, fetchOptions);
@@ -69,7 +69,7 @@ export class FetchManager {
   }
 }
 
-export const handleError = (e: Error|ErrorObj|string):ErrorObj => {
+export const handleError = (e: Error | ErrorObj | string): ErrorObj => {
   console.error('An error occurred: ', e);
 
   let error: ErrorObj = { message: 'An error occurred' };
@@ -80,11 +80,11 @@ export const handleError = (e: Error|ErrorObj|string):ErrorObj => {
       if (status === 422) error = { message: 'Validation Failed.', items: items };
     }
 
-    const { error:fetchError } = e as unknown as { error:string };
+    const { error: fetchError } = e as unknown as { error: string };
     if (fetchError) error = { message: fetchError };
   } else {
     error = { message: e };
   }
 
   return error;
-}
+};

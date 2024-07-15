@@ -39,13 +39,13 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data: userData, error: userError } = await getUser(),
-        { data: cartData } = await getCart(),
-        { data: categoriesData } = await getProductCategories(),
-    requestUrl = headers().get('x-url') as string|undefined;
+    { data: cartData } = await getCart(),
+    { data: categoriesData } = await getProductCategories(),
+    requestUrl = headers().get('x-url') as string | undefined;
 
   if (userError && requestUrl !== '/') {
     if (isPrivateUrl(requestUrl)) return redirect('/');
