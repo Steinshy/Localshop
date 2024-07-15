@@ -32,6 +32,6 @@ export const defaultAddressValues: AddressValuesProps = {
   state: '',
   city: '',
   zip: '',
-  phone: 0,
+  phone: undefined,
   default: false,
 };

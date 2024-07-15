@@ -18,10 +18,10 @@ import { ParseGoogleAddress } from '@utils/helpers';
 
 // Interfaces
 import { GooglePlaceAddress } from '@interfaces/general';
-import { AddressResponse, AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
+import { AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
 
 // Data
-import { defaultAddress } from '@data/dataAddress';
+import { defaultAddressValues } from '@data/dataAddress';
 
 const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpdate, id }) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -32,16 +32,16 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
   };
 
   const findAddress = () => {
-    if (!id) return defaultAddress;
+    if (!id) return defaultAddressValues;
     const address = addresses.find((item) => item.id === id);
-    if (!address) return defaultAddress;
+    if (!address) return defaultAddressValues;
 
     const { attributes } = address;
     const newAttributes = { ...attributes };
     return cleanAttributes(newAttributes);
   };
 
-  const formAddress = id ? findAddress() : defaultAddress;
+  const formAddress = findAddress();
 
   return (
     <>
