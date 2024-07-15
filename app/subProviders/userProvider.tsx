@@ -8,13 +8,12 @@ import { getUser, userLogout } from '@actions/actionsUser';
 
 // Interfaces
 import { actionsUser, UserResponse } from '@interfaces/user';
-import { UserProviderProps } from '@interfaces/subProviders';
-import { UserContextType } from '@interfaces/subProviders';
+import { UserProviderProps, UserContextType } from '@interfaces/subProviders';
 
 // Data
 import { defaultUser } from '@data/dataUser';
 
-const useUser = (initialUser: UserResponse) => {
+export const useUser = (initialUser: UserResponse) => {
   const [user, setUser] = useState<UserResponse>(initialUser);
 
   const refresh = useCallback(async () => {
@@ -31,13 +30,13 @@ const useUser = (initialUser: UserResponse) => {
   return { data: user, update: setUser, isLogged: () => user.id > 0, logout, refresh };
 };
 
-const UserProvider: FC<UserProviderProps> = ({ children, initialUser }) => {
+export const UserProvider: FC<UserProviderProps> = ({ children, initialUser }) => {
   const userState = useUser(initialUser);
 
   return <UserContext.Provider value={userState}>{children}</UserContext.Provider>;
 };
 
-const UserContext = createContext<UserContextType>({
+export const UserContext = createContext<UserContextType>({
   data: {} as UserResponse,
   update: () => {},
   refresh: async () => {
@@ -48,5 +47,3 @@ const UserContext = createContext<UserContextType>({
   isLogged: () => true || false,
   logout: () => {},
 });
-
-export { UserProvider, UserContext, useUser };

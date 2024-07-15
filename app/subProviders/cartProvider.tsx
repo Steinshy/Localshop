@@ -8,14 +8,13 @@ import { getCart } from '@actions/actionsCart';
 
 // Interfaces
 import { CartActions, CartResponse } from '@interfaces/cart';
-import { CartProviderProps } from '@interfaces/subProviders';
-import { CartContextType } from '@interfaces/subProviders';
+import { CartProviderProps, CartContextType } from '@interfaces/subProviders';
 
 // Data
 import { defaultCart } from '@data/dataCart';
 import { AddressResponse } from '@interfaces/userAddress';
 
-const useCart = (initialCart: CartResponse) => {
+export const useCart = (initialCart: CartResponse) => {
   const [cart, setCart] = useState<CartResponse>(initialCart),
     [shipping, setShipping] = useState<AddressResponse | undefined>(initialCart.attributes.shipping?.data),
     [billing, setBilling] = useState<AddressResponse | undefined>(initialCart.attributes.billing?.data);
@@ -33,13 +32,13 @@ const useCart = (initialCart: CartResponse) => {
   return { data: cart, update: setCart, refresh, reset, shipping, setShipping, billing, setBilling };
 };
 
-const CartProvider: FC<CartProviderProps> = ({ children, initialCart }) => {
+export const CartProvider: FC<CartProviderProps> = ({ children, initialCart }) => {
   const userCart = useCart(initialCart);
 
   return <CartContext.Provider value={userCart}>{children}</CartContext.Provider>;
 };
 
-const CartContext = createContext<CartContextType>({
+export const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
   update: () => {},
   refresh: async () => {
@@ -53,5 +52,3 @@ const CartContext = createContext<CartContextType>({
   billing: {} as AddressResponse,
   setBilling: () => {},
 });
-
-export { CartProvider, CartContext, useCart };
