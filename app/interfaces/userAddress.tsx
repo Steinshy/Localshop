@@ -34,12 +34,12 @@ export type AddressValuesProps = {
   firstname: string;
   lastname: string;
   address: string;
-  country: string;
-  state: string;
   city: string;
+  state: string;
+  country: string;
   zip: string;
   phone?: number;
-  default: boolean;
+  default?: boolean;
 };
 
 // addressModal

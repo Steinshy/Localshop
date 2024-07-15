@@ -1,5 +1,5 @@
 // Interfaces
-import { AddressResponse } from '@interfaces/userAddress';
+import { AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
 
 // Components/user/addressModal | dataCart | dataOrders
 export const defaultAddress: AddressResponse = {
@@ -21,4 +21,17 @@ export const defaultAddress: AddressResponse = {
     createdAt: '',
     updatedAt: '',
   },
+};
+
+export const defaultAddressValues: AddressValuesProps = {
+  label: '',
+  firstname: '',
+  lastname: '',
+  address: '',
+  country: '',
+  state: '',
+  city: '',
+  zip: '',
+  phone: 0,
+  default: false,
 };

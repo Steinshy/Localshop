@@ -18,7 +18,7 @@ import { ParseGoogleAddress } from '@utils/helpers';
 
 // Interfaces
 import { GooglePlaceAddress } from '@interfaces/general';
-import { AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
+import { AddressResponse, AddressModalProp, AddressValuesProps } from '@interfaces/userAddress';
 
 // Data
 import { defaultAddress } from '@data/dataAddress';
@@ -59,7 +59,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
           <ModalHeader>{id ? 'Edit Address' : 'Add a new Address'}</ModalHeader>
           <ModalBody>
             <Formik
-              initialValues={formAddress}
+              initialValues={formAddress as AddressValuesProps}
               validate={(values: AddressValuesProps) => {
                 const errors: { [key: string]: string } = {};
                 Object.keys(values).forEach((key) => {
@@ -270,7 +270,7 @@ const AddressModal: FC<AddressModalProp> = ({ addresses, handleCreate, handleUpd
                         name='default'
                         label='Set as default'
                         className='col-span-1'
-                        defaultSelected={formAddress.default || false}
+                        defaultSelected={formAddress.default || false} 
                         as={Checkbox}
                         isDisabled={isSubmitting}
                         size='sm'
