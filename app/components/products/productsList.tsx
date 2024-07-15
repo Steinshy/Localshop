@@ -25,12 +25,13 @@ import { getProducts } from '@actions/actionsProducts';
 
 const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
   const searchParams = useSearchParams(),
-        [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
-        [localProducts, setLocalProducts] = useState<ProductResponse[]>(data || []),
-        [query, setQuery] = useState<string>(searchParams.get('q') || ''),
-        [isFetching, setIsFetching] = useState<boolean>(false);
+    [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
+    [localProducts, setLocalProducts] = useState<ProductResponse[]>(data || []),
+    [query, setQuery] = useState<string>(searchParams.get('q') || ''),
+    [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const fetchData = useCallback(async (page: number, query: string) => {
+  const fetchData = useCallback(
+    async (page: number, query: string) => {
       if (page < 1 || page > localPagy.pages || isFetching || query === searchParams.get('q')) return;
       setIsFetching(true);
 
@@ -40,7 +41,7 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
         setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
         setLocalPagy(pagy);
       }
-    
+
       setIsFetching(false);
     },
     [isFetching, localPagy.pages, searchParams, categorySlug]

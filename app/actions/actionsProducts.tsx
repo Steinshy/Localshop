@@ -13,7 +13,7 @@ import { handleError } from '@utils/fetchManager';
 
 // Index
 import { api } from '@actions/index';
-import { getProductCategoriesProps } from '@interfaces/categories';
+import { CategoryProps } from '@interfaces/categories';
 
 // Products - API - BestSellers
 export const getBestSellers = async () => {
@@ -68,7 +68,7 @@ export const getProductCategories = async () => {
   revalidateTag('categories');
 
   try {
-    const { categories } = await api.get<getProductCategoriesProps>(`/categories`, { next: { tags: ['categories'] } });
+    const { categories } = await api.get<{ categories: { data: CategoryProps[] } }>(`/categories`, { next: { tags: ['categories'] } });
     const { data } = categories;
     return { data };
   } catch (e) {
