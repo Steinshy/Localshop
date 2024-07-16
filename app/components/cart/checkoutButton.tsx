@@ -18,7 +18,7 @@ import { CartContext } from '@subProviders/cartProvider';
 import { showToast } from '@utils/helpers';
 
 // Actions
-import { placeOrder } from '@actions/actionsCart';
+import { getCart, placeOrder } from '@actions/actionsCart';
 
 // Interface
 import { CheckoutButtonProps } from '@interfaces/cart';
@@ -33,7 +33,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
   };
 
   const { text, nextPath } = pathMappings[pathname] || { text: 'Proceed to Payment', nextPath: '/order/payment' };
-  const { shipping, billing } = cartStore;
+  const { update, shipping, billing } = cartStore;
 
   const isDisabled = (): boolean => {
     if (nextPath !== '/order/payment') return false;
@@ -46,6 +46,9 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
     const apiFetch = async () => {
       const { data, error } = await placeOrder();
       if (error) return showToast(error.message, 'error');
+      const { data:cartData, error:cartError } = await getCart();
+      if (cartError) return showToast(cartError.message, 'error');
+      update(cartData);
       void router.push(`/user/orders/${data.id}`);
     }
     void apiFetch();

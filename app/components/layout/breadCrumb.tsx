@@ -22,7 +22,7 @@ import { capitalize, unslug } from '@utils/helpers';
 const Separator = () => <span className='text-small text-foreground/50'>/</span>;
 
 // Urls where we don't want to see the breadcrumb -> String | Regex
-const excludedUrls = ["\\/products\\/(\\w+)-(\\w+)", "\\/products\\/(\\w+)"];
+const excludedUrls = ["\\/products\\/(\\w+)-(\\w+)", "\\/products\\/(\\w+)", "\\/order\\/(\\w+)-(\\w+)", "\\/order\\/(\\w+)"];
 
 const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
   const pathName = usePathname(),
