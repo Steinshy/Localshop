@@ -11,7 +11,7 @@ import { Toaster } from 'react-hot-toast';
 
 // Components
 import CableComponent from '@components/cable';
-import Header from '@components/layout/header';
+import Header from '@components/navbar/header';
 import Footer from '@components/layout/footer';
 import Breadcrumb from '@components/layout/breadCrumb';
 

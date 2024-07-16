@@ -1,42 +1,52 @@
 'use client';
 
 // React
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useState, useCallback } from 'react';
 
 // NextJS
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 // NextUI
-import { Link as NextLink, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, NavbarContent, NavbarItem,
-         Navbar, Button, Badge } from '@nextui-org/react';
+import {
+  Link as NextLink,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarContent,
+  NavbarItem,
+  Navbar,
+  Button,
+  Badge,
+} from '@nextui-org/react';
 
 // Icons
 import { FaCartArrowDown } from 'react-icons/fa';
+import { FaAppleWhole } from 'react-icons/fa6';
 
-// Utils
+// subProviders
 import { CartContext } from '@subProviders/cartProvider';
 import { UserContext } from '@subProviders/userProvider';
 
 // Components
-import UserDropdown from '@components/layout/userDropdown';
+import UserDropdown from '@components/navbar/userDropdown';
 
 // Interfaces
 import { HeaderProps } from '@interfaces/general';
-import { FaAppleWhole } from 'react-icons/fa6';
 
 const Header: FC<HeaderProps> = ({ categories }) => {
   const navItems = [
-    { key: 'home', href: '/', label: 'Home' },
-    { key: 'products', href: '/products', label: 'Products' },
-    { key: 'about', href: '/about', label: 'About Us' },
-  ],
-  pathname = usePathname(),
-  cartStore = useContext(CartContext),
-  userStore = useContext(UserContext);
+      { key: 'home', href: '/', label: 'Home' },
+      { key: 'products', href: '/products', label: 'Products' },
+      { key: 'about', href: '/about', label: 'About Us' },
+    ],
+    pathname = usePathname(),
+    cartStore = useContext(CartContext),
+    userStore = useContext(UserContext);
 
-  // Categories
+  // Categories - Mobile Menu
   const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   // Mobile Menu
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -45,34 +55,39 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   const cartTotal = cartStore?.data?.attributes?.totalItems || 0;
   const { isLogged } = userStore;
 
-  const active = (item:{ [key:string]:string }) => {
+  const isItemActive = (item:{ [key:string]:string }) => {
     return item.href !== '/' ? pathname.includes(item.href) : pathname === item.href;
   }
 
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  }
+  const handleMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, [isMobileMenuOpen]);
+
+  const handleCategoriesMenu = useCallback((isOpen: boolean) => {
+    setIsCategoriesMenuOpen(isOpen);
+  }, [setIsCategoriesMenuOpen]);
 
   return (
     <div className='relative'>
-      <Navbar isBlurred={false} isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
+      <Navbar isBlurred={false} isBordered isMenuOpen={isMobileMenuOpen} onMenuOpenChange={setIsMobileMenuOpen}>
         <NavbarContent className='hidden sm:flex' justify='start'>
           <div className='text-lg flex justify-center items-center my-8'>
             <div className='bg-white rounded-s-lg text-black p-1 relative flex items-center'>
-              L<FaAppleWhole className='text-md inline'/>CAL
+              L<FaAppleWhole className='text-md inline' />
+              CAL
             </div>
             <div className='bg-black text-white p-1 rounded-e-lg'>SHOP</div>
           </div>
         </NavbarContent>
 
-        <NavbarContent className="sm:hidden" justify="start">
-          <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
+        <NavbarContent className='sm:hidden' justify='start'>
+          <NavbarMenuToggle aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'} />
         </NavbarContent>
 
         <NavbarMenu>
           {navItems.map((item) => (
-            <NavbarMenuItem key={item.key} isActive={active(item)}>
-              <NextLink as={Link} className='w-full' color='foreground' href={item.href} onPress={closeMenu}>
+            <NavbarMenuItem key={item.key} isActive={isItemActive(item)}>
+              <NextLink as={Link} className='w-full' color='foreground' href={item.href} onPress={handleMobileMenu}>
                 {item.label}
               </NextLink>
             </NavbarMenuItem>
@@ -80,21 +95,21 @@ const Header: FC<HeaderProps> = ({ categories }) => {
         </NavbarMenu>
 
         <NavbarContent className='hidden sm:flex' justify='center'>
-          {navItems.map((item) => (
+          {navItems.map((item) =>
             item.key === 'products' ? (
-              <NavbarItem key={item.key} isActive={active(item)} onMouseEnter={() => setIsCategoriesMenuOpen(true)}>
+              <NavbarItem key={item.key} isActive={isItemActive(item)} onMouseEnter={() => handleCategoriesMenu(true)}>
                 <NextLink as={Link} color='foreground' href={item.href}>
                   {item.label}
                 </NextLink>
               </NavbarItem>
             ) : (
-              <NavbarItem key={item.key} isActive={active(item)} onMouseEnter={() => setIsCategoriesMenuOpen(false)}>
+              <NavbarItem key={item.key} isActive={isItemActive(item)} onMouseEnter={() => handleCategoriesMenu(false)}>
                 <NextLink as={Link} color='foreground' href={item.href}>
                   {item.label}
                 </NextLink>
               </NavbarItem>
             )
-          ))}
+          )}
         </NavbarContent>
 
         <NavbarContent justify='end'>
@@ -127,15 +142,17 @@ const Header: FC<HeaderProps> = ({ categories }) => {
         </NavbarContent>
       </Navbar>
       <div
-        className={`${isCategoriesMenuOpen ? 'translate-y-0 opacity-1' : '-translate-y-full opacity-0 invisible'} z-[39] top-[65px] transition-all duration-500 ease-in-out absolute bg-background shadow-lg w-full flex justify-center p-2`}
-        onMouseLeave={() => setIsCategoriesMenuOpen(false)}
+        className={`${
+          isCategoriesMenuOpen ? 'translate-y-0 opacity-1' : '-translate-y-full opacity-0 invisible'
+        } z-[39] top-[65px] transition-all duration-500 ease-in-out absolute bg-background shadow-lg w-full flex justify-center p-2`}
+        onMouseLeave={() => handleCategoriesMenu(false)}
       >
         <div className='grid grid-cols-4 md:grid-cols-6 gap-3 py-3'>
           {categories.map((category) => (
             <div key={category.id}>
               <NextLink
                 href={`/products/${category.attributes.slug}`}
-                onPress={() => setIsCategoriesMenuOpen(false)}
+                onPress={() => handleCategoriesMenu(false)}
                 color='foreground'
               >
                 {category.attributes.title}
