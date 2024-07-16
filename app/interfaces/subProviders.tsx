@@ -8,8 +8,8 @@ import { AddressResponse } from './userAddress';
 
 // cartProvider | Interfaces => cart
 export type CartContextType = {
-  data: CartResponse;
-  update: Dispatch<SetStateAction<CartResponse>>;
+  data?: CartResponse;
+  update: Dispatch<SetStateAction<CartResponse|undefined>>;
   refresh: () => Promise<boolean>;
   reset: () => void;
   shipping?: AddressResponse;
@@ -20,8 +20,8 @@ export type CartContextType = {
 
 // userProvider | Interfaces => user
 export type UserContextType = {
-  data: UserResponse;
-  update: Dispatch<SetStateAction<UserResponse>>;
+  data?: UserResponse;
+  update: Dispatch<SetStateAction<UserResponse|undefined>>;
   refresh: () => Promise<boolean>;
   isLogged: () => boolean;
   logout: () => void;
@@ -30,18 +30,18 @@ export type UserContextType = {
 // CartProvider
 export type CartProviderProps = {
   children: React.ReactNode;
-  initialCart: CartResponse;
+  initialCart?: CartResponse;
 };
 
 // userProvider
 export type UserProviderProps = {
   children: React.ReactNode;
-  initialUser: UserResponse;
+  initialUser?: UserResponse;
 };
 
 // providers
 export type ProviderProps = {
   children: ReactNode;
-  initialUser: UserResponse;
-  initialCart: CartResponse;
+  initialUser?: UserResponse;
+  initialCart?: CartResponse;
 };

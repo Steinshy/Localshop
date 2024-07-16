@@ -22,6 +22,7 @@ import { AddToCartProps } from '@interfaces/cart';
 import { CartContext } from '@subProviders/cartProvider';
 import { UserContext } from '@subProviders/userProvider';
 import { showToast } from '@utils/helpers';
+import { ProductResponse } from '@interfaces/product';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => {
   const router = useRouter(),
@@ -29,11 +30,12 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
         cartStore = useContext(CartContext);
 
   // Cart & User
+  if (!cartStore.data) return;
   const { isLogged } = userStore, { data: { attributes: { items } }} = cartStore;
 
   // localProduct
   const { id: product_id } = localProduct;
-  const cartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === product_id);
+  const cartItem = items.find(({ product: cartProduct }: { product: { data: ProductResponse } }) => cartProduct.data.id.toString() === product_id);
   const cartItemsQuantity = cartItem ? cartItem.quantity : 0;
 
   const handleAddItem = useCallback((e: React.MouseEvent<HTMLElement>) => {

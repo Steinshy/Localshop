@@ -8,9 +8,6 @@ import { CartResponse } from '@interfaces/cart';
 import { ErrorObj } from '@interfaces/httpUtils';
 import { OrderResponse } from '@interfaces/userOrder';
 
-// Data
-import { defaultCart } from '@data/dataCart';
-
 // Utils
 import { handleError } from '@utils/fetchManager';
 
@@ -25,7 +22,7 @@ export const getCart = async () => {
     return { data };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
-    return { data: defaultCart, error };
+    return { error };
   }
 };
 

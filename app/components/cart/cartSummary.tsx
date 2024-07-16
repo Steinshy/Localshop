@@ -18,9 +18,11 @@ import { CartContext } from '@subProviders/cartProvider';
 import { Avatar, Badge, Tooltip } from '@nextui-org/react';
 import Link from 'next/link';
 import { AddressResponse } from '@interfaces/userAddress';
+import { CartItemProps } from '@interfaces/cart';
 
 const CartSummary = () => {
   const cartStore = useContext(CartContext), pathname = usePathname();
+  if (!cartStore.data) return;
   const { shipping, billing, data: { attributes: { coupon, totalPrice, finalPrice, items, shipping_price, taxes_price } } } = cartStore;
   const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: {} } };
 
@@ -46,7 +48,7 @@ const CartSummary = () => {
           <div className='text-sm'>
             <p className='text-md font-semibold'>Products</p>
             <div className='grid grid-cols-9 gap-2 pt-2'>
-              {items.map((item) => {
+              {items.map((item: CartItemProps) => {
                 const { quantity, product } = item;
                 const { data: { id, attributes: { category, slug, title, thumbnail: { url } } } } = product;
                 const { data: { attributes: { slug: categorySlug } } } = category;

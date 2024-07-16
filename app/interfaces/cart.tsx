@@ -4,12 +4,6 @@ import { ProductResponse } from '@interfaces/product';
 import { CartContextType } from '@interfaces/subProviders';
 import { AddressResponse } from '@interfaces/userAddress';
 
-// cartProvider
-export type CartActions = {
-  data: CartResponse;
-  error?: string;
-};
-
 // actionsCart | dataCart | Interfaces => cart | cartProvider | subProviders
 export type CartResponse = {
   id: string;

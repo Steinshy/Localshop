@@ -24,7 +24,7 @@ import { applyDiscount, deleteDiscount } from '@actions/actionsCart';
 
 const CartDiscount: FC<CartDiscountProps> = () => {
   const cartStore = useContext(CartContext);
-
+  if (!cartStore.data) return;
   const { update, data: { attributes: { totalPrice, coupon } } } = cartStore;
   const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: { code: undefined, discount: undefined } } };
 

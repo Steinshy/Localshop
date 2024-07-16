@@ -7,8 +7,7 @@ import { cookies } from 'next/headers';
 import { PasswordValuesProps, ProfileValuesProps, UserResponse } from '@interfaces/user';
 import { ErrorObj } from '@interfaces/httpUtils';
 
-// Data
-import { defaultUser } from '@data/dataUser';
+// Utils
 import { handleError } from '@utils/fetchManager';
 
 // Index
@@ -21,7 +20,7 @@ export const getUser = async () => {
     return { data };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
-    return { data: defaultUser, error };
+    return { error };
   }
 };
 
@@ -53,7 +52,7 @@ export const updateAvatar = async (formData: FormData) => {
     return { data };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
-    return { data: defaultUser, error };
+    return { error };
   }
 };
 
@@ -70,7 +69,7 @@ export const updateProfile = async (profileData: ProfileValuesProps) => {
     return { data };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
-    return { data: defaultUser, error };
+    return { error };
   }
 };
 
@@ -87,6 +86,6 @@ export const updatePassword = async (passwordData: PasswordValuesProps) => {
     return { data };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
-    return { data: defaultUser, error };
+    return { error };
   }
 };

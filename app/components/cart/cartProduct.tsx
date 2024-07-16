@@ -27,6 +27,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
 
   // Context - CartItem - Used to refresh after sync
+  if (!cartStore.data) return;
   const { data: { attributes: { items } } } = cartStore;
   const ContextCartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === id);
 

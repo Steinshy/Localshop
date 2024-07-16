@@ -7,26 +7,25 @@ import { FC, useState, createContext, useCallback } from 'react';
 import { getCart } from '@actions/actionsCart';
 
 // Interfaces
-import { CartActions, CartResponse } from '@interfaces/cart';
+import { CartResponse } from '@interfaces/cart';
 import { CartProviderProps, CartContextType } from '@interfaces/subProviders';
 
 // Data
-import { defaultCart } from '@data/dataCart';
 import { AddressResponse } from '@interfaces/userAddress';
 
-export const useCart = (initialCart: CartResponse) => {
-  const [cart, setCart] = useState<CartResponse>(initialCart),
-    [shipping, setShipping] = useState<AddressResponse | undefined>(initialCart.attributes.shipping?.data),
-    [billing, setBilling] = useState<AddressResponse | undefined>(initialCart.attributes.billing?.data);
+export const useCart = (initialCart?: CartResponse) => {
+  const [cart, setCart] = useState<CartResponse|undefined>(initialCart),
+    [shipping, setShipping] = useState<AddressResponse | undefined>(initialCart?.attributes.shipping?.data),
+    [billing, setBilling] = useState<AddressResponse | undefined>(initialCart?.attributes.billing?.data);
 
   const refresh = useCallback(async (): Promise<boolean> => {
-    const { data, error } = (await getCart()) as CartActions;
-    !error ? setCart(data) : setCart(defaultCart);
+    const { data, error } = await getCart();
+    !error ? setCart(data) : setCart(undefined);
     return !error;
   }, [setCart]);
 
   const reset = useCallback(() => {
-    setCart(defaultCart);
+    setCart(undefined);
   }, [setCart]);
 
   return { data: cart, update: setCart, refresh, reset, shipping, setShipping, billing, setBilling };

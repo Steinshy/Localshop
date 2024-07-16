@@ -6,6 +6,7 @@ import { getCart } from '@actions/actionsCart';
 
 const PaymentPage = async () => {
   const { data:cartData } = await getCart();
+  if (!cartData) return;
   const { attributes: { items } } = cartData;
 
   if (items.length <= 0) return redirect('/order');

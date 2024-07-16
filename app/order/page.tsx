@@ -18,22 +18,15 @@ import { CartContext } from '@subProviders/cartProvider';
 
 const OrderPage = () => {
   const cartStore = useContext(CartContext);
-  const {
-    data: {
-      attributes: { items },
-    },
-  } = cartStore;
+  if (!cartStore.data) return;
+  const { data: { attributes: { items } } } = cartStore;
 
   return items.length ? (
-    <ul className='flex flex-col sm:col-span-7 gap-2'>
+    <div className='flex flex-col sm:col-span-7 gap-2'>
       {items.map((cartItem) => (
-        <ul key={cartItem.id}>
-          <li>
-            <CartProduct cartItem={cartItem} />
-          </li>
-        </ul>
+        <CartProduct key={cartItem.id} cartItem={cartItem} />
       ))}
-    </ul>
+    </div>
   ) : (
     <div className='flex flex-col flex-grow justify-center items-center sm:col-span-7 gap-2'>
       <FaCartArrowDown className='text-8xl text-foreground' />

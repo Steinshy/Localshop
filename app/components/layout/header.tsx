@@ -42,8 +42,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   // Cart
-  const { data: { attributes: { totalItems } } } = cartStore;
-  const cartTotal = totalItems || 0;
+  const cartTotal = cartStore?.data?.attributes?.totalItems || 0;
   const { isLogged } = userStore;
 
   const active = (item:{ [key:string]:string }) => {

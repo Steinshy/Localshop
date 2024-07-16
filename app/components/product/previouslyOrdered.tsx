@@ -22,53 +22,25 @@ import { OrderItem, OrderResponse } from '@interfaces/userOrder';
 
 const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productId }) => {
   const [orders, setOrders] = useState<OrderResponse[]>([]),
-    [checked, setChecked] = useState<boolean>(false),
-    userStore = useContext(UserContext);
+        [checked, setChecked] = useState<boolean>(false),
+        userStore = useContext(UserContext);
   const { isLogged } = userStore;
 
   useEffect(() => {
     const apiFetch = async () => {
       const { data, error } = await getPreviouslyOrdered(productId.toString());
       setChecked(true);
-      if (error) return showToast('Fetch failed!', 'error');
+      if (error) return showToast(error.message, 'error');
       setOrders(data);
     };
 
     if (isLogged() && !checked) void apiFetch();
   }, [isLogged, productId, checked]);
 
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    const months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ],
-      day = date.getDate(),
-      month = months[date.getMonth()],
-      year = date.getFullYear();
-
-    return `${month} ${day}, ${year}`;
-  };
-
-  const getLastOrderPrice = (): number | undefined => {
-    const { attributes: { items } } = orders[0];
+  const getLastOrderInfos = (): { date?: string; price?: number; } => {
+    const { attributes: { items, createdAt } } = orders[0];
     const orderItem = items.find((item: OrderItem) => item.product.data.id === productId.toString());
-    return orderItem?.price;
-  };
-
-  const getLastOrderDate = (): string => {
-    const { attributes: { createdAt } } = orders[0];
-    return formatDate(createdAt);
+    return { date: createdAt, price: orderItem?.price };
   };
 
   return (
@@ -78,9 +50,9 @@ const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productId }) => {
         <CardBody>
           <div className='flex flex-col sm:flex-row justify-center items-center sm:justify-between gap-2'>
             <div>
-              <p>Your ordered this product {orders.length} times</p>
+              <p>Your ordered this product {orders.length > 1 ? `${orders.length} times` : 'once'}</p>
               <p className='text-foreground/75 text-sm'>
-                Last ordered on {getLastOrderDate()} for {getLastOrderPrice()}€
+                Last ordered on {getLastOrderInfos().date} for {getLastOrderInfos().price}€
               </p>
             </div>
             <Button as={Link} href={`/user/orders/${orders[0].id}`} size='sm' variant='flat'>

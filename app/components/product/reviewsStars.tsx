@@ -14,11 +14,7 @@ const ReviewsStars: FC<ReviewsStarsProps> = ({ rating }) => {
     return <FaStar key={i} className={`h-4 w-4 ${starColor}`} />;
   });
 
-  return (
-    <div className='flex items-center gap-1'>
-      {svgStars}
-    </div>
-  );
+  return <div className='flex items-center gap-1'>{svgStars}</div>;
 };
 
 export default ReviewsStars;

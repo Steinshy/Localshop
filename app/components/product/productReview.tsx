@@ -14,10 +14,7 @@ import { FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 import { ProductReviewProps } from '@interfaces/reviews';
 
 const ProductReview: FC<ProductReviewProps> = ({ review }) => {
-  // Review
   const { attributes: { body, rating, author } } = review;
-
-  // Author
   const { data: { attributes: { firstname, lastname, avatar: { small } } } } = author;
 
   return (

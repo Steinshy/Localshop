@@ -18,6 +18,7 @@ const AvatarForm = () => {
         fileInputRef = createRef<HTMLInputElement>(),
         [isFetching, setIsFetching] = useState<boolean>(false);
   
+  if (!userStore.data) return;
   const { update, data: { attributes: { avatar: { large } } } } = userStore;
 
   const fileChange = (e:ChangeEvent<HTMLInputElement>) => {

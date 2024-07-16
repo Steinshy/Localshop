@@ -3,16 +3,16 @@
 // NextJS
 import { revalidateTag } from 'next/cache';
 
-// Interface
+// Interfaces
 import { OrderResponse } from '@interfaces/userOrder';
 import { ErrorObj } from '@interfaces/httpUtils';
+import { PagyProps } from '@interfaces/general';
 
 // Utils
 import { handleError } from '@utils/fetchManager';
 
 // Index
 import { api } from '@actions/index';
-import { PagyProps } from '@interfaces/general';
 
 // User => Orders - API - Get (collection)
 export const getOrders = async (page?: number, query?: string) => {

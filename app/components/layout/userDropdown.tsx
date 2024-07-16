@@ -20,11 +20,12 @@ import { isPrivateUrl, showToast } from '@utils/helpers';
 // Actions
 import { userLogin } from '@actions/actionsUser';
 
-const UserDropdown = () => {
+const UserLoggedDropdown = () => {
   const router = useRouter(), pathname = usePathname(), userStore = useContext(UserContext), cartStore = useContext(CartContext);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState<boolean>(false);
 
-  const { isLogged, data: { attributes: { firstname, lastname, avatar: { small } } } } = userStore;
+  if (!userStore.data) return;
+  const { data: { attributes: { firstname, lastname, avatar: { small } } } } = userStore;
 
   const handleUserAction = (key: React.Key) => {
     setIsUserMenuOpen(false);
@@ -41,37 +42,13 @@ const UserDropdown = () => {
   };
 
   const handleUserLogout = () => {
-    if (!isLogged()) return;
-
     void userStore.logout();
     void cartStore.reset();
     setIsUserMenuOpen(false);
     showToast('You have been logged out!', 'success');
   };
 
-  const handleUserLogin = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    const ApiCall = async () => {
-      const { error } = await userLogin();
-      if (error) return showToast('Login failed!', 'error');
-
-      const [userResponse, cartResponse] = await Promise.all([userStore.refresh(), cartStore.refresh()]);
-      if (Boolean(userResponse) && Boolean(cartResponse)) {
-        showToast('You have been logged in!', 'success');
-      } else {
-        showToast('Login failed!', 'error');
-      }
-    };
-
-    void ApiCall();
-  };
-
-  return !isLogged() ? (
-    <Button variant='solid' radius='sm' color='primary' size='sm' onClick={handleUserLogin}>
-      Login
-    </Button>
-  ) : (
+  return (
     <Dropdown placement='bottom-end' onOpenChange={handleUserMenuOpen}>
       <DropdownTrigger>
         <Button
@@ -125,6 +102,37 @@ const UserDropdown = () => {
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
+  );
+};
+
+const UserDropdown = () => {
+  const userStore = useContext(UserContext), cartStore = useContext(CartContext);
+  const { isLogged } = userStore;
+
+  const handleUserLogin = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    const ApiCall = async () => {
+      const { error } = await userLogin();
+      if (error) return showToast('Login failed!', 'error');
+
+      const [userResponse, cartResponse] = await Promise.all([userStore.refresh(), cartStore.refresh()]);
+      if (Boolean(userResponse) && Boolean(cartResponse)) {
+        showToast('You have been logged in!', 'success');
+      } else {
+        showToast('Login failed!', 'error');
+      }
+    };
+
+    void ApiCall();
+  };
+
+  return !isLogged() ? (
+    <Button variant='solid' radius='sm' color='primary' size='sm' onClick={handleUserLogin}>
+      Login
+    </Button>
+  ) : (
+    <UserLoggedDropdown />
   );
 };
 

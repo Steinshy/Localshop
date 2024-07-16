@@ -15,6 +15,7 @@ import { FaAppleWhole, FaArrowRightLong, FaHouse } from 'react-icons/fa6';
 // Assets
 import { BG } from '@assets/index';
 import { Button, ScrollShadow } from '@nextui-org/react';
+import { ProductResponse } from '@interfaces/product';
 
 export const metadata: Metadata = {
   title: 'Home | Localshop',
@@ -25,6 +26,23 @@ const HomePage = async () => {
     { data: bestSellers } = await getBestSellers(),
     { data: newProducts } = await getNewest(),
     { data: lastPieces } = await getLastPieces();
+
+  const Section = ({title, products}: { title: string; products: ProductResponse[] }) => (
+    <section>
+      <div className='my-4'>
+        <h2 className='text-4xl inline bg-black text-white p-1 px-2 rounded-lg'>{title}</h2>
+      </div>
+      <ScrollShadow hideScrollBar orientation='horizontal' className='max-w-full'>
+        <div className='grid grid-flow-col gap-2'>
+          {products.map((item) => (
+            <div key={item.id} className='w-[300px]'>
+              <ProductCard product={item} />
+            </div>
+          ))}
+        </div>
+      </ScrollShadow>
+    </section>
+  );
 
   return (
     <>
@@ -73,51 +91,10 @@ const HomePage = async () => {
           </Button>
         </div>
       </section>
-      <div className='flex flex-col gap-2 px-2 py-4'>
-        <section id='shopnow'>
-          <div className='my-4'>
-            <h2 className='text-4xl inline bg-black text-white p-1 px-2 rounded-lg'>Buy Fresh, Buy Local</h2>
-          </div>
-          <ScrollShadow hideScrollBar orientation='horizontal' className='max-w-full'>
-            <div className='grid grid-flow-col gap-2'>
-              {newProducts.map((item) => (
-                <div key={item.id} className='w-[300px]'>
-                  <ProductCard product={item} />
-                </div>
-              ))}
-            </div>
-          </ScrollShadow>
-        </section>
-
-        <section>
-          <div className='my-4'>
-            <h2 className='text-4xl inline bg-black text-white p-1 px-2 rounded-lg'>Our Top Picks</h2>
-          </div>
-          <ScrollShadow hideScrollBar orientation='horizontal' className='max-w-full'>
-            <div className='grid grid-flow-col gap-2'>
-              {bestSellers.map((item) => (
-                <div key={item.id} className='w-[300px]'>
-                  <ProductCard product={item} />
-                </div>
-              ))}
-            </div>
-          </ScrollShadow>
-        </section>
-
-        <section>
-          <div className='my-4'>
-            <h2 className='text-4xl inline bg-black text-white p-1 px-2 rounded-lg'>Hurry, Few Left!</h2>
-          </div>
-          <ScrollShadow hideScrollBar orientation='horizontal' className='max-w-full'>
-            <div className='grid grid-flow-col gap-2'>
-              {lastPieces.map((item) => (
-                <div key={item.id} className='w-[300px]'>
-                  <ProductCard product={item} />
-                </div>
-              ))}
-            </div>
-          </ScrollShadow>
-        </section>
+      <div id='shopnow' className='flex flex-col gap-2 px-2 py-4'>
+        <Section title='Buy Fresh, Buy Local' products={newProducts} />
+        <Section title='Our Top Picks' products={bestSellers} />
+        <Section title='Hurry, Few Left!' products={lastPieces} />
       </div>
     </>
   );

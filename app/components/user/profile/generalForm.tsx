@@ -41,6 +41,7 @@ const FieldsBuilder:FC<FieldsBuilderProps> = ({ fields, busy, errors }) => (
 
 const GeneralForm = () => {
   const userStore = useContext(UserContext);
+  if (!userStore.data) return;
   const { update, data: { attributes: { firstname, lastname, email } } } = userStore;
 
   return (
