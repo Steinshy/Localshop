@@ -23,9 +23,11 @@ const OrderPage = () => {
 
   return items.length ? (
     <div className='flex flex-col sm:col-span-7 gap-2'>
-      {items.map((cartItem) => (
-        <CartProduct key={cartItem.id} cartItem={cartItem} />
-      ))}
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
+        {items.map((cartItem) => (
+          <CartProduct key={cartItem.id} cartItem={cartItem} />
+        ))}
+      </div>
     </div>
   ) : (
     <div className='flex flex-col flex-grow justify-center items-center sm:col-span-7 gap-2'>

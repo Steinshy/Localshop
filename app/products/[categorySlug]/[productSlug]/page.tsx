@@ -35,8 +35,8 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const { data: { reviews: { data:reviewsItems } } } = reviews;
   
   return product ? (
-    <>
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center p-4'>
+    <div className='max-w-screen-2xl mx-auto w-full p-4 mb-4'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center'>
         <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />
         <div className='flex flex-col gap-4'>
           <PreviouslyOrdered productId={id} />
@@ -49,17 +49,17 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
         </div>
       </div>
 
-      <div className='flex flex-col flex-grow justify-center p-4'>
-        <h2 className='text-2xl font-semibold text-center mb-4'>User Reviews</h2>
+      <div className='flex flex-col items-center'>
+        <h2 className='text-2xl font-semibold text-center my-4'>User Reviews</h2>
         {reviewsItems.length > 0 ? (
-          <div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-4 w-full'>
             {reviewsItems.map((review) => <ProductReview key={review.id} review={review} />)}
           </div>
         ) : (
           <p className='text-lg text-center'>No reviews has been added yet</p>
         )}
       </div>
-    </>
+    </div>
   ) : null;
 };
 

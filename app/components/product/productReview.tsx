@@ -18,7 +18,7 @@ const ProductReview: FC<ProductReviewProps> = ({ review }) => {
   const { data: { attributes: { firstname, lastname, avatar: { small } } } } = author;
 
   return (
-    <Card className='max-w-[500px]'>
+    <Card className='w-full'>
       <CardHeader className='flex justify-between items-center gap-3'>
         <div className='flex items-center gap-3'>
           <Avatar isBordered color='primary' size='sm' src={small} />

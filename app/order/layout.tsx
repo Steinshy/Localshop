@@ -24,7 +24,7 @@ const OrderLayout:FC<LayoutProps> = ({ children }) => {
         };
 
   return (
-    <div className='max-w-screen-2xl flex flex-col flex-grow my-8 px-2'>
+    <div className='max-w-screen-2xl mx-auto flex flex-col flex-grow my-8 px-2'>
       {/* Stepper */}
       <div className='mb-5'>
         <Stepper steps={steps} pathToStepMap={pathToStepMap} />

@@ -57,6 +57,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
       <div className='flex justify-end'>
         <CartClearBtn id={id} cartStore={cartStore} />
       </div>
+      <div className='text-lg text-center font-semibold'>{title}</div>
 
       {/* Single item information */}
       <CardBody className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
@@ -71,7 +72,6 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
             shadow='none'
             removeWrapper
           />
-          <span className='text-lg font-semibold'>{title}</span>
         </div>
         <div className='flex flex-col justify-center items-center gap-2'>
           <Input

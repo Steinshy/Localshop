@@ -28,7 +28,7 @@ const ProductsCategoryPage: FC<ProductsCategoryPageProps> = async ({ params, sea
   return (
     <>
       <ProductsHeader title={title} />
-      <div className='gap-2 px-2 pb-4 my-4'>
+      <div className='max-w-screen-2xl mx-auto w-full pb-4 my-4'>
         <ProductsList data={data} pagy={pagy} categorySlug={params.categorySlug} />
       </div>
     </>

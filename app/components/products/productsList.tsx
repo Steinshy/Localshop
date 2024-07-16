@@ -103,7 +103,7 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
       </form>
 
       {/* Products list */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 px-2 pb-4'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 px-2 pb-4'>
         {localProducts.map((product) => (
           <ProductCard key={`product_${product.id}`} product={product} />
         ))}
