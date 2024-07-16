@@ -1,10 +1,10 @@
-// Utils
-import { FetchManager } from '@utils/fetchManager';
-
 // NextJS
 import { cookies } from 'next/headers';
 
-export const base_url = 'http://api.localshop.test:3005/v1'
+// Utils
+import { FetchManager } from '@utils/fetchManager';
+
+export const base_url = 'http://api.localshop.test:3005/v1';
 export const api = new FetchManager(base_url);
 
 export function setCookieLogin(userID: number) {

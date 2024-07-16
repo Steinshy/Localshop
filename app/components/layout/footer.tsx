@@ -1,11 +1,11 @@
 // React
-import { FC } from "react";
+import { FC } from 'react';
 
 // NextJS
 import Link from 'next/link';
 
 // NextUI
-import { Link as NextLink } from "@nextui-org/react";
+import { Link as NextLink } from '@nextui-org/react';
 
 // Icons
 import { DiCssdeck } from 'react-icons/di';
@@ -14,11 +14,7 @@ import { DiCssdeck } from 'react-icons/di';
 import { FooterProps } from '@interfaces/general';
 
 const Footer: FC<FooterProps> = ({ categories }) => {
-
-  const links = [
-    { title: 'Contact', href: '' },
-  ];
-
+  const links = [{ title: 'Contact', href: '' }];
   const links2 = [
     { title: 'About Us', href: '' },
     { title: 'Sitemap', href: '' },
@@ -81,6 +77,6 @@ const Footer: FC<FooterProps> = ({ categories }) => {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;
