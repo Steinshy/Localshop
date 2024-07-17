@@ -20,18 +20,23 @@ import { userLogin } from '@actions/actionsUser';
 import UserLoggedDropdown from './userLoggedDropdown';
 
 const UserDropdown = () => {
-  const userStore = useContext(UserContext), cartStore = useContext(CartContext);
+  const userStore = useContext(UserContext),
+    cartStore = useContext(CartContext);
   const { isLogged } = userStore;
 
-  const handleUserLogin = useCallback(async () => {
-    try {
-      await userLogin();
-      await Promise.all([userStore.refresh(), cartStore.refresh()]);
-      showToast('You have been logged in!', 'success');
-    } catch (error) {
-      showToast('Login failed!', 'error');
-    }
-  }, [userStore, cartStore]);
+  const handleUserLogin = () => {
+    const checkLogin = async () => {
+      const { error } = await userLogin();
+      if (error) {
+        showToast("Login failed", 'error');
+      } else {
+        userStore.refresh();
+        cartStore.refresh();
+        showToast('You have been logged in!', 'success');
+      }
+    };
+    void checkLogin();
+  };
 
   return !isLogged() ? (
     <Button variant='solid' radius='sm' color='primary' size='sm' onClick={handleUserLogin}>
