@@ -10,7 +10,7 @@ import { useTheme } from 'next-themes';
 import { Switch } from '@nextui-org/switch';
 
 // Icons
-import { MoonIcon, SunIcon } from '@utils/themeSwitcherIcons';
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState<boolean>(false),
@@ -32,10 +32,10 @@ const ThemeSwitcher = () => {
           onValueChange={setIsSelected}
           size='lg'
           color='danger'
-          thumbIcon={theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+          thumbIcon={theme === 'dark' ? <FaMoon /> : <FaSun />}
         />
       ) : (
-        <Switch isSelected={false} size='lg' color='danger' thumbIcon={<SunIcon />} />
+        <Switch isSelected={false} size='lg' color='danger' thumbIcon={<FaSun />} />
       )}
     </div>
   );

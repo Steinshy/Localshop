@@ -8,10 +8,6 @@ export type LayoutProps = {
   children: React.ReactNode;
 };
 
-export type SvgIconProps = SVGProps<SVGSVGElement> & {
-  color?: string;
-};
-
 export type BreadcrumbProps = {
   requestUrl?: string;
 };
