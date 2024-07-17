@@ -10,7 +10,6 @@ export type CategoryProps = {
 };
 
 export type CategoriesMenuProps = {
-  isCategoriesMenuOpen: boolean;
   handleCategoriesMenu: (isOpen: boolean) => void;
   categories: CategoryProps[];
 };

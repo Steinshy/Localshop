@@ -24,8 +24,9 @@ import { getCart, placeOrder } from '@actions/actionsCart';
 import { CheckoutButtonProps } from '@interfaces/cart';
 
 const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
-  const pathname = usePathname(), cartStore = useContext(CartContext),
-        router = useRouter();
+  const pathname = usePathname(), cartStore = useContext(CartContext), router = useRouter();
+  const { update, shipping, billing } = cartStore;
+  
   const pathMappings: { [key: string]: { text: string; nextPath: string } } = {
     '/order': { text: 'Proceed to Shipping', nextPath: '/order/shipping' },
     '/order/shipping': { text: 'Proceed to Payment', nextPath: '/order/payment' },
@@ -33,7 +34,7 @@ const CheckoutButton: FC<CheckoutButtonProps> = ({ items }) => {
   };
 
   const { text, nextPath } = pathMappings[pathname] || { text: 'Proceed to Payment', nextPath: '/order/payment' };
-  const { update, shipping, billing } = cartStore;
+  
 
   const isDisabled = (): boolean => {
     if (nextPath !== '/order/payment') return false;

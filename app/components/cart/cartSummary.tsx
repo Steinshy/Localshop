@@ -3,20 +3,23 @@
 // React
 import { useContext } from 'react';
 
+// Next
+import Link from 'next/link';
+
 // NextJS
 import { usePathname } from 'next/navigation';
 
 // NextUI
-import { Card } from '@nextui-org/card';
+import { Avatar, Badge, Card, Tooltip } from '@nextui-org/react';
 
 // Components
 import CartDiscount from '@components/cart/cartDiscount';
 import CheckoutButton from '@components/cart/checkoutButton';
 
-// Utils
+// subProviders
 import { CartContext } from '@subProviders/cartProvider';
-import { Avatar, Badge, Tooltip } from '@nextui-org/react';
-import Link from 'next/link';
+
+// Interfaces
 import { AddressResponse } from '@interfaces/userAddress';
 import { CartItemProps } from '@interfaces/cart';
 

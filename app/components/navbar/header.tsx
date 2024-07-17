@@ -8,17 +8,7 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
 // NextUI
-import {
-  Link as NextLink,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
-  NavbarContent,
-  NavbarItem,
-  Navbar,
-  Button,
-  Badge,
-} from '@nextui-org/react';
+import { Link as NextLink, NavbarContent, NavbarItem, Navbar, Button, Badge } from '@nextui-org/react';
 
 // Icons
 import { FaCartArrowDown } from 'react-icons/fa';
@@ -31,6 +21,7 @@ import { UserContext } from '@subProviders/userProvider';
 // Components
 import UserDropdown from '@components/navbar/userDropdown';
 import CategoriesMenu from '@components/navbar/categoriesMenu';
+import MobileMenu from '@components/navbar/mobileMenu';
 
 // Interfaces
 import { HeaderProps } from '@interfaces/general';
@@ -81,19 +72,13 @@ const Header: FC<HeaderProps> = ({ categories }) => {
           </div>
         </NavbarContent>
 
-        <NavbarContent className='sm:hidden' justify='start'>
-          <NavbarMenuToggle aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'} />
-        </NavbarContent>
-
-        <NavbarMenu>
-          {navItems.map((item) => (
-            <NavbarMenuItem key={item.key} isActive={isItemActive(item)}>
-              <NextLink as={Link} className='w-full' color='foreground' href={item.href} onPress={handleMobileMenu}>
-                {item.label}
-              </NextLink>
-            </NavbarMenuItem>
-          ))}
-        </NavbarMenu>
+        {/* MobileMenu */}
+        <MobileMenu
+          isMobileMenuOpen={isMobileMenuOpen}
+          handleMobileMenu={handleMobileMenu}
+          navItems={navItems}
+          isItemActive={isItemActive}
+        />
 
         <NavbarContent className='hidden sm:flex' justify='center'>
           {navItems.map((item) =>
@@ -142,12 +127,18 @@ const Header: FC<HeaderProps> = ({ categories }) => {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-
-      <CategoriesMenu
-        isCategoriesMenuOpen={isCategoriesMenuOpen}
-        handleCategoriesMenu={handleCategoriesMenu}
-        categories={categories}
-      />
+      
+      {/* CategoriesMenu */}
+      <div
+        className={`${
+          isCategoriesMenuOpen ? 'translate-y-0 opacity-1' : '-translate-y-full opacity-0 invisible'
+        } z-[39] top-[65px] transition-all duration-500 ease-in-out absolute bg-background shadow-lg w-full flex justify-center p-2`}
+        onMouseLeave={() => handleCategoriesMenu(false)}
+      >
+        <div className='grid grid-cols-4 md:grid-cols-6 gap-3 py-3'>
+          <CategoriesMenu handleCategoriesMenu={handleCategoriesMenu} categories={categories} />
+        </div>
+      </div>
     </div>
   );
 };

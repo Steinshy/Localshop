@@ -15,10 +15,7 @@ import { FooterProps } from '@interfaces/general';
 
 const Footer: FC<FooterProps> = ({ categories }) => {
   const links = [{ title: 'Contact', href: '' }];
-  const links2 = [
-    { title: 'About Us', href: '' },
-    { title: 'Sitemap', href: '' },
-  ];
+  const links2 = [ { title: 'About Us', href: '' }, { title: 'Sitemap', href: '' } ];
 
   return (
     <footer className='border-t border-current text-default-100 text-sm p-2'>
