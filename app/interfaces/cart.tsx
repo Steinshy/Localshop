@@ -8,6 +8,7 @@ import { AddressResponse } from '@interfaces/userAddress';
 export type CartResponse = {
   id: string;
   type: string;
+
   attributes: {
     id: number;
     createdAt: string;

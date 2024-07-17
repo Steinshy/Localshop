@@ -21,14 +21,18 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const [product, reviews] = await Promise.all([getProduct(productSlug), getProductReviews(productSlug)]);
 
   const { data: localProduct } = product;
-  const { attributes: { id, title, description, price, thumbnail, images } } = localProduct;
-  const { data: { reviews: { data: reviewsItems } }} = reviews;
+  const {
+    attributes: { id, title, description, price, thumbnail, images },
+  } = localProduct;
+  const {
+    data: {
+      reviews: { data: reviewsItems },
+    },
+  } = reviews;
 
   return product ? (
     <>
-      <head>
-        <ProductMetadata productSlug={productSlug} />
-      </head>
+      <ProductMetadata productSlug={productSlug} />
       <div className='max-w-screen-2xl mx-auto w-full p-4 mb-4'>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center'>
           <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />

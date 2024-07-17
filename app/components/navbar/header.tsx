@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useContext, useState, useCallback } from 'react';
+import { FC, useContext, useState } from 'react';
 
 // NextJS
 import { usePathname } from 'next/navigation';
@@ -30,6 +30,7 @@ import { UserContext } from '@subProviders/userProvider';
 
 // Components
 import UserDropdown from '@components/navbar/userDropdown';
+import CategoriesMenu from '@components/navbar/categoriesMenu';
 
 // Interfaces
 import { HeaderProps } from '@interfaces/general';
@@ -55,17 +56,17 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   const cartTotal = cartStore?.data?.attributes?.totalItems || 0;
   const { isLogged } = userStore;
 
-  const isItemActive = (item:{ [key:string]:string }) => {
+  const isItemActive = (item: { [key: string]: string }) => {
     return item.href !== '/' ? pathname.includes(item.href) : pathname === item.href;
-  }
+  };
 
-  const handleMobileMenu = useCallback(() => {
+  const handleMobileMenu = () => {
     setIsMobileMenuOpen(false);
-  }, [isMobileMenuOpen]);
+  };
 
-  const handleCategoriesMenu = useCallback((isOpen: boolean) => {
+  const handleCategoriesMenu = (isOpen: boolean) => {
     setIsCategoriesMenuOpen(isOpen);
-  }, [setIsCategoriesMenuOpen]);
+  };
 
   return (
     <div className='relative'>
@@ -141,27 +142,12 @@ const Header: FC<HeaderProps> = ({ categories }) => {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <div
-        className={`${
-          isCategoriesMenuOpen ? 'translate-y-0 opacity-1' : '-translate-y-full opacity-0 invisible'
-        } z-[39] top-[65px] transition-all duration-500 ease-in-out absolute bg-background shadow-lg w-full flex justify-center p-2`}
-        onMouseLeave={() => handleCategoriesMenu(false)}
-      >
-        <div className='grid grid-cols-4 md:grid-cols-6 gap-3 py-3'>
-          {categories.map((category) => (
-            <div key={category.id}>
-              <NextLink
-                href={`/products/${category.attributes.slug}`}
-                onPress={() => handleCategoriesMenu(false)}
-                color='foreground'
-              >
-                {category.attributes.title}
-              </NextLink>
-              <p className='text-sm text-foreground/50'>Description</p>
-            </div>
-          ))}
-        </div>
-      </div>
+
+      <CategoriesMenu
+        isCategoriesMenuOpen={isCategoriesMenuOpen}
+        handleCategoriesMenu={handleCategoriesMenu}
+        categories={categories}
+      />
     </div>
   );
 };

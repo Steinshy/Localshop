@@ -23,35 +23,43 @@ import { CartContext } from '@subProviders/cartProvider';
 import { UserContext } from '@subProviders/userProvider';
 import { showToast } from '@utils/helpers';
 import { ProductResponse } from '@interfaces/product';
+import { CartResponse } from '@interfaces/cart';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => {
   const router = useRouter(),
-        userStore = useContext(UserContext),
-        cartStore = useContext(CartContext);
+    userStore = useContext(UserContext),
+    cartStore = useContext(CartContext);
 
   // Cart & User
   if (!cartStore.data) return;
-  const { isLogged } = userStore, { data: { attributes: { items } }} = cartStore;
+  const { isLogged } = userStore;
+  const { data: cart } = cartStore;
+  const { items } = cart?.attributes || { items: [] };
 
   // localProduct
   const { id: product_id } = localProduct;
-  const cartItem = items.find(({ product: cartProduct }: { product: { data: ProductResponse } }) => cartProduct.data.id.toString() === product_id);
+  const cartItem = items.find(
+    ({ product: cartProduct }: { product: { data: ProductResponse } }) => cartProduct.data.id.toString() === product_id
+  );
   const cartItemsQuantity = cartItem ? cartItem.quantity : 0;
 
-  const handleAddItem = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    if (cartItemsQuantity > 0) return router.push('/order');
+  const handleAddItem = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      e.preventDefault();
+      if (cartItemsQuantity > 0) return router.push('/order');
 
-    const apiFetch = async () => {
-      const { data, error } = await addItemToCart(product_id);
-      if (error) return showToast(error.message, 'error');
+      const apiFetch = async () => {
+        const { data, error } = await addItemToCart(product_id);
+        if (error) return showToast(error.message, 'error');
 
-      cartStore.update(data);
-      showToast(`${localProduct.attributes.title} has been added to your cart!`, 'success');
-    }
+        cartStore.update(data);
+        showToast(`${localProduct.attributes.title} has been added to your cart!`, 'success');
+      };
 
-    void apiFetch();
-  }, [localProduct, cartItemsQuantity, product_id, router, cartStore]);
+      void apiFetch();
+    },
+    [localProduct, cartItemsQuantity, product_id, router, cartStore]
+  );
 
   const btnOptions: ButtonProps = {
     color: cartItemsQuantity > 0 ? 'success' : 'primary',
