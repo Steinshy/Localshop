@@ -28,6 +28,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
   const pathName = usePathname(),
         [url, setUrl] = useState<string>(requestUrl || '');
 
+  // Create urls from a split one
   const buildHref = (urls: string[], currentIndex: number): string => {
     let str = '';
     for (let i = 0; i < currentIndex + 1; i++) {

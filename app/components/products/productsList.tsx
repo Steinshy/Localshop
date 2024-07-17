@@ -23,6 +23,9 @@ import { ProductsListProp } from '@interfaces/products';
 // Actions
 import { getProducts } from '@actions/actionsProducts';
 
+// Utils
+import { capitalize, unslug } from '@utils/helpers';
+
 const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
   const searchParams = useSearchParams(),
         [localPagy, setLocalPagy] = useState<PagyProps>(pagy || { page: 0, pages: 1 }),
@@ -89,7 +92,7 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
       <form onSubmit={handleSearch} className='flex justify-center items-center px-2 mb-4'>
         <Input
           aria-label='Search'
-          placeholder='Type...'
+          placeholder={`Search a product${categorySlug ? ` in ${capitalize(unslug(categorySlug))}` : ''}...`}
           type='search'
           value={query}
           onValueChange={setQuery}

@@ -2,19 +2,18 @@
 import { GoogleAddressObj, GooglePlaceAddress } from '@interfaces/general';
 import toast, { ToastType } from 'react-hot-toast';
 
-export const readableDate = (date: string): string => {
-  return new Intl.DateTimeFormat('en-US').format(new Date(date));
-};
-
+// Toasts
 export const showToast = (text: string, status: ToastType) => {
   status === 'error' ? toast.error(text) : toast.success(text);
 };
 
+// Turn slugged words into readable format
 export const unslug = (str: string): string => {
   if (str.length === 0) return str;
   return str.replace(/-/g, ' ');
 };
 
+// Capitalize the first letter of every word
 export const capitalize = (str: string): string => {
   if (str.length === 0) return str;
   return str
@@ -25,6 +24,7 @@ export const capitalize = (str: string): string => {
     .join(' ');
 };
 
+// Checks if the user can access the url
 export const isPrivateUrl = (requestUrl: string | undefined): boolean => {
   const privateUrls = ['/user', '/order'];
   const result = privateUrls.some((url) => {
@@ -34,6 +34,7 @@ export const isPrivateUrl = (requestUrl: string | undefined): boolean => {
   return result;
 };
 
+// Parses Google Places api's result
 export const ParseGoogleAddress = (place: GooglePlaceAddress) => {
   const { address_components } = place;
   const addressObj: GoogleAddressObj = {

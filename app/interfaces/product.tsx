@@ -45,6 +45,7 @@ export type ProductImages = {
 export type ProductPageProps = {
   params: {
     productSlug: string;
+    categorySlug: string;
   };
 };
 
