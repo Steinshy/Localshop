@@ -1,6 +1,8 @@
 // Modules
-import { GoogleAddressObj, GooglePlaceAddress } from '@interfaces/general';
 import toast, { ToastType } from 'react-hot-toast';
+
+// Interfaces
+import { GoogleAddressObj, GooglePlaceAddress } from '@interfaces/general';
 
 // Toasts
 export const showToast = (text: string, status: ToastType) => {

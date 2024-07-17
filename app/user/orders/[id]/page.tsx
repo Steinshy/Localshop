@@ -20,12 +20,12 @@ import { OrderPageProps } from '@interfaces/userOrder';
 // Actions
 import { getOrder } from '@actions/actionsUserOrders';
 
-type MetaProps = { params: { id: string } }
- 
+type MetaProps = { params: { id: string } };
+
 export async function generateMetadata({ params }: MetaProps): Promise<Metadata> {
   const { data } = await getOrder(params.id);
   const { id } = data;
-  return { title: `Order #${id}` }
+  return { title: `Order #${id}` };
 }
 
 const OrderPage: FC<OrderPageProps> = async ({ params }) => {

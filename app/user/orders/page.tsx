@@ -7,10 +7,10 @@ import OrdersList from '@components/user/order/ordersList';
 // Actions
 import { getOrders } from '@actions/actionsUserOrders';
 
-export const metadata: Metadata = { title: 'Orders'};
+export const metadata: Metadata = { title: 'Orders' };
 
 const OrdersPage = async () => {
-  const { data:orders, pagy, error } = await getOrders();
+  const { data: orders, pagy, error } = await getOrders();
   return <OrdersList items={orders} pageInfos={pagy} pageError={error} />;
 };
 
