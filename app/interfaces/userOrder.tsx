@@ -54,9 +54,14 @@ export type OrderCardProps = {
   detailed?: boolean;
 };
 
-// orderProduct
+export type chipColorsProps = {
+  [key: string]: 'primary' | 'default' | 'secondary' | 'success' | 'warning' | 'danger' | undefined;
+};
+
+// orderCard
 export type OrderProductCardProps = {
-  orderProduct: OrderItem;
+  item: OrderItem;
+  detailed: boolean;
 };
 
 // orderList
