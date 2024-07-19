@@ -12,15 +12,18 @@ import { Formik, Form, Field } from 'formik';
 // Actions
 import { updatePassword } from '@actions/actionsUser';
 
+// subProviders
+import { UserContext } from '@subProviders/userProvider';
+
 // Utils
 import { showToast } from "@utils/helpers";
-import { UserContext } from '@subProviders/userProvider';
 
 // Interfaces
 import { PasswordValuesProps } from "@interfaces/user";
 
 const PasswordForm = () => {
   const userStore = useContext(UserContext);
+  if (!userStore.data) return;
   const { update } = userStore;
 
   return (

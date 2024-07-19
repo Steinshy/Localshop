@@ -12,8 +12,10 @@ import { Formik, Form, Field } from 'formik';
 // Actions
 import { updateProfile } from '@actions/actionsUser';
 
-// Utils
+// SubProviders
 import { UserContext } from '@subProviders/userProvider';
+
+// Utils
 import { capitalize, showToast } from "@utils/helpers";
 
 // Interfaces
