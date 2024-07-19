@@ -4,14 +4,17 @@
 import { FC, useState, useContext } from 'react';
 
 // NextUI
-import { Button, Input, Spinner } from '@nextui-org/react';
+import { Button, Spinner, Input } from '@nextui-org/react';
+//
+import { FaSearch } from 'react-icons/fa';
 
 // Components
 import AddressCard from '@components/user/address/addressCard';
 import AddressModal from '@components/user/address/addressModal';
+import AddressSearch from '@components/user/address/addressSearch';
 
-// Icons
-import { FaSearch } from 'react-icons/fa';
+// subProviders
+import { CartContext } from '@subProviders/cartProvider';
 
 // Interfaces
 import { AddressListProps, AddressResponse, AddressValuesProps } from '@interfaces/userAddress';
@@ -23,34 +26,32 @@ import { getAddresses, CreateAddress, UpdateAddress, RemoveAddress } from '@acti
 
 // Utils
 import { showToast } from '@utils/helpers';
-import { CartContext } from '@subProviders/cartProvider';
 
 const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [], pageInfos, pageError, endContent, title = 'Addresses' }) => {
   const cartStore = useContext(CartContext);
   const { shipping, billing, setShipping, setBilling } = cartStore;
+
   const [addresses, setAddresses] = useState<AddressResponse[]>(items),
-        [isFetching, setIsFetching] = useState<boolean>(false),
-        [query, setQuery] = useState<string>(''),
-        [pagy, setPagy] = useState<PagyProps>(pageInfos || { page: 1, pages: 1 }),
-        [error, setError] = useState<Error | ErrorObj | string | undefined>(pageError);
+    [isFetching, setIsFetching] = useState<boolean>(false),
+    [query, setQuery] = useState<string>(''),
+    [pagy, setPagy] = useState<PagyProps>(pageInfos || { page: 1, pages: 1 }),
+    [error, setError] = useState<Error | ErrorObj | string | undefined>(pageError);
 
   const fetch = (page?: number, query?: string) => {
     const apiFetch = async () => {
       const { data, pagy, error } = await getAddresses(page, query);
       setIsFetching(false);
-
       if (error) {
         setError(error);
         return showToast(error.message, 'error');
       }
 
-      setAddresses(data);
-      setPagy(pagy);
-    }
+      setAddresses(data), setPagy(pagy);
+    };
 
     setIsFetching(true);
     void apiFetch();
-  }
+  };
 
   const handleCreate = async (newAddress: AddressValuesProps) => {
     const { error } = await CreateAddress(newAddress);
@@ -83,11 +84,6 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
     if (billing && billing.id === id) setBilling(undefined);
   };
 
-  const handleSearch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    void fetch(1, query);
-  };
-
   const handleClear = () => {
     setQuery('');
     void fetch(1);
@@ -95,74 +91,48 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
 
   const handlePreviousPage = () => {
     void fetch(pagy.page - 1, query);
-  }
+  };
 
   const handleNextPage = () => {
     void fetch(pagy.page + 1, query);
-  }
+  };
 
   return (
     <>
       <div className='flex justify-between items-center gap-2'>
         <h2 className='text-2xl'>{title}</h2>
-        {/* Search form */}
-        <form onSubmit={handleSearch} className='flex flex-grow justify-center items-center'>
-          <Input
-            aria-label='Search'
-            placeholder='Type...'
-            type='search'
-            value={query}
-            onValueChange={setQuery}
-            onClear={handleClear}
-            startContent={<FaSearch />}
-            size='md'
-            className='max-w-screen-2xl'
-            isDisabled={isFetching}
-            isClearable
-          />
-        </form>
+        {/* Address Search */}
+        <AddressSearch query={query} setQuery={setQuery} fetch={fetch} handleClear={handleClear} isFetching={isFetching} />
+         {/* Search form */}
         <AddressModal addresses={addresses} handleCreate={handleCreate} handleUpdate={handleUpdate} />
         {endContent}
       </div>
-      
+
       <div className='flex flex-col flex-grow'>
         {addresses.length > 0 && !error && !isFetching ? (
           <div className='grid grid-cols-1 gap-3'>
             {addresses.map((address) => (
-              <AddressCard
-                key={`address_${address.id}`}
-                addresses={addresses}
-                address={address}
-                selectable={selectable}
-                type={type}
-                handleCreate={handleCreate}
-                handleUpdate={handleUpdate}
-                handleRemove={handleRemove}
-              />
+              <AddressCard key={`address_${address.id}`} addresses={addresses} address={address} selectable={selectable} type={type} handleCreate={handleCreate} handleUpdate={handleUpdate} handleRemove={handleRemove} />
             ))}
           </div>
         ) : (
           <div className='flex flex-col flex-grow items-center justify-center'>
-            {isFetching ?
-              <Spinner color='primary' size='lg' />
-            :
-              <p className='text-md break-all'>
-                {error ?
-                  'There was an error retrieving your addresses'
-                :
-                  query.length > 0 ? `No results for ${query}` : 'No addresses has been added yet'
-                }
-              </p>
-            }
+            {isFetching ? <Spinner color='primary' size='lg' /> : <p className='text-md break-all'>{error ? 'There was an error retrieving your addresses' : query.length > 0 ? `No results for ${query}` : 'No addresses has been added yet'}</p>}
           </div>
         )}
       </div>
-      
+
       {/* Pagination */}
       <div className='flex justify-between items-center'>
-        <Button size='sm' isDisabled={pagy.page <= 1 || isFetching} onPress={handlePreviousPage}>Previous</Button>
-        <p className='text-sm text-foreground/50'>Displaying page {pagy.page} of {pagy.pages}</p>
-        <Button size='sm' isDisabled={pagy.page === pagy.pages || isFetching} onPress={handleNextPage}>Next</Button>
+        <Button size='sm' isDisabled={pagy.page <= 1 || isFetching} onPress={handlePreviousPage}>
+          Previous
+        </Button>
+        <p className='text-sm text-foreground/50'>
+          Displaying page {pagy.page} of {pagy.pages}
+        </p>
+        <Button size='sm' isDisabled={pagy.page === pagy.pages || isFetching} onPress={handleNextPage}>
+          Next
+        </Button>
       </div>
     </>
   );

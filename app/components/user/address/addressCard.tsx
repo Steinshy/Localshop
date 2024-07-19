@@ -13,7 +13,7 @@ import { FaLocationDot } from 'react-icons/fa6';
 // Components
 import AddressModal from '@components/user/address/addressModal';
 
-// Utils
+// subProviders
 import { CartContext } from '@subProviders/cartProvider';
 
 // Actions
@@ -23,87 +23,76 @@ import { addAddress, removeAddress } from '@actions/actionsCart';
 import { AddressCardProps } from '@interfaces/userAddress';
 import { showToast } from '@utils/helpers';
 
-const AddressCard: FC<AddressCardProps> = ({ addresses, address, handleCreate, handleUpdate, handleRemove,
-  selectable = false, type }) => {
+const AddressCard: FC<AddressCardProps> = ({ addresses, address, handleCreate, handleUpdate, handleRemove, selectable = false, type }) => {
   const { id, attributes } = address;
-  const { label, firstname, lastname, address:line, city, country, state, zip, phone,
-          default: addressDefault } = attributes;
+  const { label, firstname, lastname, address: line, city, country, state, zip, phone, default: addressDefault } = attributes;
 
   const cartStore = useContext(CartContext);
   const { shipping, billing, setShipping, setBilling } = cartStore;
-  
+
   const [selected, setSelected] = useState<boolean>(false);
 
   useEffect(() => {
-    const getSelected = () :boolean => {
-      if (!type) return false;
-
-      if (type === 'shipping') {
-        if (!shipping) return false;
-        return shipping.id === id;
-      }
-
-      if (type === 'billing') {
-        if (!billing) return false;
-        return billing.id === id;
-      }
-
-      return false;
-    }
+    const getSelected = (): boolean =>
+      type === 'shipping' ? shipping?.id === id : type === 'billing' ? billing?.id === id : false;
 
     setSelected(getSelected());
   }, [shipping, billing, id, type])
 
   const add = () => {
+    if (!type) return;
     const apiFetch = async () => {
-      if (!type) return;
       const { error } = await addAddress(id, type);
       if (error) return showToast(error.message, 'error');
 
-      if (type === 'shipping') setShipping(address);
-      if (type === 'billing') setBilling(address);
-    }
+      const newAddress = { ...address, type };
+      setShipping(newAddress.type === 'shipping' ? newAddress : shipping);
+      setBilling(newAddress.type === 'billing' ? newAddress : billing);
+    };
     void apiFetch();
-  }
+  };
 
   const remove = () => {
+    if (!type) return;
     const apiFetch = async () => {
-      if (!type) return;
       const { error } = await removeAddress(type);
       if (error) return showToast(error.message, 'error');
 
       if (type === 'shipping') setShipping(undefined);
       if (type === 'billing') setBilling(undefined);
-    }
+    };
     void apiFetch();
-  }
+  };
 
   const handleSelect = () => {
-    if (type === 'shipping') {
-      if (!shipping || shipping.id !== id) return add();
-      if (shipping && shipping.id === id) return remove();
+    if (!type || (type === 'shipping' && !shipping) || (type === 'billing' && !billing)) {
+      return add();
     }
-    if (type === 'billing') {
-      if (!billing || billing.id !== id) return add();
-      if (billing && billing.id === id) return remove();
+
+    if (shipping?.id === id) {
+      return remove();
+    }
+
+    if (billing?.id === id) {
+      return remove();
     }
   };
 
   return (
     <div className='relative'>
-      <Card
-        className={`border-2 w-full h-full ${selected ? 'border-primary' : 'border-transparent'}`}
-        isPressable={selectable}
-        onClick={selectable ? handleSelect : undefined}
-      >
+      <Card className={`border-2 w-full h-full ${selected ? 'border-primary' : 'border-transparent'}`} isPressable={selectable} onClick={selectable ? handleSelect : undefined}>
         <CardBody>
           <div className='flex items-center gap-2'>
             <FaLocationDot className='text-primary' />
             <h2 className='font-semibold'>{label}</h2>
           </div>
-          <p>{lastname} {firstname}</p>
+          <p>
+            {lastname} {firstname}
+          </p>
           <p>{line}</p>
-          <p>{zip} {city} {state} {country}</p>
+          <p>
+            {zip} {city} {state} {country}
+          </p>
           <p>{phone}</p>
         </CardBody>
       </Card>
