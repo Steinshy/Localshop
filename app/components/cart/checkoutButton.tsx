@@ -13,8 +13,10 @@ import { FaArrowRight } from 'react-icons/fa';
 // NextUI
 import { Button } from '@nextui-org/react';
 
-// Utils
+// subProviders
 import { CartContext } from '@subProviders/cartProvider';
+
+// Utils
 import { showToast } from '@utils/helpers';
 
 // Actions

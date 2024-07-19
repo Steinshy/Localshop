@@ -14,7 +14,7 @@ import CartClearBtn from '@components/cart/cartClearBtn';
 // Interfaces
 import { CartProductProps } from '@interfaces/cart';
 
-// Utils
+// subProviders
 import { CartContext } from '@subProviders/cartProvider'
 
 // Actions
@@ -22,12 +22,14 @@ import { deleteCartItem, updateQuantity } from '@actions/actionsCart';
 
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   const cartStore = useContext(CartContext);
+  if (!cartStore.data) return;
+  
   const { quantity, price, product } = cartItem;
   const { data: { id, attributes: { title, thumbnail } } } = product;
   const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
 
   // Context - CartItem - Used to refresh after sync
-  if (!cartStore.data) return;
+
   const { data: { attributes: { items } } } = cartStore;
   const ContextCartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === id);
 
@@ -55,7 +57,7 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
   return (
     <Card className='flex flex-col gap-2 w-full'>
       <div className='flex justify-end'>
-        <CartClearBtn id={id} cartStore={cartStore} />
+        <CartClearBtn id={id} />
       </div>
       <div className='text-lg text-center font-semibold'>{title}</div>
 

@@ -7,13 +7,13 @@ import { revalidateTag } from 'next/cache';
 import { PagyProps } from '@interfaces/general';
 import { ProductResponse } from '@interfaces/product';
 import { ErrorObj } from '@interfaces/httpUtils';
+import { CategoryProps } from '@interfaces/categories';
 
 // Utils
 import { handleError } from '@utils/fetchManager';
 
 // Index
 import { api } from '@actions/index';
-import { CategoryProps } from '@interfaces/categories';
 
 // Products - API - BestSellers
 export const getBestSellers = async () => {

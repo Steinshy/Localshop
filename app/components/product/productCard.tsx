@@ -18,33 +18,22 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { attributes } = product;
   const { slug, title, thumbnail, price, rating, stock, category } = attributes;
   const { url: image } = thumbnail;
-  const { data: { attributes: { slug:categorySlug } } } = category;
+  const { data: { attributes: { slug: categorySlug }}} = category;
 
   return (
     <article className='border-1 rounded-md shadow-md relative w-full h-full flex flex-col'>
-      {/* Chip */}
       <div className='absolute top-4 right-4 z-[11]'>
         <Link href={`/products/${categorySlug}/${slug}`}>
-          {stock > 50 ? (
-            <Chip color='danger' size='md'>New</Chip>
-          ) : stock < 10 && stock > 1 ? (
-            <Chip color='danger' size='md'>Low stock</Chip>
-          ) : stock < 2 && (
-            <Chip color='danger' size='md'>Last piece!</Chip>
-          )}
+          { stock > 50 ? ( <Chip color='danger' size='md'> New </Chip> )
+          : stock < 10 && stock > 1 ? (<Chip color='danger' size='md'> Low stock </Chip> )
+          : ( stock < 2 && ( <Chip color='danger' size='md'> Last piece! </Chip> ))
+          }
         </Link>
       </div>
       {/* Image */}
       <div className='flex flex-col'>
         <Link href={`/products/${categorySlug}/${slug}`}>
-          <Image
-            removeWrapper
-            radius='none'
-            shadow='none'
-            className='bg-default/20 w-full h-[250px] object-cover'
-            alt={title}
-            src={image}
-          />
+          <Image removeWrapper radius='none' shadow='none' className='bg-default/20 w-full h-[250px] object-cover' alt={title} src={image} />
         </Link>
       </div>
       {/* Infos */}

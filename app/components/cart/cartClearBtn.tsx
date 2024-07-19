@@ -1,5 +1,5 @@
 // React
-import { FC, useCallback } from 'react';
+import { FC, useContext, useCallback } from 'react';
 
 // NextUI
 import { Button } from '@nextui-org/react';
@@ -7,13 +7,19 @@ import { Button } from '@nextui-org/react';
 // Icons
 import { FaTrash } from 'react-icons/fa';
 
+// subProviders
+import { CartContext } from '@subProviders/cartProvider'
+
 // Interfaces
 import { CartClearBtnProps } from '@interfaces/cart';
 
 // Actions
 import { deleteCart, deleteCartItem } from '@actions/actionsCart';
 
-const CartClearBtn: FC<CartClearBtnProps> = ({ id, cartStore }) => {
+const CartClearBtn: FC<CartClearBtnProps> = ({ id }) => {
+  const cartStore = useContext(CartContext);
+  if (!cartStore.data) return;
+
   const handleDeleteCart = useCallback((e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
       const apiFetch = async () => {

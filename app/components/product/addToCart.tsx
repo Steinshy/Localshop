@@ -17,34 +17,27 @@ import { addItemToCart } from '@actions/actionsCart';
 
 // Interface
 import { AddToCartProps } from '@interfaces/cart';
+import { ProductResponse } from '@interfaces/product';
 
-// Utils
+// subProviders
 import { CartContext } from '@subProviders/cartProvider';
 import { UserContext } from '@subProviders/userProvider';
+
+// Utils
 import { showToast } from '@utils/helpers';
-import { ProductResponse } from '@interfaces/product';
-import { CartResponse } from '@interfaces/cart';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => {
-  const router = useRouter(),
-    userStore = useContext(UserContext),
-    cartStore = useContext(CartContext);
-
-  // Cart & User
+  const cartStore = useContext(CartContext);
   if (!cartStore.data) return;
+  const userStore = useContext(UserContext),
+    router = useRouter();
   const { isLogged } = userStore;
-  const { data: cart } = cartStore;
-  const { items } = cart?.attributes || { items: [] };
-
-  // localProduct
+  const { items } = cartStore.data?.attributes || { items: [] };
   const { id: product_id } = localProduct;
-  const cartItem = items.find(
-    ({ product: cartProduct }: { product: { data: ProductResponse } }) => cartProduct.data.id.toString() === product_id
-  );
+  const cartItem = items.find(({ product: cartProduct }: { product: { data: ProductResponse } }) => cartProduct.data.id.toString() === product_id);
   const cartItemsQuantity = cartItem ? cartItem.quantity : 0;
 
-  const handleAddItem = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
+  const handleAddItem = useCallback((e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
       if (cartItemsQuantity > 0) return router.push('/order');
 
@@ -53,7 +46,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
         if (error) return showToast(error.message, 'error');
 
         cartStore.update(data);
-        showToast(`${localProduct.attributes.title} has been added to your cart!`, 'success');
+        showToast(`${localProduct.attributes.title}\nHas been added to your cart!`, 'success');
       };
 
       void apiFetch();
@@ -67,15 +60,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
     children: cartItemsQuantity > 0 ? 'Go to Cart' : 'Add to Cart',
   };
 
-  const buttonContent = isIconOnly ? (
-    cartItemsQuantity > 0 ? (
-      <FaArrowRight className='text-lg text-white' />
-    ) : (
-      <FaShoppingCart className='text-lg' />
-    )
-  ) : (
-    btnOptions.children
-  );
+  const buttonContent = isIconOnly ? cartItemsQuantity > 0 ? <FaArrowRight className='text-lg text-white' /> : <FaShoppingCart className='text-lg' /> : btnOptions.children;
 
   return isLogged() ? (
     <Button

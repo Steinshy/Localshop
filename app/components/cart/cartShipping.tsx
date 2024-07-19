@@ -9,7 +9,7 @@ import { Button } from "@nextui-org/react";
 // Components
 import AddressList from "@components/user/address/addressList";
 
-// Utils
+// subProviders
 import { CartContext } from '@subProviders/cartProvider';
 
 // Icons

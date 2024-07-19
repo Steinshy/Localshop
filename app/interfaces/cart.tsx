@@ -1,7 +1,6 @@
 // Interface
 import { DiscountResponse } from '@interfaces/discount';
 import { ProductResponse } from '@interfaces/product';
-import { CartContextType } from '@interfaces/subProviders';
 import { AddressResponse } from '@interfaces/userAddress';
 
 // actionsCart | dataCart | Interfaces => cart | cartProvider | subProviders
@@ -56,7 +55,6 @@ export type CartProductProps = {
 // cartClearBtn
 export type CartClearBtnProps = {
   id?: string;
-  cartStore: CartContextType;
 };
 
 // checkoutButton

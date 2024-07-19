@@ -14,8 +14,11 @@ import { FaRegThumbsUp, FaRegThumbsDown } from 'react-icons/fa';
 import { ProductReviewProps } from '@interfaces/reviews';
 
 const ProductReview: FC<ProductReviewProps> = ({ review }) => {
+  if (!review) return null;
+
   const { attributes: { body, rating, author } } = review;
   const { data: { attributes: { firstname, lastname, avatar: { small } } } } = author;
+  const thumbsClasses = `text-${rating > 3 ? 'green-500' : 'red-500'}`;
 
   return (
     <Card className='w-full'>
@@ -23,15 +26,13 @@ const ProductReview: FC<ProductReviewProps> = ({ review }) => {
         <div className='flex items-center gap-3'>
           <Avatar isBordered color='primary' size='sm' src={small} />
           <div className='flex flex-col'>
-            {firstname} {lastname}
+            <span className='text-sm font-semibold'>
+              {firstname} {lastname}
+            </span>
             <ReviewsStars rating={rating} />
           </div>
         </div>
-        {rating > 3 ? 
-          <FaRegThumbsUp className='text-green-500' />
-        : 
-          <FaRegThumbsDown className='text-red-500' />
-        }
+        <FaRegThumbsUp className={`${thumbsClasses}`} />
       </CardHeader>
       <Divider />
       <CardBody>
