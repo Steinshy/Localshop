@@ -4,16 +4,14 @@
 import { useState, useEffect, FC, useCallback } from 'react';
 
 // NextUI
-import { Input, Spinner } from '@nextui-org/react';
+import { Spinner } from '@nextui-org/react';
 
 // NextJS
 import { useSearchParams } from 'next/navigation';
 
 // Components
 import ProductCard from '@components/product/productCard';
-
-// Icons
-import { FaSearch } from 'react-icons/fa';
+import ProductsSearch from '@components/products/productsSearch';
 
 // Interfaces
 import { PagyProps } from '@interfaces/general';
@@ -22,9 +20,6 @@ import { ProductsListProp } from '@interfaces/products';
 
 // Actions
 import { getProducts } from '@actions/actionsProducts';
-
-// Utils
-import { capitalize, unslug } from '@utils/helpers';
 
 const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
   const searchParams = useSearchParams(),
@@ -50,7 +45,7 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
     [isFetching, localPagy.pages, searchParams, categorySlug]
   );
 
-  const updateQueryURL = (value?: string) => {
+  const updateQueryURL = (value?: string) =>  {
     value = value || undefined;
     if (value !== undefined) {
       const params = new URLSearchParams(searchParams.toString());
@@ -89,23 +84,15 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
   return (
     <>
       {/* Search form */}
-      <form onSubmit={handleSearch} className='flex justify-center items-center px-2 mb-4'>
-        <Input
-          aria-label='Search'
-          placeholder={`Search a product${categorySlug ? ` in ${capitalize(unslug(categorySlug))}` : ''}...`}
-          type='search'
-          value={query}
-          onValueChange={setQuery}
-          onClear={handleClear}
-          startContent={<FaSearch />}
-          size='md'
-          className='max-w-screen-2xl'
-          isDisabled={isFetching}
-          isClearable
-        />
-      </form>
+      <ProductsSearch
+        query={query}
+        setQuery={setQuery}
+        handleSearch={handleSearch}
+        handleClear={handleClear}
+        isFetching={isFetching}
+        categorySlug={categorySlug} />
 
-      {/* Products list */}
+      {/* Products List */}
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 px-2 pb-4'>
         {localProducts.map((product) => (
           <ProductCard key={`product_${product.id}`} product={product} />
