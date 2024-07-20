@@ -14,6 +14,7 @@ import { handleError } from '@utils/fetchManager';
 
 // Index
 import { api } from '@actions/index';
+import { PreviouslyOrderedResponse } from '@interfaces/cart';
 
 // Products - API - BestSellers
 export const getBestSellers = async () => {
@@ -103,5 +104,19 @@ export const getProduct = async (id: string) => {
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
     return { data: {} as ProductResponse, error };
+  }
+};
+
+// Product => PreviouslyOrdered - API - Get (collection)
+export const getPreviouslyOrdered = async (id: string) => {
+  revalidateTag('user');
+  try {
+    const data = await api.get<PreviouslyOrderedResponse>(`/products/${id}/previously_ordered`, {
+      next: { tags: ['user'] },
+    });
+    return { data };
+  } catch (e) {
+    const error = handleError(e as Error | ErrorObj | string);
+    return { data: {} as PreviouslyOrderedResponse, error };
   }
 };

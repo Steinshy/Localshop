@@ -31,6 +31,22 @@ export type CartResponse = {
   };
 };
 
+// To move
+export type PreviouslyOrderedResponse = {
+  item: PreviouslyOrderedItem;
+  infos: PreviouslyOrderedInfos;
+}
+export type PreviouslyOrderedInfos = {
+  orderId: string;
+  count: number;
+  createdAt: string;
+}
+export type PreviouslyOrderedItem = {
+  data: {
+    attributes: CartItemProps
+  }
+}
+
 //  dataCart | Interfaces => cart
 export type CartItemProps = {
   id: number;

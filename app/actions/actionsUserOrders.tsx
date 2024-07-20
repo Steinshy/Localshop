@@ -40,17 +40,3 @@ export const getOrder = async (id: string) => {
     return { data: {} as OrderResponse, error };
   }
 };
-
-// Product => PreviouslyOrdered - API - Get (collection)
-export const getPreviouslyOrdered = async (id: string) => {
-  revalidateTag('user');
-  try {
-    const { data } = await api.get<{ data: OrderResponse[] }>(`/orders/previously_ordered?product_id=${id}`, {
-      next: { tags: ['user'] },
-    });
-    return { data };
-  } catch (e) {
-    const error = handleError(e as Error | ErrorObj | string);
-    return { data: {} as OrderResponse, error };
-  }
-};
