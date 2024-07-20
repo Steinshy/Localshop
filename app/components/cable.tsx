@@ -13,9 +13,11 @@ import { UserContext } from '@subProviders/userProvider';
 // Interfaces
 import { ReceivedData } from '@interfaces/httpUtils';
 const CableComponent = () => {
+  const isProd = process.env.NODE_ENV === 'production';
+  const cableURL = isProd ? 'wss://api.sandfox.ovh/cable' : 'ws://api.localshop.test:3005/cable';
   const userStore = useContext(UserContext),
     cartStore = useContext(CartContext),
-    cable: Cable = createConsumer('ws://api.localshop.test:3005/cable');
+    cable: Cable = createConsumer(cableURL);
 
   const { isLogged, refresh: userRefresh } = userStore,
     { refresh: cartRefresh } = cartStore;
