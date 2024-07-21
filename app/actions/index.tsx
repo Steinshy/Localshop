@@ -15,7 +15,7 @@ export function setCookieLogin(userID: number) {
     httpOnly: true,
     path: '/',
     sameSite: 'lax',
-    domain: isProd ? 'localshop-api.sandfox.ovh, localshop.sandfox.ovh' : '.localshop.test',
+    domain: isProd ? '.sandfox.ovh' : '.localshop.test',
     secure: isProd,
     maxAge: 7 * 24 * 60 * 60, // 7 days
   });
@@ -28,7 +28,7 @@ export function cookiesLogout() {
     httpOnly: true,
     path: '/',
     sameSite: 'lax',
-    domain: isProd ? 'localshop-api.sandfox.ovh, localshop.sandfox.ovh' : '.localshop.test',
+    domain: isProd ? '.sandfox.ovh' : '.localshop.test',
     secure: isProd,
     maxAge: -1,
   });
