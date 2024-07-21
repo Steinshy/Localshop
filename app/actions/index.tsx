@@ -8,10 +8,10 @@ const isProd = process.env.NODE_ENV === 'production';
 export const base_url = isProd ? 'https://localshop-api.sandfox.ovh/v1' : 'http://api.localshop.test:3005/v1';
 export const api = new FetchManager(base_url);
 
-export function setCookieLogin(userID: number) {
+export function setCookieLogin(response: string) {
   cookies().set({
-    name: 'user',
-    value: userID.toString(),
+    name: 'localshop_user',
+    value: response,
     httpOnly: true,
     path: '/',
     sameSite: 'lax',
@@ -23,7 +23,7 @@ export function setCookieLogin(userID: number) {
 
 export function cookiesLogout() {
   cookies().set({
-    name: 'user',
+    name: 'localshop_user',
     value: '',
     httpOnly: true,
     path: '/',

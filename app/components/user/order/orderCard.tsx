@@ -41,7 +41,7 @@ const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
   };
 
   return (
-    <Card className='border-2 w-full h-full'>
+    <Card className='border-2 w-full'>
       <CardHeader className='flex items-center justify-between bg-gray-100'>
         <div className='flex justify-center items-center gap-2'>
           <p className='font-semibold'>#{id}</p>

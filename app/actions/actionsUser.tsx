@@ -27,7 +27,7 @@ export const getUser = async () => {
 // User => API - Login
 export const userLogin = async () => {
   try {
-    const response = await api.get<number>('/user_login');
+    const response = await api.get<string>('/user_login');
     setCookieLogin(response);
     return {};
   } catch (e) {
