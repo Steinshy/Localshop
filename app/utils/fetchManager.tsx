@@ -39,6 +39,7 @@ export class FetchManager {
       credentials: 'include',
     };
 
+    console.log(`endpoint : ${endpoint}`);
     console.log('fetch Options :');
     console.log(fetchOptions.headers);
 

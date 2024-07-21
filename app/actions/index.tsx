@@ -5,7 +5,7 @@ import { cookies } from 'next/headers';
 import { FetchManager } from '@utils/fetchManager';
 
 const isProd = process.env.NODE_ENV === 'production';
-export const base_url = isProd ? 'http://api.sandfox.ovh/v1' : 'http://api.localshop.test:3005/v1';
+export const base_url = isProd ? 'https://api.sandfox.ovh/v1' : 'http://api.localshop.test:3005/v1';
 export const api = new FetchManager(base_url);
 
 export function setCookieLogin(userID: number) {

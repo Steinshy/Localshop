@@ -16,7 +16,7 @@ import { api, setCookieLogin, cookiesLogout } from '@actions/index';
 // User => API - Get
 export const getUser = async () => {
   try {
-    const { data } = await api.get<{ data: UserResponse }>('/user', { next: { tags: ['user'] } });
+    const { data } = await api.get<{ data: UserResponse }>('/user');
     return { data };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
@@ -28,8 +28,8 @@ export const getUser = async () => {
 export const userLogin = async () => {
   try {
     console.log('user login...');
-    const { userID } = await api.get<{ userID: number }>('/user_login');
-    setCookieLogin(userID);
+    const response = await api.get<number>('/user_login');
+    setCookieLogin(response);
     return {};
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
@@ -47,9 +47,7 @@ export const userLogout = () => {
 // User => API - UpdateAvatar
 export const updateAvatar = async (formData: FormData) => {
   try {
-    const { data } = await api.post<{ data: UserResponse }>('/user/update_picture', formData, {
-      next: { tags: ['user'] },
-    });
+    const { data } = await api.post<{ data: UserResponse }>('/user/update_picture', formData);
     return { data };
   } catch (e) {
     const error = handleError(e as Error | ErrorObj | string);
@@ -62,10 +60,7 @@ export const updateProfile = async (profileData: ProfileValuesProps) => {
   try {
     const { data } = await api.patch<{ data: UserResponse }>(
       '/user/update_profile',
-      JSON.stringify({ user: profileData }),
-      {
-        next: { tags: ['user'] },
-      }
+      JSON.stringify({ user: profileData })
     );
     return { data };
   } catch (e) {
@@ -79,10 +74,7 @@ export const updatePassword = async (passwordData: PasswordValuesProps) => {
   try {
     const { data } = await api.patch<{ data: UserResponse }>(
       '/user/update_password',
-      JSON.stringify({ user: passwordData }),
-      {
-        next: { tags: ['user'] },
-      }
+      JSON.stringify({ user: passwordData })
     );
     return { data };
   } catch (e) {
