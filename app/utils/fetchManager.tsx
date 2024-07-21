@@ -29,6 +29,8 @@ export class FetchManager {
       };
     }
 
+    console.log(cookies().toString());
+
     const fetchOptions: RequestInit = {
       method,
       headers: {
