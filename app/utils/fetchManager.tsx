@@ -29,8 +29,6 @@ export class FetchManager {
       };
     }
 
-    console.log(cookies().toString());
-
     const fetchOptions: RequestInit = {
       method,
       headers: {
@@ -40,6 +38,8 @@ export class FetchManager {
       body: options?.body || null,
       credentials: 'include',
     };
+
+    console.log(fetchOptions.headers);
 
     const response = await fetch(url, fetchOptions);
     if (!response.ok) {
