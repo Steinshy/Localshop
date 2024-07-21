@@ -39,10 +39,6 @@ export class FetchManager {
       credentials: 'include',
     };
 
-    console.log(`endpoint : ${endpoint}`);
-    console.log('fetch Options :');
-    console.log(fetchOptions.headers);
-
     const response = await fetch(url, fetchOptions);
     if (!response.ok) {
       throw (await response.json()) as ErrorObj;
