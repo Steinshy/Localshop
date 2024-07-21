@@ -1,3 +1,5 @@
+import { PreviouslyOrderedInfos, PreviouslyOrderedItem } from "./cart";
+
 // actionsProduct | productList | dataProduct | Interfaces => cart | product | products | userOrders
 export type ProductResponse = {
   id: string;
@@ -63,5 +65,6 @@ export type ProductImagesProps = {
 
 // previouslyOrdered
 export type PreviouslyOrderedProps = {
-  productId: number;
+  item: PreviouslyOrderedItem;
+  infos: PreviouslyOrderedInfos;
 };

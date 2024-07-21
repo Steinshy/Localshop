@@ -1,13 +1,13 @@
 'use client';
 
 // React
-import { FC, useContext, useCallback } from 'react';
+import { FC, useContext, useState } from 'react';
 
 // NextJS
 import { useRouter } from 'next/navigation';
 
 // NextUI
-import { Button, ButtonProps } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 
 // Icon
 import { FaShoppingCart, FaArrowRight } from 'react-icons/fa';
@@ -27,56 +27,51 @@ import { UserContext } from '@subProviders/userProvider';
 import { showToast } from '@utils/helpers';
 
 const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => {
-  const cartStore = useContext(CartContext);
-  if (!cartStore.data) return;
-  const userStore = useContext(UserContext),
-    router = useRouter();
-  const { isLogged } = userStore;
+  const cartStore = useContext(CartContext), userStore = useContext(UserContext), router = useRouter();
+  if (!cartStore.data || !userStore.isLogged) return null;
   const { items } = cartStore.data?.attributes || { items: [] };
-  const { id: product_id } = localProduct;
-  const cartItem = items.find(({ product: cartProduct }: { product: { data: ProductResponse } }) => cartProduct.data.id.toString() === product_id);
+  const cartItem = items.find(({ product: cartProduct }: { product: { data: ProductResponse } }) => cartProduct.data.id === localProduct.id);
   const cartItemsQuantity = cartItem ? cartItem.quantity : 0;
 
-  const handleAddItem = useCallback((e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-      if (cartItemsQuantity > 0) return router.push('/order');
+  const [isFetching, setItFetching] = useState<boolean>(false);
 
-      const apiFetch = async () => {
-        const { data, error } = await addItemToCart(product_id);
-        if (error) return showToast(error.message, 'error');
+  const handleAddItem = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (cartItemsQuantity > 0) return router.push('/order');
 
-        cartStore.update(data);
-        showToast(`${localProduct.attributes.title}\nHas been added to your cart!`, 'success');
-      };
+    const apiFetch = async () => {
+      const { data, error } = await addItemToCart(localProduct.id);
+      setItFetching(false);
+      if (error) return showToast(error.message, 'error');
 
-      void apiFetch();
-    },
-    [localProduct, cartItemsQuantity, product_id, router, cartStore]
-  );
+      cartStore.update(data);
+      showToast(`${localProduct.attributes.title}\nHas been added to your cart!`, 'success');
+    };
 
-  const btnOptions: ButtonProps = {
-    color: cartItemsQuantity > 0 ? 'success' : 'primary',
-    startContent: cartItemsQuantity > 0 && !isIconOnly && <FaArrowRight className='text-lg text-white' />,
-    children: cartItemsQuantity > 0 ? 'Go to Cart' : 'Add to Cart',
+    setItFetching(true);
+    void apiFetch();
   };
 
-  const buttonContent = isIconOnly ? cartItemsQuantity > 0 ? <FaArrowRight className='text-lg text-white' /> : <FaShoppingCart className='text-lg' /> : btnOptions.children;
-
-  return isLogged() ? (
+  return (
     <Button
-      {...btnOptions}
+      isLoading={isFetching}
       variant='solid'
+      color={cartItemsQuantity > 0 ? 'success' : 'primary'}
       size={isIconOnly ? 'sm' : 'md'}
       radius='sm'
       onClick={(e) => handleAddItem(e)}
       isIconOnly={isIconOnly}
-      startContent={cartItemsQuantity > 0 ? null : isIconOnly ? null : <FaShoppingCart className='text-lg' />}
-      endContent={cartItemsQuantity > 0 ? isIconOnly ? null : <FaArrowRight className='text-lg text-white' /> : null}
+      startContent={(cartItemsQuantity < 1 && !isIconOnly && !isFetching) && <FaShoppingCart className='text-lg' />}
+      endContent={(cartItemsQuantity > 0  && !isIconOnly && !isFetching) && <FaArrowRight className='text-lg' />}
       className={cartItemsQuantity > 0 ? 'text-white' : ''}
     >
-      {buttonContent}
+      {isIconOnly ? (
+        cartItemsQuantity > 0 ? <FaArrowRight className='text-lg text-white' /> : <FaShoppingCart className='text-lg' />
+      ) : (
+        cartItemsQuantity > 0 ? 'Go to Cart' : 'Add to Cart'
+      )}
     </Button>
-  ) : null;
+  );
 };
 
 export default AddToCart;

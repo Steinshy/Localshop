@@ -5,7 +5,7 @@ import { FC } from 'react';
 import type { Metadata } from 'next';
 
 // Actions
-import { getProduct } from '@actions/actionsProducts';
+import { getPreviouslyOrdered, getProduct } from '@actions/actionsProducts';
 import { getProductReviews } from '@actions/actionsReviews';
 
 // Components
@@ -27,17 +27,22 @@ export const generateMetadata = async ({ params }:ProductPageProps): Promise<Met
 }
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
-  const [product, reviews] = await Promise.all([getProduct(params.productSlug), getProductReviews(params.productSlug)]);
+  const [product, reviews, previouslyOrdered] = await Promise.all([getProduct(params.productSlug),
+                                                getProductReviews(params.productSlug),
+                                                getPreviouslyOrdered(params.productSlug)
+                                              ]);
   const { data: localProduct } = product;
   const { attributes: { id, title, description, price, thumbnail, images } } = localProduct;
   const { data: { reviews: { data: reviewsItems } } } = reviews;
+  const { data:previouslyOrderedData } = previouslyOrdered;
+  const { item, infos} = previouslyOrderedData;
 
   return product ? (
     <div className='max-w-screen-2xl mx-auto w-full p-4 mb-4'>
       <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center'>
         <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />
         <div className='flex flex-col gap-4'>
-          <PreviouslyOrdered productId={id} />
+          <PreviouslyOrdered item={item} infos={infos} />
           <h1 className='text-3xl font-semibold text-center sm:text-start'>{title}</h1>
           <p className='text-md text-foreground/75'>{description}</p>
           <p className='text-md font-semibold'>{price}€</p>

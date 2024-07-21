@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext } from 'react';
 
 // NextJS
 import Link from 'next/link';
@@ -12,40 +12,12 @@ import { Button, Card, CardBody } from '@nextui-org/react';
 // subProviders
 import { UserContext } from '@subProviders/userProvider';
 
-// Utils
-import { showToast } from '@utils/helpers';
-
-// Actions
-import { getPreviouslyOrdered } from '@actions/actionsProducts';
-
 // Interfaces
 import { PreviouslyOrderedProps } from '@interfaces/product';
-import { PreviouslyOrderedInfos, PreviouslyOrderedItem } from '@interfaces/cart';
 
-const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ productId }) => {
+const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ item, infos }) => {
   const userStore = useContext(UserContext);
-  const { isLogged } = userStore;
-  if (!isLogged()) return null;
-
-  const [item, setItem] = useState<PreviouslyOrderedItem>(),
-        [infos, setInfos] = useState<PreviouslyOrderedInfos>();
-
-  const handleGetOrders = () => {
-    const apiFetch = async () => {
-      const { data, error } = await getPreviouslyOrdered(productId.toString());
-      if (error) return showToast(error.message, 'error');
-      if (data.item && data.infos) {
-        setItem(data.item);
-        setInfos(data.infos);
-      }
-    };
-
-    void apiFetch();
-  };
-
-  useEffect(() => {
-    handleGetOrders();
-  }, [productId]);
+  if (!userStore.isLogged()) return null;
   
   return (
     (item && infos) &&
