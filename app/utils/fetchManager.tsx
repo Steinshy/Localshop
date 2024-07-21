@@ -39,6 +39,7 @@ export class FetchManager {
       credentials: 'include',
     };
 
+    console.log('fetch Options :');
     console.log(fetchOptions.headers);
 
     const response = await fetch(url, fetchOptions);

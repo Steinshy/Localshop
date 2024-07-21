@@ -9,6 +9,7 @@ export const base_url = isProd ? 'http://api.sandfox.ovh/v1' : 'http://api.local
 export const api = new FetchManager(base_url);
 
 export function setCookieLogin(userID: number) {
+  console.log('set cookie...');
   cookies().set({
     name: 'user',
     value: userID.toString(),
