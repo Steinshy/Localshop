@@ -28,16 +28,14 @@ const CartDiscount: FC<CartDiscountProps> = () => {
   const cartStore = useContext(CartContext);
   if (!cartStore.data) return;
   const { update, data: { attributes: { totalPrice, coupon } } } = cartStore;
-  const { data: { attributes: { code, discount } } } = coupon || { data: { attributes: { code: undefined, discount: undefined } } };
 
-  const handleDeleteDiscount = useCallback(() => {
+  const handleDeleteDiscount = () => {
     const apiFetch = async () => {
-      const response = await deleteDiscount();
-      const { data, error } = response;
+      const { data, error } = await deleteDiscount();
       !error ? update(data) : showToast(error.message, 'error');
     };
     void apiFetch();
-  }, [update]);
+  };
 
   return (
     <>
@@ -54,7 +52,7 @@ const CartDiscount: FC<CartDiscountProps> = () => {
               if (error) return setFieldError('code', error.message);
               
               values.code = '';
-              cartStore.update(data);
+              update(data);
             };
         
             setSubmitting(true);
@@ -81,10 +79,10 @@ const CartDiscount: FC<CartDiscountProps> = () => {
         </Formik>
       </div>
 
-      {code && (
+      {coupon && (
         <div className='flex justify-center mb-4'>
           <Chip className='text-white' size='sm' color='secondary' variant='solid' onClose={handleDeleteDiscount}>
-            Coupon {code} with value of {discount > 0 ? discount : 0}% applied
+            Coupon {coupon.data.attributes.code} with value of {coupon.data.attributes.discount > 0 ? coupon.data.attributes.discount : 0}% applied
           </Chip>
         </div>
       )}

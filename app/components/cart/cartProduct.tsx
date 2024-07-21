@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 
 // NextUI
 import { Image, Input } from '@nextui-org/react';
@@ -21,24 +21,17 @@ import { CartContext } from '@subProviders/cartProvider'
 import { deleteCartItem, updateQuantity } from '@actions/actionsCart';
 
 const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
-  const cartStore = useContext(CartContext);
+  const cartStore = useContext(CartContext),
+        [isFetching, setIsFetching] = useState<boolean>(false);
   if (!cartStore.data) return;
   
   const { quantity, price, product } = cartItem;
   const { data: { id, attributes: { title, thumbnail } } } = product;
-  const [currentQuantity, setCurrentQuantity] = useState<number>(quantity);
-
-  // Context - CartItem - Used to refresh after sync
-
-  const { data: { attributes: { items } } } = cartStore;
-  const ContextCartItem = items.find(({ product: cartProduct }) => cartProduct.data.id.toString() === id);
-
-  useEffect(() => {
-    if(ContextCartItem?.quantity) setCurrentQuantity(ContextCartItem?.quantity);
-  }, [ContextCartItem?.quantity]);
 
   const deleteItem = async () => {
+    setIsFetching(true);
     const { data, error } = await deleteCartItem(id);
+    setIsFetching(false);
     if (!error) cartStore.update(data);
   };
 
@@ -46,8 +39,9 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
     if (quantity <= 0) return void deleteItem();
 
     const apiCall = async () => {
-      setCurrentQuantity(quantity);
+      setIsFetching(true);
       const { data, error } = await updateQuantity(quantity, id);
+      setIsFetching(false);
       if (!error) cartStore.update(data);
     };
 
@@ -87,35 +81,37 @@ const CartProduct: FC<CartProductProps> = ({ cartItem }) => {
             size='sm'
             radius='sm'
             color='default'
-            value={currentQuantity.toString()}
+            value={quantity.toString()}
             startContent={
               <Button
-                onClick={() => handleQuantityChange(currentQuantity - 1)}
+                onClick={() => handleQuantityChange(quantity - 1)}
                 variant='solid'
                 size='sm'
                 color='default'
                 radius='sm'
                 className='w-[40px]'
                 style={{ minWidth: 0 }}
+                isDisabled={isFetching}
               >
                 -
               </Button>
             }
             endContent={
               <Button
-                onClick={() => handleQuantityChange(currentQuantity + 1)}
+                onClick={() => handleQuantityChange(quantity + 1)}
                 variant='solid'
                 size='sm'
                 color='default'
                 radius='sm'
                 className='w-[40px]'
                 style={{ minWidth: 0 }}
+                isDisabled={isFetching}
               >
                 +
               </Button>
             }
           />
-          <p className='text-lg text-foreground'>{price * currentQuantity}€</p>
+          <p className='text-lg text-foreground'>{price * quantity}€</p>
         </div>
       </CardBody>
     </Card>

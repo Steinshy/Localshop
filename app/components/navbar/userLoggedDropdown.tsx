@@ -83,12 +83,6 @@ const UserLoggedDropdown = () => {
             Orders
           </div>
         </DropdownItem>
-        <DropdownItem key='settings'>
-          <div className='flex items-center gap-2'>
-            <FaUserCog />
-            Settings
-          </div>
-        </DropdownItem>
         <DropdownItem key='logout'>
           <div className='flex items-center gap-2'>
             <FaSignOutAlt />

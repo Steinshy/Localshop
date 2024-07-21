@@ -10,7 +10,6 @@ import { redirect } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
 
 // Components
-// import CableComponent from '@components/cable';
 import Header from '@components/navbar/header';
 import Footer from '@components/layout/footer';
 import Breadcrumb from '@components/layout/breadCrumb';
@@ -61,7 +60,6 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
               <Breadcrumb requestUrl={requestUrl} />
             </div>
             {children}
-            {/* <CableComponent /> */}
           </Providers>
           <Footer categories={categoriesData} />
         </main>

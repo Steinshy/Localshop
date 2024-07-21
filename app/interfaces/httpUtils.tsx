@@ -17,8 +17,3 @@ export type ErrorObj = {
   items?: { [key: string]: string };
   status?: number;
 };
-
-// cable
-export type ReceivedData = {
-  type: 'user' | 'cart';
-};

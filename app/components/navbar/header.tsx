@@ -40,9 +40,6 @@ const Header: FC<HeaderProps> = ({ categories }) => {
   const [isCategoriesMenuOpen, setIsCategoriesMenuOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
-  // Mobile Menu
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-
   // Cart
   const cartTotal = cartStore?.data?.attributes?.totalItems || 0;
   const { isLogged } = userStore;
@@ -63,13 +60,15 @@ const Header: FC<HeaderProps> = ({ categories }) => {
     <div className='relative'>
       <Navbar isBlurred={false} isBordered isMenuOpen={isMobileMenuOpen} onMenuOpenChange={setIsMobileMenuOpen}>
         <NavbarContent className='hidden sm:flex' justify='start'>
-          <div className='text-lg flex justify-center items-center my-8'>
-            <div className='bg-white rounded-s-lg text-black p-1 relative flex items-center'>
-              L<FaAppleWhole className='text-md inline' />
-              CAL
+          <NextLink as={Link} href='/'>
+            <div className='text-lg flex justify-center items-center my-8'>
+              <div className='bg-white rounded-s-lg text-black p-1 relative flex items-center'>
+                L<FaAppleWhole className='text-md inline' />
+                CAL
+              </div>
+              <div className='bg-black text-white p-1 rounded-e-lg'>SHOP</div>
             </div>
-            <div className='bg-black text-white p-1 rounded-e-lg'>SHOP</div>
-          </div>
+          </NextLink>
         </NavbarContent>
 
         {/* MobileMenu */}

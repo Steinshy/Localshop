@@ -1,7 +1,7 @@
 'use client';
 
 // React
-import { FC, useState, createContext, useCallback } from 'react';
+import { FC, useState, createContext } from 'react';
 
 // Actions
 import { getCart } from '@actions/actionsCart';
@@ -18,17 +18,24 @@ export const useCart = (initialCart?: CartResponse) => {
     [shipping, setShipping] = useState<AddressResponse | undefined>(initialCart?.attributes.shipping?.data),
     [billing, setBilling] = useState<AddressResponse | undefined>(initialCart?.attributes.billing?.data);
 
-  const refresh = useCallback(async (): Promise<boolean> => {
+  const refresh = async () => {
     const { data, error } = await getCart();
     !error ? setCart(data) : setCart(undefined);
     return !error;
-  }, [setCart]);
+  };
 
-  const reset = useCallback(() => {
+  const update = (data: CartResponse) => {
+    setCart(prevCart => {
+      const newCart = { ...prevCart, ...data };
+      return newCart;
+    });
+  }
+
+  const reset = () => {
     setCart(undefined);
-  }, [setCart]);
+  }
 
-  return { data: cart, update: setCart, refresh, reset, shipping, setShipping, billing, setBilling };
+  return { data: cart, update, refresh, reset, shipping, setShipping, billing, setBilling };
 };
 
 export const CartProvider: FC<CartProviderProps> = ({ children, initialCart }) => {
@@ -39,7 +46,7 @@ export const CartProvider: FC<CartProviderProps> = ({ children, initialCart }) =
 
 export const CartContext = createContext<CartContextType>({
   data: {} as CartResponse,
-  update: () => {},
+  update: (data: CartResponse) => {},
   refresh: async () => {
     return await new Promise<boolean>((resolve) => {
       resolve(false);

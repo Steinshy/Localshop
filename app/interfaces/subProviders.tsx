@@ -9,7 +9,7 @@ import { AddressResponse } from './userAddress';
 // cartProvider | Interfaces => cart
 export type CartContextType = {
   data?: CartResponse;
-  update: Dispatch<SetStateAction<CartResponse|undefined>>;
+  update: (data: CartResponse) => void;
   refresh: () => Promise<boolean>;
   reset: () => void;
   shipping?: AddressResponse;
