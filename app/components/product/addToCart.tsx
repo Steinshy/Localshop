@@ -45,7 +45,7 @@ const AddToCart: FC<AddToCartProps> = ({ localProduct, isIconOnly = false }) => 
       if (error) return showToast(error.message, 'error');
 
       cartStore.update(data);
-      showToast(`${localProduct.attributes.title}\nHas been added to your cart!`, 'success');
+      showToast(`${localProduct.attributes.title}\nhas been added to your cart!`, 'success');
     };
 
     setItFetching(true);
