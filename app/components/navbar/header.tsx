@@ -120,7 +120,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                   size='md'
                   variant='ghost'
                   radius='md'
-                  className='hidden sm:flex'
+                  className='hidden md:flex'
                 >
                   Cart
                 </Button>
@@ -131,7 +131,7 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                   size='md'
                   variant='ghost'
                   radius='sm'
-                  className='flex sm:hidden'
+                  className='flex md:hidden'
                 >
                   <FaCartArrowDown className='text-2xl' />
                 </Button>

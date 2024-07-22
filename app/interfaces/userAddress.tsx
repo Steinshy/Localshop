@@ -59,7 +59,7 @@ export type AddressListProps = {
   title?: string;
   pageInfos?: PagyProps;
   pageError?: Error | ErrorObj | string;
-  endContent: ReactNode;
+  endContent?: ReactNode;
 };
 
 // addressCard

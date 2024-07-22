@@ -59,7 +59,7 @@ const UserLoggedDropdown = () => {
           startContent={<Avatar isBordered className='transition-transform' color='primary' size='sm' src={small} />}
           endContent={<FaChevronDown className={`transition-transform	${isUserMenuOpen ? 'rotate-180' : 'rotate-0'}`} />}
         >
-          <span className='hidden sm:inline'>
+          <span className='hidden md:inline'>
             {lastname} {firstname}
           </span>
         </Button>

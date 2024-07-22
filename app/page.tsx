@@ -47,44 +47,44 @@ const HomePage = async () => {
   return (
     <>
       <section
-        className='relative bg-cover bg-center -mt-[64px] min-h-screen flex flex-col items-center p-2'
+        className='relative bg-cover bg-center -mt-[64px] pt-[64px] min-h-screen flex flex-col items-center p-2'
         style={{ backgroundImage: `url(${BGImage.src})` }}
       >
         <div className='absolute inset-0 bg-black/50 backdrop-blur-sm' />
         <div className='relative text-white px-2 max-w-screen-lg mx-auto h-full flex flex-col flex-grow justify-center'>
-          <h1 className='text-8xl flex justify-center items-center my-8'>
+          <h1 className='text-5xl sm:text-6xl md:text-8xl flex justify-center items-center my-8'>
             <div className='bg-white text-black p-1 relative rounded-s-lg flex items-center'>
-              L<FaAppleWhole className='text-7xl inline' />
+              L<FaAppleWhole className='text-4xl sm:text-5xl md:text-7xl inline' />
               CAL
             </div>
             <div className='bg-black text-white p-1 rounded-e-lg'>SHOP</div>
           </h1>
 
           <section className='mt-8'>
-            <p className='text-4xl font-semibold mb-2 flex items-center underline'>
+            <p className='text-xl sm:text-2xl md:text-4xl font-semibold mb-2 flex items-center underline'>
               <FaHouse className='inline mr-3' /> Your{' '}
               <span className='ml-1 bg-white text-black p-1 rounded-s-lg'>Neighborhood</span>
               <span className='bg-black text-white p-1 rounded-e-lg'>Marketplace</span>
             </p>
-            <p className='text-xl pl-8'>
+            <p className='text-md sm:text-lg md:text-xl md:pl-8'>
               At LocalShop, we believe in the power of community and the importance of supporting local businesses. Our
               platform connects you with the best local products, handpicked from your neighborhood&apos;s finest
               artisans, farmers, and small business owners. By choosing LocalShop, you&apos;re not only getting
               high-quality, unique items but also contributing to the growth and sustainability of your local economy.
             </p>
-            <Button size='md' variant='flat' className='ml-8 mt-4 text-lg text-white' endContent={<FaArrowRightLong />}>
+            <Button size='md' variant='flat' className='md:ml-8 mt-4 text-md sm:text-lg text-white' endContent={<FaArrowRightLong />}>
               Read more about us
             </Button>
           </section>
         </div>
-        <div className='relative mb-8'>
+        <div className='relative mb-8 text-center'>
           <Button
             as={Link}
             href='#shopnow'
             size='md'
             color='primary'
             variant='solid'
-            className='ml-8 mt-4 text-lg text-white'
+            className='mt-4 text-lg text-white'
             endContent={<FaAppleWhole />}
           >
             Shop Now

@@ -11,7 +11,7 @@ export const metadata: Metadata = { title: 'Addresses' };
 
 const AddressesPage = async () => {
   const { data: addresses, pagy, error } = await getAddresses();
-  return <AddressList items={addresses} pageInfos={pagy} pageError={error} endContent={<></>} />;
+  return <AddressList items={addresses} pageInfos={pagy} pageError={error} />;
 };
 
 export default AddressesPage;
