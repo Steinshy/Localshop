@@ -65,16 +65,12 @@ const AddressCard: FC<AddressCardProps> = ({ addresses, address, handleCreate, h
   };
 
   const handleSelect = () => {
-    if (!type || (type === 'shipping' && !shipping) || (type === 'billing' && !billing)) {
+    if (!type) return;
+
+    if ((type === 'shipping' && shipping?.id === id) || (type === 'billing' && billing?.id === id)) {
+      return remove();
+    } else {
       return add();
-    }
-
-    if (shipping?.id === id) {
-      return remove();
-    }
-
-    if (billing?.id === id) {
-      return remove();
     }
   };
 

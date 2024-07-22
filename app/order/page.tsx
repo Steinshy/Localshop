@@ -25,7 +25,7 @@ const OrderPage = () => {
   const { data: { attributes: { items } } } = cartStore;
 
   return items.length ? (
-    <div className='flex flex-col sm:col-span-7 gap-2'>
+    <div className='flex flex-col flex-1 gap-2'>
       <div className='flex justify-between'>
         <Button color='default' variant='light' href='/products' as={Link} startContent={<FaArrowLeft className='text-foreground/50' />} className='text-foreground/50'>
           Continue shopping

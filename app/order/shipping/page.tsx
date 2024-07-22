@@ -18,7 +18,7 @@ const ShippingPage = async () => {
   const { data, pagy } = await getAddresses(1);
 
   return (
-    <div className="flex flex-col sm:col-span-7 gap-2">
+    <div className="flex flex-col flex-1 gap-2">
       <CartShipping items={data} pageInfos={pagy} />
     </div>
   );
