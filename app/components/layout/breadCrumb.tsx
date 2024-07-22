@@ -66,7 +66,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
   const [items, setItems] = useState<BreadcrumbItems>(buildItems());
 
   useEffect(() => {
-    if (pathName === requestUrl || !pathName) return;
+    if (!pathName || pathName === url) return;
     setUrl(pathName);
   }, [pathName, requestUrl]);
 
