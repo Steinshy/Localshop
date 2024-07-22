@@ -56,9 +56,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
         <main className='flex flex-col flex-grow'>
           <Providers initialUser={userData} initialCart={cartData}>
             <Header categories={categoriesData} />
-            <div className='max-w-screen-2xl mx-auto w-full'>
-              <Breadcrumb requestUrl={requestUrl} />
-            </div>
+            <Breadcrumb requestUrl={requestUrl} />
             {children}
           </Providers>
           <Footer categories={categoriesData} />

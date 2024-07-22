@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: 'Profile' };
 
 const ProfilePage = () => {
   return (
-    <div className='flex flex-col flex-grow'>
+    <>
       <h1 className='text-2xl mb-2'>Profile</h1>
 
       <div className='flex flex-col gap-2'>
@@ -18,7 +18,7 @@ const ProfilePage = () => {
         <GeneralForm />
         <PasswordForm />
       </div>
-    </div>
+    </>
   );
 };
 

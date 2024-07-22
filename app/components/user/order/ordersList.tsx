@@ -4,13 +4,11 @@
 import { FC, useState } from 'react';
 
 // NextUI
-import { Button, Input, Spinner } from '@nextui-org/react';
+import { Button, Spinner } from '@nextui-org/react';
 
 // Components
 import OrderCard from '@components/user/order/orderCard';
-
-// Icons
-import { FaSearch } from 'react-icons/fa';
+import SearchBar from '@components/searchBar';
 
 // Actions
 import { getOrders } from '@actions/actionsUserOrders';
@@ -25,10 +23,10 @@ import { showToast } from '@utils/helpers';
 
 const OrdersList: FC<OrderListProps> = ({ items = [], pageInfos = { page: 1, pages: 1 }, pageError }) => {
   const [orders, setOrders] = useState<OrderResponse[]>(items),
-    [isFetching, setIsFetching] = useState<boolean>(false),
-    [query, setQuery] = useState<string>(''),
-    [pagy, setPagy] = useState<PagyProps>(pageInfos),
-    [error, setError] = useState<Error | ErrorObj | string | undefined>(pageError);
+        [isFetching, setIsFetching] = useState<boolean>(false),
+        [query, setQuery] = useState<string>(''),
+        [pagy, setPagy] = useState<PagyProps>(pageInfos),
+        [error, setError] = useState<Error | ErrorObj | string | undefined>(pageError);
 
   const fetch = (page?: number, query?: string) => {
     const apiFetch = async () => {
@@ -48,16 +46,6 @@ const OrdersList: FC<OrderListProps> = ({ items = [], pageInfos = { page: 1, pag
     void apiFetch();
   };
 
-  const handleSearch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    void fetch(1, query);
-  };
-
-  const handleClear = () => {
-    setQuery('');
-    void fetch(1);
-  };
-
   const handlePreviousPage = () => {
     void fetch(pagy.page - 1, query);
   };
@@ -68,15 +56,16 @@ const OrdersList: FC<OrderListProps> = ({ items = [], pageInfos = { page: 1, pag
 
   return (
     <>
-      <div className='flex justify-between items-center'>
-        <h1 className='text-2xl'>Orders</h1>
-        {/* Search form */}
-        <form onSubmit={handleSearch} className='flex flex-grow justify-center items-center px-2'>
-          <Input aria-label='Search' placeholder='Type...' type='search' value={query} onValueChange={setQuery} onClear={handleClear} startContent={<FaSearch />} size='md' isDisabled={isFetching} isClearable />
-        </form>
+      <h2 className='text-2xl'>Orders</h2>
+      <div className='grid grid-cols-1 sm:flex items-center gap-2'>
+        <div className='grid grid-cols-4 gap-2 sm:flex sm:flex-1'>
+          <div className='col-span-3 sm:flex-1'>
+            <SearchBar query={query} setQuery={setQuery} fetch={fetch} isFetching={isFetching} />
+          </div>
+        </div>
       </div>
 
-      <div className='flex flex-col flex-grow'>
+      <div className='flex flex-col flex-grow my-4'>
         {orders.length > 0 && !error && !isFetching ? (
           <div className='grid grid-cols-1 gap-3'>
             {orders.map((order) => (

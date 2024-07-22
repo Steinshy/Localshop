@@ -85,26 +85,28 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
 
   return (
     (items.length > 1 && !testExcludedUrls()) && (
-      <nav className='flex items-center gap-1 p-2'>
-        <NextLink as={Link} href='/' className='text-small font-bold text-foreground/75'>
-          <FaHome />
-        </NextLink>
+      <div className='max-w-screen-2xl mx-auto w-full'>
+        <nav className='flex items-center gap-1 p-2'>
+          <NextLink as={Link} href='/' className='text-small font-bold text-foreground/75'>
+            <FaHome />
+          </NextLink>
 
-        <Separator />
+          <Separator />
 
-        {items.map((item, index) => (
-          <>
-            {item.href ? (
-              <NextLink key={`breadcrumb_${index}`} as={Link} href={item.href} className='text-small font-bold text-foreground/75'>
-                {item.title}
-              </NextLink>
-            ) : (
-              <span key={`breadcrumb_${index}`} className='text-small font-bold text-foreground/50 truncate text-ellipsis'>{item.title}</span>
-            )}
-            {index < items.length - 1 && <Separator />}
-          </>
-        ))}
-      </nav>
+          {items.map((item, index) => (
+            <>
+              {item.href ? (
+                <NextLink key={`breadcrumb_${index}`} as={Link} href={item.href} className='text-small font-bold text-foreground/75'>
+                  {item.title}
+                </NextLink>
+              ) : (
+                <span key={`breadcrumb_${index}`} className='text-small font-bold text-foreground/50 truncate text-ellipsis'>{item.title}</span>
+              )}
+              {index < items.length - 1 && <Separator />}
+            </>
+          ))}
+        </nav>
+      </div>
     )
   );
 }

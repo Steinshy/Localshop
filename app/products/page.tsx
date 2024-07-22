@@ -23,7 +23,7 @@ const ProductsPage: FC<ProductsPageProps> = async ({ searchParams }) => {
   return (
     <>
       <ProductsHeader />
-      <div className='max-w-screen-2xl mx-auto w-full px-2 pb-4 my-4'>
+      <div className='max-w-screen-2xl mx-auto w-full flex flex-col items-center flex-grow mt-4 mb-8 px-2'>
         <ProductsList data={data} pagy={pagy} />
       </div>
     </>

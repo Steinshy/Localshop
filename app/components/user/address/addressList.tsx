@@ -9,7 +9,7 @@ import { Button, Spinner } from '@nextui-org/react';
 // Components
 import AddressCard from '@components/user/address/addressCard';
 import AddressModal from '@components/user/address/addressModal';
-import AddressSearch from '@components/user/address/addressSearch';
+import SearchBar from '@components/searchBar';
 
 // subProviders
 import { CartContext } from '@subProviders/cartProvider';
@@ -30,10 +30,10 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
   const { shipping, billing, setShipping, setBilling } = cartStore;
 
   const [addresses, setAddresses] = useState<AddressResponse[]>(items),
-    [isFetching, setIsFetching] = useState<boolean>(false),
-    [query, setQuery] = useState<string>(''),
-    [pagy, setPagy] = useState<PagyProps>(pageInfos || { page: 1, pages: 1 }),
-    [error, setError] = useState<Error | ErrorObj | string | undefined>(pageError);
+        [isFetching, setIsFetching] = useState<boolean>(false),
+        [query, setQuery] = useState<string>(''),
+        [pagy, setPagy] = useState<PagyProps>(pageInfos || { page: 1, pages: 1 }),
+        [error, setError] = useState<Error | ErrorObj | string | undefined>(pageError);
 
   const fetch = (page?: number, query?: string) => {
     const apiFetch = async () => {
@@ -82,11 +82,6 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
     if (billing && billing.id === id) setBilling(undefined);
   };
 
-  const handleClear = () => {
-    setQuery('');
-    void fetch(1);
-  };
-
   const handlePreviousPage = () => {
     void fetch(pagy.page - 1, query);
   };
@@ -101,7 +96,7 @@ const AddressList: FC<AddressListProps> = ({ type, selectable = false, items = [
       <div className='grid grid-cols-1 sm:flex items-center gap-2'>
         <div className='grid grid-cols-4 gap-2 sm:flex sm:flex-1'>
           <div className='col-span-3 sm:flex-1'>
-            <AddressSearch query={query} setQuery={setQuery} fetch={fetch} handleClear={handleClear} isFetching={isFetching} />
+            <SearchBar query={query} setQuery={setQuery} fetch={fetch} isFetching={isFetching} />
           </div>
           <AddressModal addresses={addresses} handleCreate={handleCreate} handleUpdate={handleUpdate} />
         </div>

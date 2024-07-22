@@ -11,7 +11,6 @@ import { useSearchParams } from 'next/navigation';
 
 // Components
 import ProductCard from '@components/product/productCard';
-import ProductsSearch from '@components/products/productsSearch';
 
 // Interfaces
 import { PagyProps } from '@interfaces/general';
@@ -20,6 +19,7 @@ import { ProductsListProp } from '@interfaces/products';
 
 // Actions
 import { getProducts } from '@actions/actionsProducts';
+import SearchBar from '@components/searchBar';
 
 const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
   const searchParams = useSearchParams(),
@@ -28,22 +28,22 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
         [query, setQuery] = useState<string>(searchParams.get('q') || ''),
         [isFetching, setIsFetching] = useState<boolean>(false);
 
-  const fetchData = useCallback(
-    async (page: number, query: string) => {
-      if (page < 1 || page > localPagy.pages || isFetching || query === searchParams.get('q')) return;
-      setIsFetching(true);
+  const fetch = useCallback(async (page?: number, query?: string) => {
+    page = page || 1;
+    if (page < 1 || page > localPagy.pages || isFetching || query === searchParams.get('q')) return;
+    setIsFetching(true);
 
-      const { data, pagy, error } = await getProducts(page, query, categorySlug);
+    void updateQueryURL(query);
 
-      if (!error) {
-        setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
-        setLocalPagy(pagy);
-      }
+    const { data, pagy, error } = await getProducts(page, query, categorySlug);
 
-      setIsFetching(false);
-    },
-    [isFetching, localPagy.pages, searchParams, categorySlug]
-  );
+    if (!error) {
+      setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
+      setLocalPagy(pagy);
+    }
+
+    setIsFetching(false);
+  }, [isFetching, localPagy.pages, searchParams, categorySlug]);
 
   const updateQueryURL = (value?: string) =>  {
     value = value || undefined;
@@ -57,43 +57,25 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
     }
   };
 
-  const handleSearch = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    void updateQueryURL(query);
-    void fetchData(1, query);
-  };
-
-  const handleClear = () => {
-    setQuery('');
-    void updateQueryURL();
-    void fetchData(1, '');
-  };
-
   // Infinite scrolling
   useEffect(() => {
     const handleScroll = () => {
       const offsetY = 10;
       if (window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight - offsetY)
         return;
-      void fetchData(localPagy.page + 1, query);
+      void fetch(localPagy.page + 1, query);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [localPagy.page, fetchData, query, isFetching, searchParams]);
+  }, [localPagy.page, fetch, query, isFetching, searchParams]);
 
   return (
     <>
       {/* Search form */}
-      <ProductsSearch
-        query={query}
-        setQuery={setQuery}
-        handleSearch={handleSearch}
-        handleClear={handleClear}
-        isFetching={isFetching}
-        categorySlug={categorySlug} />
+      <SearchBar query={query} setQuery={setQuery} fetch={fetch} isFetching={isFetching} />
 
       {/* Products List */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 px-2 pb-4'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 w-full my-4'>
         {localProducts.map((product) => (
           <ProductCard key={`product_${product.id}`} product={product} />
         ))}
@@ -108,7 +90,7 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
 
       {/* Results - end of the pages */}
       {localPagy.page >= localPagy.pages && (
-        <div className='flex justify-center items-center my-4'>
+        <div className='flex justify-center items-center mt-4'>
           <p className='text-sm text-foreground/50'>{localProducts.length} Products</p>
         </div>
       )}
