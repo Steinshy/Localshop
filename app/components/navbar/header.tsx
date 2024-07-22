@@ -71,13 +71,19 @@ const Header: FC<HeaderProps> = ({ categories }) => {
           </NextLink>
         </NavbarContent>
 
-        {/* MobileMenu */}
-        <MobileMenu
-          isMobileMenuOpen={isMobileMenuOpen}
-          handleMobileMenu={handleMobileMenu}
-          navItems={navItems}
-          isItemActive={isItemActive}
-        />
+        {/* Mobile */}
+        <NavbarContent className='flex sm:hidden' justify='start'>
+          <NextLink as={Link} color='foreground' href='/'>
+            <FaAppleWhole className='text-2xl inline' />
+          </NextLink>
+          
+          <MobileMenu
+            isMobileMenuOpen={isMobileMenuOpen}
+            handleMobileMenu={handleMobileMenu}
+            navItems={navItems}
+            isItemActive={isItemActive}
+          />
+        </NavbarContent>
 
         <NavbarContent className='hidden sm:flex' justify='center'>
           {navItems.map((item) =>
@@ -114,8 +120,20 @@ const Header: FC<HeaderProps> = ({ categories }) => {
                   size='md'
                   variant='ghost'
                   radius='md'
+                  className='hidden sm:flex'
                 >
                   Cart
+                </Button>
+                <Button
+                  isIconOnly
+                  as={Link}
+                  href='/order'
+                  size='md'
+                  variant='ghost'
+                  radius='sm'
+                  className='flex sm:hidden'
+                >
+                  <FaCartArrowDown className='text-2xl' />
                 </Button>
               </Badge>
             </NavbarItem>

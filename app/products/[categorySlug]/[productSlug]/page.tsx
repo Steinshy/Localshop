@@ -38,8 +38,8 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const { item, infos} = previouslyOrderedData;
 
   return product ? (
-    <div className='max-w-screen-2xl mx-auto w-full p-4 mb-4'>
-      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center'>
+    <div className='max-w-screen-2xl mx-auto w-full p-4 mb-4 flex flex-col flex-grow'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center justify-center flex-grow'>
         <ProductImages key={id} title={title} mainImage={thumbnail.url} images={images} />
         <div className='flex flex-col gap-4'>
           <PreviouslyOrdered item={item} infos={infos} />

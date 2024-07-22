@@ -93,18 +93,16 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ requestUrl }) => {
         <Separator />
 
         {items.map((item, index) => (
-          <ul key={`breadcrumb_${index}`} className='flex items-center gap-1'>
+          <>
             {item.href ? (
-              <li>
-                <NextLink as={Link} href={item.href} className='text-small font-bold text-foreground/75'>
-                  {item.title}
-                </NextLink>
-              </li>
+              <NextLink key={`breadcrumb_${index}`} as={Link} href={item.href} className='text-small font-bold text-foreground/75'>
+                {item.title}
+              </NextLink>
             ) : (
-              <span className='text-small font-bold text-foreground/50'>{item.title}</span>
+              <span key={`breadcrumb_${index}`} className='text-small font-bold text-foreground/50 truncate text-ellipsis'>{item.title}</span>
             )}
             {index < items.length - 1 && <Separator />}
-          </ul>
+          </>
         ))}
       </nav>
     )
