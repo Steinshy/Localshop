@@ -21,6 +21,7 @@ import { capitalize, unslug } from '@utils/helpers';
 
 const Separator = () => <span className="text-small text-foreground/50">/</span>;
 
+// TODO : Change the exclusion list into a whitelist
 // Urls where we don't want to see the breadcrumb -> String | Regex
 const excludedUrls = ['\\/products\\/(\\w+)-(\\w+)', '\\/products\\/(\\w+)', '\\/order\\/(\\w+)-(\\w+)', '\\/order\\/(\\w+)'];
 

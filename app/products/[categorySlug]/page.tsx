@@ -2,6 +2,7 @@
 import { FC } from 'react';
 
 // NextJS
+// import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 
 // Actions
@@ -17,10 +18,14 @@ import { capitalize, unslug } from '@utils/helpers';
 // Interfaces
 import { ProductsCategoryPageProps } from '@interfaces/products';
 
+// TODO :
+// Request Category and return undefined if not found
 export const generateMetadata = ({ params }: ProductsCategoryPageProps): Metadata => {
   return { title: capitalize(unslug(params.categorySlug)) };
 };
 
+// TODO :
+// Request Category and redirect to 404 if not found
 const ProductsCategoryPage: FC<ProductsCategoryPageProps> = async ({ params, searchParams }) => {
   const urlParams = searchParams || {},
     title = capitalize(unslug(params.categorySlug));

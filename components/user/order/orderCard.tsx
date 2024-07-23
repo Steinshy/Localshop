@@ -32,6 +32,7 @@ const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
   const chipColors: chipColorsProps = {
     Cancelled: 'danger',
     Pending: 'warning',
+    Processing: 'secondary',
     Shipped: 'primary',
     Delivered: 'success'
   };

@@ -2,6 +2,7 @@
 import { FC } from 'react';
 
 // NextJS
+import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 
 // Actions
@@ -20,14 +21,17 @@ import { capitalize, unslug } from '@utils/helpers';
 // Interfaces
 import { ProductPageProps } from '@interfaces/product';
 
-export const generateMetadata = async ({ params }: ProductPageProps): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: ProductPageProps): Promise<Metadata|undefined> => {
   const { data, error } = await getProduct(params.productSlug);
-  if (error) return {};
+  if (error) return;
   return { title: `${data.attributes.title} - ${capitalize(unslug(params.categorySlug))}` };
 };
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const [product, reviews, previouslyOrdered] = await Promise.all([getProduct(params.productSlug), getProductReviews(params.productSlug), getPreviouslyOrdered(params.productSlug)]);
+  
+  if (product.error) notFound();
+
   const { data: localProduct } = product;
   const {
     attributes: { id, title, description, price, thumbnail, images }
