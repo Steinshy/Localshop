@@ -36,13 +36,12 @@ const ProductsList: FC<ProductsListProp> = ({ data, pagy, categorySlug }) => {
     void updateQueryURL(query);
 
     const { data, pagy, error } = await getProducts(page, query, categorySlug);
+    setIsFetching(false);
 
     if (!error) {
       setLocalProducts((previousProducts) => (page > 1 ? [...previousProducts, ...data] : data));
       setLocalPagy(pagy);
     }
-
-    setIsFetching(false);
   }, [isFetching, localPagy.pages, searchParams, categorySlug]);
 
   const updateQueryURL = (value?: string) =>  {
