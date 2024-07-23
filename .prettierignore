@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.yarn/
 .prettierignore
 .prettierrc
 .gitignore
@@ -11,3 +12,4 @@ node_modules/
 *.js
 *.txt
 *.css
+*.yml

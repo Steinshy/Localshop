@@ -1,4 +1,4 @@
-*.log
-.next/
 .yarn/install-state.gz
+.next/
 node_modules/
+*.log
