@@ -5,9 +5,11 @@ import { redirect } from 'next/navigation';
 import { getCart } from '@actions/actionsCart';
 
 const PaymentPage = async () => {
-  const { data:cartData } = await getCart();
+  const { data: cartData } = await getCart();
   if (!cartData) return;
-  const { attributes: { items } } = cartData;
+  const {
+    attributes: { items }
+  } = cartData;
 
   if (items.length <= 0) return redirect('/order');
 
@@ -16,6 +18,6 @@ const PaymentPage = async () => {
       <h1 className="text-xl">Payment</h1>
     </div>
   );
-}
+};
 
 export default PaymentPage;

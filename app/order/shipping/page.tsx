@@ -9,9 +9,11 @@ import { getAddresses } from '@actions/actionsUserAddress';
 import { getCart } from '@actions/actionsCart';
 
 const ShippingPage = async () => {
-  const { data:cartData } = await getCart();
+  const { data: cartData } = await getCart();
   if (!cartData) return;
-  const { attributes: { items } } = cartData;
+  const {
+    attributes: { items }
+  } = cartData;
 
   if (items.length <= 0) return redirect('/order');
 

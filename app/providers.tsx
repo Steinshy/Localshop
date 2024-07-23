@@ -10,15 +10,15 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { NextUIProvider } from '@nextui-org/react';
 
 // Providers
-import { CartProvider } from '@subProviders/cartProvider';
-import { UserProvider } from '@subProviders/userProvider';
+import { CartProvider } from '@providers/cartProvider';
+import { UserProvider } from '@providers/userProvider';
 
 // Interfaces
-import { ProviderProps } from '@interfaces/subProviders';
+import { ProviderProps } from '@interfaces/providers';
 
 const Providers: FC<ProviderProps> = ({ children, initialUser, initialCart }) => (
-  <NextUIProvider className='flex flex-col flex-grow'>
-    <NextThemesProvider attribute='class' defaultTheme='light'>
+  <NextUIProvider className="flex flex-col flex-grow">
+    <NextThemesProvider attribute="class" defaultTheme="light">
       <UserProvider initialUser={initialUser}>
         <CartProvider initialCart={initialCart}>{children}</CartProvider>
       </UserProvider>

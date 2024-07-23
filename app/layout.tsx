@@ -29,16 +29,14 @@ import { getProductCategories } from '@actions/actionsProducts';
 import { isPrivateUrl } from '@utils/helpers';
 
 // CSS
-import './styles/App.css';
+import '@styles/App.css';
 
 export const metadata: Metadata = {
   title: {
     template: '%s | Localshop',
-    default: 'Localshop',
-  },
+    default: 'Localshop'
+  }
 };
-
-export const dynamic = 'force-dynamic';
 
 const RootLayout: FC<LayoutProps> = async ({ children }) => {
   const { data: userData, error: userError } = await getUser(),
@@ -51,9 +49,9 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
   }
 
   return (
-    <html lang='en'>
-      <body className='flex flex-col min-h-svh'>
-        <main className='flex flex-col flex-grow'>
+    <html lang="en">
+      <body className="flex flex-col min-h-svh">
+        <main className="flex flex-col flex-grow">
           <Providers initialUser={userData} initialCart={cartData}>
             <Header categories={categoriesData} />
             <Breadcrumb requestUrl={requestUrl} />
@@ -61,7 +59,7 @@ const RootLayout: FC<LayoutProps> = async ({ children }) => {
           </Providers>
           <Footer categories={categoriesData} />
         </main>
-        <Toaster position='top-center' toastOptions={{ duration: 2000 }} />
+        <Toaster position="top-center" toastOptions={{ duration: 2000 }} />
       </body>
     </html>
   );

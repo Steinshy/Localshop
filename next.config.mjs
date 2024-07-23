@@ -9,10 +9,10 @@
 const nextConfig = {
   productionBrowserSourceMaps: true,
   swcMinify: true,
-  reactStrictMode: true,
+  reactStrictMode: process.env.NODE_ENV === 'development',
   images: {
-    domains: ['url'],
-  },
+    domains: ['url']
+  }
 };
 
 // export default bundleAnalyzer(nextConfig);

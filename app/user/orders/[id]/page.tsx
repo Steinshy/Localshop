@@ -33,22 +33,15 @@ const OrderPage: FC<OrderPageProps> = async ({ params }) => {
 
   return (
     <>
-      <h1 className='text-2xl mb-2'>Order #{order.id}</h1>
+      <h1 className="text-2xl mb-2">Order #{order.id}</h1>
 
       {/*  Order Details */}
       {order ? (
         <OrderCard order={order} detailed />
       ) : (
-        <div className='flex flex-col gap-2'>
-          <p className='text-lg'>Order not found</p>
-          <Button
-            color='primary'
-            variant='flat'
-            href='/user/orders'
-            as={Link}
-            className='mt-4'
-            endContent={<FaArrowRight />}
-          >
+        <div className="flex flex-col gap-2">
+          <p className="text-lg">Order not found</p>
+          <Button color="primary" variant="flat" href="/user/orders" as={Link} className="mt-4" endContent={<FaArrowRight />}>
             Go back to orders
           </Button>
         </div>

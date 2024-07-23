@@ -11,9 +11,9 @@ export const metadata: Metadata = { title: 'Profile' };
 const ProfilePage = () => {
   return (
     <>
-      <h1 className='text-2xl mb-2'>Profile</h1>
+      <h1 className="text-2xl mb-2">Profile</h1>
 
-      <div className='flex flex-col gap-2'>
+      <div className="flex flex-col gap-2">
         <AvatarForm />
         <GeneralForm />
         <PasswordForm />

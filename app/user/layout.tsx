@@ -1,23 +1,24 @@
 'use client';
 
 // React
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 
-// Navigate
+// NextJS
 import { redirect } from 'next/navigation';
 
 // Interfaces
 import { LayoutProps } from '@interfaces/general';
-import { UserContext } from '@subProviders/userProvider';
+import { UserContext } from '@providers/userProvider';
 
-export default function UserLayout({ children }: LayoutProps) {
+const UserLayout: FC<LayoutProps> = ({ children }) => {
   const userStore = useContext(UserContext);
-  const { isLogged } = userStore;
-  if (!isLogged) redirect('/');
+  if (!userStore.isLogged) redirect('/');
 
   return (
-    <div className='max-w-screen-md mx-auto w-full flex flex-col items-center flex-grow my-8 px-2'>
-      <div className='flex flex-col flex-grow w-full'>{children}</div>
+    <div className="max-w-screen-md mx-auto w-full flex flex-col items-center flex-grow my-8 px-2">
+      <div className="flex flex-col flex-grow w-full">{children}</div>
     </div>
   );
-}
+};
+
+export default UserLayout;
