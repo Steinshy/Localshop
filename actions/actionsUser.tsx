@@ -38,7 +38,7 @@ export const userLogin = async () => {
 
 // User => API - Logout
 export const userLogout = () => {
-  if (!cookies().has('user')) return;
+  if (!cookies().has('localshop_user')) return;
   cookiesLogout();
   return;
 };
