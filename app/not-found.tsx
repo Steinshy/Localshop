@@ -1,18 +1,18 @@
 // NextJS
-import { Metadata } from "next";
+import { Metadata } from 'next';
 
 // NextUI
-import { Divider } from "@nextui-org/react";
+import { Divider } from '@nextui-org/react';
 
 // Icons
-import { FcBrokenLink } from "react-icons/fc";
+import { FcBrokenLink } from 'react-icons/fc';
 
 export const metadata: Metadata = {
   title: 'Not Found'
 };
 
 const NotFoundPage = () => {
-	return (
+  return (
     <div className="max-w-screen-2xl mx-auto w-full p-4 mb-4 flex flex-col flex-grow justify-center items-center">
       <div className="flex items-center gap-3">
         <h1 className="text-6xl text-center">404</h1>
@@ -24,4 +24,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage
+export default NotFoundPage;

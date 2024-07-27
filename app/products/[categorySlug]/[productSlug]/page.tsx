@@ -21,7 +21,7 @@ import { capitalize, unslug } from '@utils/helpers';
 // Interfaces
 import { ProductPageProps } from '@interfaces/product';
 
-export const generateMetadata = async ({ params }: ProductPageProps): Promise<Metadata|undefined> => {
+export const generateMetadata = async ({ params }: ProductPageProps): Promise<Metadata | undefined> => {
   const { data, error } = await getProduct(params.productSlug);
   if (error) return;
   return { title: `${data.attributes.title} - ${capitalize(unslug(params.categorySlug))}` };
@@ -29,7 +29,7 @@ export const generateMetadata = async ({ params }: ProductPageProps): Promise<Me
 
 const ProductPage: FC<ProductPageProps> = async ({ params }) => {
   const [product, reviews, previouslyOrdered] = await Promise.all([getProduct(params.productSlug), getProductReviews(params.productSlug), getPreviouslyOrdered(params.productSlug)]);
-  
+
   if (product.error) notFound();
 
   const { data: localProduct } = product;
