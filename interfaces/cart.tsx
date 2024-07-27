@@ -52,6 +52,7 @@ export type CartItemProps = {
   id: number;
   quantity: number;
   price: number;
+  total: number;
   product: {
     data: ProductResponse;
   };

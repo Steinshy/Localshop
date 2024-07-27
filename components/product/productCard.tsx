@@ -61,7 +61,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           <ReviewsStars rating={rating} />
         </div>
         <div className="flex justify-between">
-          <p className="text-lg">{price} €</p>
+          <p className="text-lg">{price}</p>
           <AddToCart localProduct={product} isIconOnly />
         </div>
       </div>

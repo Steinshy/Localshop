@@ -52,7 +52,7 @@ const ProductPage: FC<ProductPageProps> = async ({ params }) => {
           <PreviouslyOrdered item={item} infos={infos} />
           <h1 className="text-3xl font-semibold text-center sm:text-start">{title}</h1>
           <p className="text-md text-foreground/75">{description}</p>
-          <p className="text-md font-semibold">{price}€</p>
+          <p className="text-md font-semibold">{price}</p>
           <div className="flex justify-center sm:justify-start">
             <AddToCard localProduct={localProduct} />
           </div>

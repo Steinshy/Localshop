@@ -66,7 +66,7 @@ const OrderCard: FC<OrderCardProps> = ({ order, detailed = false }) => {
           <p>-</p>
           <p>{createdAt}</p>
           <p>-</p>
-          <p>{total}€</p>
+          <p>{total}</p>
         </div>
 
         <Chip size="sm" className="text-white" color={chipColors[status]}>

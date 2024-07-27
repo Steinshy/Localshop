@@ -1,9 +1,9 @@
 // Interfaces
 import { UserResponse } from '@interfaces/user';
-import { ProductResponse } from '@interfaces/product';
 import { PagyProps } from '@interfaces/general';
 import { ErrorObj } from '@interfaces//httpUtils';
 import { AddressResponse } from '@interfaces/userAddress';
+import { CartItemProps } from './cart';
 
 // actionsCart | actionsUserOrder | previouslyOrdered | dataOrders | interfaces => userOrders
 export type OrderResponse = {
@@ -15,7 +15,7 @@ export type OrderResponse = {
     total: number;
     createdAt: string;
     updatedAt: string;
-    items: OrderItem[];
+    items: CartItemProps[];
     totalItems: number;
     totalUniqueItems: number;
     status: string;
@@ -28,16 +28,6 @@ export type OrderResponse = {
     billing: {
       data: AddressResponse;
     };
-  };
-};
-
-// previouslyOrdered | dataOrders | interfaces => userOrders
-export type OrderItem = {
-  id: number;
-  quantity: number;
-  price: number;
-  product: {
-    data: ProductResponse;
   };
 };
 
@@ -60,7 +50,7 @@ export type chipColorsProps = {
 
 // orderCard
 export type OrderProductCardProps = {
-  item: OrderItem;
+  item: CartItemProps;
   detailed: boolean;
 };
 

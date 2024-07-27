@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { OrderProductCardProps } from '@interfaces/userOrder';
 
 const OrderProductCard: FC<OrderProductCardProps> = ({ item, detailed }) => {
-  const { quantity, price, product } = item;
+  const { quantity, price, total, product } = item;
   const {
     data: {
       id,
@@ -58,9 +58,9 @@ const OrderProductCard: FC<OrderProductCardProps> = ({ item, detailed }) => {
         </div>
 
         <div className="grid grid-cols-3 gap-4">
-          <p className="text-lg text-foreground">{price}€</p>
+          <p className="text-lg text-foreground">{price}</p>
           <p className="text-lg text-foreground">{quantity}</p>
-          <p className="text-lg text-foreground">{price * quantity}€</p>
+          <p className="text-lg text-foreground">{total}</p>
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ const PreviouslyOrdered: FC<PreviouslyOrderedProps> = ({ item, infos }) => {
             <div>
               <p>Your have ordered this product {infos.count > 1 ? `${infos.count} times` : 'once'}</p>
               <p className="text-foreground/75 text-sm">
-                Last ordered {infos.createdAt} ago for {item.data?.attributes.price}€
+                Last ordered {infos.createdAt} ago for {item.data?.attributes.price}
               </p>
             </div>
             <Button as={Link} href={`/user/orders/${infos.orderId}`} size="sm" variant="flat">
