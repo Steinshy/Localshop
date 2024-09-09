@@ -1,7 +1,7 @@
-node_modules/
-assets/
-.next/
-.yarn/
+node_modules
+assets
+.next
+.yarn
 .prettierignore
 .prettierrc
 .gitignore

@@ -1,4 +1,5 @@
-.yarn/install-state.gz
-.next/
-node_modules/
+.next
+node_modules
 *.log
+.vscode
+.yarn
